@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d921b1a895a40453ba5f0fdc0329a9ab
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Prefabs/ArrowRenderer 3.prefab
+  uploadId: 600981

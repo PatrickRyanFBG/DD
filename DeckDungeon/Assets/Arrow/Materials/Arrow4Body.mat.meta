@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ca5725f9a490340fda9e3ef3277d30aa
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Materials/Arrow4Body.mat
+  uploadId: 600981

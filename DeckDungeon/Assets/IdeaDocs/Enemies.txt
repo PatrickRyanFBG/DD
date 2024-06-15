@@ -1,0 +1,21 @@
+Melee Goblin
+	- Actions
+		- Attack
+		- Move 1
+		- Drop Bomb
+
+Bomb
+	- Actions
+		- Expload
+
+Goblin Shaman
+	- Actions
+		- Attack
+		- Move 1
+		- Heal Target Location
+
+Rat
+	- Actions
+		- Attack
+		- Move 2
+

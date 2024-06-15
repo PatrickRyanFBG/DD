@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DDPlayer_MatchDiscard : MonoBehaviour
+{
+    [Header("Testing")]
+    [SerializeField]
+    private TMPro.TextMeshProUGUI numberText;
+
+    private List<DDCardInHand> cards = new List<DDCardInHand>();
+
+    public void CardDiscarded(DDCardInHand card)
+    {
+        cards.Add(card);
+
+        // DO ANIMATION OF CARD MOVING TO DISCARD
+        card.transform.parent = transform;
+        card.transform.position = transform.position;
+        card.gameObject.SetActive(false);
+
+        numberText.text = cards.Count.ToString();
+    }
+
+    public List<DDCardInHand> GetAndClearDiscard()
+    {
+        List<DDCardInHand> outgoing = cards;
+        cards = new List<DDCardInHand>();
+        numberText.text = "0";
+        return outgoing;
+    }
+
+    public int GetNumberInDiscard()
+    {
+        return cards.Count;
+    }
+
+    public void DestroyCards()
+    {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            Destroy(cards[i].gameObject);
+        }
+
+        cards.Clear();
+        numberText.text = "0";
+    }
+}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 23bb379472ece4fc49c068564bcff3fe
+timeCreated: 1503516032
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Manual.pdf
+  uploadId: 600981

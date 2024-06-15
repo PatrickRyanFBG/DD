@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7f941b8ee9927448f99bd0fa712bbc11
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Prefabs/Arrow 2/Segment.prefab
+  uploadId: 600981

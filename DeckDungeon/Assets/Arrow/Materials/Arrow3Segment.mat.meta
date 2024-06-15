@@ -1,0 +1,16 @@
+﻿fileFormatVersion: 2
+guid: c163b7b5773704cca95f4ffd83a42869
+timeCreated: 1502102349
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Materials/Arrow3Segment.mat
+  uploadId: 600981

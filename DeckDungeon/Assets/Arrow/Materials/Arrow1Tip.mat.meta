@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5a6b0099507714126a55567f590346f4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Materials/Arrow1Tip.mat
+  uploadId: 600981

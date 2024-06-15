@@ -1,0 +1,55 @@
++1 Push - Move One Unit Back One Space
++1 Pull - Move One Unit Forward One Space
++1 Something - Move One Unit Right One Space
++1 Something - Move One Unit Left One Space
++2 Rush - Move All Units Forward One Space
+-1 Spear Throw - Deal X Damage To One Unit
+-2 Cleave - Dead X Damage To One Row
+-2 Pierce - Dead X Damage To One Column
+-1 Caltrops - Starting In Location Deals X Damage for X Turns
+-1 Bandage - Heal X Damage
+
+
+
+
+
+
+
+
+
+
+Discard a Card - Deal Damage
+Deal Damage Per Action Card This Encounter
+Dawn Armor
+Ricochet (deal damage to two targets)
+
+Prepare - Gain X Draw X
+Shackle Strike - Can't Move
+Riposte - The Next Attack an Enemy does hit itself as well
+Gain X Strength
+Gain X Dex
+Whirl Wind - Deal X Damage to a Row then X to the row behind it
+Wild Strike - Deal Damage To a Random Enemy
+Deal X Damage Twice
+Add Fade 1 to a card in your Hand to Deal X Damage
+Lose X HP Gain X
+Lose X HP Draw X
+Discard Your Hand Draw X Card
+Echo Strike - Create a Temporary verion of the last Attack
+Parry - When Attacked this Turn deal X Damage
+Apply X Bleed
+
+
+Barricade - Spawn Object with X Health
+Spring Trap - When an opponent moves into this deal damage 
+Push As Far Back
+Pull As Far Forward
+Shove Left As Far
+Shove Right As Far
+
+Spring Trap - Move Enemy X
+Spike Trap - Deal X Damage
+Blade Trap - Deal X Damage To Whole Row
+Blade Trap - Deal X Damage To Whole Column
+Bear Trap - Imobilize 1 Turn
+Energy Trap - Gain X

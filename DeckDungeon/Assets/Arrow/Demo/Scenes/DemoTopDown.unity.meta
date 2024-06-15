@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ea9f505970c189d42b796a90d2570faa
+timeCreated: 1502104944
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 97386
+  packageName: Arrow For TCG
+  packageVersion: 1.3
+  assetPath: Assets/Arrow/Demo/Scenes/DemoTopDown.unity
+  uploadId: 600981

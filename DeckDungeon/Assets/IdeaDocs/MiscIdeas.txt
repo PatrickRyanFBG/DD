@@ -1,0 +1,40 @@
+Card Attributes
+	- Fade X
+		- Decreases every use and disapears from encounter deck when 0
+	- Locked
+		- Is not discarded at end of turn
+	- Drawn:
+		- Does an effect when Drawn
+	- Discarded:
+		- Does an effect when Discarded
+	- Temporary
+		- If not used disepears
+
+Enemy Attributes
+	- Vulnerable
+	- Weak
+	- Bleed
+	- Immobile
+	- Dex
+
+
+Card Types
+	 - Action
+		- Attack
+		- Spell
+	- Preparation ?
+	- Item ?
+	- Trap ?
+
+Damage Types Physical and Magical (and Shadow?)
+	- 
+
+Armor negates number of damage per stack and then decreases one stack
+
+Stats
+	- Strength
+		- Increase Bonk Damage
+	- Dex
+		- Increase Attack Damage
+	- Int
+		- Increase Spell Damage
