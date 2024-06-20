@@ -28,7 +28,7 @@ public class DDDungeonCard_GoblinCamp : DDDungeonCardEncounter
             }
 
             locs.Add(nextPos);
-            board.SpawnEnemy(x, y, SingletonHolder.Instance.EnemyLibrary.EnemyDictionary.MeleeGoblin);
+            board.SpawnEnemy(x, y, SingletonHolder.Instance.EnemyLibrary.EnemyDictionary.GoblinMelee);
         }
     }
 }

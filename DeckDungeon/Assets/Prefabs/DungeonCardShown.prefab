@@ -50,6 +50,7 @@ MonoBehaviour:
   nameText: {fileID: 4572672138017517339}
   descText: {fileID: 5265609244541031470}
   locked: {fileID: 6095952090526936507}
+  col: {fileID: 4365107899325166508}
 --- !u!65 &4365107899325166508
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class DDEnemyLibrary : MonoBehaviour
 [System.Serializable]
 public class Enemies
 {
-    public DDEnemy_MeleeGoblin MeleeGoblin;
+    public DDEnemy_GoblinMelee GoblinMelee;
 }
 
 [System.Serializable]
@@ -25,4 +25,6 @@ public class SharedActionIcons
     public Texture Attack_Melee;
     public Texture Attack_Explode;
     public Texture Attack_Heal;
+
+    public Texture Attack_GainDexterity;
 }

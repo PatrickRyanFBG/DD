@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5a45ce53db24c49a403a783ea35dfc, type: 3}
+  m_Name: DDEnemy_GoblinMelee
+  m_EditorClassIdentifier: 
+  image: {fileID: 2800000, guid: 7f87244ee549c5a4486524f8e68c4498, type: 3}
+  StartingHealth: 10
+  enemyName: Goblin
+  damage: 5
+  dexGain: 3

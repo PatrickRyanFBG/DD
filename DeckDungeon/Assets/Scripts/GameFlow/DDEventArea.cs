@@ -23,7 +23,7 @@ public class DDEventArea : MonoBehaviour
     private List<GameObject> options = new List<GameObject>();
 
     [SerializeField]
-    private Button optionPrefab;
+    private DDButton optionPrefab;
 
     private DDDungeonCardEvent currentEvent;
 
@@ -46,9 +46,9 @@ public class DDEventArea : MonoBehaviour
         options.Clear();
     }
 
-    public Button GenerateButton()
+    public DDButton GenerateButton()
     {
-        Button button = Instantiate(optionPrefab, optionParent);
+        DDButton button = Instantiate(optionPrefab, optionParent);
         options.Add(button.gameObject);
         return button;
     }

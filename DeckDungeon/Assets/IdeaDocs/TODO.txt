@@ -1,4 +1,8 @@
 	NOTE FOR LATER:
-	Gotta wrapper for the option button so I can also do Event Trigger for hover
+	Find away to select empty locations for barricade. Right now selections are DDSelections and have no idea what is in them. Maybe pass the selection back to card?
+
+
+
+
 
 	Gotta do something with enemies turns so that way they can be destroyed mid turn and not fuck it up. So destroy as part of clean up maybe?

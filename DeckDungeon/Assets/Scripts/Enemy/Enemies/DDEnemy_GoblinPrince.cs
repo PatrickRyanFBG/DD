@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class DDEnemy_MeleeGoblin : DDEnemyBase
+public class DDEnemy_GoblinPrince : DDEnemyBase
 {
     [SerializeField]
     private int damage;
 
     [SerializeField]
-    private DDEnemyBase bombEnemy;
+    private int dexterityBuff;
 
     [SerializeField]
-    private Texture bombIcon;
+    private DDEnemyBase meleeGoblin;
+
+    [SerializeField]
+    private Texture meleeGoblinIcon;
 
     public override List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy)
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
-        DDEnemyActionBase bombAction = null;
+        List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
+        SingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
 
-        if(Random.Range(0, 10) < 3)
+        DDEnemyActionBase summonGoblin = null;
+
+        // Always summon another goblin if prince is there is only one or less other goblin
+        if (allEnemies.Count <= 2 || Random.Range(0, 10) < 4)
         {
             Vector2 actingCoords = actingEnemy.CurrentLocaton.Coord;
 
@@ -29,22 +36,22 @@ public class DDEnemy_MeleeGoblin : DDEnemyBase
                 int randX = Random.Range(-1, 2);
                 int randY = Random.Range(-1, 2);
 
-                if(Random.Range(0, 2) == 0)
+                if (Random.Range(0, 2) == 0)
                 {
-                    if(randY != 0)
+                    if (randY != 0)
                     {
                         randX = 0;
                     }
                 }
                 else
                 {
-                    if(randX != 0)
+                    if (randX != 0)
                     {
                         randY = 0;
                     }
                 }
 
-                if(randX == 0 && randX == 0)
+                if (randX == 0 && randX == 0)
                 {
                     continue;
                 }
@@ -60,31 +67,44 @@ public class DDEnemy_MeleeGoblin : DDEnemyBase
                     continue;
                 }
 
-                if(SingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
+                if (SingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
                 {
-                    bombAction = new DDEnemyAction_SpawnEnemy(bombEnemy, new Vector2(randX, randY), bombIcon);
+                    summonGoblin = new DDEnemyAction_SpawnEnemy(meleeGoblin, new Vector2(randX, randY), meleeGoblinIcon);
                     break;
                 }
             }
         }
 
-        if (bombAction != null)
+        if (summonGoblin != null)
         {
-            actions.Add(bombAction);
+            actions.Add(summonGoblin);
         }
         else
         {
-            if (Random.Range(0, 4) <= 2)
+            EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
+            actions.Add(new DDEnemyAction_Move(randomDirection));
+
+            allEnemies.Shuffle();
+
+            DDEnemyActionBase buffAction = null;
+
+            for (int i = 0; i < allEnemies.Count; i++)
             {
-                EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
-                actions.Add(new DDEnemyAction_Move(randomDirection));
+                DDEnemyOnBoard eob = allEnemies[i];
+                if (eob != null && eob != actingEnemy)
+                {
+                    buffAction = new DDEnemyAction_BuffDexterityAlly(dexterityBuff, eob.CurrentLocaton.Coord);
+                }
+            }
+
+            if(buffAction != null)
+            {
+                actions.Add(buffAction);
             }
             else
             {
                 actions.Add(new DDEnemyAction_Attack(damage));
             }
-
-            actions.Add(new DDEnemyAction_Attack(damage));
         }
 
         return actions;

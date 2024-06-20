@@ -22,4 +22,4 @@ MonoBehaviour:
   - amount: 3
     enemy: {fileID: 11400000, guid: fc3d601df88156e4d98fd3ab9dd9fe5f, type: 2}
   - amount: 1
-    enemy: {fileID: 11400000, guid: 8d28f3bbdcfc8104aa878db51876131e, type: 2}
+    enemy: {fileID: 11400000, guid: 09daf832655a01448b6a9cbc8adfcf7b, type: 2}

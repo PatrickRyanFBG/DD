@@ -1195,6 +1195,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70533522}
   m_CullTransparentMesh: 1
+--- !u!1 &85134854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 85134855}
+  - component: {fileID: 85134857}
+  - component: {fileID: 85134856}
+  m_Layer: 0
+  m_Name: DeckCardAddedStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &85134855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85134854}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 2, y: 0.099999994, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 487030056}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &85134856
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85134854}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 720ea100b5a5ea741a0e79cfb3ab65c6, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &85134857
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85134854}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &135970326
 GameObject:
   m_ObjectHideFlags: 0
@@ -3443,7 +3528,7 @@ MonoBehaviour:
   image: {fileID: 427605}
   description: {fileID: 1353177734}
   optionParent: {fileID: 341801270}
-  optionPrefab: {fileID: 4096228204333797067, guid: f2b6067f5dd0c754fa88419b1d0c2d39, type: 3}
+  optionPrefab: {fileID: 4937150991773095331, guid: f2b6067f5dd0c754fa88419b1d0c2d39, type: 3}
 --- !u!4 &364130318
 Transform:
   m_ObjectHideFlags: 0
@@ -4416,7 +4501,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bad0cdaaa15054940979364e05677125, type: 2}
   - {fileID: 11400000, guid: 24f04e1a90469c245986cbc096e0b436, type: 2}
   - {fileID: 11400000, guid: 5e4b772b81437dd49bf8f14984bcfb17, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
+  - {fileID: 11400000, guid: 2f0a202b4ffb4df409e089dbf5d4f07c, type: 2}
   - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
   - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
   - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
@@ -4432,6 +4517,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03f300cf3d3287346a9a96bbea2fc2ad, type: 2}
   - {fileID: 11400000, guid: 6b62d44ee443ed34fa4730767ba9c3bd, type: 2}
   - {fileID: 11400000, guid: 0f3284d9466e826498e5731798ca62a9, type: 2}
+  - {fileID: 11400000, guid: 81b88c85767ebcb4b9ab71a853ce6a82, type: 2}
+  startingArtifacts:
+  - {fileID: 11400000, guid: ab6cf7ddad925fa44854eedf010659ca, type: 2}
+  - {fileID: 11400000, guid: 74309c6a291c2c04abb7e787fb0d000d, type: 2}
+  - {fileID: 11400000, guid: f69e792b27fd22f46bbc10184985e4e4, type: 2}
+  cardPrefabForAdded: {fileID: 7860509345118219333, guid: 25909ed861df84146ac135a34098461b, type: 3}
+  dungeonCardAddedStart: {fileID: 85134855}
+  dungeonCardAddedEnd: {fileID: 1715764504}
   keyImage: {fileID: 1775639788}
   artifactUIParent: {fileID: 293183288}
   artifactUIPrefab: {fileID: 3736100483662058607, guid: d5407368afec28240b705c143e70ae8f, type: 3}
@@ -4449,6 +4542,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1715764504}
+  - {fileID: 85134855}
   - {fileID: 1079680096}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5855,11 +5949,11 @@ RectTransform:
   - {fileID: 1240686470}
   m_Father: {fileID: 1231229233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 150, y: 50}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &683976119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9340,6 +9434,9 @@ MonoBehaviour:
   discard: {fileID: 34185436}
   selectedCardLocation: {fileID: 1122326157}
   arrow: {fileID: 1939724366}
+  GainedMomentum:
+    m_PersistentCalls:
+      m_Calls: []
   momentum: {fileID: 1691696024}
 --- !u!1 &1067041982
 GameObject:
@@ -15862,7 +15959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDictionary:
-    MeleeGoblin: {fileID: 11400000, guid: fc3d601df88156e4d98fd3ab9dd9fe5f, type: 2}
+    GoblinMelee: {fileID: 0}
   SharedActionIconDictionary:
     Move_Up: {fileID: 2800000, guid: b7334b37fbf69d84fadc2ea5fcd85e4e, type: 3}
     Move_Right: {fileID: 2800000, guid: 174d6487df740cb45bc940ff5572f7c3, type: 3}
@@ -15871,6 +15968,7 @@ MonoBehaviour:
     Attack_Melee: {fileID: 2800000, guid: baf1af08c192c1b4cac220b574ff7616, type: 3}
     Attack_Explode: {fileID: 2800000, guid: 38c0d0b63e6c6234eb9e5cbf6ed575cf, type: 3}
     Attack_Heal: {fileID: 2800000, guid: a74bd99562f9aab4e906110616567f8d, type: 3}
+    Attack_GainDexterity: {fileID: 2800000, guid: 2718ad04683c39040a5b6922c7cc8c6e, type: 3}
 --- !u!4 &1739157147
 Transform:
   m_ObjectHideFlags: 0
@@ -17227,6 +17325,9 @@ MonoBehaviour:
   discard: {fileID: 1196716445}
   selectedCardLocation: {fileID: 1328956285}
   arrow: {fileID: 931345935}
+  GainedMomentum:
+    m_PersistentCalls:
+      m_Calls: []
   momentum: {fileID: 785620157}
 --- !u!4 &1941480982
 Transform:
@@ -19166,9 +19267,9 @@ SceneRoots:
   - {fileID: 829762111}
   - {fileID: 364130318}
   - {fileID: 751347733}
-  - {fileID: 1608201907}
   - {fileID: 282712902}
   - {fileID: 1161323821}
   - {fileID: 1579977260}
   - {fileID: 3157179268108734906}
   - {fileID: 1320992825820685569}
+  - {fileID: 1608201907}

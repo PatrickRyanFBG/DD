@@ -52,6 +52,11 @@ public class DDCardInHand : DDSelection
         return currentCard.Targets;
     }
 
+    public bool IsSelectionValid(DDSelection selection, int targetIndex)
+    {
+        return currentCard.IsSelectionValid(selection, targetIndex);
+    }
+
     public override void Hovered()
     {
         if (selected)

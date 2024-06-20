@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7794459819938711637}
   - component: {fileID: 4096228204333797067}
   - component: {fileID: 7148649807349384668}
+  - component: {fileID: 4937150991773095331}
   m_Layer: 0
   m_Name: EventOption
   m_TagString: Untagged
@@ -138,7 +139,36 @@ MonoBehaviour:
   - eventID: 0
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 4937150991773095331}
+          m_TargetAssemblyTypeName: DDButton, Assembly-CSharp
+          m_MethodName: EventTriggerPointerEnter
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &4937150991773095331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4384068891837924349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e4fd2f56c24614db0525a827b832e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 4096228204333797067}
+  buttonText: {fileID: 5834821846980414809}
+  OnPointerEnter:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7603002855872177557
 GameObject:
   m_ObjectHideFlags: 0

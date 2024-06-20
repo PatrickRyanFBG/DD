@@ -93,7 +93,7 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
 
         yield return new WaitForSeconds(1f);
 
-        SingletonHolder.Instance.Dungeon.DoDamage(damage);
+        SingletonHolder.Instance.Dungeon.DoDamage(damage + enemy.Dexterity);
 
         GameObject.Destroy(attackPrefab);
 
@@ -200,5 +200,91 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
     public override string GetDescription()
     {
         return "This enemy will attempt to heal a specific location for " + healAmount;
+    }
+}
+
+public class DDEnemyAction_BuffDexterity : DDEnemyActionBase
+{
+    private int amount;
+
+    public DDEnemyAction_BuffDexterity(int amount)
+    {
+        this.amount = amount;
+    }
+
+    public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
+    {
+        text.text = amount.ToString();
+        text.enabled = true;
+
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        // TODO
+        // Something with particle effects to show some feedback
+        enemy.GainDexterity(amount);
+        
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    public override Texture GetIcon()
+    {
+        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
+    }
+
+    public override string GetDescription()
+    {
+        return "This enemy will gain " + amount + " of dexterity (attacks increased by total dexterity)";
+    }
+}
+
+public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
+{
+    private int buffAmount;
+    private Vector2 targetLocation;
+
+    public DDEnemyAction_BuffDexterityAlly(int buffAmount, Vector2 targetLocation)
+    {
+        this.buffAmount = buffAmount;
+        this.targetLocation = targetLocation;
+    }
+
+    public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
+    {
+        text.text = buffAmount.ToString();
+        text.enabled = true;
+
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        DDEnemyOnBoard target = SingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
+        if (target != null)
+        {
+            target.GainDexterity(buffAmount);
+        }
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public override Texture GetIcon()
+    {
+        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
+    }
+
+    public override bool HasLocationBasedEffects(ref Vector2 target)
+    {
+        target = targetLocation;
+        return true;
+    }
+
+    public override string GetDescription()
+    {
+        return "This enemy will attempt to buff dexterity a specific location for " + buffAmount;
     }
 }

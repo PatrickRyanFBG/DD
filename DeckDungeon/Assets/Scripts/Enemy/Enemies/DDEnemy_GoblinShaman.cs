@@ -16,6 +16,7 @@ public class DDEnemy_GoblinShaman : DDEnemyBase
 
         List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
         SingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        allEnemies.Shuffle();
 
         DDEnemyActionBase healAction = null;
 

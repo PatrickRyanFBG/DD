@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e5a45ce53db24c49a403a783ea35dfc, type: 3}
-  m_Name: DDEnemy_MeleeGoblin
+  m_Script: {fileID: 11500000, guid: da9e80e4cd46fed4da71c3d7ebbf8f81, type: 3}
+  m_Name: DDEnemy_GoblinTinkerer
   m_EditorClassIdentifier: 
-  image: {fileID: 2800000, guid: 7f87244ee549c5a4486524f8e68c4498, type: 3}
-  StartingHealth: 10
+  image: {fileID: 2800000, guid: 255e7e1363095714f848b129be066cb3, type: 3}
+  StartingHealth: 15
+  enemyName: 
   damage: 5
   bombEnemy: {fileID: 11400000, guid: 302ee3e7f13ca0243816eff9f21964ba, type: 2}
   bombIcon: {fileID: 2800000, guid: fb8bde40d3b645248b5d10f702c2ae14, type: 3}

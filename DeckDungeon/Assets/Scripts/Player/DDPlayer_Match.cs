@@ -33,6 +33,8 @@ public class DDPlayer_Match : MonoBehaviour
     private int momentumCounter;
     public int MomentumCounter { get { return momentumCounter; } }
 
+    public UnityEngine.Events.UnityEvent GainedMomentum;
+
     [Header("Testing")]
     [SerializeField]
     private TMPro.TextMeshProUGUI momentum;
@@ -60,16 +62,21 @@ public class DDPlayer_Match : MonoBehaviour
         deck.ShuffleInCards(SingletonHolder.Instance.Dungeon.PlayerDeck);
     }
 
-    private void Awake()
+    public void SetHandSizeToDefault()
     {
         currentHandSize = defaultHandSize;
+    }
+
+    public void AdjustHandSize(int amount)
+    {
+        currentHandSize += amount;
     }
 
     private void Update()
     {
         if (selectedCard)
         {
-            if(!arrow.gameObject.activeInHierarchy)
+            if (!arrow.gameObject.activeInHierarchy)
             {
                 arrow.gameObject.SetActive(true);
             }
@@ -151,18 +158,21 @@ public class DDPlayer_Match : MonoBehaviour
         }
         else if (selectedCard != null)
         {
-            cardSelections.Add(selection);
-            if (++currentTargetIndex >= cardTargets.Count)
+            if (selectedCard.IsSelectionValid(selection, currentTargetIndex))
             {
-                cardResolving = StartCoroutine(WaitingForCard());
-                hand.CardRemoved(selectedCard);
-                discard.CardDiscarded(selectedCard);
-                SingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
-                selectedCard = null;
-            }
-            else
-            {
-                SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                cardSelections.Add(selection);
+                if (++currentTargetIndex >= cardTargets.Count)
+                {
+                    cardResolving = StartCoroutine(WaitingForCard());
+                    hand.CardRemoved(selectedCard);
+                    discard.CardDiscarded(selectedCard);
+                    SingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
+                    selectedCard = null;
+                }
+                else
+                {
+                    SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                }
             }
         }
         else
@@ -180,6 +190,12 @@ public class DDPlayer_Match : MonoBehaviour
     public void AddToMomentum(int value)
     {
         momentumCounter += value;
+
+        for (int i = 0; i < value; i++)
+        {
+            GainedMomentum?.Invoke();
+        }
+
         momentum.text = momentumCounter.ToString();
     }
 

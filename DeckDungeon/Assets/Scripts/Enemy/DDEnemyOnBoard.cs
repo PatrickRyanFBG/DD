@@ -9,6 +9,7 @@ public class DDEnemyOnBoard : DDSelection
     private int currentHealth;
 
     private DDEnemyBase currentEnemy;
+    public DDEnemyBase CurrentEnemy { get { return currentEnemy; } }
 
     [Header("Testing")]
     [SerializeField]
@@ -41,6 +42,14 @@ public class DDEnemyOnBoard : DDSelection
     [SerializeField]
     private GameObject attackPrefab;
     public GameObject AttackPrefab { get { return attackPrefab; } }
+
+    private int dexterity = 0;
+    public int Dexterity { get { return dexterity; } }
+
+    [SerializeField]
+    private RawImage dexIcon;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI dexText;
 
     public void SetUpEnemy(DDEnemyBase enemyBase)
     {
@@ -106,6 +115,26 @@ public class DDEnemyOnBoard : DDSelection
             // Take Damage Feedback.
         }
         UpdateHealthUI();
+    }
+
+    public void GainDexterity(int amount)
+    {
+        dexterity += amount;
+        if(dexterity != 0)
+        {
+            if(!dexIcon.enabled)
+            {
+                dexIcon.enabled = true;
+                dexText.enabled = true;
+            }
+
+            dexText.text = dexterity.ToString();
+        }
+        else if(dexIcon.enabled)
+        {
+            dexIcon.enabled = false;
+            dexText.enabled = false;
+        }
     }
 
     public void DoHeal(int amount)

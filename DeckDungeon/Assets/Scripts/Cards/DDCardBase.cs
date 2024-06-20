@@ -18,7 +18,7 @@ public abstract class DDCardBase : DDScriptableObject
     private string description;
 
     [SerializeField]
-    private List<Target> targets;
+    protected List<Target> targets;
     public List<Target> Targets { get { return targets; } }
 
     public virtual bool SelectCard()
@@ -40,6 +40,11 @@ public abstract class DDCardBase : DDScriptableObject
         cardInHand.DescText.text = description;
     }
 
+    public virtual bool IsSelectionValid(DDSelection selection, int targetIndex)
+    {
+        return true;
+    }
+
     // Card Drawn
     // Card Discard
 }
@@ -50,7 +55,7 @@ public abstract class DDCardBase : DDScriptableObject
 [System.Serializable]
 public class Target
 {
-    public enum TargetType
+    public enum ETargetType
     {
         PlayerCard = 6,
         Location = 7,
@@ -61,7 +66,8 @@ public class Target
     }
 
     [SerializeField]
-    private TargetType targetType;
+    private ETargetType targetType;
+    public ETargetType TargetType { get { return targetType; } }
 
     public int GetTargetTypeLayer()
     {

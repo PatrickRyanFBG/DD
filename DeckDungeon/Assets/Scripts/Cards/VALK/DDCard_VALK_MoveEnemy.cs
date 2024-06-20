@@ -25,7 +25,7 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
         for (int i = 0; i < allEnemies.Count; i++)
         {
             DDEnemyOnBoard enemy = allEnemies[i];
-            if (enemy != null)
+            if (enemy != null && !enemy.CurrentEnemy.Immovable)
             {
                 SingletonHolder.Instance.Board.MoveEnemy(enemy, direction, amount, true);
             }
@@ -36,5 +36,18 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
         SingletonHolder.Instance.Player.AddToMomentum(momentumGain);
 
         yield return null;
+    }
+
+    public override bool IsSelectionValid(DDSelection selection, int targetIndex)
+    {
+        if(targets[targetIndex].TargetType == Target.ETargetType.Enemy)
+        {
+            DDEnemyOnBoard eob = selection as DDEnemyOnBoard;
+            if (eob)
+            {
+                return !eob.CurrentEnemy.Immovable;   
+            }
+        }
+        return true;
     }
 }

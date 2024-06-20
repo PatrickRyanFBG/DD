@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class DDDungeon : MonoBehaviour
 {
@@ -55,6 +56,15 @@ public class DDDungeon : MonoBehaviour
     private List<DDDungeonCardBase> startingDungeonDeck;
     [SerializeField]
     private List<DDCardBase> startingPlayerDeck;
+    [SerializeField]
+    private List<DDArtifactBase> startingArtifacts;
+
+    [SerializeField]
+    private DDDungeonCardShown cardPrefabForAdded;
+    [SerializeField]
+    private Transform dungeonCardAddedStart;
+    [SerializeField]
+    private Transform dungeonCardAddedEnd;
 
     [SerializeField]
     private GameObject keyImage;
@@ -91,7 +101,7 @@ public class DDDungeon : MonoBehaviour
             leisureArea.gameObject.SetActive(false);
         }
 
-        if(playerCardSelection.gameObject.activeInHierarchy)
+        if (playerCardSelection.gameObject.activeInHierarchy)
         {
             playerCardSelection.gameObject.SetActive(false);
         }
@@ -106,7 +116,35 @@ public class DDDungeon : MonoBehaviour
     public void AddCardToDungeonDeck(DDDungeonCardBase card)
     {
         dungeonDeck.Add(card);
+
+        DDDungeonCardShown shown = GameObject.Instantiate(cardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
+        shown.SetUpDungeonCard(card, 0, false);
+        shown.transform.DOMove(dungeonCardAddedEnd.position, .6f, false);
+        Destroy(shown.gameObject, .61f);
+
         dungeonDeckCount.text = dungeonDeck.Count.ToString();
+    }
+
+    public void AddCardToDungeonDeck(List<DDDungeonCardBase> cards)
+    {
+        StartCoroutine(AddCardToDungeonDeckOvertime(cards));
+    }
+
+    public IEnumerator AddCardToDungeonDeckOvertime(List<DDDungeonCardBase> cards)
+    {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            DDDungeonCardBase card = cards[i];
+
+            DDDungeonCardShown shown = GameObject.Instantiate(cardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
+            shown.SetUpDungeonCard(card, 0, false);
+            shown.transform.DOMove(dungeonCardAddedEnd.position, .3f, false);
+            Destroy(shown.gameObject, .35f);
+            dungeonDeck.Add(card);
+            dungeonDeckCount.text = dungeonDeck.Count.ToString();
+
+            yield return new WaitForSeconds(.25f);
+        }
     }
 
     public void PromptDungeonCard()
@@ -137,7 +175,7 @@ public class DDDungeon : MonoBehaviour
                 break;
             case EDungeonCardType.Event:
                 DDDungeonCardEvent eventCard = card as DDDungeonCardEvent;
-                if(eventCard != null)
+                if (eventCard != null)
                 {
                     StartEvent(eventCard);
                 }
@@ -154,10 +192,28 @@ public class DDDungeon : MonoBehaviour
     #endregion
 
     #region Player Card Related
-    public void PromptPlayerCard(DDDungeonCardEncounter encounterCard)
+    public void EncounterCompleted(DDDungeonCardEncounter encounterCard)
     {
         TurnOffAreas();
+        StartCoroutine(EncounterCompletedOvertime(encounterCard));
+    }
+
+    public IEnumerator EncounterCompletedOvertime(DDDungeonCardEncounter encounterCard)
+    {
+        yield return StartCoroutine(encounterCard.EncounterCompleted());
+        PromptPlayerCard(encounterCard);
+    }
+
+    public void PromptPlayerCard(DDDungeonCardEncounter encounterCard)
+    {
         playerCardSelection.DisplayPlayerCards(encounterCard);
+        ChangeDungeonPhase(EDungeonPhase.PlayerCardSelection);
+    }
+
+    public void PromptPlayerCard(List<DDCardBase> specificCards)
+    {
+        TurnOffAreas();
+        playerCardSelection.DisplayPlayerCards(specificCards);
         ChangeDungeonPhase(EDungeonPhase.PlayerCardSelection);
     }
 
@@ -226,5 +282,22 @@ public class DDDungeon : MonoBehaviour
     {
         currentHealth += value;
         UpdateHealthText();
+    }
+
+    public DDArtifactBase GrabArtifact()
+    {
+        if(startingArtifacts.Count == 0)
+        {
+            return null;
+        }
+        int index = Random.Range(0, startingArtifacts.Count);
+        DDArtifactBase artifact = startingArtifacts[index];
+        startingArtifacts.RemoveAt(index);
+        return artifact;
+    }
+
+    public void ReturnArtifact(DDArtifactBase artifact)
+    {
+        startingArtifacts.Add(artifact);
     }
 }

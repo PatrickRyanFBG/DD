@@ -59,6 +59,10 @@ public class DDCardSelection : MonoBehaviour
                     SingletonHolder.Instance.Dungeon.PromptDungeonCard();
                 }
             }
+            else
+            {
+                SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+            }
         }
     }
 
@@ -90,6 +94,21 @@ public class DDCardSelection : MonoBehaviour
         {
             extraImage.gameObject.SetActive(false);
         }
+
+        gameObject.SetActive(true);
+    }
+
+    public void DisplayPlayerCards(List<DDCardBase> specificCards)
+    {
+        // Generate Three Random Cards
+        int amount = 3;
+        for (int i = 0; i < amount; i++)
+        {
+            playerCards[i].SetUpCard(specificCards[i]);
+        }
+
+        SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(playerCardLayer);
+        extraImage.gameObject.SetActive(false);
 
         gameObject.SetActive(true);
     }

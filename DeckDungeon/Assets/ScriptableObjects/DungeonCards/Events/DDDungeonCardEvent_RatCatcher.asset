@@ -20,7 +20,7 @@ MonoBehaviour:
   eventDescription: I've caught all the rats in the dungeon. Give me some gold or
     I am going to release them back!
   eventImage: {fileID: 2800000, guid: 343d78553e3a7854d9c684067795dc6c, type: 3}
-  numberOfRatCards: 2
+  numberOfRatCards: 3
   ratCard: {fileID: 11400000, guid: 1814fa4a90d607d4581aefa8dd77988b, type: 2}
   releaseRatsText: No way Rat Catcher!
   secondOptionText: I was suppose to get Gold?

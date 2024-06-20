@@ -22,7 +22,6 @@ public class DDCardLibrary : MonoBehaviour
             }
 
             cards.Add(valkyrieCards[randNum]);
-
         }
 
         return cards;

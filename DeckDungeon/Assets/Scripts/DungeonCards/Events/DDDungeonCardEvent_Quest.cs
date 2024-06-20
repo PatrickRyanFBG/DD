@@ -13,31 +13,31 @@ public class DDDungeonCardEvent_Quest : DDDungeonCardEvent
     {
         base.DisplayEvent(area);
 
-        Button buttonOne = area.GenerateButton();
+        DDButton buttonOne = area.GenerateButton();
         buttonOne.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Follow the mysterious figure.";
-        buttonOne.onClick.AddListener(() =>
+        buttonOne.Button.onClick.AddListener(() =>
         {
             area.Description.text = secondDescription;
             area.CleanUpButtons();
 
-            Button okayButton = area.GenerateButton();
+            DDButton okayButton = area.GenerateButton();
             okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Wow that is cool!";
-            okayButton.onClick.AddListener(() =>
+            okayButton.Button.onClick.AddListener(() =>
             {
                 SingletonHolder.Instance.Dungeon.PromptDungeonCard();
             });
         });
 
-        Button buttonTwo = area.GenerateButton();
+        DDButton buttonTwo = area.GenerateButton();
         buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Loot their camp. (100 gold)";
-        buttonTwo.onClick.AddListener(() =>
+        buttonTwo.Button.onClick.AddListener(() =>
         {
             area.Description.text = secondDescription;//"Well gold isn't added into this demo, so that stinks, but secret is the other button didn't do anything either";
             area.CleanUpButtons();
 
-            Button okayButton = area.GenerateButton();
+            DDButton okayButton = area.GenerateButton();
             okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Wow that is cool!";
-            okayButton.onClick.AddListener(() =>
+            okayButton.Button.onClick.AddListener(() =>
             {
                 SingletonHolder.Instance.Dungeon.PromptDungeonCard();
             });

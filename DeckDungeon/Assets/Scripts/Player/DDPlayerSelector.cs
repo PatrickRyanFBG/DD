@@ -82,6 +82,6 @@ public class DDPlayerSelector : MonoBehaviour
 
     public void SetToPlayerCard()
     {
-        SetSelectionLayer(1 << (int)Target.TargetType.PlayerCard);
+        SetSelectionLayer(1 << (int)Target.ETargetType.PlayerCard);
     }
 }

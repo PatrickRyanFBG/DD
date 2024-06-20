@@ -26,29 +26,31 @@ public class DDDungeonCardEvent_RatCatcher : DDDungeonCardEvent
     {
         base.DisplayEvent(area);
 
-        Button buttonOne = area.GenerateButton();
+        DDButton buttonOne = area.GenerateButton();
         buttonOne.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = releaseRatsText;
-        buttonOne.onClick.AddListener(() =>
+        buttonOne.Button.onClick.AddListener(() =>
         {
+            List<DDDungeonCardBase> cards = new List<DDDungeonCardBase>();
             for (int i = 0; i < numberOfRatCards; i++)
             {
-                SingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(ratCard);
+                cards.Add(ratCard);
             }
+            SingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(cards);
 
             area.Description.text = afterReleaseDescription;
             area.CleanUpButtons();
 
-            Button okayButton = area.GenerateButton();
+            DDButton okayButton = area.GenerateButton();
             okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Oh no!";
-            okayButton.onClick.AddListener(() =>
+            okayButton.Button.onClick.AddListener(() =>
             {
                 SingletonHolder.Instance.Dungeon.PromptDungeonCard();
             });
         });
 
-        Button buttonTwo = area.GenerateButton();
+        DDButton buttonTwo = area.GenerateButton();
         buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = secondOptionText;
-        buttonTwo.onClick.AddListener(() =>
+        buttonTwo.Button.onClick.AddListener(() =>
         {
             for (int i = 0; i < numberOfRatCards; i++)
             {
@@ -58,9 +60,9 @@ public class DDDungeonCardEvent_RatCatcher : DDDungeonCardEvent
             area.Description.text = afterReleaseDescription;
             area.CleanUpButtons();
 
-            Button okayButton = area.GenerateButton();
+            DDButton okayButton = area.GenerateButton();
             okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Oh no!";
-            okayButton.onClick.AddListener(() =>
+            okayButton.Button.onClick.AddListener(() =>
             {
                 SingletonHolder.Instance.Dungeon.PromptDungeonCard();
             });

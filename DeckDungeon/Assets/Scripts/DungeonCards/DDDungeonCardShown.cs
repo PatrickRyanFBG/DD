@@ -26,7 +26,10 @@ public class DDDungeonCardShown : DDSelection
     private int index;
     public int Index { get { return index; } }
 
-    public void SetUpDungeonCard(DDDungeonCardBase dungeonCard, int cardIndex)
+    [SerializeField]
+    private Collider col;
+
+    public void SetUpDungeonCard(DDDungeonCardBase dungeonCard, int cardIndex, bool interactable = true)
     {
         currentDungeonCard = dungeonCard;
         currentDungeonCard.DisplayInformation(this);
@@ -38,6 +41,8 @@ public class DDDungeonCardShown : DDSelection
         descText.enabled = false;
 
         gameObject.SetActive(true);
+
+        col.enabled = interactable;
     }
 
     public bool CardSelected()

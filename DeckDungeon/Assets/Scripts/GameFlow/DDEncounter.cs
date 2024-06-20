@@ -49,7 +49,7 @@ public class DDEncounter : MonoBehaviour
 
     public void EnemyDefeated(DDEnemyOnBoard enemy)
     {
-        if(enemies.Remove(enemy))
+        if (enemies.Remove(enemy))
         {
             if (enemies.Count == 0)
             {
@@ -139,7 +139,15 @@ public class DDEncounter : MonoBehaviour
 
     private void DoPlayersTurn()
     {
-
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (enemies.Count > 0)
+            {
+                DDEnemyOnBoard enemy = enemies[0];
+                EnemyDefeated(enemy);
+                Destroy(enemy.gameObject);
+            }
+        }
     }
 
     private IEnumerator DoMonstersAct()
@@ -153,7 +161,7 @@ public class DDEncounter : MonoBehaviour
             yield return enemies[i].DoActions();
         }
 
-        if(currentEncounterPhase != EEncounterPhase.EncounterEnd)
+        if (currentEncounterPhase != EEncounterPhase.EncounterEnd)
         {
             ChangeCurrentPhase(EEncounterPhase.MonsterForecast);
         }
@@ -163,7 +171,7 @@ public class DDEncounter : MonoBehaviour
     {
         SingletonHolder.Instance.Board.ClearAllEffects();
         gameObject.SetActive(false);
-        SingletonHolder.Instance.Dungeon.PromptPlayerCard(currentEncounter);
+        SingletonHolder.Instance.Dungeon.EncounterCompleted(currentEncounter);
     }
 
     public void PlayerEndedTurn()
@@ -179,6 +187,7 @@ public class DDEncounter : MonoBehaviour
         switch (currentEncounterPhase)
         {
             case EEncounterPhase.EncounterStart:
+                player.SetHandSizeToDefault();
                 break;
             case EEncounterPhase.MonsterForecast:
                 break;

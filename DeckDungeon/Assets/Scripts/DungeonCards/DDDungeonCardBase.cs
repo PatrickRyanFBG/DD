@@ -59,7 +59,18 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
     protected bool testingHasChest;
     public bool TestingHasChest { get => testingHasChest; }
 
+    [SerializeField]
+    private List<DDDungeonCardBase> cardsToShuffleInAfter;
+
     public abstract void SpawnEnemies();
+
+    public virtual IEnumerator EncounterCompleted()
+    {
+        if(cardsToShuffleInAfter != null)
+        {
+            yield return SingletonHolder.Instance.Dungeon.AddCardToDungeonDeckOvertime(cardsToShuffleInAfter);
+        }
+    }
 }
 
 [System.Serializable]
