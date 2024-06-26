@@ -33,9 +33,7 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
             yield return null;
         }
 
-        SingletonHolder.Instance.Player.AddToMomentum(momentumGain);
-
-        yield return null;
+        yield return base.ExecuteCard(selections);
     }
 
     public override bool IsSelectionValid(DDSelection selection, int targetIndex)

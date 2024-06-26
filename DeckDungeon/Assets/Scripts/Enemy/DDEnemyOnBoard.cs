@@ -11,6 +11,9 @@ public class DDEnemyOnBoard : DDSelection
     private DDEnemyBase currentEnemy;
     public DDEnemyBase CurrentEnemy { get { return currentEnemy; } }
 
+    private int turnNumber;
+    public int TurnNumber { get { return turnNumber; } }
+
     [Header("Testing")]
     [SerializeField]
     private TMPro.TextMeshProUGUI healthUI;
@@ -232,5 +235,16 @@ public class DDEnemyOnBoard : DDSelection
         }
 
         SingletonHolder.Instance.Encounter.SetActionDescription("");
+    }
+
+    public bool IsPlanningToMove()
+    {
+        if(nextActions.Count > 0)
+        {
+            DDEnemyAction_Move move = nextActions[0] as DDEnemyAction_Move;
+            return move != null;
+        }
+
+        return false;
     }
 }

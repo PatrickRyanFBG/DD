@@ -105,7 +105,7 @@ public class DDPlayer_Match : MonoBehaviour
         }
     }
 
-    private void DrawACard()
+    public void DrawACard()
     {
         bool cardAvail = true;
         if (deck.GetNumberInDeck() == 0)
@@ -129,6 +129,11 @@ public class DDPlayer_Match : MonoBehaviour
     public void DiscardHand()
     {
         hand.DiscardHand(discard);
+    }
+
+    public void DiscardCard(DDCardInHand card)
+    {
+        hand.DiscardCard(card, discard);
     }
 
     public void SomethingSelected(DDSelection selection)

@@ -10,9 +10,7 @@ public class DDCard_VALK_DealDamage : DDCard_VALKBase
 
     public override IEnumerator ExecuteCard(List<DDSelection> selections)
     {
-        SingletonHolder.Instance.Player.RemoveFromMomentum(momentumCost);
-
-        yield return null;
+        yield return base.ExecuteCard(selections);
 
         List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
 

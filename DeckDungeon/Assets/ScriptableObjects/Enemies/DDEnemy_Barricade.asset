@@ -16,3 +16,4 @@ MonoBehaviour:
   StartingHealth: 1
   enemyName: 
   immovable: 1
+  friendly: 1

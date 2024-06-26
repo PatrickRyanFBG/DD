@@ -10,15 +10,17 @@
 -1 Bandage - Heal X Damage
 
 
-
-
-
-
-
-
-
-
+Barricade - Spawn Object with X Health
+Quick Thinkinng - Draw 2 Cards
 Discard a Card - Deal Damage
+
+
+
+
+
+
+
+
 Deal Damage Per Action Card This Encounter
 Dawn Armor
 Ricochet (deal damage to two targets)
@@ -40,7 +42,6 @@ Parry - When Attacked this Turn deal X Damage
 Apply X Bleed
 
 
-Barricade - Spawn Object with X Health
 Spring Trap - When an opponent moves into this deal damage 
 Push As Far Back
 Pull As Far Forward

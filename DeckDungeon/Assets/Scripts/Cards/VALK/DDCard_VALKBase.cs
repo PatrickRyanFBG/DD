@@ -23,4 +23,19 @@ public abstract class DDCard_VALKBase : DDCardBase
 
         cardInHand.MomentumNumber.text = momentumCost.ToString();
     }
+
+    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    {
+        if(momentumGain > 0)
+        {
+            SingletonHolder.Instance.Player.AddToMomentum(momentumGain);
+        }
+
+        if(momentumCost > 0)
+        {
+            SingletonHolder.Instance.Player.RemoveFromMomentum(momentumCost);
+        }
+
+        yield return null;
+    }
 }

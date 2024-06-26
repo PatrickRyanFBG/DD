@@ -32,6 +32,12 @@ public class DDPlayer_MatchHand : MonoBehaviour
         }
     }
 
+    public void DiscardCard(DDCardInHand card, DDPlayer_MatchDiscard discard)
+    {
+        discard.CardDiscarded(card);
+        cards.Remove(card);
+    }
+
     private void UpdateCardsPosition()
     {
         if(cards.Count == 1)

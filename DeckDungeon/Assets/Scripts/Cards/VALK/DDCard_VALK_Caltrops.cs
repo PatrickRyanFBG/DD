@@ -15,9 +15,7 @@ public class DDCard_VALK_Caltrops : DDCard_VALKBase
 
     public override IEnumerator ExecuteCard(List<DDSelection> selections)
     {
-        SingletonHolder.Instance.Player.RemoveFromMomentum(momentumCost);
-
-        yield return null;
+        yield return base.ExecuteCard(selections);
 
         DDLocation loc = selections[0] as DDLocation;
         if (loc != null)

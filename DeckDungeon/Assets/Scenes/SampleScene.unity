@@ -4510,7 +4510,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0869a61ab134c3b4685a158f2787c38e, type: 2}
   - {fileID: 11400000, guid: 30c44c7d4999b04498466a086f4e5114, type: 2}
   - {fileID: 11400000, guid: 651b58b21d4c6c043b9deaa4a4a5929a, type: 2}
-  - {fileID: 11400000, guid: 81108c96b5115d640bf7ff5ff06e9330, type: 2}
   - {fileID: 11400000, guid: 4b85b925759232549b1ab5c7a98a957a, type: 2}
   - {fileID: 11400000, guid: 297a179ec64e14f40b4bbf143517215a, type: 2}
   - {fileID: 11400000, guid: 802252ae6c63c714980176153b736d6e, type: 2}
@@ -10467,12 +10466,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valkyrieCards:
   - {fileID: 11400000, guid: 0869a61ab134c3b4685a158f2787c38e, type: 2}
+  - {fileID: 11400000, guid: 81b88c85767ebcb4b9ab71a853ce6a82, type: 2}
   - {fileID: 11400000, guid: 30c44c7d4999b04498466a086f4e5114, type: 2}
   - {fileID: 11400000, guid: 651b58b21d4c6c043b9deaa4a4a5929a, type: 2}
   - {fileID: 11400000, guid: 81108c96b5115d640bf7ff5ff06e9330, type: 2}
   - {fileID: 11400000, guid: 4b85b925759232549b1ab5c7a98a957a, type: 2}
   - {fileID: 11400000, guid: 297a179ec64e14f40b4bbf143517215a, type: 2}
   - {fileID: 11400000, guid: 802252ae6c63c714980176153b736d6e, type: 2}
+  - {fileID: 11400000, guid: ebb513a08f8b73644b54c785b36158be, type: 2}
   - {fileID: 11400000, guid: 03f300cf3d3287346a9a96bbea2fc2ad, type: 2}
   - {fileID: 11400000, guid: 6b62d44ee443ed34fa4730767ba9c3bd, type: 2}
   - {fileID: 11400000, guid: 0f3284d9466e826498e5731798ca62a9, type: 2}
@@ -15968,7 +15969,7 @@ MonoBehaviour:
     Attack_Melee: {fileID: 2800000, guid: baf1af08c192c1b4cac220b574ff7616, type: 3}
     Attack_Explode: {fileID: 2800000, guid: 38c0d0b63e6c6234eb9e5cbf6ed575cf, type: 3}
     Attack_Heal: {fileID: 2800000, guid: a74bd99562f9aab4e906110616567f8d, type: 3}
-    Attack_GainDexterity: {fileID: 2800000, guid: 2718ad04683c39040a5b6922c7cc8c6e, type: 3}
+    Attack_GainDexterity: {fileID: 2800000, guid: c324c92c2e5d798438fa02591ce910eb, type: 3}
 --- !u!4 &1739157147
 Transform:
   m_ObjectHideFlags: 0

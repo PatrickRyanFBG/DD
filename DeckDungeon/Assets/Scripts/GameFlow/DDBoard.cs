@@ -9,9 +9,11 @@ public class DDBoard : MonoBehaviour
 
     private int columnsCount;
     public int ColumnsCount { get { return columnsCount; } }
+    public int ColumnCountIndex { get { return columnsCount - 1; } }
 
     private int rowCount;
     public int RowCount { get { return rowCount; } }
+    public int RowCountIndex { get { return rowCount - 1; } }
 
     [Header("Testing")]
     [SerializeField]

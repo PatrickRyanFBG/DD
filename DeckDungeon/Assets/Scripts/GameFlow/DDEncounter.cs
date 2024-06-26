@@ -55,6 +55,28 @@ public class DDEncounter : MonoBehaviour
             {
                 ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
             }
+            else
+            {
+                bool allFriendly = true;
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    if(!enemies[i].CurrentEnemy.Friendly)
+                    {
+                        allFriendly = false;
+                        break;
+                    }
+                }
+
+                if(allFriendly)
+                {
+                    for (int i = enemies.Count - 1; i >= 0; i--)
+                    {
+                        Destroy(enemies[i].gameObject);
+                        enemies.RemoveAt(i);
+                    }
+                    ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
+                }
+            }
         }
     }
 
@@ -129,6 +151,7 @@ public class DDEncounter : MonoBehaviour
 
     private void DoMonsterForecast()
     {
+        // Monster Priority?
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].ForecastActions(enemies.Count - i);
@@ -176,8 +199,11 @@ public class DDEncounter : MonoBehaviour
 
     public void PlayerEndedTurn()
     {
-        player.DiscardHand();
-        ChangeCurrentPhase(EEncounterPhase.MonstersAct);
+        if(currentEncounterPhase == EEncounterPhase.PlayersTurn)
+        {
+            player.DiscardHand();
+            ChangeCurrentPhase(EEncounterPhase.MonstersAct);
+        }
     }
 
     private void ChangeCurrentPhase(EEncounterPhase toPhase)
