@@ -8,9 +8,11 @@ public class DDColumn : DDSelection
     private DDLocation[] locations;
     public DDLocation[] Locations { get { return locations; } }
     
-    /*
     [SerializeField]
     private DDRow[] rows;
+
+    private int index;
+    public int Index { get { return index; } }
 
 #if UNITY_EDITOR
     [ContextMenu("Fix Location")]
@@ -24,11 +26,24 @@ public class DDColumn : DDSelection
             for (int i = 0; i < rows.Length; i++)
             {
                 locations[i] = rows[i].Locations[val];
+
+                UnityEditor.SerializedObject serObj = new UnityEditor.SerializedObject(locations[i]);
+                UnityEditor.SerializedProperty serProp = serObj.FindProperty("coord");
+                Vector2 cur = serProp.vector2Value;
+                cur.x = val;
+                serProp.vector2Value = cur;
+                serObj.ApplyModifiedProperties();
+
+                //locations[i].FixCoordX(val);
             }
         }
     }
 #endif
-    */
+
+    public void SetIndex(int val)
+    {
+        index = val;
+    }
 
     public override void FillSelectionList(ref List<DDSelection> selections)
     {

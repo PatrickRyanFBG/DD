@@ -9,6 +9,7 @@ public class DDPlayer_MatchHand : MonoBehaviour
     public void AddCard(DDCardInHand card)
     {
         cards.Add(card);
+        card.UpdateDisplayInformation();
         card.gameObject.SetActive(true);
         card.transform.parent = transform;
 

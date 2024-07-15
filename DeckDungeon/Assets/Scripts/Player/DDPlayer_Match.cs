@@ -35,6 +35,10 @@ public class DDPlayer_Match : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent GainedMomentum;
 
+    private int[] laneArmors;
+    [SerializeField]
+    private DDPlayerLaneArmorUI[] laneArmorUI;
+
     [Header("Testing")]
     [SerializeField]
     private TMPro.TextMeshProUGUI momentum;
@@ -50,8 +54,15 @@ public class DDPlayer_Match : MonoBehaviour
         cardResolving = null;
     }
 
-    public void ClearCards()
+    public void EncounterStarted()
     {
+        laneArmors = new int[laneArmorUI.Length];
+
+        for (int i = 0; i < laneArmorUI.Length; i++)
+        {
+            laneArmorUI[i].SetAmount(0);
+        }
+
         deck.DestroyCards();
         hand.DestroyCards();
         discard.DestroyCards();
@@ -102,6 +113,34 @@ public class DDPlayer_Match : MonoBehaviour
         for (int i = 0; i < currentHandSize; i++)
         {
             DrawACard();
+        }
+    }
+
+    public bool IsLaneArmored(float lane)
+    {
+        return laneArmors[(int)lane] > 0;
+    }
+
+    public void AddArmorToLane(int amount, int lane)
+    {
+        laneArmors[lane] += amount;
+        laneArmorUI[lane].SetAmount(laneArmors[lane]);
+    }
+
+    public int DealDamageInLane(int damage, int lane)
+    {
+        int leftOverDamage = laneArmors[lane] - damage;
+        laneArmors[lane] = Mathf.Max(leftOverDamage, 0);
+
+        laneArmorUI[lane].SetAmount(laneArmors[lane]);
+
+        if(leftOverDamage >= 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return Mathf.Abs(leftOverDamage);
         }
     }
 
@@ -170,7 +209,15 @@ public class DDPlayer_Match : MonoBehaviour
                 {
                     cardResolving = StartCoroutine(WaitingForCard());
                     hand.CardRemoved(selectedCard);
-                    discard.CardDiscarded(selectedCard);
+                    if(selectedCard.AllUsed)
+                    {
+                        // Show some effect the card being used the final time.
+                        Destroy(selectedCard.gameObject);
+                    }
+                    else
+                    {
+                        discard.CardDiscarded(selectedCard);
+                    }
                     SingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                     selectedCard = null;
                 }

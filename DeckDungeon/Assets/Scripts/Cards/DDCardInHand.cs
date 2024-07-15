@@ -39,12 +39,22 @@ public class DDCardInHand : DDSelection
     private bool selected = false;
     private Vector3 prevLocation;
 
+    private int amountUsed = 0;
+    public int AmountUsed { get { return amountUsed; } }
+    // If the currentCard uses == 0, then it doesn't have use mechanic.
+    public bool AllUsed { get { return currentCard.Uses == 0 ? false : amountUsed >= currentCard.Uses; } }
+
     public virtual void SetUpCard(DDCardBase cardBase)
     {
         currentCard = cardBase;
-        cardBase.DisplayInformation(this);
+        UpdateDisplayInformation();
 
         gameObject.SetActive(true);
+    }
+
+    public void UpdateDisplayInformation()
+    {
+        currentCard.DisplayInformation(this);
     }
 
     public List<Target> GetCardTarget()
@@ -89,6 +99,7 @@ public class DDCardInHand : DDSelection
 
     public IEnumerator ExecuteCard(List<DDSelection> selections)
     {
+        ++amountUsed;
         selected = false;
         return currentCard.ExecuteCard(selections);
     }

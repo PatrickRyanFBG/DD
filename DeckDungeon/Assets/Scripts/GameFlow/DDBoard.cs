@@ -25,6 +25,11 @@ public class DDBoard : MonoBehaviour
 
     private void Awake()
     {
+        for (int i = 0; i < columns.Length; i++)
+        {
+            columns[i].SetIndex(i);
+        }
+
         columnsCount = columns.Length;
         rowCount = columns[0].Locations.Length;
     }
@@ -41,11 +46,11 @@ public class DDBoard : MonoBehaviour
             DDEnemyOnBoard currentEnemy = Instantiate(dummyPrefab, transform);
             SingletonHolder.Instance.Encounter.RegisterEnemy(currentEnemy);
             currentEnemy.SetUpEnemy(enemy);
-            columns[x].Locations[y].SetEnemy(currentEnemy, true);
+            columns[x].Locations[y].SnapEnemyToHere(currentEnemy);
         }
     }
 
-    public void MoveEnemy(DDEnemyOnBoard enemy, EMoveDirection direction, int amount, bool fromPlayer)
+    public IEnumerator MoveEnemy(DDEnemyOnBoard enemy, EMoveDirection direction, int amount, bool fromPlayer)
     {
         Vector2 currentCoord = enemy.CurrentLocaton.Coord;
         if(direction == EMoveDirection.Up || direction == EMoveDirection.Down)
@@ -62,6 +67,7 @@ public class DDBoard : MonoBehaviour
                     // We bonk though?!
                     if(fromPlayer)
                     {
+                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
                         enemy.DoDamage(bonkDamage);
                         occupiedEnemy.DoDamage(bonkDamage);
                     }
@@ -74,9 +80,8 @@ public class DDBoard : MonoBehaviour
             // We have moved any amount
             if(enemy.CurrentLocaton.Coord.y != currentCoord.y)
             {
-                enemy.CurrentLocaton.SetEnemy(null);
-
-                columns[(int)currentCoord.x].Locations[(int)currentCoord.y].SetEnemy(enemy);
+                yield return enemy.CurrentLocaton.SetEnemy(null);
+                yield return columns[(int)currentCoord.x].Locations[(int)currentCoord.y].SetEnemy(enemy);
             }
         }
         else if (direction == EMoveDirection.Left || direction == EMoveDirection.Right)
@@ -93,6 +98,7 @@ public class DDBoard : MonoBehaviour
                     // We bonk though?!
                     if (fromPlayer)
                     {
+                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
                         enemy.DoDamage(bonkDamage);
                         occupiedEnemy.DoDamage(bonkDamage);
                     }
@@ -105,9 +111,8 @@ public class DDBoard : MonoBehaviour
             // We have moved any amount
             if (enemy.CurrentLocaton.Coord.x != currentCoord.x)
             {
-                enemy.CurrentLocaton.SetEnemy(null);
-
-                columns[(int)currentCoord.x].Locations[(int)currentCoord.y].SetEnemy(enemy);
+                yield return enemy.CurrentLocaton.SetEnemy(null);
+                yield return columns[(int)currentCoord.x].Locations[(int)currentCoord.y].SetEnemy(enemy);
             }
         }
     }

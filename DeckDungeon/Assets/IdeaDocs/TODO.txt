@@ -1,5 +1,6 @@
-	NOTE FOR LATER:
-	Find away to select empty locations for barricade. Right now selections are DDSelections and have no idea what is in them. Maybe pass the selection back to card?
+NOTE FOR LATER:
+	- Armor per lane.
+	- 
 
 
 

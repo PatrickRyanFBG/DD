@@ -30,7 +30,7 @@ public class DDEncounter : MonoBehaviour
         currentEncounter = encounter;
         currentEncounter.SpawnEnemies();
 
-        player.ClearCards();
+        player.EncounterStarted();
         player.ShuffleInDeck();
         ChangeCurrentPhase(EEncounterPhase.EncounterStart);
 

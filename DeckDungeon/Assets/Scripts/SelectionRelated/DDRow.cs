@@ -12,13 +12,11 @@ public class DDRow : DDSelection
     [ContextMenu("Fix Coord")]
     private void FixCoord()
     {
-        /*
         locations = new DDLocation[transform.childCount];
         for (int i = 0; i < locations.Length; i++)
         {
             locations[i] = transform.GetChild(i).GetComponent<DDLocation>();
         }
-        */
 
         string s = gameObject.name.Substring(3);
         int val;
@@ -26,8 +24,16 @@ public class DDRow : DDSelection
         {
             for (int i = 0; i < locations.Length; i++)
             {
-                locations[i].FixCoord(val);
-                UnityEditor.EditorUtility.SetDirty(locations[i]);
+                UnityEditor.SerializedObject serObj = new UnityEditor.SerializedObject(locations[i]);
+                UnityEditor.SerializedProperty serProp = serObj.FindProperty("coord");
+                Vector2 cur = serProp.vector2Value;
+                cur.y = val;
+                serProp.vector2Value = cur;
+                serObj.ApplyModifiedProperties();
+
+                //locations[i].FixCoord(val);
+                //UnityEditor.EditorUtility.SetDirty(locations[i]);
+                //UnityEditor.EditorUtility.SetDirty(locations[i].gameObject);
             }
         }
     }

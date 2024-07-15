@@ -280,7 +280,7 @@ public class DDDungeon : MonoBehaviour
 
     public void HealDamage(int value)
     {
-        currentHealth += value;
+        currentHealth = Mathf.Min(currentHealth + value, maxHealth);
         UpdateHealthText();
     }
 

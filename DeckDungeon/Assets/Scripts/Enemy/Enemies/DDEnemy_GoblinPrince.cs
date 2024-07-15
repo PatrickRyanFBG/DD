@@ -81,8 +81,11 @@ public class DDEnemy_GoblinPrince : DDEnemyBase
         }
         else
         {
-            EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
-            actions.Add(new DDEnemyAction_Move(randomDirection));
+            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Up, false);
+            if (moveAction != null)
+            {
+                actions.Add(moveAction);
+            }
 
             allEnemies.Shuffle();
 

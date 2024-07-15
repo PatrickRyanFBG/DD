@@ -21,6 +21,10 @@ public abstract class DDCardBase : DDScriptableObject
     protected List<Target> targets;
     public List<Target> Targets { get { return targets; } }
 
+    [SerializeField]
+    private int uses = 0;
+    public int Uses { get { return uses; } }
+
     public virtual bool SelectCard()
     {
         return true;
@@ -38,6 +42,10 @@ public abstract class DDCardBase : DDScriptableObject
         cardInHand.Image.texture = image;
         cardInHand.NameText.text = name;
         cardInHand.DescText.text = description;
+        if(uses > 0)
+        {
+            cardInHand.DescText.text += "\r\nUses: " + (uses - cardInHand.AmountUsed).ToString();
+        }
     }
 
     public virtual bool IsSelectionValid(DDSelection selection, int targetIndex)

@@ -26,54 +26,41 @@ public class DDEnemy_GoblinMelee : DDEnemyBase
 
         if (buffAction != null)
         {
-            EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
-            actions.Add(new DDEnemyAction_Move(randomDirection));
+            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Down, false);
+            if (moveAction != null)
+            {
+                actions.Add(moveAction);
+            }
 
             actions.Add(buffAction);
         }
         else
         {
-            if (Random.Range(0, 4) <= 2)
+            bool shouldMove = false;
+
+            if (SingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
             {
-                // We want to move down
-                if (actingEnemy.CurrentLocaton.Coord.y > 0)
+                // If this lane is armored we have a 90% chance to move, but 10% chance to double attack
+                shouldMove = Random.Range(0, 10) < 9;
+            }
+            else if(actingEnemy.CurrentLocaton.Coord.y == 0)
+            {
+                // If the lane is not armored and we are at 0 we have a 40% chance of moving.
+                shouldMove = Random.Range(0, 10) < 4;
+            }
+            else
+            {
+                // If the lane is not armored, and we are not at goal we have a 70% chance to move.
+                shouldMove = Random.Range(0, 10) < 7;
+            }
+
+            if (shouldMove)
+            {
+                DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Down, true);
+                if (moveAction != null)
                 {
-                    // checking to see if there is an enemy in the space below
-                    Vector2 checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2.down;
-                    DDEnemyOnBoard eob = SingletonHolder.Instance.Board.GetEnemyAtLocation(checkLoc);
-
-                    bool canMove = false;
-
-                    if (eob != null)
-                    {
-                        // If we are after the one we are moving to
-                        if (actingEnemy.TurnNumber > eob.TurnNumber && eob.IsPlanningToMove())
-                        {
-                            canMove = true;
-                        }
-                        else
-                        {
-                            /*
-                            if (actingEnemy.CurrentLocaton.Coord.x > 0 && actingEnemy.CurrentLocaton.Coord.x < (SingletonHolder.Instance.Board.ColumnsCount - 1))
-                            {
-                            
-                            }
-                            */
-                            actions.Add(new DDEnemyAction_Move(Random.Range(0, 2) == 0 ? EMoveDirection.Left : EMoveDirection.Right));
-                        }
-                    }
-                    else
-                    {
-                        canMove = true;
-                    }
-
-                    if (canMove)
-                    {
-                        actions.Add(new DDEnemyAction_Move(EMoveDirection.Down));
-                    }
+                    actions.Add(moveAction);
                 }
-                //EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
-                //actions.Add(new DDEnemyAction_Move(randomDirection));
             }
             else
             {

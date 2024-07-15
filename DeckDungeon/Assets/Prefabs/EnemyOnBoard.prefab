@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 9191645978588933599}
   - component: {fileID: 4390007760225274251}
   - component: {fileID: 8119853473460651625}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Dexterity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.375, y: -1}
+  m_AnchoredPosition: {x: 0.375, y: -0.75}
   m_SizeDelta: {x: 0.25, y: 0.25}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4390007760225274251
@@ -176,14 +176,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192221559558566438}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1958448230566972578}
   m_Father: {fileID: 7241326860579468764}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!1 &1498491462923053908
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 5979259503933581462}
   - component: {fileID: 8311470980744195133}
   - component: {fileID: 1207073807661844453}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1.1, y: 0.1, z: 1.1}
+  m_LocalScale: {x: 1.4, y: 0.1, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6936293168571236576}
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 6277276296127093948}
   - component: {fileID: 3539769231488021454}
   - component: {fileID: 3494668987898766114}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ActionTwo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 8585763118210859148}
   - component: {fileID: 2397518668136708934}
   - component: {fileID: 7876956868080541711}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ActionOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 4209736108718570803}
   - component: {fileID: 7877553279953580740}
   - component: {fileID: 8301165679766910660}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TurnOrder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 3203228317006519814}
   - component: {fileID: 9127527405225999032}
   - component: {fileID: 3991165109183273473}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ActionOneText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 4897978454236704812}
   - component: {fileID: 3996872051140528478}
   - component: {fileID: 5724829436612685080}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DexterityText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 7244377856756838533}
   - component: {fileID: 4919280054279067541}
   - component: {fileID: 8415473877906269347}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ActionTwoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1121,7 +1121,7 @@ GameObject:
   - component: {fileID: 2647292299621651734}
   - component: {fileID: 8843263377000680473}
   - component: {fileID: 6718073094832240310}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 3422414591932233903}
   - component: {fileID: 3008181126429966063}
   - component: {fileID: 4439591388995641668}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1250,7 +1250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.6}
+  m_AnchoredPosition: {x: 0, y: -0.4}
   m_SizeDelta: {x: 0, y: -0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3008181126429966063

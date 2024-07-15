@@ -35,42 +35,10 @@ public class DDEnemy_GoblinShaman : DDEnemyBase
         }
         else
         {
-            // We want to move down
-            if (actingEnemy.CurrentLocaton.Coord.y < SingletonHolder.Instance.Board.RowCountIndex)
+            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Up, true);
+            if (moveAction != null)
             {
-                // checking to see if there is an enemy in the space below
-                Vector2 checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2.down;
-                DDEnemyOnBoard eob = SingletonHolder.Instance.Board.GetEnemyAtLocation(checkLoc);
-
-                bool canMove = false;
-
-                if (eob != null)
-                {
-                    // If we are after the one we are moving to
-                    if (actingEnemy.TurnNumber > eob.TurnNumber && eob.IsPlanningToMove())
-                    {
-                        canMove = true;
-                    }
-                    else
-                    {
-                        /*
-                        if (actingEnemy.CurrentLocaton.Coord.x > 0 && actingEnemy.CurrentLocaton.Coord.x < (SingletonHolder.Instance.Board.ColumnsCount - 1))
-                        {
-
-                        }
-                        */
-                        actions.Add(new DDEnemyAction_Move(Random.Range(0, 2) == 0 ? EMoveDirection.Left : EMoveDirection.Right));
-                    }
-                }
-                else
-                {
-                    canMove = true;
-                }
-
-                if (canMove)
-                {
-                    actions.Add(new DDEnemyAction_Move(EMoveDirection.Up));
-                }
+                actions.Add(moveAction);
             }
             actions.Add(new DDEnemyAction_Attack(damage));
         }

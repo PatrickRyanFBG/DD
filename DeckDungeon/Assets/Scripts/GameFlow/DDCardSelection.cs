@@ -35,34 +35,38 @@ public class DDCardSelection : MonoBehaviour
         SingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
     }
 
+    public void EndCardSelection()
+    {
+        if (fromEncounter != null)
+        {
+            if (fromEncounter.TestingHasChest)
+            {
+                SingletonHolder.Instance.Dungeon.StartEvent(chestEvent);
+                SingletonHolder.Instance.Dungeon.HasKey = false;
+            }
+            else
+            {
+                if (fromEncounter.TestingHasKey)
+                {
+                    SingletonHolder.Instance.Dungeon.HasKey = true;
+                }
+
+                SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+            }
+        }
+        else
+        {
+            SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+        }
+    }
+
     private void SomethingSelected(DDSelection selection)
     {
         DDCardShown playerCard = selection as DDCardShown;
         if (playerCard != null)
         {
             playerCard.CardSelected();
-
-            if (fromEncounter != null)
-            {
-                if (fromEncounter.TestingHasChest)
-                {
-                    SingletonHolder.Instance.Dungeon.StartEvent(chestEvent);
-                    SingletonHolder.Instance.Dungeon.HasKey = false;
-                }
-                else
-                {
-                    if (fromEncounter.TestingHasKey)
-                    {
-                        SingletonHolder.Instance.Dungeon.HasKey = true;
-                    }
-
-                    SingletonHolder.Instance.Dungeon.PromptDungeonCard();
-                }
-            }
-            else
-            {
-                SingletonHolder.Instance.Dungeon.PromptDungeonCard();
-            }
+            EndCardSelection();
         }
     }
 

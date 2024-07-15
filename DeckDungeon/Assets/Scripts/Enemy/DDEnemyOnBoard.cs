@@ -69,29 +69,32 @@ public class DDEnemyOnBoard : DDSelection
         NonActionableUnhover();
     }
 
-    public void SetLocation(DDLocation location, bool snapLocation)
+    public void SnapLocation(DDLocation location)
     {
         currentLocation = location;
         if (currentLocation != null)
         {
-            transform.parent = location.transform;
-            if (snapLocation)
-            {
-                transform.localPosition = Vector3.zero;
-            }
-            else
-            {
-                StartCoroutine(MoveToLocation());
-            }
+            transform.parent = currentLocation.transform;
+            transform.localPosition = Vector3.zero;
         }
     }
 
-    private IEnumerator MoveToLocation()
+    public IEnumerator SetLocation(DDLocation location)
+    {
+        currentLocation = location;
+        if (currentLocation != null)
+        {
+            transform.parent = currentLocation.transform;
+            yield return StartCoroutine(MoveToLocation());
+        }
+    }
+
+    public IEnumerator MoveToLocation()
     {
         Vector3 startPos = transform.position;
         Vector3 targetPos = CurrentLocaton.transform.position;
 
-        targetPos.y = startPos.y;
+        //targetPos.y = startPos.y;
 
         float time = 0;
 
@@ -99,6 +102,28 @@ public class DDEnemyOnBoard : DDSelection
         {
             time += Time.deltaTime;
             transform.position = Vector3.Lerp(startPos, targetPos, time);
+            yield return null;
+        }
+    }
+
+    public IEnumerator MoveToLocationAndBack(Vector3 pos)
+    {
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = Vector3.Lerp(startPos, pos, .75f);
+
+        float time = 0;
+        while (time < .5f)
+        {
+            time += Time.deltaTime;
+            transform.position = Vector3.Lerp(startPos, targetPos, time / .5f);
+            yield return null;
+        }
+
+        time = 0;
+        while (time < .5f)
+        {
+            time += Time.deltaTime;
+            transform.position = Vector3.Lerp(targetPos, startPos, time / .5f);
             yield return null;
         }
     }
@@ -123,9 +148,9 @@ public class DDEnemyOnBoard : DDSelection
     public void GainDexterity(int amount)
     {
         dexterity += amount;
-        if(dexterity != 0)
+        if (dexterity != 0)
         {
-            if(!dexIcon.enabled)
+            if (!dexIcon.enabled)
             {
                 dexIcon.enabled = true;
                 dexText.enabled = true;
@@ -133,7 +158,7 @@ public class DDEnemyOnBoard : DDSelection
 
             dexText.text = dexterity.ToString();
         }
-        else if(dexIcon.enabled)
+        else if (dexIcon.enabled)
         {
             dexIcon.enabled = false;
             dexText.enabled = false;
@@ -183,6 +208,11 @@ public class DDEnemyOnBoard : DDSelection
     {
         for (int i = 0; i < nextActions.Count; i++)
         {
+            Vector2 loc = Vector2.zero;
+            if (nextActions[i].HasLocationBasedEffects(ref loc))
+            {
+                SingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
+            }
             yield return nextActions[i].ExecuteAction(this);
         }
     }
@@ -214,7 +244,7 @@ public class DDEnemyOnBoard : DDSelection
             }
             actionDesc += nextActions[i].GetDescription();
 
-            if(i != nextActions.Count - 1)
+            if (i != nextActions.Count - 1)
             {
                 actionDesc += "\r\n";
             }
@@ -239,7 +269,7 @@ public class DDEnemyOnBoard : DDSelection
 
     public bool IsPlanningToMove()
     {
-        if(nextActions.Count > 0)
+        if (nextActions.Count > 0)
         {
             DDEnemyAction_Move move = nextActions[0] as DDEnemyAction_Move;
             return move != null;

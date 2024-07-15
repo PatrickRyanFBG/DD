@@ -49,9 +49,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        SingletonHolder.Instance.Board.MoveEnemy(enemy, moveDirection, 1, false);
-
-        yield return new WaitForSeconds(1f);
+        yield return SingletonHolder.Instance.Board.MoveEnemy(enemy, moveDirection, 1, false);
     }
 
     public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
@@ -64,6 +62,119 @@ public class DDEnemyAction_Move : DDEnemyActionBase
     public override string GetDescription()
     {
         return "This enemy will attempt to move " + moveDirection.ToString();
+    }
+
+    private static bool CanMoveToSpot(int turnNumber, Vector2 checkLoc)
+    {
+        if(checkLoc.x < 0 || checkLoc.x > SingletonHolder.Instance.Board.ColumnCountIndex ||
+            checkLoc.y < 0 || checkLoc.y > SingletonHolder.Instance.Board.RowCountIndex)
+        {
+            return false;
+        }
+
+        DDEnemyOnBoard eob = SingletonHolder.Instance.Board.GetEnemyAtLocation(checkLoc);
+
+        bool canMove = false;
+
+        if (eob != null)
+        {
+            // If we are after the one we are moving to
+            if (turnNumber > eob.TurnNumber && eob.IsPlanningToMove())
+            {
+                canMove = true;
+            }
+        }
+        else
+        {
+            // The spot is empty
+
+            // TODO :: We need to check if two enemies are going to move into the same spot?
+            // Maybe we put a flag into the location
+            canMove = true;
+        }
+
+        return canMove;
+    }
+
+    private static bool MoveRandomlyLeftOrRight(DDEnemyOnBoard actingEnemy, ref EMoveDirection dir)
+    {
+        bool canMoveToGoal = false;
+
+        EMoveDirection rand = Random.Range(0, 2) == 0 ? EMoveDirection.Right : EMoveDirection.Left;
+        Vector2 checkLoc = actingEnemy.CurrentLocaton.Coord + (rand == EMoveDirection.Right ? Vector2.right : Vector2.left);
+
+        if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
+        {
+            canMoveToGoal = true;
+            dir = rand;
+        }
+        else
+        {
+            rand = (EMoveDirection)(((int)rand + 2) % 4);
+            checkLoc = actingEnemy.CurrentLocaton.Coord + (rand == EMoveDirection.Right ? Vector2.right : Vector2.left);
+
+            if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
+            {
+                canMoveToGoal = true;
+                dir = rand;
+            }
+        }
+
+        return canMoveToGoal;
+    }
+
+    public static DDEnemyAction_Move CalculateBestMove(DDEnemyOnBoard actingEnemy, EMoveDirection preference, bool attacking)
+    {
+        bool canMoveToGoal = false;
+        EMoveDirection goalDirection = EMoveDirection.Down;
+
+        if(attacking)
+        {
+            if(SingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
+            {
+                canMoveToGoal = MoveRandomlyLeftOrRight(actingEnemy, ref goalDirection);
+            }
+
+            if(canMoveToGoal)
+            {
+                return new DDEnemyAction_Move(goalDirection);
+            }
+        }
+
+        switch (preference)
+        {
+            case EMoveDirection.Up:
+                Vector2 checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2.up;
+                if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
+                {
+                    return new DDEnemyAction_Move(EMoveDirection.Up);
+                }
+                break;
+            case EMoveDirection.Right:
+                break;
+            case EMoveDirection.Down:
+                checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2.down;
+                if(CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
+                {
+                    return new DDEnemyAction_Move(EMoveDirection.Down);
+                }
+                break;
+            case EMoveDirection.Left:
+                break;
+            default:
+                break;
+        }
+
+        canMoveToGoal = MoveRandomlyLeftOrRight(actingEnemy, ref goalDirection);
+        if (canMoveToGoal)
+        {
+            return new DDEnemyAction_Move(goalDirection);
+        }
+        else
+        {
+            return null;
+        }
+
     }
 }
 
@@ -86,14 +197,18 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        GameObject attackPrefab = GameObject.Instantiate(enemy.AttackPrefab, enemy.transform.position, Quaternion.identity);
-        Vector3 goal = attackPrefab.transform.position;
-        goal.z = -4;
+        GameObject attackPrefab = GameObject.Instantiate(enemy.AttackPrefab, enemy.transform.position + enemy.CurrentLocaton.transform.up * .2f, Quaternion.identity);
+        Vector3 goal = attackPrefab.transform.position - (enemy.CurrentLocaton.transform.forward * (1.5f * (enemy.CurrentLocaton.Coord.y + 1)));
         attackPrefab.transform.DOMove(goal, 1);
 
         yield return new WaitForSeconds(1f);
 
-        SingletonHolder.Instance.Dungeon.DoDamage(damage + enemy.Dexterity);
+        int leftOverDamage = SingletonHolder.Instance.Player.DealDamageInLane(damage + enemy.Dexterity, (int)enemy.CurrentLocaton.Coord.x);
+
+        if(leftOverDamage > 0)
+        {
+            SingletonHolder.Instance.Dungeon.DoDamage(leftOverDamage);
+        }
 
         GameObject.Destroy(attackPrefab);
 

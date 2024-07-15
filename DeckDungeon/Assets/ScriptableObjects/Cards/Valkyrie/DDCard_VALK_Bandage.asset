@@ -17,6 +17,7 @@ MonoBehaviour:
   description: Heals 10
   targets:
   - targetType: 10
+  uses: 1
   momentumCost: 1
   momentumGain: 0
   healAmount: 10

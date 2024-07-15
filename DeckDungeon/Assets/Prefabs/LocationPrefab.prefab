@@ -75,6 +75,7 @@ MonoBehaviour:
   visualsPrefab: {fileID: 1845101686881326069, guid: 32dcbd1bf8376f246a3be27348ed261b, type: 3}
   hoveredRender: {fileID: 4459255617171361326}
   highlightRenderer: {fileID: 8174637420114850945}
+  minMaxX: {x: 0, y: 0}
 --- !u!1 &2589918851591727798
 GameObject:
   m_ObjectHideFlags: 0

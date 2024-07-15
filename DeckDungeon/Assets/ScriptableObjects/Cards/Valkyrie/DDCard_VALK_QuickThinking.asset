@@ -17,6 +17,7 @@ MonoBehaviour:
   description: Draw 2 cards.
   targets:
   - targetType: 10
+  uses: 2
   momentumCost: 0
   momentumGain: 0
   drawAmount: 2

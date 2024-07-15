@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +5,15 @@ using UnityEngine;
 public class DDPlayerSelector : MonoBehaviour
 {
     [SerializeField]
-    private Camera cam;
+    private Camera boardCam;
+    [SerializeField]
+    private Camera uiCam;
 
     [SerializeField]
     private LayerMask currentMask;
 
-    private Ray r;
+    private Ray boardRay;
+    private Ray uiRay;
     private RaycastHit hit;
 
     private DDSelection currentlyHovered;
@@ -35,11 +37,17 @@ public class DDPlayerSelector : MonoBehaviour
 
     private void Update()
     {
-        r = cam.ScreenPointToRay(Input.mousePosition);
+        bool camHitSomething = false;
 
-        if (Physics.Raycast(r, out hit, 1000, currentMask))
+        boardRay = boardCam.ScreenPointToRay(Input.mousePosition);
+        LayerMask currentAndCameraMask = currentMask & boardCam.cullingMask;
+        
+        Debug.DrawLine(boardRay.origin, boardRay.origin + boardRay.direction * 1000, Color.cyan);
+
+        if (Physics.Raycast(boardRay, out hit, 1000, currentAndCameraMask))
         {
             DDSelection mousedOver = hit.transform.GetComponent<DDSelection>();
+            camHitSomething = true;
 
             if (currentlyHovered != mousedOver)
             {
@@ -53,6 +61,31 @@ public class DDPlayerSelector : MonoBehaviour
             }
         }
         else
+        {
+            uiRay = uiCam.ScreenPointToRay(Input.mousePosition);
+            currentAndCameraMask = currentMask & uiCam.cullingMask;
+
+            Debug.DrawLine(uiRay.origin, uiRay.origin + uiRay.direction * 1000, Color.magenta);
+
+            if (Physics.Raycast(uiRay, out hit, 1000, currentAndCameraMask))
+            {
+                DDSelection mousedOver = hit.transform.GetComponent<DDSelection>();
+                camHitSomething = true;
+
+                if (currentlyHovered != mousedOver)
+                {
+                    if (currentlyHovered)
+                    {
+                        currentlyHovered.Unhovered();
+                    }
+
+                    currentlyHovered = mousedOver;
+                    currentlyHovered.Hovered();
+                }
+            }
+        }
+
+        if (!camHitSomething)
         {
             if (currentlyHovered)
             {
@@ -70,9 +103,20 @@ public class DDPlayerSelector : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        if(hit.collider != null)
+        {
+            GUI.Label(new Rect(Screen.width / 2 - 150, Screen.height - 50, 150, 50), hit.collider.gameObject.ToString());
+        }
+    }
+#endif
+
     public Vector3 GetMousePos()
     {
-        return r.origin + r.direction * (cam.transform.position.y - 1);
+        uiRay = uiCam.ScreenPointToRay(Input.mousePosition);
+        return uiRay.origin + uiRay.direction * (uiCam.transform.position.y - 1);
     }
 
     public void SetSelectionLayer(int layer)

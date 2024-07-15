@@ -82,6 +82,12 @@ public class DDLocation : DDSelection
         gameObject.name = "Location " + coord.x + " " + coord.y;
     }
 
+    public void FixCoordX(int x)
+    {
+        coord.x = x;
+        gameObject.name = "Location " + coord.x + " " + coord.y;
+    }
+
     public void FixCoord(int y)
     {
         coord.y = y;
@@ -113,12 +119,24 @@ public class DDLocation : DDSelection
         return currentEnemy;
     }
 
-    public void SetEnemy(DDEnemyOnBoard enemy, bool snapLocation = false)
+    public void SnapEnemyToHere(DDEnemyOnBoard enemy)
     {
         currentEnemy = enemy;
+        enemy.SnapLocation(this);
+    }
+
+    public IEnumerator SetEnemy(DDEnemyOnBoard enemy)
+    {
+        if(currentEnemy != null)
+        {
+            yield return currentEnemy.SetLocation(null);
+        }
+
+        currentEnemy = enemy;
+
         if (currentEnemy != null)
         {
-            currentEnemy.SetLocation(this, snapLocation);
+            yield return currentEnemy.SetLocation(this);
         }
     }
 

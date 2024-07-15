@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Segment
       objectReference: {fileID: 0}
+    - target: {fileID: 1648654368789128, guid: ab82086137c07244abcfb06ec0e02ce9, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4583819191039724, guid: ab82086137c07244abcfb06ec0e02ce9, type: 3}
       propertyPath: m_RootOrder
       value: 0

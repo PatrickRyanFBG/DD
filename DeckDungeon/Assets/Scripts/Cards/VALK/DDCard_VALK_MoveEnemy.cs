@@ -27,10 +27,8 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
             DDEnemyOnBoard enemy = allEnemies[i];
             if (enemy != null && !enemy.CurrentEnemy.Immovable)
             {
-                SingletonHolder.Instance.Board.MoveEnemy(enemy, direction, amount, true);
+               yield return SingletonHolder.Instance.Board.MoveEnemy(enemy, direction, amount, true);
             }
-
-            yield return null;
         }
 
         yield return base.ExecuteCard(selections);
