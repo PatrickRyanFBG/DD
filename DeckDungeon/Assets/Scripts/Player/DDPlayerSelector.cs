@@ -20,6 +20,22 @@ public class DDPlayerSelector : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent<DDSelection> SomethingSelected;
 
+    private bool blocked;
+
+    public void BlockClicks(bool shouldBlock)
+    {
+        blocked = shouldBlock;
+
+        if(blocked)
+        {
+            if (currentlyHovered)
+            {
+                currentlyHovered.Unhovered();
+                currentlyHovered = null;
+            }
+        }
+    }
+
     private void OnEnable()
     {
         SingletonHolder.Instance.Dungeon.PhaseChanged.AddListener(DungeonPhaseChanged);
@@ -37,6 +53,11 @@ public class DDPlayerSelector : MonoBehaviour
 
     private void Update()
     {
+        if(blocked)
+        {
+            return;
+        }
+
         bool camHitSomething = false;
 
         boardRay = boardCam.ScreenPointToRay(Input.mousePosition);
@@ -57,7 +78,11 @@ public class DDPlayerSelector : MonoBehaviour
                 }
 
                 currentlyHovered = mousedOver;
-                currentlyHovered.Hovered();
+
+                if(currentlyHovered)
+                {
+                    currentlyHovered.Hovered();
+                }
             }
         }
         else
@@ -80,7 +105,11 @@ public class DDPlayerSelector : MonoBehaviour
                     }
 
                     currentlyHovered = mousedOver;
-                    currentlyHovered.Hovered();
+                    
+                    if (currentlyHovered)
+                    {
+                        currentlyHovered.Hovered();
+                    }
                 }
             }
         }

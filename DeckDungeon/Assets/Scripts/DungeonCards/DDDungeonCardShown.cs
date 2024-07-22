@@ -22,12 +22,23 @@ public class DDDungeonCardShown : DDSelection
     private GameObject locked;
 
     private DDDungeonCardBase currentDungeonCard;
+    public DDDungeonCardBase CurrentDungeonCard { get { return currentDungeonCard; } }
 
     private int index;
     public int Index { get { return index; } }
 
     [SerializeField]
     private Collider col;
+
+    public UnityEngine.Events.UnityEvent<DDDungeonCardShown> OnCardSelected;
+
+    public void DungeonCardSelected()
+    {
+        if(currentDungeonCard.CanSelect())
+        {
+            OnCardSelected.Invoke(this);
+        }
+    }
 
     public void SetUpDungeonCard(DDDungeonCardBase dungeonCard, int cardIndex, bool interactable = true)
     {
@@ -43,11 +54,6 @@ public class DDDungeonCardShown : DDSelection
         gameObject.SetActive(true);
 
         col.enabled = interactable;
-    }
-
-    public bool CardSelected()
-    {
-        return currentDungeonCard.SelectCard();
     }
 
     public override void Hovered()

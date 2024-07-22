@@ -40,6 +40,8 @@ public class DDDungeon : MonoBehaviour
     private DDEventArea eventArea;
     [SerializeField]
     private DDLeisureArea leisureArea;
+    [SerializeField]
+    private DDShowDeckArea showDeckArea;
 
     public UnityEngine.Events.UnityEvent<EDungeonPhase> PhaseChanged;
 
@@ -51,6 +53,11 @@ public class DDDungeon : MonoBehaviour
     private TMPro.TextMeshProUGUI dungeonDeckCount;
     [SerializeField]
     private TMPro.TextMeshProUGUI dungeonDiscardCount;
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI playerDeckCount;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI playerDiscardCount;
 
     [SerializeField]
     private List<DDDungeonCardBase> startingDungeonDeck;
@@ -85,6 +92,10 @@ public class DDDungeon : MonoBehaviour
         dungeonDeck.AddRange(startingDungeonDeck);
         dungeonDeckCount.text = dungeonDeck.Count.ToString();
         playerDeck.AddRange(startingPlayerDeck);
+
+        playerDeckCount.text = playerDeck.Count.ToString();
+        // Should have a global player discard for cards that will start in an encounter in the discard pile
+        playerDiscardCount.text = "0";
 
         PromptDungeonCard();
     }
@@ -195,6 +206,11 @@ public class DDDungeon : MonoBehaviour
     public void EncounterCompleted(DDDungeonCardEncounter encounterCard)
     {
         TurnOffAreas();
+
+        playerDeckCount.text = playerDeck.Count.ToString();
+        // Should have a global player discard for cards that will start in an encounter in the discard pile
+        playerDiscardCount.text = "0";
+
         StartCoroutine(EncounterCompletedOvertime(encounterCard));
     }
 
@@ -299,5 +315,82 @@ public class DDDungeon : MonoBehaviour
     public void ReturnArtifact(DDArtifactBase artifact)
     {
         startingArtifacts.Add(artifact);
+    }
+
+    public void DisplayDungeonDeck()
+    {
+        TurnOffAreas();
+        showDeckArea.gameObject.SetActive(true);
+        showDeckArea.ShowDungeonDeck(dungeonDeck);
+    }
+
+    public void DisplayDungeonDiscard()
+    {
+        TurnOffAreas();
+        showDeckArea.gameObject.SetActive(true);
+        showDeckArea.ShowDungeonDeck(dungeonDiscard);
+    }
+
+    public void DisplayPlayerDeck()
+    {
+        TurnOffAreas();
+        showDeckArea.gameObject.SetActive(true);
+
+        if (currentDungeonPhase == EDungeonPhase.Encounter)
+        {
+            showDeckArea.ShowPlayerDeck(SingletonHolder.Instance.Player.CurrentDeck);
+        }
+        else
+        {
+            showDeckArea.ShowPlayerDeck(playerDeck);
+        }
+    }
+
+    public void DisplayPlayerDiscard()
+    {
+        TurnOffAreas();
+        showDeckArea.gameObject.SetActive(true);
+
+        if (currentDungeonPhase == EDungeonPhase.Encounter)
+        {
+            showDeckArea.ShowPlayerDeck(SingletonHolder.Instance.Player.CurrentDiscard);
+        }
+        else
+        {
+            // Show global discard?
+            //showDeckArea.ShowPlayerDeck(playerDeck);
+        }
+    }
+
+    public void DisplayDeckClosed()
+    {
+        showDeckArea.gameObject.SetActive(false);
+
+        switch (currentDungeonPhase)
+        {
+            case EDungeonPhase.DungeonStart:
+                break;
+            case EDungeonPhase.DungeonCardSelection:
+                dungeonCardSelection.gameObject.SetActive(true);
+                break;
+            case EDungeonPhase.Event:
+                eventArea.gameObject.SetActive(true);
+                break;
+            case EDungeonPhase.Leisure:
+                leisureArea.gameObject.SetActive(true);
+                break;
+            case EDungeonPhase.Encounter:
+                encounter.gameObject.SetActive(true);
+                break;
+            case EDungeonPhase.PlayerCardSelection:
+                playerCardSelection.gameObject.SetActive(true);
+                break;
+            case EDungeonPhase.DungeonLost:
+                break;
+            case EDungeonPhase.DungeonWon:
+                break;
+            default:
+                break;
+        }
     }
 }

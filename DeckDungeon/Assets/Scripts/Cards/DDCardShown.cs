@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class DDCardShown : DDCardInHand
 {
+    public UnityEngine.Events.UnityEvent<DDCardShown> OnCardSelected;
+
     public void CardSelected()
     {
-        SingletonHolder.Instance.Dungeon.PlayerCardSelect(currentCard);
+        OnCardSelected.Invoke(this);
     }
 
     public override void Hovered()

@@ -30,11 +30,13 @@ public class DDDungeonCardSelection : MonoBehaviour
         DDDungeonCardShown dungeonCard = selection as DDDungeonCardShown;
         if (dungeonCard != null)
         {
-            if(dungeonCard.CardSelected())
-            {
-                // Card selected succesfully
-            }
+            dungeonCard.DungeonCardSelected();
         }
+    }
+
+    public void DungeonCardSelected(DDDungeonCardShown cardShown)
+    {
+        SingletonHolder.Instance.Dungeon.DungeonCardSelected(cardShown.CurrentDungeonCard);
     }
 
     private void Update()

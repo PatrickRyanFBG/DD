@@ -116,4 +116,9 @@ public class DDCardSelection : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
+    public void CardSelected(DDCardShown cardShown)
+    {
+        SingletonHolder.Instance.Dungeon.PlayerCardSelect(cardShown.CurrentCard);
+    }
 }

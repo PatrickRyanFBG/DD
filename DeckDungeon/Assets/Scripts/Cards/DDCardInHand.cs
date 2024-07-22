@@ -29,6 +29,7 @@ public class DDCardInHand : DDSelection
     public TextMeshProUGUI MomentumNumber { get => momentumNumber; }
 
     protected DDCardBase currentCard;
+    public DDCardBase CurrentCard { get { return currentCard; } }
 
     private Coroutine moveUpCoroutine;
     private Coroutine moveDownCoroutine;

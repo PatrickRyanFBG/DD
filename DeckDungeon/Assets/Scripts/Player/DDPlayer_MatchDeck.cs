@@ -12,6 +12,7 @@ public class DDPlayer_MatchDeck : MonoBehaviour
     private TMPro.TextMeshProUGUI numberText;
 
     private List<DDCardInHand> cards = new List<DDCardInHand>();
+    public List<DDCardInHand> Cards { get { return cards; } }
 
     public void ShuffleInCard(DDCardInHand card, bool waitToShuffle = false)
     {

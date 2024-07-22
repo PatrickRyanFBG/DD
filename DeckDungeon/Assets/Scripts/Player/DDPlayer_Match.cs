@@ -11,10 +11,14 @@ public class DDPlayer_Match : MonoBehaviour
 
     [SerializeField]
     private DDPlayer_MatchDeck deck;
+    public List<DDCardInHand> CurrentDeck { get { return deck.Cards; } }
+
     [SerializeField]
     private DDPlayer_MatchHand hand;
     [SerializeField]
     private DDPlayer_MatchDiscard discard;
+    public List<DDCardInHand> CurrentDiscard { get { return discard.Cards; } }
+
 
     private DDCardInHand selectedCard;
     private List<Target> cardTargets;
