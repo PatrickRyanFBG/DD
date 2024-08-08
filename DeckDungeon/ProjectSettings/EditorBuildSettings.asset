@@ -8,8 +8,14 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Rotated.unity
     guid: 2c7ef82e8e1922742ae5729e908d6d7c
+  - enabled: 1
+    path: Assets/DaCardSharks/Loader.unity
+    guid: f607775297b92b34a8cec358af4f7e7b
+  - enabled: 1
+    path: Assets/DaCardSharks/DaCardSharks.unity
+    guid: d290fe76e35f082428655a6abe0f56a6
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

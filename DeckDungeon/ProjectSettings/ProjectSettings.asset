@@ -663,7 +663,7 @@ PlayerSettings:
     PS5: DOTWEEN
     QNX: DOTWEEN
     Standalone: DOTWEEN
-    WebGL: DOTWEEN
+    WebGL: DOTWEEN;FISHNET;FISHNET_V4
     Windows Store Apps: DOTWEEN
     XboxOne: DOTWEEN
     iPhone: DOTWEEN

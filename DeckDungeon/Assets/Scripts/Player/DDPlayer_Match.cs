@@ -19,7 +19,6 @@ public class DDPlayer_Match : MonoBehaviour
     private DDPlayer_MatchDiscard discard;
     public List<DDCardInHand> CurrentDiscard { get { return discard.Cards; } }
 
-
     private DDCardInHand selectedCard;
     private List<Target> cardTargets;
     private List<DDSelection> cardSelections;
@@ -70,6 +69,11 @@ public class DDPlayer_Match : MonoBehaviour
         deck.DestroyCards();
         hand.DestroyCards();
         discard.DestroyCards();
+    }
+
+    public void ShuffleInDeck(List<DDCardBase> cards)
+    {
+        deck.ShuffleInCards(cards);
     }
 
     public void ShuffleInDeck()
