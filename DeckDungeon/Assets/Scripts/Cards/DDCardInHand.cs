@@ -45,6 +45,9 @@ public class DDCardInHand : DDSelection
     // If the currentCard uses == 0, then it doesn't have use mechanic.
     public bool AllUsed { get { return currentCard.Uses == 0 ? false : amountUsed >= currentCard.Uses; } }
 
+    [SerializeField]
+    private bool canBeSelected = true;
+
     public virtual void SetUpCard(DDCardBase cardBase)
     {
         currentCard = cardBase;
@@ -70,7 +73,7 @@ public class DDCardInHand : DDSelection
 
     public override void Hovered()
     {
-        if (selected)
+        if (selected || !canBeSelected)
         {
             return;
         }
@@ -154,6 +157,11 @@ public class DDCardInHand : DDSelection
             return false;
         }
 
+        if(!canBeSelected)
+        {
+            return false;
+        }
+
         if (moveUpCoroutine != null)
         {
             StopCoroutine(moveUpCoroutine);
@@ -169,7 +177,7 @@ public class DDCardInHand : DDSelection
         prevLocation.z = 0;
 
         selected = true;
-        selectedCoroutine = StartCoroutine(CardSelectedOverTime(location));
+        //selectedCoroutine = StartCoroutine(CardSelectedOverTime(location));
 
         return true;
     }

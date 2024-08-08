@@ -15,6 +15,8 @@ public class DDPlayer_Match : MonoBehaviour
 
     [SerializeField]
     private DDPlayer_MatchHand hand;
+    public List<DDCardInHand> CurrentHand { get { return hand.Cards; } }
+
     [SerializeField]
     private DDPlayer_MatchDiscard discard;
     public List<DDCardInHand> CurrentDiscard { get { return discard.Cards; } }
@@ -93,6 +95,7 @@ public class DDPlayer_Match : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (selectedCard)
         {
             if (!arrow.gameObject.activeInHierarchy)
@@ -113,7 +116,7 @@ public class DDPlayer_Match : MonoBehaviour
         {
             arrow.gameObject.SetActive(false);
         }
-
+        */
     }
 
     public void DrawFullHand()
@@ -183,6 +186,21 @@ public class DDPlayer_Match : MonoBehaviour
         hand.DiscardCard(card, discard);
     }
 
+    public void DiscardSelectedCard()
+    {
+        if(selectedCard != null)
+        {
+            discard.CardDiscarded(selectedCard);
+            selectedCard = null;
+        }
+    }
+
+    public void UpdateDisplayNumbers()
+    {
+        Debug.Log("UpdateDisplayNumbers");
+        DCSMatch.Instance.LocalPlayer.UpdateDisplayNumbers(deck.Cards.Count, discard.Cards.Count);
+    }
+
     public void SomethingSelected(DDSelection selection)
     {
         if (cardResolving != null)
@@ -192,7 +210,7 @@ public class DDPlayer_Match : MonoBehaviour
 
         if (selectedCard == null)
         {
-            if (SingletonHolder.Instance.Encounter.CurrentPhase == EEncounterPhase.PlayersTurn)
+            if (DCSMatch.Instance.LocalPlayer != null && (DCSMatch.Instance.LocalPlayer.CurrentState == EDCSPlayerState.Attacking || DCSMatch.Instance.LocalPlayer.CurrentState == EDCSPlayerState.Defending))
             {
                 DDCardInHand card = selection as DDCardInHand;
                 if (card != null)
@@ -200,16 +218,24 @@ public class DDPlayer_Match : MonoBehaviour
                     if (card.CardSelected(selectedCardLocation.localPosition))
                     {
                         selectedCard = card;
-                        cardTargets = selectedCard.GetCardTarget();
-                        cardSelections = new List<DDSelection>(cardTargets.Count);
-                        currentTargetIndex = 0;
-                        SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                        //cardTargets = selectedCard.GetCardTarget();
+                        //cardSelections = new List<DDSelection>(cardTargets.Count);
+                        //currentTargetIndex = 0;
+                        //SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                        
+                        hand.CardRemoved(selectedCard);
+                        selectedCard.gameObject.SetActive(false);
+
+                        DCSMatch.Instance.CardSelectedServer(DCSMatch.Instance.GetCardIndex(selectedCard.CurrentCard));
+
+                        //discard.CardDiscarded(selectedCard);
                     }
                 }
             }
         }
         else if (selectedCard != null)
         {
+            /*
             if (selectedCard.IsSelectionValid(selection, currentTargetIndex))
             {
                 cardSelections.Add(selection);
@@ -234,6 +260,7 @@ public class DDPlayer_Match : MonoBehaviour
                     SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
                 }
             }
+            */
         }
         else
         {

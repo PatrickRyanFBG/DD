@@ -52,7 +52,7 @@ public class DDPlayer_MatchDeck : MonoBehaviour
 
     private void ShuffleDeck()
     {
-        numberText.text = cards.Count.ToString();
+        //numberText.text = cards.Count.ToString();
         cards.Shuffle();
     }
 
@@ -60,7 +60,7 @@ public class DDPlayer_MatchDeck : MonoBehaviour
     {
         DDCardInHand outGoingCard = cards[cards.Count - 1];
         cards.RemoveAt(cards.Count - 1);
-        numberText.text = cards.Count.ToString();
+        //numberText.text = cards.Count.ToString();
         return outGoingCard;
     }
 
@@ -77,6 +77,6 @@ public class DDPlayer_MatchDeck : MonoBehaviour
         }
 
         cards.Clear();
-        numberText.text = "0";
+        //numberText.text = "0";
     }
 }

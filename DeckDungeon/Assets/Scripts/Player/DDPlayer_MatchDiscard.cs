@@ -20,14 +20,14 @@ public class DDPlayer_MatchDiscard : MonoBehaviour
         card.transform.position = transform.position;
         card.gameObject.SetActive(false);
 
-        numberText.text = cards.Count.ToString();
+        //numberText.text = cards.Count.ToString();
     }
 
     public List<DDCardInHand> GetAndClearDiscard()
     {
         List<DDCardInHand> outgoing = cards;
         cards = new List<DDCardInHand>();
-        numberText.text = "0";
+        //numberText.text = "0";
         return outgoing;
     }
 
@@ -44,6 +44,6 @@ public class DDPlayer_MatchDiscard : MonoBehaviour
         }
 
         cards.Clear();
-        numberText.text = "0";
+        //numberText.text = "0";
     }
 }

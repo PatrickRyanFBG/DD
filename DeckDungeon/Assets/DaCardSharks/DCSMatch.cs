@@ -8,6 +8,7 @@ using FishNet.Object.Synchronizing;
 public enum EDCSMatchState
 {
     Loading,
+    Selecting,
     Fighting,
     Looting,
     Ending
@@ -27,8 +28,15 @@ public class DCSMatch : NetworkBehaviour
 
     private readonly SyncVar<EDCSMatchState> matchState = new SyncVar<EDCSMatchState>();
 
-    public TMPro.TextMeshProUGUI[] playerDeckCounts;
-    public TMPro.TextMeshProUGUI[] playerDiscardCounts;
+    public DCSNetworkedPlayer LocalPlayer;
+
+    [SerializeField]
+    private DDCardInHand[] cardsSelected;
+
+    [SerializeField]
+    private List<DDCardBase> allCards;
+
+    private int lastPlayerAttacking = 0;
 
     private void Awake()
     {
@@ -47,10 +55,9 @@ public class DCSMatch : NetworkBehaviour
         base.OnStartClient();
         Debug.Log("I'm Client.");
         //enabled = false;
-        ClientReady();
+        //ClientReady();
     }
 
-    [ServerRpc(RequireOwnership = false)]
     public void ClientReady(NetworkConnection connection = null)
     {
         DCSPlayerInfo info = new DCSPlayerInfo();
@@ -61,28 +68,91 @@ public class DCSMatch : NetworkBehaviour
 
         if (connectedPlayers.Count == 2)
         {
-            AllClientsConnected();
+            StartCoroutine(AllClientsConnected());
         }
     }
 
-    public void AllClientsConnected()
+    public IEnumerator AllClientsConnected()
     {
+        //yield return new WaitForSeconds(1f);
+
+        while(!Input.GetKeyDown(KeyCode.Space))
+        {
+            yield return null;
+        }
+
         foreach (var item in connectedPlayers)
         {
             item.player.DrawHand(item.conn);
         }
 
+        matchState.Value = EDCSMatchState.Selecting;
+
         connectedPlayers[0].player.MoveToSelectAttack();
+        connectedPlayers[1].player.MoveToWaiting();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void CardSelectedServer(int index, NetworkConnection conn = null)
+    {
+        CardSelected(conn.ClientId, index);
+
+        if (connectedPlayers[conn.ClientId].player.CurrentState == EDCSPlayerState.Attacking)
+        {
+            connectedPlayers[(conn.ClientId + 1) % 2].player.MoveToSelectDefense();
+        }
+        else if (connectedPlayers[conn.ClientId].player.CurrentState == EDCSPlayerState.Defending)
+        {
+            // HERE WE SELECTED A DEFENSE CARD GOTTA DO BATTLE
+            matchState.Value = EDCSMatchState.Fighting;
+            DoBattle();
+            // connectedPlayers[conn.ClientId].player.MoveToSelectAttack();
+        }
+
+        connectedPlayers[conn.ClientId].player.MoveToWaiting();
     }
 
     [ObserversRpc]
-    public void UpdateDeckDiscardNumbers(int deck, int discard, NetworkConnection conn = null)
+    public void CardSelected(int playerIndex, int cardIndex)
     {
-        if(conn.ClientId < 0 || conn.ClientId > playerDeckCounts.Length)
+        cardsSelected[playerIndex].SetUpCard(allCards[cardIndex]);
+    }
+
+    public int GetCardIndex(DDCardBase card)
+    {
+        return allCards.IndexOf(card);
+    }
+
+    [ObserversRpc]
+    public void DoBattle()
+    {
+        StartCoroutine(DoBattleOverTime());
+    }
+
+    private IEnumerator DoBattleOverTime()
+    {
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < cardsSelected.Length; i++)
         {
-            return;
+            cardsSelected[i].gameObject.SetActive(false);
         }
-        playerDeckCounts[conn.ClientId].text = deck.ToString();
-        playerDiscardCounts[conn.ClientId].text = discard.ToString();
+
+        foreach (var item in connectedPlayers)
+        {
+            item.player.DiscardSelectedCard(item.conn);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        if(IsServerStarted)
+        {
+            matchState.Value = EDCSMatchState.Selecting;
+
+            lastPlayerAttacking = (lastPlayerAttacking + 1) % 2;
+
+            connectedPlayers[lastPlayerAttacking].player.MoveToSelectAttack();
+            connectedPlayers[(lastPlayerAttacking + 1) % 2].player.MoveToWaiting();
+        }
     }
 }

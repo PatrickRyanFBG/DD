@@ -15,6 +15,15 @@ public enum EDCSPlayerState
     Dead
 }
 
+[System.Serializable]
+public class DCSUIInformation
+{
+    public GameObject parent;
+    public TMPro.TextMeshProUGUI health;
+    public TMPro.TextMeshProUGUI deckCount;
+    public TMPro.TextMeshProUGUI discardCount;
+}
+
 public class DCSNetworkedPlayer : NetworkBehaviour
 {
     [SerializeField]
@@ -27,16 +36,37 @@ public class DCSNetworkedPlayer : NetworkBehaviour
 
     private readonly IntSyncVar visualWidth = new IntSyncVar();
 
-    private readonly SyncVar<EDCSPlayerState> playerState = new SyncVar<EDCSPlayerState>(new SyncTypeSettings(ReadPermission.ExcludeOwner));
-    
+    private readonly SyncVar<EDCSPlayerState> playerState = new SyncVar<EDCSPlayerState>();
+    public EDCSPlayerState CurrentState => playerState.Value;
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI stateText;
+
+    [SerializeField]
+    private DCSUIInformation[] infos;
+    private readonly SyncVar<int> clientId = new SyncVar<int>(new SyncTypeSettings(-1f));
+
     private void Awake()
     {
         playerState.OnChange += PlayerState_OnChange;
+        stateText.text = playerState.Value.ToString();
+        clientId.OnChange += ClientId_OnChange;
+    }
+
+    private void ClientId_OnChange(int prev, int next, bool asServer)
+    {
+        infos[next - 1].parent.SetActive(true);
     }
 
     private void PlayerState_OnChange(EDCSPlayerState prev, EDCSPlayerState next, bool asServer)
     {
         Debug.Log("PlayerState_OnChange: " + asServer);
+        //if (SingletonHolder.Instance.Player.CurrentHand.Count == 0)
+        //{
+        //    SingletonHolder.Instance.Player.DrawFullHand();
+        //}
+
+        stateText.text = next.ToString();
         switch (next)
         {
             case EDCSPlayerState.Waiting:
@@ -72,31 +102,50 @@ public class DCSNetworkedPlayer : NetworkBehaviour
             currentDeck.AddRange(startingCards);
             SingletonHolder.Instance.Player.SetHandSizeToDefault();
             SingletonHolder.Instance.Player.ShuffleInDeck(currentDeck);
-            //DCSMatch.Instance.UpdateDeckDiscardNumbers(currentDeck.Count, 0);
 
             gameObject.name = "DCSNetworkedPlayer_LOCAL";
             ClientConfirmSpawned();
+            DCSMatch.Instance.LocalPlayer = this;
         }
         else
         {
             gameObject.name = "DCSNetworkedPlayer_REMOTE";
         }
     }
-    
+
     [ServerRpc]
     public void ClientConfirmSpawned(NetworkConnection connection = null)
     {
         base.OnSpawnServer(connection);
         Debug.Log("OnSpawnServer: " + connection.ClientId + " ObjectId: " + base.ObjectId);
         visualWidth.Value = connection.ClientId == 0 ? -1 : 1;
+        // It doesn't get updated if if it doesn't change so xdd
+        clientId.Value = connection.ClientId + 1;
+        DCSMatch.Instance.ClientReady(connection);
     }
 
     [TargetRpc]
     public void DrawHand(NetworkConnection conn)
     {
         SingletonHolder.Instance.Player.DrawFullHand();
+        SingletonHolder.Instance.Player.UpdateDisplayNumbers();
     }
-    
+
+    [TargetRpc]
+    public void DiscardSelectedCard(NetworkConnection conn)
+    {
+        SingletonHolder.Instance.Player.DiscardSelectedCard();
+        SingletonHolder.Instance.Player.DrawACard();
+        SingletonHolder.Instance.Player.UpdateDisplayNumbers();
+    }
+
+    [ObserversRpc(ExcludeServer = true)]
+    public void UpdateDisplayNumbers(int deck, int discard)
+    {
+        infos[clientId.Value - 1].deckCount.text = deck.ToString();
+        infos[clientId.Value - 1].discardCount.text = discard.ToString();
+    }
+
     public void MoveToWaiting()
     {
         playerState.Value = EDCSPlayerState.Waiting;
@@ -107,7 +156,7 @@ public class DCSNetworkedPlayer : NetworkBehaviour
         playerState.Value = EDCSPlayerState.Attacking;
     }
 
-    public void MoveToSelectDefense()
+    public void MoveToSelectDefense(NetworkConnection conn = null)
     {
         playerState.Value = EDCSPlayerState.Defending;
     }

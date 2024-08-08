@@ -5,6 +5,7 @@ using UnityEngine;
 public class DDPlayer_MatchHand : MonoBehaviour
 {
     private List<DDCardInHand> cards = new List<DDCardInHand>();
+    public List<DDCardInHand> Cards { get { return cards; } }
 
     public void AddCard(DDCardInHand card)
     {
