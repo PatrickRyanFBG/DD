@@ -17,3 +17,4 @@ MonoBehaviour:
   description: Block
   targets: []
   uses: 0
+  basicDefense: 4

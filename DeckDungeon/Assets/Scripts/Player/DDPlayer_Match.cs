@@ -198,7 +198,7 @@ public class DDPlayer_Match : MonoBehaviour
     public void UpdateDisplayNumbers()
     {
         Debug.Log("UpdateDisplayNumbers");
-        DCSMatch.Instance.LocalPlayer.UpdateDisplayNumbers(deck.Cards.Count, discard.Cards.Count);
+        DCSMatch.Instance.LocalPlayer.UpdateDisplayNumbersServer(deck.Cards.Count, discard.Cards.Count);
     }
 
     public void SomethingSelected(DDSelection selection)

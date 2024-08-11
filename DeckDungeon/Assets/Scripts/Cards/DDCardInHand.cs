@@ -21,12 +21,24 @@ public class DDCardInHand : DDSelection
     public TextMeshProUGUI NameText { get => nameText; }
 
     [SerializeField]
+    private TMPro.TextMeshProUGUI typeText;
+    public TextMeshProUGUI TypeText { get => typeText; }
+
+    [SerializeField]
     private TMPro.TextMeshProUGUI descText;
     public TextMeshProUGUI DescText { get => descText; }
 
     [SerializeField]
     private TMPro.TextMeshProUGUI momentumNumber;
     public TextMeshProUGUI MomentumNumber { get => momentumNumber; }
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI defenseNumber;
+    public TextMeshProUGUI DefenseNumber { get => defenseNumber; }
+
+    [SerializeField]
+    private TMPro.TextMeshProUGUI offenseNumber;
+    public TextMeshProUGUI OffenseNumber { get => offenseNumber; }
 
     protected DDCardBase currentCard;
     public DDCardBase CurrentCard { get { return currentCard; } }

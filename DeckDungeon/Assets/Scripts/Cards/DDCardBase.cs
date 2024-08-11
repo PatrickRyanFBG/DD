@@ -7,22 +7,22 @@ public abstract class DDCardBase : DDScriptableObject
 {
     [Header("base")]
     [SerializeField]
-    private Texture image;
+    protected Texture image;
     public Texture Image { get { return image; } }
 
     [SerializeField]
-    private new string name;
+    protected new string name;
     public string Name { get { return name; } }
 
     [SerializeField, Multiline]
-    private string description;
+    protected string description;
 
     [SerializeField]
     protected List<Target> targets;
     public List<Target> Targets { get { return targets; } }
 
     [SerializeField]
-    private int uses = 0;
+    protected int uses = 0;
     public int Uses { get { return uses; } }
 
     public virtual bool SelectCard()

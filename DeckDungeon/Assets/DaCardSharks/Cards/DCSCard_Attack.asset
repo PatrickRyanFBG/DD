@@ -17,3 +17,5 @@ MonoBehaviour:
   description: Attack
   targets: []
   uses: 0
+  basicDefense: 3
+  basicAttack: 5

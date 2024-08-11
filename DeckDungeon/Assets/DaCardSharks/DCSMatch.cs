@@ -36,7 +36,7 @@ public class DCSMatch : NetworkBehaviour
     [SerializeField]
     private List<DDCardBase> allCards;
 
-    private int lastPlayerAttacking = 0;
+    private readonly IntSyncVar lastPlayerAttacking = new IntSyncVar();
 
     private void Awake()
     {
@@ -58,6 +58,14 @@ public class DCSMatch : NetworkBehaviour
         //ClientReady();
     }
 
+    public override void OnSpawnServer(NetworkConnection connection)
+    {
+        base.OnSpawnServer(connection);
+        Debug.Log("<color=red> OnSpawnServer </color>");
+        ClientReady(connection);
+    }
+
+    [ObserversRpc(BufferLast = true)]
     public void ClientReady(NetworkConnection connection = null)
     {
         DCSPlayerInfo info = new DCSPlayerInfo();
@@ -66,7 +74,7 @@ public class DCSMatch : NetworkBehaviour
         connectedPlayers.Add(info);
         Debug.Log("Server: Client Ready " + connection.ClientId);
 
-        if (connectedPlayers.Count == 2)
+        if (IsServerStarted && connectedPlayers.Count == 2)
         {
             StartCoroutine(AllClientsConnected());
         }
@@ -138,6 +146,23 @@ public class DCSMatch : NetworkBehaviour
             cardsSelected[i].gameObject.SetActive(false);
         }
 
+        int defendingPlayer = (lastPlayerAttacking.Value + 1) % 2;
+
+        DCSCardBase_Defense defenseCard = cardsSelected[defendingPlayer].CurrentCard as DCSCardBase_Defense;
+        yield return defenseCard.ExecuteCard(false);
+        int defenseNumber = defenseCard.GetDefenseNumber();
+
+        DCSCardBase_Offense offenseCard = cardsSelected[lastPlayerAttacking.Value].CurrentCard as DCSCardBase_Offense;
+        yield return offenseCard.ExecuteCard(true);
+        int attackNumber = offenseCard.GetAttackNumber();
+
+        int remainingAttack = attackNumber - defenseNumber;
+        if(remainingAttack > 0)
+        {
+            // Damage was delt.
+            connectedPlayers[defendingPlayer].player.DealDamage(remainingAttack);
+        }
+
         foreach (var item in connectedPlayers)
         {
             item.player.DiscardSelectedCard(item.conn);
@@ -149,10 +174,10 @@ public class DCSMatch : NetworkBehaviour
         {
             matchState.Value = EDCSMatchState.Selecting;
 
-            lastPlayerAttacking = (lastPlayerAttacking + 1) % 2;
+            lastPlayerAttacking.Value = (lastPlayerAttacking.Value + 1) % 2;
 
-            connectedPlayers[lastPlayerAttacking].player.MoveToSelectAttack();
-            connectedPlayers[(lastPlayerAttacking + 1) % 2].player.MoveToWaiting();
+            connectedPlayers[lastPlayerAttacking.Value].player.MoveToSelectAttack();
+            connectedPlayers[(lastPlayerAttacking.Value + 1) % 2].player.MoveToWaiting();
         }
     }
 }

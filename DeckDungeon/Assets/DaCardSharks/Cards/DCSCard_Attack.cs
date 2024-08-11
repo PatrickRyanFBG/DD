@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DCSCard_Attack : DCSCardBase
+public class DCSCard_Attack : DCSCardBase_Offense
 {
 
 }

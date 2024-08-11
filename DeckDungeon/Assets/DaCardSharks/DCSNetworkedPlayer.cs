@@ -20,6 +20,7 @@ public class DCSUIInformation
 {
     public GameObject parent;
     public TMPro.TextMeshProUGUI health;
+    public TMPro.TextMeshProUGUI streetCred;
     public TMPro.TextMeshProUGUI deckCount;
     public TMPro.TextMeshProUGUI discardCount;
 }
@@ -35,6 +36,8 @@ public class DCSNetworkedPlayer : NetworkBehaviour
     private RawImage visuals;
 
     private readonly IntSyncVar visualWidth = new IntSyncVar();
+    private readonly IntSyncVar healthValue = new IntSyncVar();
+    private readonly IntSyncVar streetCredValue = new IntSyncVar();
 
     private readonly SyncVar<EDCSPlayerState> playerState = new SyncVar<EDCSPlayerState>();
     public EDCSPlayerState CurrentState => playerState.Value;
@@ -44,18 +47,33 @@ public class DCSNetworkedPlayer : NetworkBehaviour
 
     [SerializeField]
     private DCSUIInformation[] infos;
-    private readonly SyncVar<int> clientId = new SyncVar<int>(new SyncTypeSettings(-1f));
+    private DCSUIInformation myInfo { get { return infos[clientId.Value - 1]; } }
+    private readonly SyncVar<int> clientId = new SyncVar<int>();
 
     private void Awake()
     {
         playerState.OnChange += PlayerState_OnChange;
         stateText.text = playerState.Value.ToString();
         clientId.OnChange += ClientId_OnChange;
+        healthValue.OnChange += HealthValue_OnChange;
+        streetCredValue.OnChange += StreetCredValue_OnChange;
+    }
+
+    private void StreetCredValue_OnChange(int prev, int next, bool asServer)
+    {
+        myInfo.streetCred.text = next + " / 100";
+    }
+
+    private void HealthValue_OnChange(int prev, int next, bool asServer)
+    {
+        myInfo.health.text = next + " / 50";
     }
 
     private void ClientId_OnChange(int prev, int next, bool asServer)
     {
         infos[next - 1].parent.SetActive(true);
+        myInfo.health.text = "50 / 50";
+        myInfo.streetCred.text = "0 / 100";
     }
 
     private void PlayerState_OnChange(EDCSPlayerState prev, EDCSPlayerState next, bool asServer)
@@ -91,6 +109,13 @@ public class DCSNetworkedPlayer : NetworkBehaviour
         visuals.uvRect = uvRec;
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void DealDamage(int amount)
+    {
+        healthValue.Value -= amount;
+        streetCredValue.Value += amount;
+    }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -121,7 +146,8 @@ public class DCSNetworkedPlayer : NetworkBehaviour
         visualWidth.Value = connection.ClientId == 0 ? -1 : 1;
         // It doesn't get updated if if it doesn't change so xdd
         clientId.Value = connection.ClientId + 1;
-        DCSMatch.Instance.ClientReady(connection);
+        healthValue.Value = 50;
+        streetCredValue.Value = 0;
     }
 
     [TargetRpc]
@@ -139,7 +165,13 @@ public class DCSNetworkedPlayer : NetworkBehaviour
         SingletonHolder.Instance.Player.UpdateDisplayNumbers();
     }
 
-    [ObserversRpc(ExcludeServer = true)]
+    [ServerRpc]
+    public void UpdateDisplayNumbersServer(int deck, int discard)
+    {
+        UpdateDisplayNumbers(deck, discard);
+    }
+
+    [ObserversRpc]
     public void UpdateDisplayNumbers(int deck, int discard)
     {
         infos[clientId.Value - 1].deckCount.text = deck.ToString();

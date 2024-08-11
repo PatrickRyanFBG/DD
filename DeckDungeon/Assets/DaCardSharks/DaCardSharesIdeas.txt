@@ -1,0 +1,8 @@
+- Chard Wizard
+	- If damage is dealth, set burn 5
+- Juno Reverse
+	- If street credit higher than opponents, reflect half the damage
+- Time Walker
+	- If damage is dealt, attack again
+- Take a drag
+	- Gain 
