@@ -60,6 +60,10 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
     public bool TestingHasChest { get => testingHasChest; }
 
     [SerializeField]
+    private int goldToGive;
+    public int GoldToGive { get => goldToGive; }
+
+    [SerializeField]
     private List<DDDungeonCardBase> cardsToShuffleInAfter;
 
     public abstract void SpawnEnemies();
@@ -70,6 +74,8 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
         {
             yield return SingletonHolder.Instance.Dungeon.AddCardToDungeonDeckOvertime(cardsToShuffleInAfter);
         }
+
+        SingletonHolder.Instance.Dungeon.AddOrRemoveGold(goldToGive);
     }
 }
 
@@ -112,5 +118,26 @@ public abstract class DDDungeonCardLeisure : DDDungeonCardBase
         area.LeisureName.text = leisureName;
         area.Description.text = leisureDescription;
         area.Image.texture = leisureImage;
+    }
+}
+
+[System.Serializable]
+public abstract class DDDungeonCardShop : DDDungeonCardBase
+{
+    [Header("Shop")]
+    [SerializeField]
+    private string shopKeepName;
+
+    [SerializeField, Multiline]
+    private string shopDialogue;
+
+    [SerializeField]
+    private Texture shopImage;
+
+    public virtual void DisplayShop(DDShopArea area)
+    {
+        area.ShopName.text = shopKeepName;
+        area.Description.text = shopDialogue;
+        area.Image.texture = shopImage;
     }
 }

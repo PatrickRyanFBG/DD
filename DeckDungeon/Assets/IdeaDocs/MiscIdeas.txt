@@ -1,6 +1,4 @@
 Card Attributes
-	- Fade X
-		- Decreases every use and disapears from encounter deck when 0
 	- Locked
 		- Is not discarded at end of turn
 	- Drawn:

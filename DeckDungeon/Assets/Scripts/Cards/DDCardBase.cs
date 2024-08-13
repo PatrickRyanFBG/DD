@@ -5,7 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public abstract class DDCardBase : DDScriptableObject
 {
-    [Header("base")]
+    [Header("Base")]
+    [SerializeField]
+    private ECardType cardType;
+    public ECardType CardType { get { return cardType; } }
+
     [SerializeField]
     private Texture image;
     public Texture Image { get { return image; } }
@@ -40,6 +44,7 @@ public abstract class DDCardBase : DDScriptableObject
     public virtual void DisplayInformation(DDCardInHand cardInHand)
     {
         cardInHand.Image.texture = image;
+        cardInHand.CardTypeText.text = cardType.ToString();
         cardInHand.NameText.text = name;
         cardInHand.DescText.text = description;
         if(uses > 0)

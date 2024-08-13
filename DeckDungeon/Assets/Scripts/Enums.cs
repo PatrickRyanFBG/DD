@@ -10,7 +10,8 @@ public enum EDungeonCardType
 {
     Encounter,
     Event,
-    Leisure
+    Leisure,
+    Shop
 }
 
 public enum EDungeonCardExtra
@@ -34,7 +35,16 @@ public enum EDungeonPhase
     Event,
     Leisure,
     Encounter,
+    Shop,
     PlayerCardSelection,
     DungeonLost,
     DungeonWon,
+}
+
+public enum ECardType
+{
+    Utility,
+    Action,
+    Offensive,
+    Defensive
 }

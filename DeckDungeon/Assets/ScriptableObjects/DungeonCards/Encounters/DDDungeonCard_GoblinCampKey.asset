@@ -18,6 +18,8 @@ MonoBehaviour:
   description: These goblins have escaped with the key.
   testingHasKey: 1
   testingHasChest: 0
+  goldToGive: 100
+  cardsToShuffleInAfter: []
   enemies:
   - amount: 3
     enemy: {fileID: 11400000, guid: fc3d601df88156e4d98fd3ab9dd9fe5f, type: 2}

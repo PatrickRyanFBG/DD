@@ -21,6 +21,7 @@ MonoBehaviour:
     need the key!'
   testingHasKey: 0
   testingHasChest: 1
+  goldToGive: 100
   cardsToShuffleInAfter: []
   enemies:
   - amount: 2

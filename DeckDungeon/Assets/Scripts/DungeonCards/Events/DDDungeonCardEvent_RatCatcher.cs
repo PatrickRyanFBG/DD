@@ -52,10 +52,12 @@ public class DDDungeonCardEvent_RatCatcher : DDDungeonCardEvent
         buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = secondOptionText;
         buttonTwo.Button.onClick.AddListener(() =>
         {
+            List<DDDungeonCardBase> cards = new List<DDDungeonCardBase>();
             for (int i = 0; i < numberOfRatCards; i++)
             {
-                SingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(ratCard);
+                cards.Add(ratCard);
             }
+            SingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(cards);
 
             area.Description.text = afterReleaseDescription;
             area.CleanUpButtons();

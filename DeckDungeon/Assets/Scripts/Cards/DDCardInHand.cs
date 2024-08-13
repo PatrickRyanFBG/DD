@@ -17,6 +17,10 @@ public class DDCardInHand : DDSelection
     public RawImage Image { get => image; }
 
     [SerializeField]
+    private TMPro.TextMeshProUGUI cardTypeText;
+    public TextMeshProUGUI CardTypeText { get => cardTypeText; }
+
+    [SerializeField]
     private TMPro.TextMeshProUGUI nameText;
     public TextMeshProUGUI NameText { get => nameText; }
 

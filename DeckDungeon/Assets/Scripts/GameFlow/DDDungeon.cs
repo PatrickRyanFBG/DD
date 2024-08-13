@@ -29,7 +29,7 @@ public class DDDungeon : MonoBehaviour
     [SerializeField]
     private List<DDArtifactBase> artifacts = new List<DDArtifactBase>();
 
-    [Header("States")]
+    [Header("Areas")]
     [SerializeField]
     private DDEncounter encounter;
     [SerializeField]
@@ -42,13 +42,24 @@ public class DDDungeon : MonoBehaviour
     private DDLeisureArea leisureArea;
     [SerializeField]
     private DDShowDeckArea showDeckArea;
+    [SerializeField]
+    private DDShopArea shopArea;
 
     public UnityEngine.Events.UnityEvent<EDungeonPhase> PhaseChanged;
+
+    // Gold
+    [Header("Gold")]
+    private int goldAmount;
+    public int GoldAmount { get { return goldAmount; } }
+    public UnityEngine.Events.UnityEvent<int> GoldAmountChange;
 
     // Artifacts/Equipment
     [Header("Testing")]
     [SerializeField]
     private TMPro.TextMeshProUGUI healthText;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI goldText;
+
     [SerializeField]
     private TMPro.TextMeshProUGUI dungeonDeckCount;
     [SerializeField]
@@ -120,6 +131,11 @@ public class DDDungeon : MonoBehaviour
         if (dungeonCardSelection.gameObject.activeInHierarchy)
         {
             dungeonCardSelection.gameObject.SetActive(false);
+        }
+
+        if(shopArea.gameObject.activeInHierarchy)
+        {
+            shopArea.gameObject.SetActive(false);
         }
     }
 
@@ -198,6 +214,13 @@ public class DDDungeon : MonoBehaviour
                     StartLeisure(leisureCard);
                 }
                 break;
+            case EDungeonCardType.Shop:
+                DDDungeonCardShop shopCard = card as DDDungeonCardShop;
+                if (shopCard != null)
+                {
+                    StartShop(shopCard);
+                }
+                break;
         }
     }
     #endregion
@@ -262,6 +285,13 @@ public class DDDungeon : MonoBehaviour
         TurnOffAreas();
         leisureArea.DisplayLeisure(leisureCard);
         ChangeDungeonPhase(EDungeonPhase.Leisure);
+    }
+
+    public void StartShop(DDDungeonCardShop shopCard)
+    {
+        TurnOffAreas();
+        shopArea.DisplayShop(shopCard);
+        ChangeDungeonPhase(EDungeonPhase.Shop);
     }
 
     public void StartEncounter(DDDungeonCardEncounter encounterCard)
@@ -348,11 +378,10 @@ public class DDDungeon : MonoBehaviour
 
     public void DisplayPlayerDiscard()
     {
-        TurnOffAreas();
-        showDeckArea.gameObject.SetActive(true);
-
         if (currentDungeonPhase == EDungeonPhase.Encounter)
         {
+            TurnOffAreas();
+            showDeckArea.gameObject.SetActive(true);
             showDeckArea.ShowPlayerDeck(SingletonHolder.Instance.Player.CurrentDiscard);
         }
         else
@@ -392,5 +421,17 @@ public class DDDungeon : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void AddOrRemoveGold(int amount)
+    {
+        goldAmount = Mathf.Max(goldAmount + amount, 0);
+        goldText.text = goldAmount.ToString();
+        GoldAmountChange?.Invoke(goldAmount);
+    }
+
+    public bool HasEnoughGold(int amount)
+    {
+        return goldAmount >= amount;
     }
 }
