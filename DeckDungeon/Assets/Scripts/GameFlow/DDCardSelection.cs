@@ -119,6 +119,6 @@ public class DDCardSelection : MonoBehaviour
 
     public void CardSelected(DDCardShown cardShown)
     {
-        SingletonHolder.Instance.Dungeon.PlayerCardSelect(cardShown.CurrentCard);
+        SingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, cardShown.transform.position);
     }
 }

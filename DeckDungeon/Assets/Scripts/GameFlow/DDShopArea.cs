@@ -18,7 +18,7 @@ public class DDShopArea : MonoBehaviour
     public TMPro.TextMeshProUGUI Description { get { return description; } }
 
     [SerializeField]
-    private DDCardShown[] cards;
+    private DDCardShownShop[] cards;
 
     [SerializeField]
     private DDDungeonCardShown[] dungeonCards;
@@ -29,6 +29,9 @@ public class DDShopArea : MonoBehaviour
     [SerializeField]
     private Camera cardAreaCamera;
 
+    [SerializeField]
+    private Camera mainUICamera;
+
     private Ray camRay;
     public Ray CamRay { get { return camRay; } }
 
@@ -37,22 +40,28 @@ public class DDShopArea : MonoBehaviour
 
     private DDDungeonCardShop currentShop;
 
+    [SerializeField]
+    private RawImage renderTexture;
+    Vector3[] corners = new Vector3[4];
+
     private void Awake()
     {
-        
+        renderTexture.rectTransform.GetWorldCorners(corners);
     }
 
     private void Update()
     {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(renderTexture.rectTransform, Input.mousePosition, null, out var localPoint);
         bool camHitSomething = false;
-        Vector3 pos = Input.mousePosition;
-        pos -= new Vector3(Screen.width / 2, (Screen.height / 2), 0);
-        pos *= (1 / .65f);
-        pos += new Vector3(Screen.width / 2, (Screen.height / 2), 0);
-        camRay = cardAreaCamera.ScreenPointToRay(pos);
+        localPoint.x = localPoint.x / renderTexture.rectTransform.sizeDelta.x;
+        localPoint.x *= Screen.width;
+        localPoint.y = localPoint.y / renderTexture.rectTransform.sizeDelta.y;
+        localPoint.y *= Screen.height;
+
+        camRay = cardAreaCamera.ScreenPointToRay(new Vector3(localPoint.x, localPoint.y));
         LayerMask currentAndCameraMask = cardAreaCamera.cullingMask;
 
-        Debug.DrawLine(camRay.origin, camRay.origin + camRay.direction * 1000, Color.yellow);
+        Debug.DrawLine(camRay.origin, camRay.origin + camRay.direction * 1000, Color.green);
 
         if (Physics.Raycast(camRay, out hit, 1000, currentAndCameraMask))
         {
@@ -90,14 +99,38 @@ public class DDShopArea : MonoBehaviour
             {
                 switch (currentlyHovered)
                 {
-                    case DDCardShown:
-                        DDCardShown cardShown = currentlyHovered as DDCardShown;
-                        cardShown.CardSelected();
+                    case DDCardShownShop:
+                        DDCardShownShop cardShown = currentlyHovered as DDCardShownShop;
+                        if (SingletonHolder.Instance.Dungeon.HasEnoughGold(cardShown.CurrentPrice))
+                        {
+                            SingletonHolder.Instance.Dungeon.AddOrRemoveGold(-cardShown.CurrentPrice);
+
+                            Debug.Log(cardShown.CurrentCard.name);
+                            cardShown.gameObject.SetActive(false);
+                            // Okay this is WILD but I need to go from world space of the actual card Object to screenSpace of the cardShown camera
+                            Vector3 screenSpace = cardAreaCamera.WorldToScreenPoint(cardShown.transform.position);
+                            // and then find the percentage of the pos
+                            screenSpace.x /= Screen.width;
+                            // scale it to the renderTexture Width
+                            screenSpace.x *= renderTexture.rectTransform.sizeDelta.x;
+                            screenSpace.y /= Screen.height;
+                            screenSpace.y *= renderTexture.rectTransform.sizeDelta.y;
+
+                            // then add it to the bottom left corner of the renderTexture
+                            screenSpace.x += corners[0].x;
+                            screenSpace.y += corners[0].y;
+
+                            // then go back to worldSpace, but this time with the mainUI camera so it is in the correct space.
+                            // xdd
+                            Vector3 worldSpace = mainUICamera.ScreenToWorldPoint(screenSpace);
+
+                            SingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, worldSpace);
+                        }
                         break;
-                    case DDDungeonCardShown:
-                        DDDungeonCardShown dungeonCardShown = currentlyHovered as DDDungeonCardShown;
-                        dungeonCardShown.DungeonCardSelected();
-                        break;
+                        //case DDDungeonCardShown:
+                        //    DDDungeonCardShown dungeonCardShown = currentlyHovered as DDDungeonCardShown;
+                        //    dungeonCardShown.DungeonCardSelected();
+                        //    break;
                 }
             }
         }
@@ -108,5 +141,17 @@ public class DDShopArea : MonoBehaviour
         currentShop = shopCard;
         gameObject.SetActive(true);
         currentShop.DisplayShop(this);
+
+        //int amountOfCards = Random.Range(0, cards.Length);
+        List<DDCardBase> generatedCards = SingletonHolder.Instance.CardLibrary.GenerateValkyrieCards(cards.Length);
+        for (int i = 0; i < generatedCards.Count; i++)
+        {
+            cards[i].SetUpShopCard(generatedCards[i]);
+        }
+    }
+
+    public void CloseShop()
+    {
+        SingletonHolder.Instance.Dungeon.PromptDungeonCard();
     }
 }

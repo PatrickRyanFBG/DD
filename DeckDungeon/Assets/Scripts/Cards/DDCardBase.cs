@@ -29,6 +29,10 @@ public abstract class DDCardBase : DDScriptableObject
     private int uses = 0;
     public int Uses { get { return uses; } }
 
+    [SerializeField]
+    private Vector2 price = new Vector2(100,200);
+    public int Price { get { return (int)Random.Range(price.x, price.y); } }
+
     public virtual bool SelectCard()
     {
         return true;

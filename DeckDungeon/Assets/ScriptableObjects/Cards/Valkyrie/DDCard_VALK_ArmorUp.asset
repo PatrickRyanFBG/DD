@@ -19,6 +19,7 @@ MonoBehaviour:
   targets:
   - targetType: 9
   uses: 0
+  price: {x: 100, y: 200}
   momentumCost: 1
   momentumGain: 0
   armorAmount: 15

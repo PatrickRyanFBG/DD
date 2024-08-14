@@ -51,7 +51,7 @@ public class DDDungeon : MonoBehaviour
     [Header("Gold")]
     private int goldAmount;
     public int GoldAmount { get { return goldAmount; } }
-    public UnityEngine.Events.UnityEvent<int> GoldAmountChange;
+    public UnityEngine.Events.UnityEvent<int> GoldAmountChanged;
 
     // Artifacts/Equipment
     [Header("Testing")]
@@ -78,7 +78,12 @@ public class DDDungeon : MonoBehaviour
     private List<DDArtifactBase> startingArtifacts;
 
     [SerializeField]
-    private DDDungeonCardShown cardPrefabForAdded;
+    private DDCardShown cardPrefabForAdded;
+    [SerializeField]
+    private Transform cardAddedEnd;
+
+    [SerializeField]
+    private DDDungeonCardShown dungeonCardPrefabForAdded;
     [SerializeField]
     private Transform dungeonCardAddedStart;
     [SerializeField]
@@ -93,6 +98,9 @@ public class DDDungeon : MonoBehaviour
     [SerializeField]
     private DDArtifactUI artifactUIPrefab;
 
+    [SerializeField]
+    private int startingGold = 500;
+
     private void Awake()
     {
         maxHealth = startingHealth;
@@ -102,11 +110,14 @@ public class DDDungeon : MonoBehaviour
 
         dungeonDeck.AddRange(startingDungeonDeck);
         dungeonDeckCount.text = dungeonDeck.Count.ToString();
+        
         playerDeck.AddRange(startingPlayerDeck);
-
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";
+
+        goldAmount = startingGold;
+        goldText.text = goldAmount.ToString();
 
         PromptDungeonCard();
     }
@@ -144,7 +155,7 @@ public class DDDungeon : MonoBehaviour
     {
         dungeonDeck.Add(card);
 
-        DDDungeonCardShown shown = GameObject.Instantiate(cardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
+        DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
         shown.SetUpDungeonCard(card, 0, false);
         shown.transform.DOMove(dungeonCardAddedEnd.position, .6f, false);
         Destroy(shown.gameObject, .61f);
@@ -163,7 +174,7 @@ public class DDDungeon : MonoBehaviour
         {
             DDDungeonCardBase card = cards[i];
 
-            DDDungeonCardShown shown = GameObject.Instantiate(cardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
+            DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
             shown.SetUpDungeonCard(card, 0, false);
             shown.transform.DOMove(dungeonCardAddedEnd.position, .3f, false);
             Destroy(shown.gameObject, .35f);
@@ -256,9 +267,21 @@ public class DDDungeon : MonoBehaviour
         ChangeDungeonPhase(EDungeonPhase.PlayerCardSelection);
     }
 
-    public void PlayerCardSelect(DDCardBase card)
+    public void AddCardToDeck(DDCardBase card, Vector3 startPos)
     {
+        StartCoroutine(AddCardToDeckOvertime(card, startPos));
+    }
+
+    public IEnumerator AddCardToDeckOvertime(DDCardBase card, Vector3 startPos)
+    {
+        DDCardShown shown = GameObject.Instantiate(cardPrefabForAdded, startPos, Quaternion.identity);
+        shown.SetUpCard(card);
+        shown.transform.DOMove(cardAddedEnd.position, .3f, false);
+        Destroy(shown.gameObject, .35f);
         playerDeck.Add(card);
+        playerDeckCount.text = playerDeck.Count.ToString();
+
+        yield return new WaitForSeconds(.25f);
     }
     #endregion
 
@@ -427,7 +450,7 @@ public class DDDungeon : MonoBehaviour
     {
         goldAmount = Mathf.Max(goldAmount + amount, 0);
         goldText.text = goldAmount.ToString();
-        GoldAmountChange?.Invoke(goldAmount);
+        GoldAmountChanged?.Invoke(goldAmount);
     }
 
     public bool HasEnoughGold(int amount)
