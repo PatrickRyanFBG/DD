@@ -21,7 +21,7 @@ MonoBehaviour:
     Goblin Queen''s deck).'
   testingHasKey: 0
   testingHasChest: 0
-  goldToGive: 200
+  goldToGive: 150
   cardsToShuffleInAfter:
   - {fileID: 11400000, guid: c1f407cdc4574e9498283aaab1a6c5f7, type: 2}
   - {fileID: 11400000, guid: 24f04e1a90469c245986cbc096e0b436, type: 2}

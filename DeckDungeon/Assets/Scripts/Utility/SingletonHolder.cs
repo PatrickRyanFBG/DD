@@ -14,6 +14,7 @@ public class SingletonHolder : MonoBehaviour
     public DDEnemyLibrary EnemyLibrary;
     public DDPlayer_Match Player;
     public DDPlayerSelector PlayerSelector;
+    public DDShowDeckArea ShowDeckArea;
 
     private void Awake()
     {

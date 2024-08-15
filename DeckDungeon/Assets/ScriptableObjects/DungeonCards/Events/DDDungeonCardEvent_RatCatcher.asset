@@ -23,9 +23,15 @@ MonoBehaviour:
   numberOfRatCards: 3
   ratCard: {fileID: 11400000, guid: 1814fa4a90d607d4581aefa8dd77988b, type: 2}
   releaseRatsText: No way Rat Catcher!
-  secondOptionText: I was suppose to get Gold?
   afterReleaseDescription: 'Sucks for you then! Good luck fighting all these rats!
 
 
     (Events
     can effect the dungeon deck, this event shuffled in 3 rat combat cards.)'
+  payGoldOptionText: Pay 100 Gold.
+  afterPayDescription: 'Thank you fine adventurer. Please be on your way and leave
+    me with my rats!
+
+
+    (Events can effect the dungeon deck, this event could
+    have shuffled in 3 rat combat cards.)'

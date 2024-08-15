@@ -34,6 +34,9 @@ public class DDShowDeckArea : MonoBehaviour
 
     private int numberOfRows;
 
+    public UnityEngine.Events.UnityEvent<DDCardBase> CardSelectedCallback;
+    public UnityEngine.Events.UnityEvent<DDDungeonCardBase> DungeonCardSelectedCallback;
+
     public void CloseArea()
     {
         SingletonHolder.Instance.Dungeon.DisplayDeckClosed();
@@ -90,7 +93,11 @@ public class DDShowDeckArea : MonoBehaviour
                 {
                     case DDCardShown:
                         DDCardShown cardShown = currentlyHovered as DDCardShown;
-                        cardShown.CardSelected();
+                        CardSelectedCallback?.Invoke(cardShown.CurrentCard);
+                        break;
+                    case DDDungeonCardShown:
+                        DDDungeonCardShown dungeonCardardShown = currentlyHovered as DDDungeonCardShown;
+                        DungeonCardSelectedCallback?.Invoke(dungeonCardardShown.CurrentDungeonCard);
                         break;
                     case DDScroller:
                         scrollbar.GrabbedBar(true);

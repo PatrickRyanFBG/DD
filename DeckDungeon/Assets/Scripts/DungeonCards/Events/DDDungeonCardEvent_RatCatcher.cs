@@ -16,11 +16,14 @@ public class DDDungeonCardEvent_RatCatcher : DDDungeonCardEvent
     [SerializeField]
     private string releaseRatsText;
 
-    [SerializeField]
-    private string secondOptionText;
-
     [SerializeField, Multiline]
     private string afterReleaseDescription;
+
+    [SerializeField]
+    private string payGoldOptionText;
+
+    [SerializeField, Multiline]
+    private string afterPayDescription;
 
     public override void DisplayEvent(DDEventArea area)
     {
@@ -49,25 +52,42 @@ public class DDDungeonCardEvent_RatCatcher : DDDungeonCardEvent
         });
 
         DDButton buttonTwo = area.GenerateButton();
-        buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = secondOptionText;
+        buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = payGoldOptionText;
         buttonTwo.Button.onClick.AddListener(() =>
         {
-            List<DDDungeonCardBase> cards = new List<DDDungeonCardBase>();
-            for (int i = 0; i < numberOfRatCards; i++)
+            if(SingletonHolder.Instance.Dungeon.HasEnoughGold(100))
             {
-                cards.Add(ratCard);
+                SingletonHolder.Instance.Dungeon.AddOrRemoveGold(-100);
+
+                area.Description.text = afterPayDescription;
+                area.CleanUpButtons();
+
+                DDButton okayButton = area.GenerateButton();
+                okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Awkward.";
+                okayButton.Button.onClick.AddListener(() =>
+                {
+                    SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+                });
             }
-            SingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(cards);
-
-            area.Description.text = afterReleaseDescription;
-            area.CleanUpButtons();
-
-            DDButton okayButton = area.GenerateButton();
-            okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Oh no!";
-            okayButton.Button.onClick.AddListener(() =>
+            else
             {
-                SingletonHolder.Instance.Dungeon.PromptDungeonCard();
-            });
+                List<DDDungeonCardBase> cards = new List<DDDungeonCardBase>();
+                for (int i = 0; i < numberOfRatCards; i++)
+                {
+                    cards.Add(ratCard);
+                }
+                SingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(cards);
+
+                area.Description.text = afterReleaseDescription;
+                area.CleanUpButtons();
+
+                DDButton okayButton = area.GenerateButton();
+                okayButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Oh no!";
+                okayButton.Button.onClick.AddListener(() =>
+                {
+                    SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+                });
+            }
         });
     }
 }

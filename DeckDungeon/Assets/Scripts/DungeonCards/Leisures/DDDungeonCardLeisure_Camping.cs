@@ -20,9 +20,12 @@ public class DDDungeonCardLeisure_Camping : DDDungeonCardLeisure
         });
 
         Button buttonTwo = area.GenerateButton();
-        buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Upgrade (Doesn't Work)";
+        buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Purge A Card";
         buttonTwo.onClick.AddListener(() =>
         {
+            SingletonHolder.Instance.Dungeon.DisplayPlayerDeck();
+            SingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.AddListener(CardSelected);
+            buttonTwo.interactable = false;
         });
 
         Button buttonThree = area.GenerateButton();
@@ -32,5 +35,12 @@ public class DDDungeonCardLeisure_Camping : DDDungeonCardLeisure
         });
 
         base.DisplayLeisure(area);
+    }
+
+    public void CardSelected(DDCardBase selectedCard)
+    {
+        SingletonHolder.Instance.Dungeon.RemoveCardFromDeck(selectedCard);
+        SingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(CardSelected);
+        SingletonHolder.Instance.Dungeon.DisplayDeckClosed();
     }
 }

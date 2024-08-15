@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class DDDungeon : MonoBehaviour
 {
+    // The current card, so we don't add it to discard before it is finished.
+    private DDDungeonCardBase currentDungeonCard = null;
     // Dungeon Deck
     private List<DDDungeonCardBase> dungeonDeck = new List<DDDungeonCardBase>();
     // Dungeon Discard
@@ -151,6 +153,12 @@ public class DDDungeon : MonoBehaviour
     }
 
     #region Dungeon Deck Related
+    public void RemoveCardFromDungeonDiscard(DDDungeonCardBase card)
+    {
+        dungeonDiscard.Remove(card);
+        dungeonDiscardCount.text = dungeonDiscard.Count.ToString();
+    }
+
     public void AddCardToDungeonDeck(DDDungeonCardBase card)
     {
         dungeonDeck.Add(card);
@@ -187,6 +195,13 @@ public class DDDungeon : MonoBehaviour
 
     public void PromptDungeonCard()
     {
+        if(currentDungeonCard != null)
+        {
+            dungeonDiscard.Add(currentDungeonCard);
+            dungeonDiscardCount.text = dungeonDiscard.Count.ToString();
+            currentDungeonCard = null;
+        }
+
         TurnOffAreas();
 
         // Do something based on where it comes from?
@@ -199,8 +214,8 @@ public class DDDungeon : MonoBehaviour
         // Do something here maybe that modifies the card selected
         dungeonDeck.Remove(card);
         dungeonDeckCount.text = dungeonDeck.Count.ToString();
-        dungeonDiscard.Add(card);
-        dungeonDiscardCount.text = dungeonDiscard.Count.ToString();
+
+        currentDungeonCard = card;
 
         switch (card.Type)
         {
@@ -282,6 +297,13 @@ public class DDDungeon : MonoBehaviour
         playerDeckCount.text = playerDeck.Count.ToString();
 
         yield return new WaitForSeconds(.25f);
+    }
+
+    // TODO Probably remove by index?
+    public void RemoveCardFromDeck(DDCardBase card)
+    {
+        playerDeck.Remove(card);
+        playerDeckCount.text = playerDeck.Count.ToString();
     }
     #endregion
 

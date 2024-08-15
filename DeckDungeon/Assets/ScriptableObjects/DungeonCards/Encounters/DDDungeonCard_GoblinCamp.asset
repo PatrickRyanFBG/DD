@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Its a camp full of goblins!
   testingHasKey: 0
   testingHasChest: 0
-  goldToGive: 100
+  goldToGive: 50
   cardsToShuffleInAfter: []
   enemies:
   - amount: 3

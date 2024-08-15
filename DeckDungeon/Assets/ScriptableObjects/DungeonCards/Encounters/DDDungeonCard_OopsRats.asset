@@ -18,7 +18,7 @@ MonoBehaviour:
   description: It was the rats all a long.
   testingHasKey: 0
   testingHasChest: 0
-  goldToGive: 50
+  goldToGive: 25
   cardsToShuffleInAfter: []
   enemies:
   - amount: 7
