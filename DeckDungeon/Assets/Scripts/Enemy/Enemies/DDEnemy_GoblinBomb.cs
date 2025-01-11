@@ -39,7 +39,7 @@ public class DDEnemyAction_Explode : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        SingletonHolder.Instance.Dungeon.DoDamage(damage);
+        DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(damage);
         enemy.DoDamage(damage);
 
         yield return new WaitForSeconds(1f);
@@ -52,6 +52,6 @@ public class DDEnemyAction_Explode : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Explode;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Explode;
     }
 }

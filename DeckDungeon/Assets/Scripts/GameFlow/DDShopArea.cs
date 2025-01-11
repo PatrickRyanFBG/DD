@@ -101,9 +101,9 @@ public class DDShopArea : MonoBehaviour
                 {
                     case DDCardShownShop:
                         DDCardShownShop cardShown = currentlyHovered as DDCardShownShop;
-                        if (SingletonHolder.Instance.Dungeon.HasEnoughGold(cardShown.CurrentPrice))
+                        if (DDGamePlaySingletonHolder.Instance.Dungeon.HasEnoughGold(cardShown.CurrentPrice))
                         {
-                            SingletonHolder.Instance.Dungeon.AddOrRemoveGold(-cardShown.CurrentPrice);
+                            DDGamePlaySingletonHolder.Instance.Dungeon.AddOrRemoveGold(-cardShown.CurrentPrice);
 
                             Debug.Log(cardShown.CurrentCard.name);
                             cardShown.gameObject.SetActive(false);
@@ -124,7 +124,7 @@ public class DDShopArea : MonoBehaviour
                             // xdd
                             Vector3 worldSpace = mainUICamera.ScreenToWorldPoint(screenSpace);
 
-                            SingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, worldSpace);
+                            DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, worldSpace);
                         }
                         break;
                         //case DDDungeonCardShown:
@@ -143,7 +143,7 @@ public class DDShopArea : MonoBehaviour
         currentShop.DisplayShop(this);
 
         //int amountOfCards = Random.Range(0, cards.Length);
-        List<DDCardBase> generatedCards = SingletonHolder.Instance.CardLibrary.GenerateValkyrieCards(cards.Length);
+        List<DDCardBase> generatedCards = DDGamePlaySingletonHolder.Instance.CardLibrary.GenerateValkyrieCards(cards.Length);
         for (int i = 0; i < generatedCards.Count; i++)
         {
             cards[i].SetUpShopCard(generatedCards[i]);
@@ -152,6 +152,6 @@ public class DDShopArea : MonoBehaviour
 
     public void CloseShop()
     {
-        SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+        DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
     }
 }

@@ -1,8 +1,28 @@
 NOTE FOR LATER:
+	Create Second Class - Mage of Sorts
+	New Relics
+
+	Start Screen
+		> Play
+		> 
+	Pre Game
+		> Select Class
+			> Starting Deck
+				> Dungeon Deck
+	Starting Deck
+		> Shows the 12~ cards
+			> Click To Remove
+		> Look at Collection
+			> Click To Add
+		> Adventure
+	Dungeon Deck
+		> Starter
+		> Additional
+		> Start
+	Game Play Loop
 
 
-
-
+	Gotta create a better way to do quests than to write a scriptable object for each quest specifically, or I can but feels like there has to be a better way without relying on some sort of scripting language
 
 
 	Gotta do something with enemies turns so that way they can be destroyed mid turn and not fuck it up. So destroy as part of clean up maybe?

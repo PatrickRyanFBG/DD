@@ -14,7 +14,7 @@ public class DDCard_VALK_Barricade : DDCard_VALKBase
         DDLocation loc = selections[0] as DDLocation;
         if (loc != null)
         {
-            SingletonHolder.Instance.Board.SpawnEnemy(loc.Coord.x, loc.Coord.y, barriade);
+            DDGamePlaySingletonHolder.Instance.Board.SpawnEnemy(loc.Coord.x, loc.Coord.y, barriade);
         }
 
         yield return null;

@@ -10,13 +10,13 @@ public class DDArtifact_Hyperactive : DDArtifactBase
 
     public override void Equipped()
     {
-        SingletonHolder.Instance.Player.GainedMomentum.AddListener(GainedMomentum);
+        DDGamePlaySingletonHolder.Instance.Player.GainedMomentum.AddListener(GainedMomentum);
     }
 
     private void GainedMomentum()
     {
         List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
-        SingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
 
         for (int i = 0; i < allEnemies.Count; i++)
         {

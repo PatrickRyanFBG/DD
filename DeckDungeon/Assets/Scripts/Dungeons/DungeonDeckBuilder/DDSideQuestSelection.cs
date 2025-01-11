@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class DDSideQuestSelection : MonoBehaviour
+{
+    [SerializeField]
+    private RawImage heroShotImage;
+    public RawImage HeroShotImage { get => heroShotImage; }
+
+    [SerializeField]
+    private TextMeshProUGUI sideQuestName;
+    public TextMeshProUGUI SideQuestName { get => sideQuestName; }
+
+    [SerializeField]
+    private TextMeshProUGUI sideQuestDescription;
+    public TextMeshProUGUI SideQuestDescription { get => sideQuestDescription; }
+
+    [SerializeField]
+    private Toggle selectionButton;
+    public Toggle SelectionButton { get => selectionButton; }
+}

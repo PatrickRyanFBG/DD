@@ -37,10 +37,11 @@ public class DDShowDeckArea : MonoBehaviour
     public UnityEngine.Events.UnityEvent<DDCardBase> CardSelectedCallback;
     public UnityEngine.Events.UnityEvent<DDDungeonCardBase> DungeonCardSelectedCallback;
 
+    public UnityEngine.Events.UnityEvent OnClose; 
+
     public void CloseArea()
     {
-        SingletonHolder.Instance.Dungeon.DisplayDeckClosed();
-        SingletonHolder.Instance.PlayerSelector.BlockClicks(false);
+        OnClose?.Invoke();
     }
 
     private void Update()
@@ -193,7 +194,10 @@ public class DDShowDeckArea : MonoBehaviour
             usedDungeonCards.RemoveAt(i);
         }
 
-        SingletonHolder.Instance.PlayerSelector.BlockClicks(true);
+        if (DDGamePlaySingletonHolder.Instance != null)
+        {
+            DDGamePlaySingletonHolder.Instance.PlayerSelector.BlockClicks(true);
+        }
     }
 
     public void ShowDungeonDeck(List<DDDungeonCardBase> cardsToShow)

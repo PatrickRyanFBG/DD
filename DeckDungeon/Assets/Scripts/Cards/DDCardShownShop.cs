@@ -25,13 +25,13 @@ public class DDCardShownShop : DDCardShown
 
     private void OnEnable()
     {
-        SingletonHolder.Instance.Dungeon.GoldAmountChanged.AddListener(GoldAmountChanged);
-        GoldAmountChanged(SingletonHolder.Instance.Dungeon.GoldAmount);
+        DDGamePlaySingletonHolder.Instance.Dungeon.GoldAmountChanged.AddListener(GoldAmountChanged);
+        GoldAmountChanged(DDGamePlaySingletonHolder.Instance.Dungeon.GoldAmount);
     }
 
     private void OnDisable()
     {
-        SingletonHolder.Instance.Dungeon.GoldAmountChanged.RemoveListener(GoldAmountChanged);
+        DDGamePlaySingletonHolder.Instance.Dungeon.GoldAmountChanged.RemoveListener(GoldAmountChanged);
     }
 
     public void GoldAmountChanged(int amount)

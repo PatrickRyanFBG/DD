@@ -53,14 +53,14 @@ public class DDEnemy_GoblinTinkerer : DDEnemyBase
                 randY = (int)actingCoords.y + randY;
 
                 if (randX < 0 ||
-                    randX >= SingletonHolder.Instance.Board.ColumnsCount ||
+                    randX >= DDGamePlaySingletonHolder.Instance.Board.ColumnsCount ||
                     randY < 0 ||
-                    randY >= SingletonHolder.Instance.Board.RowCount)
+                    randY >= DDGamePlaySingletonHolder.Instance.Board.RowCount)
                 {
                     continue;
                 }
 
-                if (SingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
+                if (DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
                 {
                     bombAction = new DDEnemyAction_SpawnEnemy(bombEnemy, new Vector2(randX, randY), bombIcon);
                     break;

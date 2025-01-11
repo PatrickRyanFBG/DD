@@ -175,7 +175,7 @@ public class DDEncounter : MonoBehaviour
 
     private IEnumerator DoMonstersAct()
     {
-        SingletonHolder.Instance.Board.DoAllEffects();
+        DDGamePlaySingletonHolder.Instance.Board.DoAllEffects();
 
         // Something destroyed this enemy mid action (probably bombs exploding for now).
         // So we are going backwards for now for safety
@@ -192,9 +192,9 @@ public class DDEncounter : MonoBehaviour
 
     private void DoEncounterEnd()
     {
-        SingletonHolder.Instance.Board.ClearAllEffects();
+        DDGamePlaySingletonHolder.Instance.Board.ClearAllEffects();
         gameObject.SetActive(false);
-        SingletonHolder.Instance.Dungeon.EncounterCompleted(currentEncounter);
+        DDGamePlaySingletonHolder.Instance.Dungeon.EncounterCompleted(currentEncounter);
     }
 
     public void PlayerEndedTurn()
@@ -218,7 +218,7 @@ public class DDEncounter : MonoBehaviour
             case EEncounterPhase.MonsterForecast:
                 break;
             case EEncounterPhase.PlayersTurn:
-                SingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
+                DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                 player.ResetMomentum();
                 player.DrawFullHand();
                 break;

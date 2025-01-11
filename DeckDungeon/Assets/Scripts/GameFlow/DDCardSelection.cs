@@ -27,12 +27,12 @@ public class DDCardSelection : MonoBehaviour
 
     private void OnEnable()
     {
-        SingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
     }
 
     private void OnDisable()
     {
-        SingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
     }
 
     public void EndCardSelection()
@@ -41,22 +41,22 @@ public class DDCardSelection : MonoBehaviour
         {
             if (fromEncounter.TestingHasChest)
             {
-                SingletonHolder.Instance.Dungeon.StartEvent(chestEvent);
-                SingletonHolder.Instance.Dungeon.HasKey = false;
+                DDGamePlaySingletonHolder.Instance.Dungeon.StartEvent(chestEvent);
+                DDGamePlaySingletonHolder.Instance.Dungeon.HasKey = false;
             }
             else
             {
                 if (fromEncounter.TestingHasKey)
                 {
-                    SingletonHolder.Instance.Dungeon.HasKey = true;
+                    DDGamePlaySingletonHolder.Instance.Dungeon.HasKey = true;
                 }
 
-                SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+                DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
             }
         }
         else
         {
-            SingletonHolder.Instance.Dungeon.PromptDungeonCard();
+            DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
         }
     }
 
@@ -74,13 +74,13 @@ public class DDCardSelection : MonoBehaviour
     {
         // Generate Three Random Cards
         int amount = 3;
-        List<DDCardBase> cards = SingletonHolder.Instance.CardLibrary.GenerateValkyrieCards(amount);
+        List<DDCardBase> cards = DDGamePlaySingletonHolder.Instance.CardLibrary.GenerateValkyrieCards(amount);
         for (int i = 0; i < amount; i++)
         {
             playerCards[i].SetUpCard(cards[i]);
         }
 
-        SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(playerCardLayer);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(playerCardLayer);
 
         fromEncounter = encounterCard;
 
@@ -111,7 +111,7 @@ public class DDCardSelection : MonoBehaviour
             playerCards[i].SetUpCard(specificCards[i]);
         }
 
-        SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(playerCardLayer);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(playerCardLayer);
         extraImage.gameObject.SetActive(false);
 
         gameObject.SetActive(true);
@@ -119,6 +119,6 @@ public class DDCardSelection : MonoBehaviour
 
     public void CardSelected(DDCardShown cardShown)
     {
-        SingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, cardShown.transform.position);
+        DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, cardShown.transform.position);
     }
 }

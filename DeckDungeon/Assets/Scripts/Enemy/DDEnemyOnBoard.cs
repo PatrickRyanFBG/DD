@@ -135,7 +135,7 @@ public class DDEnemyOnBoard : DDSelection
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            SingletonHolder.Instance.Encounter.EnemyDefeated(this);
+            DDGamePlaySingletonHolder.Instance.Encounter.EnemyDefeated(this);
             Destroy(gameObject);
         }
         else
@@ -211,7 +211,7 @@ public class DDEnemyOnBoard : DDSelection
             Vector2 loc = Vector2.zero;
             if (nextActions[i].HasLocationBasedEffects(ref loc))
             {
-                SingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
+                DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
             }
             yield return nextActions[i].ExecuteAction(this);
         }
@@ -240,7 +240,7 @@ public class DDEnemyOnBoard : DDSelection
             Vector2 loc = Vector2.zero;
             if (nextActions[i].HasLocationBasedEffects(ref loc))
             {
-                SingletonHolder.Instance.Board.GetLocation(loc).Highlight();
+                DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Highlight();
             }
             actionDesc += nextActions[i].GetDescription();
 
@@ -250,7 +250,7 @@ public class DDEnemyOnBoard : DDSelection
             }
         }
 
-        SingletonHolder.Instance.Encounter.SetActionDescription(actionDesc);
+        DDGamePlaySingletonHolder.Instance.Encounter.SetActionDescription(actionDesc);
     }
 
     public void NonActionableUnhover()
@@ -260,11 +260,11 @@ public class DDEnemyOnBoard : DDSelection
             Vector2 loc = Vector2.zero;
             if (nextActions[i].HasLocationBasedEffects(ref loc))
             {
-                SingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
+                DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
             }
         }
 
-        SingletonHolder.Instance.Encounter.SetActionDescription("");
+        DDGamePlaySingletonHolder.Instance.Encounter.SetActionDescription("");
     }
 
     public bool IsPlanningToMove()

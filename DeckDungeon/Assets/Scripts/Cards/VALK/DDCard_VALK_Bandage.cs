@@ -12,7 +12,7 @@ public class DDCard_VALK_Bandage : DDCard_VALKBase
     {
         yield return base.ExecuteCard(selections);
 
-        SingletonHolder.Instance.Dungeon.HealDamage(healAmount);
+        DDGamePlaySingletonHolder.Instance.Dungeon.HealDamage(healAmount);
 
         yield return null;
     }

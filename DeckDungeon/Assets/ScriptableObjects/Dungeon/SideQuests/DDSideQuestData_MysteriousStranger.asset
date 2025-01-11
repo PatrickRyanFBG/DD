@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b8c96a83266d6478d9f1cde715f44f, type: 3}
+  m_Name: DDSideQuestData_MysteriousStranger
+  m_EditorClassIdentifier: 
+  sideQuestName: 'Mysterious Stranger '
+  sideQuestDecsription:
+  - A mysterious stranger has been lurking around the goblins.
+  - B
+  - C
+  heroShots:
+  - {fileID: 2800000, guid: cffa07f2a582fca44952385bafb464f0, type: 3}
+  - {fileID: 2800000, guid: cffa07f2a582fca44952385bafb464f0, type: 3}
+  - {fileID: 2800000, guid: cffa07f2a582fca44952385bafb464f0, type: 3}
+  cards:
+  - {fileID: 11400000, guid: 32ee8b7e7cca1cc4e84e6cfa267e419a, type: 2}
+  - {fileID: 11400000, guid: 8a9f3be5c48cbab478d9ecef3d24205c, type: 2}
+  - {fileID: 11400000, guid: b74218ea86b44d245b08729dab8d973d, type: 2}

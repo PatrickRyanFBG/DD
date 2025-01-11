@@ -13,7 +13,7 @@ public class DDCard_VALK_ImproviseWeapon : DDCard_VALKBase
         yield return base.ExecuteCard(selections);
 
         DDCardInHand card = selections[0] as DDCardInHand;
-        SingletonHolder.Instance.Player.DiscardCard(card);
+        DDGamePlaySingletonHolder.Instance.Player.DiscardCard(card);
 
         yield return new WaitForSeconds(.25f);
 

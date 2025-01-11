@@ -38,12 +38,19 @@ public class DDPlayerSelector : MonoBehaviour
 
     private void OnEnable()
     {
-        SingletonHolder.Instance.Dungeon.PhaseChanged.AddListener(DungeonPhaseChanged);
+        if (DDGamePlaySingletonHolder.Instance != null)
+        {
+            DDGamePlaySingletonHolder.Instance.Dungeon.PhaseChanged.AddListener(DungeonPhaseChanged);
+            DDGamePlaySingletonHolder.Instance.ShowDeckArea.OnClose.AddListener(() => { BlockClicks(false); });
+        }
     }
 
     private void OnDisable()
     {
-        SingletonHolder.Instance.Dungeon.PhaseChanged.RemoveListener(DungeonPhaseChanged);
+        if (DDGamePlaySingletonHolder.Instance != null)
+        {
+            DDGamePlaySingletonHolder.Instance.Dungeon.PhaseChanged.RemoveListener(DungeonPhaseChanged);
+        }
     }
 
     private void DungeonPhaseChanged(EDungeonPhase toPhase)

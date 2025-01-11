@@ -14,7 +14,7 @@ public abstract class DDCard_VALKBase : DDCardBase
 
     public override bool SelectCard()
     {
-        return SingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
+        return DDGamePlaySingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
     }
 
     public override void DisplayInformation(DDCardInHand cardInHand)
@@ -28,12 +28,12 @@ public abstract class DDCard_VALKBase : DDCardBase
     {
         if(momentumGain > 0)
         {
-            SingletonHolder.Instance.Player.AddToMomentum(momentumGain);
+            DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(momentumGain);
         }
 
         if(momentumCost > 0)
         {
-            SingletonHolder.Instance.Player.RemoveFromMomentum(momentumCost);
+            DDGamePlaySingletonHolder.Instance.Player.RemoveFromMomentum(momentumCost);
         }
 
         yield return null;

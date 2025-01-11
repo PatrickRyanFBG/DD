@@ -14,7 +14,7 @@ public class DDCard_VALK_ArmorUp : DDCard_VALKBase
 
         DDColumn col = selections[0] as DDColumn;
 
-        SingletonHolder.Instance.Player.AddArmorToLane(armorAmount, col.Index);
+        DDGamePlaySingletonHolder.Instance.Player.AddArmorToLane(armorAmount, col.Index);
 
         yield return null;
     }

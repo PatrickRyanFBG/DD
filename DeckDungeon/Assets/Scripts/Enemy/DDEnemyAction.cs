@@ -35,13 +35,13 @@ public class DDEnemyAction_Move : DDEnemyActionBase
         switch (moveDirection)
         {
             case EMoveDirection.Up:
-                return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Up;
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Up;
             case EMoveDirection.Right:
-                return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Right;
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Right;
             case EMoveDirection.Down:
-                return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Down;
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Down;
             case EMoveDirection.Left:
-                return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Left;
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Move_Left;
         }
 
         return null;
@@ -49,7 +49,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        yield return SingletonHolder.Instance.Board.MoveEnemy(enemy, moveDirection, 1, false);
+        yield return DDGamePlaySingletonHolder.Instance.Board.MoveEnemy(enemy, moveDirection, 1, false);
     }
 
     public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
@@ -66,13 +66,13 @@ public class DDEnemyAction_Move : DDEnemyActionBase
 
     private static bool CanMoveToSpot(int turnNumber, Vector2 checkLoc)
     {
-        if(checkLoc.x < 0 || checkLoc.x > SingletonHolder.Instance.Board.ColumnCountIndex ||
-            checkLoc.y < 0 || checkLoc.y > SingletonHolder.Instance.Board.RowCountIndex)
+        if(checkLoc.x < 0 || checkLoc.x > DDGamePlaySingletonHolder.Instance.Board.ColumnCountIndex ||
+            checkLoc.y < 0 || checkLoc.y > DDGamePlaySingletonHolder.Instance.Board.RowCountIndex)
         {
             return false;
         }
 
-        DDEnemyOnBoard eob = SingletonHolder.Instance.Board.GetEnemyAtLocation(checkLoc);
+        DDEnemyOnBoard eob = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(checkLoc);
 
         bool canMove = false;
 
@@ -130,7 +130,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
 
         if(attacking)
         {
-            if(SingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
+            if(DDGamePlaySingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
             {
                 canMoveToGoal = MoveRandomlyLeftOrRight(actingEnemy, ref goalDirection);
             }
@@ -203,11 +203,11 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
 
         yield return new WaitForSeconds(1f);
 
-        int leftOverDamage = SingletonHolder.Instance.Player.DealDamageInLane(damage + enemy.Dexterity, (int)enemy.CurrentLocaton.Coord.x);
+        int leftOverDamage = DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(damage + enemy.Dexterity, (int)enemy.CurrentLocaton.Coord.x);
 
         if(leftOverDamage > 0)
         {
-            SingletonHolder.Instance.Dungeon.DoDamage(leftOverDamage);
+            DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(leftOverDamage);
         }
 
         GameObject.Destroy(attackPrefab);
@@ -217,7 +217,7 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Melee;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Melee;
     }
 
     public override string GetDescription()
@@ -248,7 +248,7 @@ public class DDEnemyAction_SpawnEnemy : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        SingletonHolder.Instance.Board.SpawnEnemy(atLocation.x, atLocation.y, enemyToSpawn);
+        DDGamePlaySingletonHolder.Instance.Board.SpawnEnemy(atLocation.x, atLocation.y, enemyToSpawn);
 
         yield return new WaitForSeconds(1f);
     }
@@ -292,7 +292,7 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        DDEnemyOnBoard target = SingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
+        DDEnemyOnBoard target = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
         if(target != null)
         {
             target.DoHeal(healAmount);
@@ -303,7 +303,7 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Heal;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Heal;
     }
 
     public override bool HasLocationBasedEffects(ref Vector2 target)
@@ -347,7 +347,7 @@ public class DDEnemyAction_BuffDexterity : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
     }
 
     public override string GetDescription()
@@ -378,7 +378,7 @@ public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        DDEnemyOnBoard target = SingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
+        DDEnemyOnBoard target = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
         if (target != null)
         {
             target.GainDexterity(buffAmount);
@@ -389,7 +389,7 @@ public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return SingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
     }
 
     public override bool HasLocationBasedEffects(ref Vector2 target)

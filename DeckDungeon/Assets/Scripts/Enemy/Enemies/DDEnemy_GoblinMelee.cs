@@ -38,7 +38,7 @@ public class DDEnemy_GoblinMelee : DDEnemyBase
         {
             bool shouldMove = false;
 
-            if (SingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
+            if (DDGamePlaySingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
             {
                 // If this lane is armored we have a 90% chance to move, but 10% chance to double attack
                 shouldMove = Random.Range(0, 10) < 9;

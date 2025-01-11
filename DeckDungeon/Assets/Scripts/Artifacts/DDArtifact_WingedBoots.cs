@@ -12,14 +12,14 @@ public class DDArtifact_WingedBoots : DDArtifactBase
     public override void Equipped()
     {
         //throw new System.NotImplementedException();
-        SingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
     }
 
     private void EncounterPhaseChanged(EEncounterPhase phase)
     {
         if(phase == EEncounterPhase.PlayersTurn)
         {
-            SingletonHolder.Instance.Player.AddToMomentum(momentumGain);
+            DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(momentumGain);
         }
     }
 }

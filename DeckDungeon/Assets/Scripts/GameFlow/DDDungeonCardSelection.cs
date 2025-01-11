@@ -17,12 +17,12 @@ public class DDDungeonCardSelection : MonoBehaviour
 
     private void OnEnable()
     {
-        SingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
     }
 
     private void OnDisable()
     {
-        SingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
     }
 
     private void SomethingSelected(DDSelection selection)
@@ -36,7 +36,7 @@ public class DDDungeonCardSelection : MonoBehaviour
 
     public void DungeonCardSelected(DDDungeonCardShown cardShown)
     {
-        SingletonHolder.Instance.Dungeon.DungeonCardSelected(cardShown.CurrentDungeonCard);
+        DDGamePlaySingletonHolder.Instance.Dungeon.DungeonCardSelected(cardShown.CurrentDungeonCard);
     }
 
     private void Update()
@@ -90,7 +90,7 @@ public class DDDungeonCardSelection : MonoBehaviour
             dungeonCards[2].gameObject.SetActive(false);
         }
 
-        SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(dungeonCardLayer);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(dungeonCardLayer);
 
         gameObject.SetActive(true);
     }

@@ -49,12 +49,12 @@ public class DDPlayer_Match : MonoBehaviour
 
     private void OnEnable()
     {
-        SingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
     }
 
     private void OnDisable()
     {
-        SingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
         cardResolving = null;
     }
 
@@ -74,7 +74,7 @@ public class DDPlayer_Match : MonoBehaviour
 
     public void ShuffleInDeck()
     {
-        deck.ShuffleInCards(SingletonHolder.Instance.Dungeon.PlayerDeck);
+        deck.ShuffleInCards(DDGamePlaySingletonHolder.Instance.Dungeon.PlayerDeck);
     }
 
     public void SetHandSizeToDefault()
@@ -96,12 +96,12 @@ public class DDPlayer_Match : MonoBehaviour
                 arrow.gameObject.SetActive(true);
             }
 
-            arrow.SetPositions(selectedCardLocation.position + Vector3.up, SingletonHolder.Instance.PlayerSelector.GetMousePos());
+            arrow.SetPositions(selectedCardLocation.position + Vector3.up, DDGamePlaySingletonHolder.Instance.PlayerSelector.GetMousePos());
 
             if (Input.GetMouseButtonDown(1))
             {
                 selectedCard.CardDeselected();
-                SingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
+                DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                 selectedCard = null;
             }
         }
@@ -188,7 +188,7 @@ public class DDPlayer_Match : MonoBehaviour
 
         if (selectedCard == null)
         {
-            if (SingletonHolder.Instance.Encounter.CurrentPhase == EEncounterPhase.PlayersTurn)
+            if (DDGamePlaySingletonHolder.Instance.Encounter.CurrentPhase == EEncounterPhase.PlayersTurn)
             {
                 DDCardInHand card = selection as DDCardInHand;
                 if (card != null)
@@ -199,7 +199,7 @@ public class DDPlayer_Match : MonoBehaviour
                         cardTargets = selectedCard.GetCardTarget();
                         cardSelections = new List<DDSelection>(cardTargets.Count);
                         currentTargetIndex = 0;
-                        SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
                     }
                 }
             }
@@ -222,12 +222,12 @@ public class DDPlayer_Match : MonoBehaviour
                     {
                         discard.CardDiscarded(selectedCard);
                     }
-                    SingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
+                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                     selectedCard = null;
                 }
                 else
                 {
-                    SingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetTargetTypeLayer());
                 }
             }
         }

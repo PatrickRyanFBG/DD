@@ -105,6 +105,14 @@ public class DDDungeon : MonoBehaviour
 
     private void Awake()
     {
+        if(DDGlobalManager.Instance.FromMainMenu)
+        {
+
+        }
+        else
+        {
+
+        }
         maxHealth = startingHealth;
         currentHealth = maxHealth;
 
@@ -122,6 +130,8 @@ public class DDDungeon : MonoBehaviour
         goldText.text = goldAmount.ToString();
 
         PromptDungeonCard();
+
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.OnClose.AddListener(DisplayDeckClosed);
     }
 
     private void TurnOffAreas()
@@ -413,7 +423,7 @@ public class DDDungeon : MonoBehaviour
 
         if (currentDungeonPhase == EDungeonPhase.Encounter)
         {
-            showDeckArea.ShowPlayerDeck(SingletonHolder.Instance.Player.CurrentDeck);
+            showDeckArea.ShowPlayerDeck(DDGamePlaySingletonHolder.Instance.Player.CurrentDeck);
         }
         else
         {
@@ -427,7 +437,7 @@ public class DDDungeon : MonoBehaviour
         {
             TurnOffAreas();
             showDeckArea.gameObject.SetActive(true);
-            showDeckArea.ShowPlayerDeck(SingletonHolder.Instance.Player.CurrentDiscard);
+            showDeckArea.ShowPlayerDeck(DDGamePlaySingletonHolder.Instance.Player.CurrentDiscard);
         }
         else
         {

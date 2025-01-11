@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 17d83da3fad005249b4f497bcd68e730
+  - enabled: 1
+    path: Assets/Scenes/PlayerDeckBuilder.unity
+    guid: f70415d309d5c134eaabd63f3b88b694
+  - enabled: 1
+    path: Assets/Scenes/DungeonDeckBuilder.unity
+    guid: 785109f2bd27ec04da68b1d200399608
+  - enabled: 1
     path: Assets/Scenes/Rotated.unity
     guid: 2c7ef82e8e1922742ae5729e908d6d7c
   m_configObjects: {}

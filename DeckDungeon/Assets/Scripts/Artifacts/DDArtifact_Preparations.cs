@@ -10,14 +10,14 @@ public class DDArtifact_Preparations : DDArtifactBase
 
     public override void Equipped()
     {
-        SingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
     }
 
     private void EncounterPhaseChanged(EEncounterPhase phase)
     {
         if (phase == EEncounterPhase.EncounterStart)
         {
-            SingletonHolder.Instance.Player.AdjustHandSize(extraDrawCount);
+            DDGamePlaySingletonHolder.Instance.Player.AdjustHandSize(extraDrawCount);
         }
     }
 }

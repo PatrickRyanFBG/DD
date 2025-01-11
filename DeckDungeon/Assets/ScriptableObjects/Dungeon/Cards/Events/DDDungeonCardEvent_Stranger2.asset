@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c0feacc87ddca419c2bb1469bad590, type: 3}
+  m_Name: DDDungeonCardEvent_Stranger2
+  m_EditorClassIdentifier: 
+  type: 1
+  image: {fileID: 2800000, guid: c6910b27daf4bfb449a8bfaf9e2060f7, type: 3}
+  name: Quest
+  description: It's a Quest!
+  eventName: Mysterious Stranger
+  eventDescription: You come accross a mystious stranger at a camp. Upon seeing you
+    they dart away.
+  eventImage: {fileID: 2800000, guid: cffa07f2a582fca44952385bafb464f0, type: 3}
+  secondDescription: This is an example of a cross run quest. This quest would add
+    a special encounter card, then after defeating that the next quest card would
+    be shuffled into your next run. So quests and story happens both in run but also
+    between, after, and out of runs.

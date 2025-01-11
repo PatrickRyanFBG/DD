@@ -44,7 +44,7 @@ public class DDBoard : MonoBehaviour
         if(columns[x].Locations[y].GetEnemy() == null)
         {
             DDEnemyOnBoard currentEnemy = Instantiate(dummyPrefab, transform);
-            SingletonHolder.Instance.Encounter.RegisterEnemy(currentEnemy);
+            DDGamePlaySingletonHolder.Instance.Encounter.RegisterEnemy(currentEnemy);
             currentEnemy.SetUpEnemy(enemy);
             columns[x].Locations[y].SnapEnemyToHere(currentEnemy);
         }
