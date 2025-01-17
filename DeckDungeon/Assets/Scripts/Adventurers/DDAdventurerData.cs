@@ -19,19 +19,32 @@ public class DDAdventurerData : DDScriptableObject
     private Texture gamePlayVisuals;
 
     [SerializeField]
+    private int startingHealth;
+    public int StartingHealth { get => startingHealth; }
+
+    [SerializeField]
     private int startingStrength;
+    public int StartingStrength { get => startingStrength; set => startingStrength = value; }
 
     [SerializeField]
     private int startingDexterity;
+    public int StartingDexterity { get => startingDexterity; set => startingDexterity = value; }
 
     [SerializeField]
     private int startingIntelligence;
+    public int StartingIntelligence { get => startingIntelligence; set => startingIntelligence = value; }
+
+    [SerializeField]
+    private int startingGold;
+    public int StartingGold { get => startingGold; set => startingGold = value; }
 
     [SerializeField]
     private List<DDArtifactBase> artifacts;
+    public List<DDArtifactBase> Artifacts { get => artifacts; set => artifacts = value; }
 
     [SerializeField]
     private List<DDCardBase> cards;
+    public List<DDCardBase> Cards { get => cards; }
 
     [SerializeField]
     private int[] startingDeckByIndex;
@@ -39,6 +52,9 @@ public class DDAdventurerData : DDScriptableObject
     [Header("Testing")]
     [SerializeField]
     private bool comingSoon;
+
+    [System.NonSerialized] 
+    private bool didInit;
 
     public void SetUpUI(DDAdventurerSelection selectionUI)
     {
@@ -54,6 +70,13 @@ public class DDAdventurerData : DDScriptableObject
 
     public void RuntimeInit()
     {
+        if(didInit)
+        {
+            return;
+        }
+
+        didInit = true;
+
         string lastStartingDeck = PlayerPrefs.GetString(adventureName + PlayerPrefKeys.StartingDeckPostfix, "");
         if (string.IsNullOrEmpty(lastStartingDeck))
         {
@@ -79,7 +102,27 @@ public class DDAdventurerData : DDScriptableObject
 
         for (int i = 0; i < indexes.Length; i++)
         {
-            startingDeck.Add(cards[indexes[i]]);
+            // Now deep cloned to allow for in-game modifications
+            startingDeck.Add(cards[indexes[i]].Clone());
         }
+    }
+
+    public List<DDCardBase> GenerateCards(int amount)
+    {
+        List<DDCardBase> cards = new List<DDCardBase>(amount);
+
+        for (int i = 0; i < amount; i++)
+        {
+            int randNum = Random.Range(0, cards.Count);
+
+            while (cards.Contains(cards[randNum]))
+            {
+                randNum = Random.Range(0, cards.Count);
+            }
+
+            cards.Add(cards[randNum]);
+        }
+
+        return cards;
     }
 }

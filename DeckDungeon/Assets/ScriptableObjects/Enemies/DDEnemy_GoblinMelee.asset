@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 7f87244ee549c5a4486524f8e68c4498, type: 3}
   StartingHealth: 10
+  StartingArmor: 0
   enemyName: Goblin
+  immovable: 0
+  friendly: 0
   damage: 5
   dexGain: 3
+  woundCard: {fileID: 11400000, guid: 3a78ae5e23217b0449300b6bb525b6f2, type: 2}

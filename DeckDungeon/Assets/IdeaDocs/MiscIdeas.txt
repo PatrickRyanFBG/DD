@@ -1,6 +1,6 @@
 Card Attributes
 	- Locked
-		- Is not discarded at end of turn
+		- Cannot be used and not discarded
 	- Drawn:
 		- Does an effect when Drawn
 	- Discarded:
@@ -8,13 +8,31 @@ Card Attributes
 	- Temporary
 		- If not used disepears
 
-Enemy Attributes
-	- Vulnerable
-	- Weak
-	- Bleed
-	- Immobile
-	- Dex
+Player Attributes
+	- 
 
+Enemy Attributes
+	- Immobile (cannot be moved)
+	- Enemy Add Player to Deck/Discard
+	- Attack * N
+	- Move * N
+
+Enemy and Player
+	- Vulnerable (incerase % damage taken)
+	- Weak (less % damage delt)
+	- Bleed (Ticks Damage for N turns (seperate applications))
+	- Ignite (Ticks Damage and Decreases Every Turn (stacking))
+	- Dex
+	- Int
+	- Block (Lane) (Enemy block doesn't stack, it is like temporary life)
+
+Stats
+- Strength
+	- Increase Bonk Damage
+- Dex
+	- Increase Attack Damage
+- Int
+	- Increase Elemental Damage
 
 Card Types
 	 - Action
@@ -29,10 +47,3 @@ Damage Types Physical and Magical (and Shadow?)
 
 Armor negates number of damage per stack and then decreases one stack
 
-Stats
-	- Strength
-		- Increase Bonk Damage
-	- Dex
-		- Increase Attack Damage
-	- Int
-		- Increase Spell Damage

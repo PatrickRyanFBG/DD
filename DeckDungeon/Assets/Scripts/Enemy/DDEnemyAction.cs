@@ -303,7 +303,7 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Heal;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_Heal;
     }
 
     public override bool HasLocationBasedEffects(ref Vector2 target)
@@ -347,7 +347,7 @@ public class DDEnemyAction_BuffDexterity : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_GainDexterity;
     }
 
     public override string GetDescription()
@@ -389,7 +389,7 @@ public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_GainDexterity;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_GainDexterity;
     }
 
     public override bool HasLocationBasedEffects(ref Vector2 target)
@@ -401,5 +401,117 @@ public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
     public override string GetDescription()
     {
         return "This enemy will attempt to buff dexterity a specific location for " + buffAmount;
+    }
+}
+
+public class DDEnemyAction_GainArmor : DDEnemyActionBase
+{
+    private int armorAmount;
+
+    public DDEnemyAction_GainArmor(int amount)
+    {
+        armorAmount = amount;
+    }
+    
+    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
+    {
+        text.text = armorAmount.ToString();
+        text.enabled = true;
+
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        // TODO
+        // Something with particle effects to show some feedback
+        enemy.SetArmor(armorAmount);
+
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    public override string GetDescription()
+    {
+        return "This enemy will dawn " + armorAmount + " armor";
+    }
+
+    public override Texture GetIcon()
+    {
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_GainArmor;
+    }
+}
+
+public class DDEnemyAction_AddCardTo : DDEnemyActionBase
+{
+    private int cardAmount;
+    private DDCardBase cardToAdd;
+    private ECardLocation location;
+
+    public DDEnemyAction_AddCardTo(int amount, DDCardBase card, ECardLocation toLocation)
+    {
+        cardAmount = amount;
+        cardToAdd = card;
+        location = toLocation;
+    }
+
+    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
+    {
+        text.text = cardAmount.ToString();
+        text.enabled = true;
+
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        for (int i = 0; i < cardAmount; i++)
+        {
+            switch (location)
+            {
+                case ECardLocation.Deck:
+                    break;
+                case ECardLocation.Hard:
+                    break;
+                case ECardLocation.Discard:
+                    yield return DDGamePlaySingletonHolder.Instance.Player.AddCardToDiscard(cardToAdd);
+                    break;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    public override string GetDescription()
+    {
+        return "This enemy will add " + cardAmount + " " + cardToAdd.Name + " to your " + location.ToString() + ".";
+    }
+
+    public override Texture GetIcon()
+    {
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_AddCard;
+    }
+}
+
+public class DDEnemyAction_LockRandomCard : DDEnemyActionBase
+{
+    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override string GetDescription()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override Texture GetIcon()
+    {
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_LockCard;
     }
 }

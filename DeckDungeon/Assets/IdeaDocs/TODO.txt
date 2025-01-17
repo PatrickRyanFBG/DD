@@ -1,3 +1,28 @@
+1/16
+	- Lock Card still needed (lets come back to this later)
+	- Do enemy pass
+		- STS has sort of pools for encounters so first couple encounters are easier.
+
+	Afternoon
+		- Stat system (just holding number and icon, usages of stats will be elsewhere)
+			- for Armor
+			- and Dexterity
+			- Where we put bleed and affixes?
+1/15
+	- Lock Card
+	- Test Shield
+	- Create Wound
+		- Test Add Card To Discards
+
+	I need to have some layer between DDCardBase and DDCardInHand for all 
+
+1/14
+	- Create each enemy action
+		- Gain Shield
+		- Lock Card
+		- Add Card to Discard
+		- Make a buff/debuff system? For bleed, fire, ect.
+
 NOTE FOR LATER:
 	Create Second Class - Mage of Sorts
 	New Relics

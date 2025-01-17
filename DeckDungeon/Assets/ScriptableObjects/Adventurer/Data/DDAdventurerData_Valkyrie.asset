@@ -16,9 +16,11 @@ MonoBehaviour:
   adventureDecsription: Strong in battle, strong in will.
   heroShot: {fileID: 2800000, guid: 357dd04a4390eb04ba9ac0b4cc3cd886, type: 3}
   gamePlayVisuals: {fileID: 2800000, guid: 357dd04a4390eb04ba9ac0b4cc3cd886, type: 3}
+  startingHealth: 100
   startingStrength: 5
   startingDexterity: 1
   startingIntelligence: 1
+  startingGold: 0
   artifacts:
   - {fileID: 11400000, guid: f69e792b27fd22f46bbc10184985e4e4, type: 2}
   - {fileID: 11400000, guid: 74309c6a291c2c04abb7e787fb0d000d, type: 2}

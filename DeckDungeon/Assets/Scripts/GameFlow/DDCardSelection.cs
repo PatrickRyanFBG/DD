@@ -74,7 +74,7 @@ public class DDCardSelection : MonoBehaviour
     {
         // Generate Three Random Cards
         int amount = 3;
-        List<DDCardBase> cards = DDGamePlaySingletonHolder.Instance.CardLibrary.GenerateValkyrieCards(amount);
+        List<DDCardBase> cards = DDGlobalManager.Instance.SelectedAdventurer.GenerateCards(amount);
         for (int i = 0; i < amount; i++)
         {
             playerCards[i].SetUpCard(cards[i]);

@@ -10,7 +10,7 @@ public class DDGamePlaySingletonHolder : MonoBehaviour
     public DDDungeon Dungeon;
     public DDEncounter Encounter;
     public DDBoard Board;
-    public DDCardLibrary CardLibrary;
+    //public DDCardLibrary CardLibrary;
     public DDEnemyLibrary EnemyLibrary;
     public DDPlayer_Match Player;
     public DDPlayerSelector PlayerSelector;

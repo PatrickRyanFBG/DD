@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class DDCard_VALK_DealDamage : DDCard_VALKBase
 {
     [Header("Deal Damage")]

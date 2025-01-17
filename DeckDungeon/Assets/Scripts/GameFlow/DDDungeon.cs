@@ -58,6 +58,9 @@ public class DDDungeon : MonoBehaviour
     // Artifacts/Equipment
     [Header("Testing")]
     [SerializeField]
+    private bool forceInternalData;
+
+    [SerializeField]
     private TMPro.TextMeshProUGUI healthText;
     [SerializeField]
     private TMPro.TextMeshProUGUI goldText;
@@ -105,28 +108,37 @@ public class DDDungeon : MonoBehaviour
 
     private void Awake()
     {
-        if(DDGlobalManager.Instance.FromMainMenu)
+        if(!forceInternalData)
         {
+            DDAdventurerData adventurerData = DDGlobalManager.Instance.SelectedAdventurer;
+            maxHealth = adventurerData.StartingHealth;
+            currentHealth = maxHealth;
+            
+            goldAmount = adventurerData.StartingGold;
 
+            playerDeck.AddRange(adventurerData.StartingDeck);
+
+            dungeonDeck.AddRange(DDGlobalManager.Instance.SelectedDungeon.DungeonOrder[0].Cards);
+            // Figure out side quests here
         }
         else
         {
+            maxHealth = startingHealth;
+            currentHealth = maxHealth;
 
+            dungeonDeck.AddRange(startingDungeonDeck);
+
+            playerDeck.AddRange(startingPlayerDeck);
+
+            goldAmount = startingGold;
         }
-        maxHealth = startingHealth;
-        currentHealth = maxHealth;
 
         UpdateHealthText();
 
-        dungeonDeck.AddRange(startingDungeonDeck);
-        dungeonDeckCount.text = dungeonDeck.Count.ToString();
-        
-        playerDeck.AddRange(startingPlayerDeck);
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";
-
-        goldAmount = startingGold;
+        dungeonDeckCount.text = dungeonDeck.Count.ToString();
         goldText.text = goldAmount.ToString();
 
         PromptDungeonCard();

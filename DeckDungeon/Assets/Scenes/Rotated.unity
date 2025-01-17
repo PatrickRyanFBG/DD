@@ -3725,6 +3725,7 @@ MonoBehaviour:
   GoldAmountChanged:
     m_PersistentCalls:
       m_Calls: []
+  forceInternalData: 0
   healthText: {fileID: 992226922}
   goldText: {fileID: 637257444}
   dungeonDeckCount: {fileID: 375049874}
@@ -5811,7 +5812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a83f2de0ec57a41bb69b4cb7783f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardInHandPrefab: {fileID: 4052139881940155762, guid: f518f472b7bb3cc47a4817dc01f00557, type: 3}
   numberText: {fileID: 637507297}
 --- !u!114 &732046589 stripped
 MonoBehaviour:
@@ -9233,7 +9233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1128581722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10035,6 +10035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877ead1b150b67c4ba7161f02ec6053c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardSpawnLocation: {fileID: 85134855}
   numberText: {fileID: 363666731}
 --- !u!1 &1206492631
 GameObject:
@@ -12390,7 +12391,6 @@ MonoBehaviour:
   Dungeon: {fileID: 487030055}
   Encounter: {fileID: 1161323820}
   Board: {fileID: 1598843755}
-  CardLibrary: {fileID: 1128581722}
   EnemyLibrary: {fileID: 1739157146}
   Player: {fileID: 1941480981}
   PlayerSelector: {fileID: 487030057}
@@ -13465,7 +13465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDictionary:
-    GoblinMelee: {fileID: 0}
+    GoblinMelee: {fileID: 11400000, guid: fc3d601df88156e4d98fd3ab9dd9fe5f, type: 2}
   SharedActionIconDictionary:
     Move_Up: {fileID: 2800000, guid: b7334b37fbf69d84fadc2ea5fcd85e4e, type: 3}
     Move_Right: {fileID: 2800000, guid: 174d6487df740cb45bc940ff5572f7c3, type: 3}
@@ -13473,8 +13473,11 @@ MonoBehaviour:
     Move_Left: {fileID: 2800000, guid: a610b47958b0efd41a62a3e554dae30f, type: 3}
     Attack_Melee: {fileID: 2800000, guid: baf1af08c192c1b4cac220b574ff7616, type: 3}
     Attack_Explode: {fileID: 2800000, guid: 38c0d0b63e6c6234eb9e5cbf6ed575cf, type: 3}
-    Attack_Heal: {fileID: 2800000, guid: a74bd99562f9aab4e906110616567f8d, type: 3}
-    Attack_GainDexterity: {fileID: 2800000, guid: c324c92c2e5d798438fa02591ce910eb, type: 3}
+    Action_Heal: {fileID: 2800000, guid: a74bd99562f9aab4e906110616567f8d, type: 3}
+    Action_GainDexterity: {fileID: 2800000, guid: c324c92c2e5d798438fa02591ce910eb, type: 3}
+    Action_GainArmor: {fileID: 2800000, guid: 793f872522048ce4e833989c43cc4749, type: 3}
+    Action_AddCard: {fileID: 2800000, guid: 9058583e326e347498078311e39ccabd, type: 3}
+    Action_LockCard: {fileID: 2800000, guid: 4665d0a95ae270b44bd8901693551c2e, type: 3}
 --- !u!4 &1739157147
 Transform:
   m_ObjectHideFlags: 0
@@ -14717,6 +14720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e8aa8c242abbf4dab1ad0b7d500423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardInHandPrefab: {fileID: 4052139881940155762, guid: f518f472b7bb3cc47a4817dc01f00557, type: 3}
   defaultHandSize: 5
   deck: {fileID: 730474305}
   hand: {fileID: 516181698}

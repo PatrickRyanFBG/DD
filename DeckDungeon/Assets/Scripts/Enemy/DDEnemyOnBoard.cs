@@ -7,6 +7,7 @@ public class DDEnemyOnBoard : DDSelection
 {
     private int maxHealth;
     private int currentHealth;
+    private int currentArmor;
 
     private DDEnemyBase currentEnemy;
     public DDEnemyBase CurrentEnemy { get { return currentEnemy; } }
@@ -54,6 +55,11 @@ public class DDEnemyOnBoard : DDSelection
     [SerializeField]
     private TMPro.TextMeshProUGUI dexText;
 
+    [SerializeField]
+    private RawImage armorIcon;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI armorText;
+
     public void SetUpEnemy(DDEnemyBase enemyBase)
     {
         currentEnemy = enemyBase;
@@ -61,6 +67,8 @@ public class DDEnemyOnBoard : DDSelection
         maxHealth = enemyBase.StartingHealth;
         currentHealth = maxHealth;
         UpdateHealthUI();
+        currentArmor = enemyBase.StartingArmor;
+        UpdateArmorUI();
     }
 
     private void OnDisable()
@@ -130,19 +138,33 @@ public class DDEnemyOnBoard : DDSelection
 
     public void DoDamage(int amount)
     {
-        currentHealth -= amount;
+        currentArmor -= amount;
 
-        if (currentHealth <= 0)
+        if (currentArmor <= 0)
         {
-            currentHealth = 0;
-            DDGamePlaySingletonHolder.Instance.Encounter.EnemyDefeated(this);
-            Destroy(gameObject);
+            amount = currentArmor * -1;
+
+            currentArmor = 0;
+
+            if (amount > 0)
+            {
+                currentHealth -= amount;
+
+                if (currentHealth <= 0)
+                {
+                    currentHealth = 0;
+                    DDGamePlaySingletonHolder.Instance.Encounter.EnemyDefeated(this);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    // Take Damage Feedback.
+                }
+                UpdateHealthUI();
+            }
         }
-        else
-        {
-            // Take Damage Feedback.
-        }
-        UpdateHealthUI();
+
+        UpdateArmorUI();
     }
 
     public void GainDexterity(int amount)
@@ -162,6 +184,31 @@ public class DDEnemyOnBoard : DDSelection
         {
             dexIcon.enabled = false;
             dexText.enabled = false;
+        }
+    }
+
+    public void SetArmor(int amount)
+    {
+        currentArmor = amount;
+        UpdateArmorUI();
+    }
+
+    private void UpdateArmorUI()
+    {
+        if (currentArmor > 0)
+        {
+            if (!armorIcon.enabled)
+            {
+                armorIcon.enabled = true;
+                armorText.enabled = true;
+            }
+
+            armorText.text = currentArmor.ToString();
+        }
+        else if (armorIcon.enabled)
+        {
+            armorIcon.enabled = false;
+            armorText.enabled = false;
         }
     }
 

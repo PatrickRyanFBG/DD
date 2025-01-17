@@ -22,15 +22,20 @@ public abstract class DDCardBase : DDScriptableObject
     private string description;
 
     [SerializeField]
+    private List<ECardFinishing> finishes;
+    public List<ECardFinishing> Finishes { get => finishes; }
+
+    [SerializeField]
     protected List<Target> targets;
     public List<Target> Targets { get { return targets; } }
 
+    // Need to make a base between this and player cards
     [SerializeField]
     private int uses = 0;
     public int Uses { get { return uses; } }
 
     [SerializeField]
-    private Vector2 price = new Vector2(100,200);
+    private Vector2 price = new Vector2(100, 200);
     public int Price { get { return (int)Random.Range(price.x, price.y); } }
 
     public virtual bool SelectCard()
@@ -43,7 +48,22 @@ public abstract class DDCardBase : DDScriptableObject
 
     }
 
+    public virtual IEnumerator DrawCard()
+    {
+        yield return null;
+    }
+
     public abstract IEnumerator ExecuteCard(List<DDSelection> selections);
+
+    public virtual IEnumerator DiscardCard()
+    {
+        yield return null;
+    }
+
+    public virtual IEnumerator DestroyedCard()
+    {
+        yield return null;
+    }
 
     public virtual void DisplayInformation(DDCardInHand cardInHand)
     {
@@ -51,7 +71,7 @@ public abstract class DDCardBase : DDScriptableObject
         cardInHand.CardTypeText.text = cardType.ToString();
         cardInHand.NameText.text = name;
         cardInHand.DescText.text = description;
-        if(uses > 0)
+        if (uses > 0)
         {
             cardInHand.DescText.text += "\r\nUses: " + (uses - cardInHand.AmountUsed).ToString();
         }
@@ -61,9 +81,6 @@ public abstract class DDCardBase : DDScriptableObject
     {
         return true;
     }
-
-    // Card Drawn
-    // Card Discard
 }
 
 // Selection

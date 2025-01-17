@@ -11,9 +11,17 @@ public class DDEnemy_GoblinMelee : DDEnemyBase
     [SerializeField]
     private int dexGain;
 
+    [SerializeField]
+    private DDCardBase woundCard;
+
     public override List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy)
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
+
+        actions.Add(new DDEnemyAction_AddCardTo(2, woundCard, ECardLocation.Discard));
+        actions.Add(new DDEnemyAction_GainArmor(10));
+        
+        return actions;
 
         DDEnemyActionBase buffAction = null;
 

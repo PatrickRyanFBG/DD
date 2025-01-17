@@ -24,11 +24,22 @@ public class DDPlayer_MatchHand : MonoBehaviour
         }
     }
 
-    public void DiscardHand(DDPlayer_MatchDiscard discard)
+    public IEnumerator DiscardHand(DDPlayer_MatchDiscard discard)
     {
         for (int i = cards.Count - 1; i >= 0; i--)
         {
-            discard.CardDiscarded(cards[i]);
+            // TODO :: Change this to bit wise enum
+            if(cards[i].CurrentCard.Finishes.Contains(ECardFinishing.Fleeting))
+            {
+                yield return cards[i].CurrentCard.DestroyedCard();
+                Destroy(cards[i].gameObject);
+            }
+            else
+            {
+                yield return cards[i].CurrentCard.DiscardCard();
+                discard.CardDiscarded(cards[i]);
+            }
+
             cards.RemoveAt(i);
         }
     }

@@ -10,6 +10,8 @@ public abstract class DDEntityBase : DDScriptableObject
 
     public int StartingHealth;
 
+    public int StartingArmor;
+
     [SerializeField]
     private string enemyName;
     public string EnemyName { get => enemyName; }

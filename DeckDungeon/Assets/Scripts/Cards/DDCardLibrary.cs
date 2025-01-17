@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Adventurer specific cards in the Adventure Data right now
+// Maybe this class should hold generic cards if that is ever a thing
 public class DDCardLibrary : MonoBehaviour
 {
     // something something we need different rarities some where

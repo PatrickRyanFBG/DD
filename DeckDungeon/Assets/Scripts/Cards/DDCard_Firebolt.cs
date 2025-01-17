@@ -9,6 +9,11 @@ public class DDCard_Firebolt : DDCardBase
     [SerializeField]
     private int damage = 5;
 
+    public override IEnumerator DrawCard()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override IEnumerator ExecuteCard(List<DDSelection> selections)
     {
         DDEnemyOnBoard enemy = selections[0] as DDEnemyOnBoard;
@@ -19,5 +24,14 @@ public class DDCard_Firebolt : DDCardBase
         }
 
         yield return null;
+    }
+    public override IEnumerator DiscardCard()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override IEnumerator DestroyedCard()
+    {
+        throw new System.NotImplementedException();
     }
 }

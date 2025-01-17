@@ -24,6 +24,7 @@ public enum EEncounterPhase
     EncounterStart,
     MonsterForecast,
     PlayersTurn,
+    PlayersEndTurn,
     MonstersAct,
     EncounterEnd,
 }
@@ -46,5 +47,20 @@ public enum ECardType
     Utility,
     Action,
     Offensive,
-    Defensive
+    Defensive,
+    Wound,
+    Curses
+}
+
+public enum ECardLocation
+{ 
+    Deck,
+    Hard,
+    Discard
+}
+
+public enum ECardFinishing
+{
+    None,
+    Fleeting
 }

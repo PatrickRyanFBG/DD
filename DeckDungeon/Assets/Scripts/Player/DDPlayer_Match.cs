@@ -6,6 +6,10 @@ using UnityEngine;
 public class DDPlayer_Match : MonoBehaviour
 {
     [SerializeField]
+    private DDCardInHand cardInHandPrefab;
+    public DDCardInHand CardInHandPrefab { get => cardInHandPrefab; }
+
+    [SerializeField]
     private int defaultHandSize = 5;
     private int currentHandSize;
 
@@ -18,7 +22,6 @@ public class DDPlayer_Match : MonoBehaviour
     [SerializeField]
     private DDPlayer_MatchDiscard discard;
     public List<DDCardInHand> CurrentDiscard { get { return discard.Cards; } }
-
 
     private DDCardInHand selectedCard;
     private List<Target> cardTargets;
@@ -75,6 +78,11 @@ public class DDPlayer_Match : MonoBehaviour
     public void ShuffleInDeck()
     {
         deck.ShuffleInCards(DDGamePlaySingletonHolder.Instance.Dungeon.PlayerDeck);
+    }
+
+    public IEnumerator AddCardToDiscard(DDCardBase card)
+    {
+        return discard.AddCardOverTime(card);
     }
 
     public void SetHandSizeToDefault()
@@ -169,9 +177,9 @@ public class DDPlayer_Match : MonoBehaviour
         }
     }
 
-    public void DiscardHand()
+    public IEnumerator DiscardHand()
     {
-        hand.DiscardHand(discard);
+        yield return hand.DiscardHand(discard);
     }
 
     public void DiscardCard(DDCardInHand card)

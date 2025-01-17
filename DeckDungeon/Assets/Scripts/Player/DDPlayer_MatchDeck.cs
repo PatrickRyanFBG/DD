@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class DDPlayer_MatchDeck : MonoBehaviour
 {
-    [SerializeField]
-    private DDCardInHand cardInHandPrefab;
-
     [Header("Testing")]
     [SerializeField]
     private TMPro.TextMeshProUGUI numberText;
@@ -32,7 +29,8 @@ public class DDPlayer_MatchDeck : MonoBehaviour
     {
         for (int i = 0; i < otherCards.Count; i++)
         {
-            DDCardInHand cardInHand = Instantiate(cardInHandPrefab, transform);
+            // Do another deep copy here to allow for in-match modifications?
+            DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, transform);
             cardInHand.SetUpCard(otherCards[i]);
             ShuffleInCard(cardInHand, true);
         }

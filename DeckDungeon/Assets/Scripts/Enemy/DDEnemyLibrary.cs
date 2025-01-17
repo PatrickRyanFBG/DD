@@ -24,7 +24,10 @@ public class SharedActionIcons
 
     public Texture Attack_Melee;
     public Texture Attack_Explode;
-    public Texture Attack_Heal;
 
-    public Texture Attack_GainDexterity;
+    public Texture Action_Heal;
+    public Texture Action_GainDexterity;
+    public Texture Action_GainArmor;
+    public Texture Action_AddCard;
+    public Texture Action_LockCard;
 }

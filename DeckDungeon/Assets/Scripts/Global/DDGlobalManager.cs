@@ -23,21 +23,70 @@ public class DDGlobalManager : MonoBehaviour
     public DDAdventurerDataLibrary AdventurerDataLibrary { get => adventurerDataLibrary; }
 
     private DDAdventurerData selectedAdventurer;
-    public DDAdventurerData SelectedAdventurer { get => selectedAdventurer; }
+    public DDAdventurerData SelectedAdventurer
+    {
+        get
+        {
+            if(FromMainMenu)
+            {
+                return selectedAdventurer;
+            }
+            else
+            {
+                debugAdventurer.RuntimeInit();
+                return debugAdventurer;
+            }
+        }
+    }
 
-    [SerializeField]
+        [SerializeField]
     private DDDungeonDataLibrary dungeonDataLibrary;
     public DDDungeonDataLibrary DungeonDataLibrary { get => dungeonDataLibrary; }
 
     private DDDungeonMetaData selectedDungeon;
-    public DDDungeonMetaData SelectedDungeon { get => selectedDungeon; }
+    public DDDungeonMetaData SelectedDungeon
+    {
+        get
+        {
+            if (FromMainMenu)
+            {
+                return selectedDungeon;
+            }
+            else
+            {
+                return debugDungeon;
+            }
+        }
+    }
+
 
     private List<DDDungeonSideQuestData> sideQuests = new List<DDDungeonSideQuestData>();
-
-    private List<DDDungeonCardBase> startingDungeonDeck = new List<DDDungeonCardBase>();
+    public List<DDDungeonSideQuestData> SideQuests
+    {
+        get
+        {
+            if (FromMainMenu)
+            {
+                return sideQuests;
+            }
+            else
+            {
+                return debugSideQuests;
+            }
+        }
+    }
 
     [Header("Testing")]
     public bool FromMainMenu;
+
+    [SerializeField]
+    private DDAdventurerData debugAdventurer;
+
+    [SerializeField]
+    private DDDungeonMetaData debugDungeon;
+
+    [SerializeField]
+    private List<DDDungeonSideQuestData> debugSideQuests;
 
     private void Awake()
     {

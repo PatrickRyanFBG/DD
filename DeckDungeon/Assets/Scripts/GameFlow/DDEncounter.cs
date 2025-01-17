@@ -173,6 +173,12 @@ public class DDEncounter : MonoBehaviour
         }
     }
 
+    private IEnumerator DoPlayersEndTurn()
+    {
+        yield return player.DiscardHand();
+        ChangeCurrentPhase(EEncounterPhase.MonstersAct);
+    }
+
     private IEnumerator DoMonstersAct()
     {
         DDGamePlaySingletonHolder.Instance.Board.DoAllEffects();
@@ -201,8 +207,7 @@ public class DDEncounter : MonoBehaviour
     {
         if(currentEncounterPhase == EEncounterPhase.PlayersTurn)
         {
-            player.DiscardHand();
-            ChangeCurrentPhase(EEncounterPhase.MonstersAct);
+            ChangeCurrentPhase(EEncounterPhase.PlayersEndTurn);
         }
     }
 
@@ -221,6 +226,9 @@ public class DDEncounter : MonoBehaviour
                 DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                 player.ResetMomentum();
                 player.DrawFullHand();
+                break;
+            case EEncounterPhase.PlayersEndTurn:
+                StartCoroutine(DoPlayersEndTurn());
                 break;
             case EEncounterPhase.MonstersAct:
                 StartCoroutine(DoMonstersAct());

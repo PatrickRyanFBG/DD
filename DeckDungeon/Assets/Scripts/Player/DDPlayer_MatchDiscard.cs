@@ -1,15 +1,30 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DDPlayer_MatchDiscard : MonoBehaviour
 {
+    [SerializeField]
+    private Transform cardSpawnLocation;
+
     [Header("Testing")]
     [SerializeField]
     private TMPro.TextMeshProUGUI numberText;
 
     private List<DDCardInHand> cards = new List<DDCardInHand>();
     public List<DDCardInHand> Cards { get { return cards; } }
+
+    public IEnumerator AddCardOverTime(DDCardBase card)
+    {
+        DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, cardSpawnLocation.position, Quaternion.identity, transform);
+        cardInHand.transform.DOMove(transform.position, .3f, false);
+        cardInHand.SetUpCard(card);
+        
+        yield return new WaitForSeconds(.3f);
+
+        CardDiscarded(cardInHand);
+    }
 
     public void CardDiscarded(DDCardInHand card)
     {
