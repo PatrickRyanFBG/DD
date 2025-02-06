@@ -1,3 +1,27 @@
+CardEffect
+    Has Target
+    
+
+    Deal Damage
+    Draw Card
+    Apply to Character
+    Apply to Enemy
+    Apply to Lane
+    Ect
+    
+Card
+    Has List of Effects
+    When Gathering Targets Check each CardEffect's Target and if different add to list
+
+Lanes have affixes: Armor Thorns
+
+1/28
+	x Range/Melee is in for both enemies and cards
+	x enemy pass done for ~5 enemies
+	- Need to do pass on valk cards
+	- Need to clean up UI for dungeon selection
+	
+
 1/16
 	- Lock Card still needed (lets come back to this later)
 	- Do enemy pass

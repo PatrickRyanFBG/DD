@@ -1,23 +1,30 @@
-Melee Goblin
-	- Actions
-		- Attack
-		- Move 1
-		- Drop Bomb
+Whirligig Goblin
+	- Range (throws tools)
+	- Flying (avoids ground effects) [for later]
+	- Attack
+	- Move
+	- Buff Defense
 
-Bomb
-	- Actions
-		- Expload
+Cogcrush Beetle
+	- Melee
+	- Attack
+	- Move
+	- Give Defense
 
-Goblin Shaman
-	- Actions
-		- Attack
-		- Move 1
-		- Heal Target Location
+Sprocket Scrapper
+	- Melee
+	- Attack
+	- Move
+	- Buff Self Dex
 
-Rat
-	- Actions
-		- Attack
-		- Move 2
+Gizmo Goblin
+	- Ranged
+	- Attack
+	- Move
+	- Spawns Bombs
 
-
+Scrap Spitter
+	- Immobile
+	- Attack
+	- Wound
 

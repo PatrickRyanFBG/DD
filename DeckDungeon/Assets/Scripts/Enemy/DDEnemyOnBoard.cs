@@ -1,19 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DDEnemyOnBoard : DDSelection
 {
     private int maxHealth;
     private int currentHealth;
-    private int currentArmor;
 
     private DDEnemyBase currentEnemy;
-    public DDEnemyBase CurrentEnemy { get { return currentEnemy; } }
+    public DDEnemyBase CurrentEnemy => currentEnemy;
+
+    private DDAffixManager affixManager;
 
     private int turnNumber;
-    public int TurnNumber { get { return turnNumber; } }
+    public int TurnNumber => turnNumber;
 
     [Header("Testing")]
     [SerializeField]
@@ -41,14 +44,11 @@ public class DDEnemyOnBoard : DDSelection
     private List<DDEnemyActionBase> nextActions = new List<DDEnemyActionBase>();
 
     private DDLocation currentLocation;
-    public DDLocation CurrentLocaton { get { return currentLocation; } }
+    public DDLocation CurrentLocaton => currentLocation;
 
     [SerializeField]
     private GameObject attackPrefab;
-    public GameObject AttackPrefab { get { return attackPrefab; } }
-
-    private int dexterity = 0;
-    public int Dexterity { get { return dexterity; } }
+    public GameObject AttackPrefab => attackPrefab;
 
     [SerializeField]
     private RawImage dexIcon;
@@ -67,8 +67,22 @@ public class DDEnemyOnBoard : DDSelection
         maxHealth = enemyBase.StartingHealth;
         currentHealth = maxHealth;
         UpdateHealthUI();
-        currentArmor = enemyBase.StartingArmor;
-        UpdateArmorUI();
+        affixManager = new DDAffixManager();
+        affixManager.AffixAdjusted.AddListener(AffixAdjusted);
+        affixManager.ModifyValueOfAffix(EAffixType.Armor, enemyBase.StartingArmor, true);
+    }
+
+    private void AffixAdjusted(EAffixType changedAffix)
+    {
+        switch (changedAffix)
+        {
+            case EAffixType.Expertise:
+                UpdateDexterityUI();
+                break;
+            case EAffixType.Armor:
+                UpdateArmorUI();
+                break;
+        }
     }
 
     private void OnDisable()
@@ -136,15 +150,14 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public void DoDamage(int amount)
+    public void DoDamage(int amount, ERangeType rangeType = ERangeType.None)
     {
-        currentArmor -= amount;
+        int totalDamage = amount + DDGamePlaySingletonHolder.Instance.Board.GetMeleeRangedBonus(rangeType, currentLocation.Coord.y);
+        int reducedArmorAmount = affixManager.ModifyValueOfAffix(EAffixType.Armor, -totalDamage, false);
 
-        if (currentArmor <= 0)
+        if (reducedArmorAmount <= 0)
         {
-            amount = currentArmor * -1;
-
-            currentArmor = 0;
+            amount = reducedArmorAmount * -1;
 
             if (amount > 0)
             {
@@ -163,14 +176,24 @@ public class DDEnemyOnBoard : DDSelection
                 UpdateHealthUI();
             }
         }
-
-        UpdateArmorUI();
     }
 
-    public void GainDexterity(int amount)
+    public void ModifyAffix(EAffixType affixType, int amount, bool shouldSet)
     {
-        dexterity += amount;
-        if (dexterity != 0)
+        affixManager.ModifyValueOfAffix(affixType, amount, shouldSet);
+    }
+
+    public int GetAffixValue(EAffixType affixType)
+    {
+        int? value = affixManager.TryGetAffixValue(affixType);
+        return value == null ? 0 : value.Value;
+    }
+
+    // TODO :: Gotta make a system that handles UI for affixes
+    private void UpdateDexterityUI()
+    {
+        int? dexValue = affixManager.TryGetAffixValue(EAffixType.Expertise);
+        if (dexValue != null && dexValue.Value > 0)
         {
             if (!dexIcon.enabled)
             {
@@ -178,7 +201,7 @@ public class DDEnemyOnBoard : DDSelection
                 dexText.enabled = true;
             }
 
-            dexText.text = dexterity.ToString();
+            dexText.text = dexValue.Value.ToString();
         }
         else if (dexIcon.enabled)
         {
@@ -187,15 +210,10 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public void SetArmor(int amount)
-    {
-        currentArmor = amount;
-        UpdateArmorUI();
-    }
-
     private void UpdateArmorUI()
     {
-        if (currentArmor > 0)
+        int? armorValue = affixManager.TryGetAffixValue(EAffixType.Armor);
+        if (armorValue != null && armorValue.Value > 0)
         {
             if (!armorIcon.enabled)
             {
@@ -203,7 +221,7 @@ public class DDEnemyOnBoard : DDSelection
                 armorText.enabled = true;
             }
 
-            armorText.text = currentArmor.ToString();
+            armorText.text = armorValue.Value.ToString();
         }
         else if (armorIcon.enabled)
         {
@@ -255,7 +273,7 @@ public class DDEnemyOnBoard : DDSelection
     {
         for (int i = 0; i < nextActions.Count; i++)
         {
-            Vector2 loc = Vector2.zero;
+            Vector2Int loc = Vector2Int.zero;
             if (nextActions[i].HasLocationBasedEffects(ref loc))
             {
                 DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
@@ -284,7 +302,7 @@ public class DDEnemyOnBoard : DDSelection
         string actionDesc = "";
         for (int i = 0; i < nextActions.Count; i++)
         {
-            Vector2 loc = Vector2.zero;
+            Vector2Int loc = Vector2Int.zero;
             if (nextActions[i].HasLocationBasedEffects(ref loc))
             {
                 DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Highlight();
@@ -304,7 +322,7 @@ public class DDEnemyOnBoard : DDSelection
     {
         for (int i = 0; i < nextActions.Count; i++)
         {
-            Vector2 loc = Vector2.zero;
+            Vector2Int loc = Vector2Int.zero;
             if (nextActions[i].HasLocationBasedEffects(ref loc))
             {
                 DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();

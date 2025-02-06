@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class DDDungeonDeckBuilder : MonoBehaviour
 {
+    // Gotta make this a list and prefab and shit
     [SerializeField]
     private DDDungeonSelection[] dungeonSelections;
 
@@ -32,10 +34,14 @@ public class DDDungeonDeckBuilder : MonoBehaviour
         if (testing)
         {
             testingData.SetUpUI(dungeonSelections[0]);
-            dungeonSelections[0].SelectionButton.onClick.AddListener(() =>
+
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((data) => 
             {
                 MadeDungeonSelection(0);
             });
+            dungeonSelections[0].Events.triggers.Add(entry);
 
             testingSideQuestData.SetUpUI(0, sideQuestSelections[0]);
             sideQuestSelections[0].SelectionButton.onValueChanged.AddListener((selected) =>
@@ -53,10 +59,14 @@ public class DDDungeonDeckBuilder : MonoBehaviour
             {
                 data[i].SetUpUI(dungeonSelections[i]);
                 int index = i;
-                dungeonSelections[i].SelectionButton.onClick.AddListener(() =>
+
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerClick;
+                entry.callback.AddListener((data) =>
                 {
                     MadeDungeonSelection(index);
                 });
+                dungeonSelections[i].Events.triggers.Add(entry);
             }
         }
     }

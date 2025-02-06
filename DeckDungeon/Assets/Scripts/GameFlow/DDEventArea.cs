@@ -7,15 +7,15 @@ public class DDEventArea : MonoBehaviour
 {
     [SerializeField]
     private TMPro.TextMeshProUGUI eventName;
-    public TMPro.TextMeshProUGUI EventName { get { return eventName; } }
+    public TMPro.TextMeshProUGUI EventName => eventName;
 
     [SerializeField]
     private RawImage image;
-    public RawImage Image { get { return image; } }
+    public RawImage Image => image;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI description;
-    public TMPro.TextMeshProUGUI Description { get { return description; } }
+    public TMPro.TextMeshProUGUI Description => description;
 
     [SerializeField]
     private Transform optionParent;

@@ -7,7 +7,7 @@ public class DDButton : MonoBehaviour
 {
     [SerializeField]
     private Button button;
-    public Button Button { get { return button; } }
+    public Button Button => button;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI buttonText;

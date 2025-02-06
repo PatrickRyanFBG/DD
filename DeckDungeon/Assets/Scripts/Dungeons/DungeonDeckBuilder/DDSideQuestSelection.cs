@@ -8,17 +8,17 @@ public class DDSideQuestSelection : MonoBehaviour
 {
     [SerializeField]
     private RawImage heroShotImage;
-    public RawImage HeroShotImage { get => heroShotImage; }
+    public RawImage HeroShotImage => heroShotImage;
 
     [SerializeField]
     private TextMeshProUGUI sideQuestName;
-    public TextMeshProUGUI SideQuestName { get => sideQuestName; }
+    public TextMeshProUGUI SideQuestName => sideQuestName;
 
     [SerializeField]
     private TextMeshProUGUI sideQuestDescription;
-    public TextMeshProUGUI SideQuestDescription { get => sideQuestDescription; }
+    public TextMeshProUGUI SideQuestDescription => sideQuestDescription;
 
     [SerializeField]
     private Toggle selectionButton;
-    public Toggle SelectionButton { get => selectionButton; }
+    public Toggle SelectionButton => selectionButton;
 }

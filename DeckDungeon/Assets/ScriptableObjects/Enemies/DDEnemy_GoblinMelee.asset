@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5a45ce53db24c49a403a783ea35dfc, type: 3}
   m_Name: DDEnemy_GoblinMelee
   m_EditorClassIdentifier: 
-  image: {fileID: 2800000, guid: 7f87244ee549c5a4486524f8e68c4498, type: 3}
-  StartingHealth: 10
+  image: {fileID: 2800000, guid: 93c46debd92e4bd4b919565eae65226e, type: 3}
+  StartingHealth: 15
   StartingArmor: 0
-  enemyName: Goblin
+  enemyName: Scrapper
   immovable: 0
   friendly: 0
   damage: 5

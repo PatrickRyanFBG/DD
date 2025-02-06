@@ -9,5 +9,5 @@ public class DDDungeonData : DDScriptableObject
 
     [SerializeField]
     private List<DDDungeonCardBase> cards;
-    public List<DDDungeonCardBase> Cards { get => cards; }
+    public List<DDDungeonCardBase> Cards => cards;
 }

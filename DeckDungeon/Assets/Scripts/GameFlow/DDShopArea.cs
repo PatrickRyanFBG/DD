@@ -7,15 +7,15 @@ public class DDShopArea : MonoBehaviour
 {
     [SerializeField]
     private TMPro.TextMeshProUGUI shopName;
-    public TMPro.TextMeshProUGUI ShopName { get { return shopName; } }
+    public TMPro.TextMeshProUGUI ShopName => shopName;
 
     [SerializeField]
     private RawImage image;
-    public RawImage Image { get { return image; } }
+    public RawImage Image => image;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI description;
-    public TMPro.TextMeshProUGUI Description { get { return description; } }
+    public TMPro.TextMeshProUGUI Description => description;
 
     [SerializeField]
     private DDCardShownShop[] cards;
@@ -33,7 +33,7 @@ public class DDShopArea : MonoBehaviour
     private Camera mainUICamera;
 
     private Ray camRay;
-    public Ray CamRay { get { return camRay; } }
+    public Ray CamRay => camRay;
 
     private RaycastHit hit;
     private DDSelection currentlyHovered;

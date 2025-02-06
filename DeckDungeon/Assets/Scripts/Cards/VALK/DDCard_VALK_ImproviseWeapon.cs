@@ -19,7 +19,7 @@ public class DDCard_VALK_ImproviseWeapon : DDCard_VALKBase
         yield return new WaitForSeconds(.25f);
 
         DDEnemyOnBoard enemy = selections[1] as DDEnemyOnBoard;
-        enemy.DoDamage(damage);
+        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, rangeType, enemy);
 
         yield return new WaitForSeconds(.1f);
     }

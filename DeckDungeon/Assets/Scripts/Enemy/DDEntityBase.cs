@@ -6,7 +6,7 @@ public abstract class DDEntityBase : DDScriptableObject
 {
     [SerializeField]
     private Texture image;
-    public Texture Image { get { return image; } }
+    public Texture Image => image;
 
     public int StartingHealth;
 
@@ -14,15 +14,19 @@ public abstract class DDEntityBase : DDScriptableObject
 
     [SerializeField]
     private string enemyName;
-    public string EnemyName { get => enemyName; }
+    public string EnemyName => enemyName;
 
     [SerializeField]
     private bool immovable = false;
-    public bool Immovable { get { return immovable; } }
+    public bool Immovable => immovable;
 
     [SerializeField]
     private bool friendly;
-    public bool Friendly { get { return friendly; } }
+    public bool Friendly => friendly;
+
+    [SerializeField]
+    private ERangeType rangeType = ERangeType.None;
+    public ERangeType RangeType => rangeType;
 
     public abstract List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy);
 }

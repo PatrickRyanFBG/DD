@@ -7,15 +7,15 @@ public abstract class DDArtifactBase : DDScriptableObject
 {
     [SerializeField]
     private string artifactName;
-    public string ArtifactName { get => artifactName; }
+    public string ArtifactName => artifactName;
 
     [SerializeField, Multiline]
     private string description;
-    public string Description { get => description; }
+    public string Description => description;
 
     [SerializeField]
     private Texture icon;
-    public Texture Icon { get => icon; }
+    public Texture Icon => icon;
 
     public abstract void Equipped();
 }

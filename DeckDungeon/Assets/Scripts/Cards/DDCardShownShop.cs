@@ -5,7 +5,7 @@ using UnityEngine;
 public class DDCardShownShop : DDCardShown
 {
     private int currentPrice;
-    public int CurrentPrice { get => currentPrice; }
+    public int CurrentPrice => currentPrice;
 
     [SerializeField]
     private GameObject priceParent;

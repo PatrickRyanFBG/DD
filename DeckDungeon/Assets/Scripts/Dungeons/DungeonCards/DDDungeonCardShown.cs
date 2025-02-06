@@ -8,24 +8,24 @@ public class DDDungeonCardShown : DDSelection
 {
     [SerializeField]
     private RawImage image;
-    public RawImage Image { get => image; }
+    public RawImage Image => image;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI nameText;
-    public TextMeshProUGUI NameText { get => nameText; }
+    public TextMeshProUGUI NameText => nameText;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI descText;
-    public TextMeshProUGUI DescText { get => descText; }
+    public TextMeshProUGUI DescText => descText;
 
     [SerializeField]
     private GameObject locked;
 
     private DDDungeonCardBase currentDungeonCard;
-    public DDDungeonCardBase CurrentDungeonCard { get { return currentDungeonCard; } }
+    public DDDungeonCardBase CurrentDungeonCard => currentDungeonCard;
 
     private int index;
-    public int Index { get { return index; } }
+    public int Index => index;
 
     [SerializeField]
     private Collider col;

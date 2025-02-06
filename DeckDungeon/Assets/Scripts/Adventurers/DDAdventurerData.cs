@@ -6,11 +6,11 @@ public class DDAdventurerData : DDScriptableObject
 {
     [SerializeField]
     private string adventureName;
-    public string AdventureName { get => adventureName; }
+    public string AdventureName => adventureName;
 
     [SerializeField, Multiline]
     private string adventureDecsription;
-    public string AdventureDecsription { get => adventureDecsription; }
+    public string AdventureDecsription => adventureDecsription;
 
     [SerializeField]
     private Texture heroShot;
@@ -20,7 +20,7 @@ public class DDAdventurerData : DDScriptableObject
 
     [SerializeField]
     private int startingHealth;
-    public int StartingHealth { get => startingHealth; }
+    public int StartingHealth => startingHealth;
 
     [SerializeField]
     private int startingStrength;
@@ -44,7 +44,7 @@ public class DDAdventurerData : DDScriptableObject
 
     [SerializeField]
     private List<DDCardBase> cards;
-    public List<DDCardBase> Cards { get => cards; }
+    public List<DDCardBase> Cards => cards;
 
     [SerializeField]
     private int[] startingDeckByIndex;
@@ -64,7 +64,7 @@ public class DDAdventurerData : DDScriptableObject
     }
 
     private List<DDCardBase> startingDeck;
-    public List<DDCardBase> StartingDeck { get => startingDeck; }
+    public List<DDCardBase> StartingDeck => startingDeck;
 
     private List<DDCardBase> ownedCards;
 

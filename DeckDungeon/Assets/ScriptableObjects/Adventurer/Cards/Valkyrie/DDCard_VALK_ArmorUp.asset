@@ -16,6 +16,8 @@ MonoBehaviour:
   image: {fileID: 2800000, guid: 793f872522048ce4e833989c43cc4749, type: 3}
   name: Armor Up
   description: Adds 15 armor to a column.
+  rangeType: 2
+  finishes: 
   targets:
   - targetType: 9
   uses: 0

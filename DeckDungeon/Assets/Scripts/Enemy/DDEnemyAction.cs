@@ -15,7 +15,7 @@ public abstract class DDEnemyActionBase
 
     public abstract string GetDescription();
 
-    public virtual bool HasLocationBasedEffects(ref Vector2 target)
+    public virtual bool HasLocationBasedEffects(ref Vector2Int target)
     {
         return false;
     }
@@ -64,9 +64,9 @@ public class DDEnemyAction_Move : DDEnemyActionBase
         return "This enemy will attempt to move " + moveDirection.ToString();
     }
 
-    private static bool CanMoveToSpot(int turnNumber, Vector2 checkLoc)
+    private static bool CanMoveToSpot(int turnNumber, Vector2Int checkLoc)
     {
-        if(checkLoc.x < 0 || checkLoc.x > DDGamePlaySingletonHolder.Instance.Board.ColumnCountIndex ||
+        if (checkLoc.x < 0 || checkLoc.x > DDGamePlaySingletonHolder.Instance.Board.ColumnCountIndex ||
             checkLoc.y < 0 || checkLoc.y > DDGamePlaySingletonHolder.Instance.Board.RowCountIndex)
         {
             return false;
@@ -101,7 +101,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
         bool canMoveToGoal = false;
 
         EMoveDirection rand = Random.Range(0, 2) == 0 ? EMoveDirection.Right : EMoveDirection.Left;
-        Vector2 checkLoc = actingEnemy.CurrentLocaton.Coord + (rand == EMoveDirection.Right ? Vector2.right : Vector2.left);
+        Vector2Int checkLoc = actingEnemy.CurrentLocaton.Coord + (rand == EMoveDirection.Right ? Vector2Int.right : Vector2Int.left);
 
         if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
         {
@@ -111,7 +111,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
         else
         {
             rand = (EMoveDirection)(((int)rand + 2) % 4);
-            checkLoc = actingEnemy.CurrentLocaton.Coord + (rand == EMoveDirection.Right ? Vector2.right : Vector2.left);
+            checkLoc = actingEnemy.CurrentLocaton.Coord + (rand == EMoveDirection.Right ? Vector2Int.right : Vector2Int.left);
 
             if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
             {
@@ -128,14 +128,14 @@ public class DDEnemyAction_Move : DDEnemyActionBase
         bool canMoveToGoal = false;
         EMoveDirection goalDirection = EMoveDirection.Down;
 
-        if(attacking)
+        if (attacking)
         {
-            if(DDGamePlaySingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
+            if (DDGamePlaySingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
             {
                 canMoveToGoal = MoveRandomlyLeftOrRight(actingEnemy, ref goalDirection);
             }
 
-            if(canMoveToGoal)
+            if (canMoveToGoal)
             {
                 return new DDEnemyAction_Move(goalDirection);
             }
@@ -144,7 +144,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
         switch (preference)
         {
             case EMoveDirection.Up:
-                Vector2 checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2.up;
+                Vector2Int checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2Int.up;
                 if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
                 {
                     return new DDEnemyAction_Move(EMoveDirection.Up);
@@ -153,8 +153,8 @@ public class DDEnemyAction_Move : DDEnemyActionBase
             case EMoveDirection.Right:
                 break;
             case EMoveDirection.Down:
-                checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2.down;
-                if(CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
+                checkLoc = actingEnemy.CurrentLocaton.Coord + Vector2Int.down;
+                if (CanMoveToSpot(actingEnemy.TurnNumber, checkLoc))
                 {
                     return new DDEnemyAction_Move(EMoveDirection.Down);
                 }
@@ -181,6 +181,7 @@ public class DDEnemyAction_Move : DDEnemyActionBase
 public class DDEnemyAction_Attack : DDEnemyActionBase
 {
     private int damage;
+
     public DDEnemyAction_Attack(int dam)
     {
         damage = dam;
@@ -203,9 +204,12 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
 
         yield return new WaitForSeconds(1f);
 
-        int leftOverDamage = DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(damage + enemy.Dexterity, (int)enemy.CurrentLocaton.Coord.x);
+        int totalDamage = damage;
+        totalDamage += enemy.GetAffixValue(EAffixType.Expertise);
+        totalDamage += DDGamePlaySingletonHolder.Instance.Board.GetMeleeRangedBonus(enemy.CurrentEnemy.RangeType, enemy.CurrentLocaton.Coord.y);
+        int leftOverDamage = DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
 
-        if(leftOverDamage > 0)
+        if (leftOverDamage > 0)
         {
             DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(leftOverDamage);
         }
@@ -229,10 +233,10 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
 public class DDEnemyAction_SpawnEnemy : DDEnemyActionBase
 {
     private DDEnemyBase enemyToSpawn;
-    private Vector2 atLocation;
+    private Vector2Int atLocation;
     private Texture icon;
 
-    public DDEnemyAction_SpawnEnemy(DDEnemyBase enemyToSpawn, Vector2 atLocation, Texture icon)
+    public DDEnemyAction_SpawnEnemy(DDEnemyBase enemyToSpawn, Vector2Int atLocation, Texture icon)
     {
         this.enemyToSpawn = enemyToSpawn;
         this.atLocation = atLocation;
@@ -258,7 +262,7 @@ public class DDEnemyAction_SpawnEnemy : DDEnemyActionBase
         return icon;
     }
 
-    public override bool HasLocationBasedEffects(ref Vector2 target)
+    public override bool HasLocationBasedEffects(ref Vector2Int target)
     {
         target = atLocation;
         return true;
@@ -273,9 +277,9 @@ public class DDEnemyAction_SpawnEnemy : DDEnemyActionBase
 public class DDEnemyAction_HealAlly : DDEnemyActionBase
 {
     private int healAmount;
-    private Vector2 targetLocation;
+    private Vector2Int targetLocation;
 
-    public DDEnemyAction_HealAlly(int healAmount, Vector2 targetLocation)
+    public DDEnemyAction_HealAlly(int healAmount, Vector2Int targetLocation)
     {
         this.healAmount = healAmount;
         this.targetLocation = targetLocation;
@@ -293,7 +297,7 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
         DDEnemyOnBoard target = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
-        if(target != null)
+        if (target != null)
         {
             target.DoHeal(healAmount);
         }
@@ -306,7 +310,7 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
         return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_Heal;
     }
 
-    public override bool HasLocationBasedEffects(ref Vector2 target)
+    public override bool HasLocationBasedEffects(ref Vector2Int target)
     {
         target = targetLocation;
         return true;
@@ -318,59 +322,32 @@ public class DDEnemyAction_HealAlly : DDEnemyActionBase
     }
 }
 
-public class DDEnemyAction_BuffDexterity : DDEnemyActionBase
+public class DDEnemyAction_ModifyAffix : DDEnemyActionBase
 {
-    private int amount;
-
-    public DDEnemyAction_BuffDexterity(int amount)
-    {
-        this.amount = amount;
-    }
-
-    public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
-    {
-        text.text = amount.ToString();
-        text.enabled = true;
-
-        image.texture = GetIcon();
-        image.enabled = true;
-    }
-
-    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
-    {
-        // TODO
-        // Something with particle effects to show some feedback
-        enemy.GainDexterity(amount);
-        
-        yield return new WaitForSeconds(0.1f);
-    }
-
-    public override Texture GetIcon()
-    {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_GainDexterity;
-    }
-
-    public override string GetDescription()
-    {
-        return "This enemy will gain " + amount + " of dexterity (attacks increased by total dexterity)";
-    }
-}
-
-public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
-{
+    private EAffixType affix;
     private int buffAmount;
-    private Vector2 targetLocation;
+    private bool shouldSetValue;
+    private Vector2Int? targetLocation;
 
-    public DDEnemyAction_BuffDexterityAlly(int buffAmount, Vector2 targetLocation)
+    public DDEnemyAction_ModifyAffix(EAffixType affix, int buffAmount, bool shouldSetValue, Vector2Int? targetLocation = null)
     {
+        this.affix = affix;
         this.buffAmount = buffAmount;
+        this.shouldSetValue = shouldSetValue;
         this.targetLocation = targetLocation;
     }
 
     public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
     {
-        text.text = buffAmount.ToString();
-        text.enabled = true;
+        if (buffAmount != 0)
+        {
+            text.text = buffAmount.ToString();
+            text.enabled = true;
+        }
+        else if (text.enabled)
+        {
+            text.enabled = false;
+        }
 
         image.texture = GetIcon();
         image.enabled = true;
@@ -378,10 +355,17 @@ public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        DDEnemyOnBoard target = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation);
-        if (target != null)
+        if (targetLocation == null)
         {
-            target.GainDexterity(buffAmount);
+            enemy.ModifyAffix(affix, buffAmount, shouldSetValue);
+        }
+        else
+        {
+            DDEnemyOnBoard target = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation.Value);
+            if (target != null)
+            {
+                target.ModifyAffix(affix, buffAmount, shouldSetValue);
+            }
         }
 
         yield return new WaitForSeconds(1f);
@@ -389,56 +373,30 @@ public class DDEnemyAction_BuffDexterityAlly : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_GainDexterity;
+        return DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affix).Image;
     }
 
-    public override bool HasLocationBasedEffects(ref Vector2 target)
+    public override bool HasLocationBasedEffects(ref Vector2Int target)
     {
-        target = targetLocation;
+        if (targetLocation == null)
+        {
+            return false;
+        }
+
+        target = targetLocation.Value;
         return true;
     }
 
     public override string GetDescription()
     {
-        return "This enemy will attempt to buff dexterity a specific location for " + buffAmount;
-    }
-}
-
-public class DDEnemyAction_GainArmor : DDEnemyActionBase
-{
-    private int armorAmount;
-
-    public DDEnemyAction_GainArmor(int amount)
-    {
-        armorAmount = amount;
-    }
-    
-    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
-    {
-        text.text = armorAmount.ToString();
-        text.enabled = true;
-
-        image.texture = GetIcon();
-        image.enabled = true;
-    }
-
-    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
-    {
-        // TODO
-        // Something with particle effects to show some feedback
-        enemy.SetArmor(armorAmount);
-
-        yield return new WaitForSeconds(0.1f);
-    }
-
-    public override string GetDescription()
-    {
-        return "This enemy will dawn " + armorAmount + " armor";
-    }
-
-    public override Texture GetIcon()
-    {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Action_GainArmor;
+        if (targetLocation == null)
+        {
+            return "This enemy will buff their own " + affix.ToString() + " for " + buffAmount;
+        }
+        else
+        {
+            return "This enemy will attempt to buff " + affix.ToString() + " at a location for " + buffAmount;
+        }
     }
 }
 

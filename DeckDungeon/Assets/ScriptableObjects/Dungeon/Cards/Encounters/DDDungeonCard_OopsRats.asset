@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 652f66eeb68ce734a9f2320410af51bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 950728f005d4f8f44b8656f2b7468c29, type: 3}
   m_Name: DDDungeonCard_OopsRats
   m_EditorClassIdentifier: 
   type: 0
@@ -20,6 +20,5 @@ MonoBehaviour:
   testingHasChest: 0
   goldToGive: 25
   cardsToShuffleInAfter: []
-  enemies:
-  - amount: 7
-    enemy: {fileID: 11400000, guid: 0a71c4be874d5684aa06de397935af2a, type: 2}
+  dungeonAddedUponDefeat: {fileID: 0}
+  enemies: []

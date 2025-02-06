@@ -27,7 +27,7 @@ public class DDShowDeckArea : MonoBehaviour
     private DDFakeUIScrollbar scrollbar;
 
     private Ray camRay;
-    public Ray CamRay { get { return camRay; } }
+    public Ray CamRay => camRay;
 
     private RaycastHit hit;
     private DDSelection currentlyHovered;

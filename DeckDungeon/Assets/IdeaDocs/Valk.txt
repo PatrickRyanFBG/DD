@@ -1,25 +1,114 @@
-+1 Push - Move One Unit Back One Space
-+1 Pull - Move One Unit Forward One Space
-+1 Something - Move One Unit Right One Space
-+1 Something - Move One Unit Left One Space
-+2 Rush - Move All Units Forward One Space
--1 Spear Throw - Deal X Damage To One Unit
--2 Cleave - Dead X Damage To One Row
--2 Pierce - Dead X Damage To One Column
--1 Caltrops - Starting In Location Deals X Damage for X Turns
--1 Bandage - Heal X Damage
+Gainers
+	+1 Push - Move One Unit Back One Space
+	+1 Pull - Move One Unit Forward One Space
+	+1 Something - Move One Unit Right One Space
+	+1 Something - Move One Unit Left One Space
+	+2 Rush - Move All Units Forward One Space
+
+Spenders
+	-1 Spear Throw - Deal X Damage To One Unit
+	-2 Cleave - Dead X Damage To One Row
+	-2 Pierce - Dead X Damage To One Column
+	-1 Caltrops - Starting In Location Deals X Damage for X Turns
+	-1 Bandage - Heal X Damage
+	-1 Discard a Card - Deal Damage
+	-1 Barricade - Spawn Object with X Health
+
+Free
+	Quick Thinkinng - Draw 2 Cards
+
+Archtypes
+	Move Cards
+		- Gaining Momentum
+		- Strength
+	Big Attack
+		- Dex
+		- Requires Gainers still
+	Bleed
+		- Cheaper attack cards to apply bleed
+		- Needs pay off cards
+	Big Block
+		- Coupled with Thorns
+		- Lots of move cards
 
 
-Barricade - Spawn Object with X Health
-Quick Thinkinng - Draw 2 Cards
-Discard a Card - Deal Damage
+1/29/25 Ideas
 
+Starter Deck
+	Push
+	Push
+	Pull
+	Pull
+	Left
+	Right
+	Spear Throw - Deal X Damage To One Unit (Range)
+	Spear Throw - Deal X Damage To One Unit 
+	Slash - Deal X Damage To One Unit (Melee)
+	Slash - Deal X Damage To One Unit
+	Armor Up - Gain Armor
 
+Common: 20 - 20
+	12 Attack
+		Spear Throw - Deal X Damage To One Unit
+		Cleave - Dead X Damage To One Row
+		Pierce - Dead X Damage To One Column
+		Caltrops - Starting In # Location Deals X Damage for X Turns
+		Discard a Card - Deal Damage
+		Barricade - Spawn Object with X Health
+		Armor Break - Deal Damage To Armor In Column
+		Sharpen - Gain Dex
+		Buff Up - Gain Strength
+		Ricochet - Deal X to two targets
+		Spiked Shield - Deal Damage Gain Block
+		Forward Slash - Deal Damage and Draw
+		Armor Up - Gain Armor
+	4 Movement
+		01 Push
+		02 Pull
+		03 Left
+		04 Right
+	4 Other
+Uncommon: 36 - 30
+	15 Attack
+Ascending Agression - Deal Damage This Gains Damage For Combat
+Shackle Strike - Can't Move
+Whirl Wind - Deal X Damage to a Row then X to the row behind it
+Double Strike - Deal X Damage Twice
+Riposte - The Next Attack an Enemy does hit itself as well
+Retaliate - Deal Damage For Each Life lost Last turn
+Thorn Whip - Deal Damage Gain Thorns In Lane
+Armor Break - Deal Damage To Armor In Column
+		08 
+		09
+		10 
+		11 
+		12 
+		13 
+		14 
+		15 
+	8 Movement
+Seperate - Pull Push
+Step Between  - Left Right
+Group Hug - Pull Row
+Grapple - Pull + Strength
+Taunt - Pull + Dex
+Fient - Push + Draw Next Turn
+Shield Rush - Push + Gain Armor
+Trip Wire - Push Row + Bleed
+	7 Other
+		01 Quick Blood - Lose Life Gain Momentum
+		02 Prepare - Draw a Card Gain Momentum
+		03 Scrap - Discard a card Draw Card
+		
+Rare: 16 - 10
+	5 Attack
+	3 Movement
+		1 Rush In - Move All Forward + Something cool
+		2 Escape - Move All Back + Something Cool
+		3 Scramble - Move All Enemies in a Random Direction + Big Momentum
+	2 Other
 
-
-
-
-
+Relics: 10
 
 Deal Damage Per Action Card This Encounter
 Dawn Armor

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class IListExtensions
 {
@@ -23,22 +25,7 @@ public static class IListExtensions
     }
 }
 
-public static class DDCardBaseExtensions
-{
-    public static DDCardBase DeepClone(this DDCardBase obj)
-    {
-        using (var ms = new MemoryStream())
-        {
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(ms, obj);
-            ms.Position = 0;
-
-            return (DDCardBase)formatter.Deserialize(ms);
-        }
-    }
-}
-
-public static class ScriptableObjectExtension
+public static class ScriptableObjectExtensions
 {
     /// <summary>
     /// Creates and returns a clone of any given scriptable object.
@@ -54,5 +41,13 @@ public static class ScriptableObjectExtension
         T instance = Object.Instantiate(scriptableObject);
         instance.name = scriptableObject.name; // remove (Clone) from name
         return instance;
+    }
+}
+
+public static class EnumExtensions
+{
+    public static int GetLayer(this ETargetType enumValue)
+    {
+        return 1 << (int)enumValue;
     }
 }

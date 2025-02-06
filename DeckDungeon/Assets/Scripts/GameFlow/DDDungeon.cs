@@ -12,10 +12,13 @@ public class DDDungeon : MonoBehaviour
     // Dungeon Discard
     private List<DDDungeonCardBase> dungeonDiscard = new List<DDDungeonCardBase>();
 
+    private int dungeonCardCount = 0;
+    public int DungeonCardCount => dungeonCardCount;
+
     [Header("Player")]
     // Players Deck
     private List<DDCardBase> playerDeck = new List<DDCardBase>();
-    public List<DDCardBase> PlayerDeck { get { return playerDeck; } }
+    public List<DDCardBase> PlayerDeck => playerDeck;
 
     // Players Health
     [SerializeField]
@@ -52,7 +55,8 @@ public class DDDungeon : MonoBehaviour
     // Gold
     [Header("Gold")]
     private int goldAmount;
-    public int GoldAmount { get { return goldAmount; } }
+    public int GoldAmount => goldAmount;
+
     public UnityEngine.Events.UnityEvent<int> GoldAmountChanged;
 
     // Artifacts/Equipment
@@ -217,6 +221,8 @@ public class DDDungeon : MonoBehaviour
 
     public void PromptDungeonCard()
     {
+        ++dungeonCardCount;
+
         if(currentDungeonCard != null)
         {
             dungeonDiscard.Add(currentDungeonCard);

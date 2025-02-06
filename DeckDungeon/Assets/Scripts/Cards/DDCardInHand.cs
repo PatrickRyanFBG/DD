@@ -14,26 +14,26 @@ public class DDCardInHand : DDSelection
 
     [SerializeField]
     private RawImage image;
-    public RawImage Image { get => image; }
+    public RawImage Image => image;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI cardTypeText;
-    public TextMeshProUGUI CardTypeText { get => cardTypeText; }
+    public TextMeshProUGUI CardTypeText => cardTypeText;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI nameText;
-    public TextMeshProUGUI NameText { get => nameText; }
+    public TextMeshProUGUI NameText => nameText;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI descText;
-    public TextMeshProUGUI DescText { get => descText; }
+    public TextMeshProUGUI DescText => descText;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI momentumNumber;
-    public TextMeshProUGUI MomentumNumber { get => momentumNumber; }
+    public TextMeshProUGUI MomentumNumber => momentumNumber;
 
     protected DDCardBase currentCard;
-    public DDCardBase CurrentCard { get { return currentCard; } }
+    public DDCardBase CurrentCard => currentCard;
 
     private Coroutine moveUpCoroutine;
     private Coroutine moveDownCoroutine;
@@ -45,9 +45,10 @@ public class DDCardInHand : DDSelection
     private Vector3 prevLocation;
 
     private int amountUsed = 0;
-    public int AmountUsed { get { return amountUsed; } }
+    public int AmountUsed => amountUsed;
+
     // If the currentCard uses == 0, then it doesn't have use mechanic.
-    public bool AllUsed { get { return currentCard.Uses == 0 ? false : amountUsed >= currentCard.Uses; } }
+    public bool AllUsed => currentCard.Uses == 0 ? false : amountUsed >= currentCard.Uses;
 
     public virtual void SetUpCard(DDCardBase cardBase)
     {

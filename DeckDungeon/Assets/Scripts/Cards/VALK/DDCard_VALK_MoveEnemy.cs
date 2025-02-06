@@ -36,7 +36,7 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
 
     public override bool IsSelectionValid(DDSelection selection, int targetIndex)
     {
-        if(targets[targetIndex].TargetType == Target.ETargetType.Enemy)
+        if(targets[targetIndex].TargetType == ETargetType.Enemy)
         {
             DDEnemyOnBoard eob = selection as DDEnemyOnBoard;
             if (eob)

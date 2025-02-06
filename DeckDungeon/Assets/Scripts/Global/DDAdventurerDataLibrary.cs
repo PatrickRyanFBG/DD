@@ -6,5 +6,5 @@ public class DDAdventurerDataLibrary : MonoBehaviour
 {
     [SerializeField]
     private List<DDAdventurerData> adventureDatas;
-    public List<DDAdventurerData> AdventureDatas { get => adventureDatas; }
+    public List<DDAdventurerData> AdventureDatas => adventureDatas;
 }

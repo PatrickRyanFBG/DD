@@ -6,7 +6,7 @@ public class DDRow : DDSelection
 {
     [SerializeField]
     private DDLocation[] locations;
-    public DDLocation[] Locations { get { return locations; } }
+    public DDLocation[] Locations => locations;
 
 #if UNITY_EDITOR
     [ContextMenu("Fix Coord")]
@@ -26,9 +26,9 @@ public class DDRow : DDSelection
             {
                 UnityEditor.SerializedObject serObj = new UnityEditor.SerializedObject(locations[i]);
                 UnityEditor.SerializedProperty serProp = serObj.FindProperty("coord");
-                Vector2 cur = serProp.vector2Value;
+                Vector2Int cur = serProp.vector2IntValue;
                 cur.y = val;
-                serProp.vector2Value = cur;
+                serProp.vector2IntValue = cur;
                 serObj.ApplyModifiedProperties();
 
                 //locations[i].FixCoord(val);

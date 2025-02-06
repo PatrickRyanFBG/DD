@@ -29,7 +29,7 @@ public class DDEnemy_GoblinPrince : DDEnemyBase
         // Always summon another goblin if prince is there is only one or less other goblin
         if (allEnemies.Count <= 2 || Random.Range(0, 10) < 4)
         {
-            Vector2 actingCoords = actingEnemy.CurrentLocaton.Coord;
+            Vector2Int actingCoords = actingEnemy.CurrentLocaton.Coord;
 
             for (int i = 0; i < 5; i++)
             {
@@ -56,8 +56,8 @@ public class DDEnemy_GoblinPrince : DDEnemyBase
                     continue;
                 }
 
-                randX = (int)actingCoords.x + randX;
-                randY = (int)actingCoords.y + randY;
+                randX = actingCoords.x + randX;
+                randY = actingCoords.y + randY;
 
                 if (randX < 0 ||
                     randX >= DDGamePlaySingletonHolder.Instance.Board.ColumnsCount ||
@@ -69,7 +69,7 @@ public class DDEnemy_GoblinPrince : DDEnemyBase
 
                 if (DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
                 {
-                    summonGoblin = new DDEnemyAction_SpawnEnemy(meleeGoblin, new Vector2(randX, randY), meleeGoblinIcon);
+                    summonGoblin = new DDEnemyAction_SpawnEnemy(meleeGoblin, new Vector2Int(randX, randY), meleeGoblinIcon);
                     break;
                 }
             }
@@ -96,7 +96,7 @@ public class DDEnemy_GoblinPrince : DDEnemyBase
                 DDEnemyOnBoard eob = allEnemies[i];
                 if (eob != null && eob != actingEnemy)
                 {
-                    buffAction = new DDEnemyAction_BuffDexterityAlly(dexterityBuff, eob.CurrentLocaton.Coord);
+                    buffAction = new DDEnemyAction_ModifyAffix(EAffixType.Expertise, dexterityBuff, false, eob.CurrentLocaton.Coord);
                 }
             }
 

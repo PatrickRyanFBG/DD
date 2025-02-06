@@ -5,8 +5,8 @@ using UnityEngine;
 public class DDLocation : DDSelection
 {
     [SerializeField]
-    private Vector2 coord;
-    public Vector2 Coord { get { return coord; } }
+    private Vector2Int coord;
+    public Vector2Int Coord => coord;
 
     private DDEnemyOnBoard currentEnemy;
 
@@ -191,7 +191,7 @@ public class DDLocation : DDSelection
 public class DDLocationEffectBase
 {
     private int turnsLeft;
-    public int TurnsLeft { get { return turnsLeft; } }
+    public int TurnsLeft => turnsLeft;
 
     public DDLocationEffectBase(int forTurns)
     {

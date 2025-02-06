@@ -3,26 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class DDDungeonSelection : MonoBehaviour
 {
     [SerializeField]
     private RawImage heroShotImage;
-    public RawImage HeroShotImage { get => heroShotImage; }
+    public RawImage HeroShotImage => heroShotImage;
 
     [SerializeField]
     private TextMeshProUGUI dungeonName;
-    public TextMeshProUGUI DungeonName { get => dungeonName; }
+    public TextMeshProUGUI DungeonName => dungeonName;
 
     [SerializeField]
     private TextMeshProUGUI dungeonDescription;
-    public TextMeshProUGUI DungeonDescription { get => dungeonDescription; }
+    public TextMeshProUGUI DungeonDescription => dungeonDescription;
 
     [SerializeField]
-    private Button selectionButton;
-    public Button SelectionButton { get => selectionButton; }
+    private EventTrigger events;
+    public EventTrigger Events => events;
 
-    [Header("Testing")]
-    [SerializeField]
-    private GameObject comingSoonObject;
+    public void PointerEnter()
+    {
+        dungeonName.gameObject.SetActive(false);
+        dungeonDescription.gameObject.SetActive(true);
+    }
+
+    public void PointerExit()
+    {
+        dungeonName.gameObject.SetActive(true);
+        dungeonDescription.gameObject.SetActive(false);
+    }
 }

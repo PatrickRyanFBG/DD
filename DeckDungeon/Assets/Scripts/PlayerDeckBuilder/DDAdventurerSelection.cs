@@ -8,19 +8,19 @@ public class DDAdventurerSelection : MonoBehaviour
 {
     [SerializeField]
     private RawImage heroShotImage;
-    public RawImage HeroShotImage { get => heroShotImage; }
+    public RawImage HeroShotImage => heroShotImage;
 
     [SerializeField]
     private TextMeshProUGUI adventurerName;
-    public TextMeshProUGUI AdventurerName { get => adventurerName; }
+    public TextMeshProUGUI AdventurerName => adventurerName;
 
     [SerializeField]
     private TextMeshProUGUI adventurerDescription;
-    public TextMeshProUGUI AdventurerDescription { get => adventurerDescription; }
+    public TextMeshProUGUI AdventurerDescription => adventurerDescription;
 
     [SerializeField]
     private Button selectionButton;
-    public Button SelectionButton { get => selectionButton; }
+    public Button SelectionButton => selectionButton;
 
     [Header("Testing")]
     [SerializeField]

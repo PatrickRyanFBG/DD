@@ -22,7 +22,7 @@ public class DDEnemy_GoblinTinkerer : DDEnemyBase
 
         if (Random.Range(0, 10) < 4)
         {
-            Vector2 actingCoords = actingEnemy.CurrentLocaton.Coord;
+            Vector2Int actingCoords = actingEnemy.CurrentLocaton.Coord;
 
             for (int i = 0; i < 5; i++)
             {
@@ -49,8 +49,8 @@ public class DDEnemy_GoblinTinkerer : DDEnemyBase
                     continue;
                 }
 
-                randX = (int)actingCoords.x + randX;
-                randY = (int)actingCoords.y + randY;
+                randX = actingCoords.x + randX;
+                randY = actingCoords.y + randY;
 
                 if (randX < 0 ||
                     randX >= DDGamePlaySingletonHolder.Instance.Board.ColumnsCount ||
@@ -62,7 +62,7 @@ public class DDEnemy_GoblinTinkerer : DDEnemyBase
 
                 if (DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
                 {
-                    bombAction = new DDEnemyAction_SpawnEnemy(bombEnemy, new Vector2(randX, randY), bombIcon);
+                    bombAction = new DDEnemyAction_SpawnEnemy(bombEnemy, new Vector2Int(randX, randY), bombIcon);
                     break;
                 }
             }

@@ -11,25 +11,19 @@ public class DDEnemy_GoblinMelee : DDEnemyBase
     [SerializeField]
     private int dexGain;
 
-    [SerializeField]
-    private DDCardBase woundCard;
-
     public override List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy)
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
-        actions.Add(new DDEnemyAction_AddCardTo(2, woundCard, ECardLocation.Discard));
-        actions.Add(new DDEnemyAction_GainArmor(10));
-        
-        return actions;
-
         DDEnemyActionBase buffAction = null;
 
+        int dexValue = actingEnemy.GetAffixValue(EAffixType.Expertise);
+
         // If no dex higher chance to buff
-        if ((actingEnemy.Dexterity <= 0 && Random.Range(0, 10) < 5) ||
-            (actingEnemy.Dexterity > 0 && Random.Range(0, 10) < 3))
+        if ((dexValue <= 0 && Random.Range(0, 10) < 5) ||
+            (dexValue > 0 && Random.Range(0, 10) < 3))
         {
-            buffAction = new DDEnemyAction_BuffDexterity(dexGain);
+            buffAction = new DDEnemyAction_ModifyAffix(EAffixType.Expertise, dexGain, false);
         }
 
         if (buffAction != null)
@@ -44,38 +38,7 @@ public class DDEnemy_GoblinMelee : DDEnemyBase
         }
         else
         {
-            bool shouldMove = false;
-
-            if (DDGamePlaySingletonHolder.Instance.Player.IsLaneArmored(actingEnemy.CurrentLocaton.Coord.x))
-            {
-                // If this lane is armored we have a 90% chance to move, but 10% chance to double attack
-                shouldMove = Random.Range(0, 10) < 9;
-            }
-            else if(actingEnemy.CurrentLocaton.Coord.y == 0)
-            {
-                // If the lane is not armored and we are at 0 we have a 40% chance of moving.
-                shouldMove = Random.Range(0, 10) < 4;
-            }
-            else
-            {
-                // If the lane is not armored, and we are not at goal we have a 70% chance to move.
-                shouldMove = Random.Range(0, 10) < 7;
-            }
-
-            if (shouldMove)
-            {
-                DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Down, true);
-                if (moveAction != null)
-                {
-                    actions.Add(moveAction);
-                }
-            }
-            else
-            {
-                actions.Add(new DDEnemyAction_Attack(damage));
-            }
-
-            actions.Add(new DDEnemyAction_Attack(damage));
+            actingEnemy.GenericMeleeAttackActions(ref actions, damage);
         }
 
         return actions;

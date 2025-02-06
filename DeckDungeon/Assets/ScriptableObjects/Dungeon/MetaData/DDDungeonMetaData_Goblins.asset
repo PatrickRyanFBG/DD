@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8e8f1602ff754081f20256b6b4959, type: 3}
   m_Name: DDDungeonMetaData_Goblins
   m_EditorClassIdentifier: 
-  dungeonChainName: Gobble Gobble
-  dungeonDecsription: Where theres Goblins, there be Gobbling.
-  heroShot: {fileID: 2800000, guid: 7f87244ee549c5a4486524f8e68c4498, type: 3}
+  dungeonChainName: Scrapyard Scrap
+  dungeonDecsription: Goblins have taken over an old workshop and started producing
+    dangerous robots.
+  heroShot: {fileID: 2800000, guid: 5c56c588d53060a4487d0628127e9870, type: 3}
   dungeonOrder:
   - {fileID: 11400000, guid: b1444b61c011f694184d43d079d143e7, type: 2}
   - {fileID: 11400000, guid: 5d1d42727d0c2d847a7b8f44325c9ca5, type: 2}

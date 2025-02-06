@@ -8,7 +8,7 @@ public abstract class DDCard_VALKBase : DDCardBase
     [Header("Valkyrie")]
     [SerializeField]
     protected int momentumCost;
-    public int MomentumCost { get { return momentumCost; } }
+    public int MomentumCost => momentumCost;
 
     [SerializeField]
     protected int momentumGain;

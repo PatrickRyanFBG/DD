@@ -7,15 +7,15 @@ public class DDLeisureArea : MonoBehaviour
 {
     [SerializeField]
     private TMPro.TextMeshProUGUI leisureName;
-    public TMPro.TextMeshProUGUI LeisureName { get { return leisureName; } }
+    public TMPro.TextMeshProUGUI LeisureName => leisureName;
 
     [SerializeField]
     private RawImage image;
-    public RawImage Image { get { return image; } }
+    public RawImage Image => image;
 
     [SerializeField]
     private TMPro.TextMeshProUGUI description;
-    public TMPro.TextMeshProUGUI Description { get { return description; } }
+    public TMPro.TextMeshProUGUI Description => description;
 
     [SerializeField]
     private Transform optionParent;

@@ -17,7 +17,11 @@ public class DDDungeonMetaData : DDScriptableObject
 
     [SerializeField]
     private List<DDDungeonData> dungeonOrder;
-    public List<DDDungeonData> DungeonOrder { get => dungeonOrder; }
+    public List<DDDungeonData> DungeonOrder => dungeonOrder;
+
+    [Header("Testing")]
+    [SerializeField]
+    private bool comingSoon;
 
     // In here dungeon specific events
     // Artifacts

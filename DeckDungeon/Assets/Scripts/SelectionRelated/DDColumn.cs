@@ -6,13 +6,13 @@ public class DDColumn : DDSelection
 {
     [SerializeField]
     private DDLocation[] locations;
-    public DDLocation[] Locations { get { return locations; } }
-    
+    public DDLocation[] Locations => locations;
+
     [SerializeField]
     private DDRow[] rows;
 
     private int index;
-    public int Index { get { return index; } }
+    public int Index => index;
 
 #if UNITY_EDITOR
     [ContextMenu("Fix Location")]
@@ -29,9 +29,9 @@ public class DDColumn : DDSelection
 
                 UnityEditor.SerializedObject serObj = new UnityEditor.SerializedObject(locations[i]);
                 UnityEditor.SerializedProperty serProp = serObj.FindProperty("coord");
-                Vector2 cur = serProp.vector2Value;
+                Vector2Int cur = serProp.vector2IntValue;
                 cur.x = val;
-                serProp.vector2Value = cur;
+                serProp.vector2IntValue = cur;
                 serObj.ApplyModifiedProperties();
 
                 //locations[i].FixCoordX(val);

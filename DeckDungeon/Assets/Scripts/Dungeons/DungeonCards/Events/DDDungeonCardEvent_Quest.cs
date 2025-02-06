@@ -9,15 +9,15 @@ public class DDQuestEventOption
 {
     [SerializeField]
     private string optionButtonText;
-    public string OptionButtonText { get => optionButtonText; }
+    public string OptionButtonText => optionButtonText;
 
     [SerializeField, Multiline]
     private string optionButtonDescription;
-    public string OptionButtonDescription { get => optionButtonDescription; }
+    public string OptionButtonDescription => optionButtonDescription;
 
     [SerializeField]
     private string optionButtonTextExit;
-    public string OptionButtonTextExit { get => optionButtonTextExit; }
+    public string OptionButtonTextExit => optionButtonTextExit;
 
     // 
 }

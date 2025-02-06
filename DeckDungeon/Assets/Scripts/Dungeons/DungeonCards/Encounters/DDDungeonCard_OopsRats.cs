@@ -14,20 +14,20 @@ public class DDDungeonCard_OopsRats : DDDungeonCardEncounter
     {
         DDBoard board = DDGamePlaySingletonHolder.Instance.Board;
 
-        List<Vector2> locs = new List<Vector2>();
+        List<Vector2Int> locs = new List<Vector2Int>();
         for (int i = 0; i < numberOfRats; i++)
         {
             int x = Random.Range(0, board.ColumnsCount);
             int y = Random.Range(0, board.RowCount);
 
-            Vector2 nextPos = new Vector2(x, y);
+            Vector2Int nextPos = new Vector2Int(x, y);
 
             while (locs.Contains(nextPos))
             {
                 x = Random.Range(0, board.ColumnsCount);
                 y = Random.Range(0, board.RowCount);
 
-                nextPos = new Vector2(x, y);
+                nextPos = new Vector2Int(x, y);
             }
 
             locs.Add(nextPos);

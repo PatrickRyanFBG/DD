@@ -18,9 +18,12 @@ MonoBehaviour:
   description: 'Move a target enemy one down
 
     Gain 1<sprite name=momentum>'
+  rangeType: 2
+  finishes: 
   targets:
   - targetType: 13
   uses: 0
+  price: {x: 100, y: 200}
   momentumCost: 0
   momentumGain: 1
   direction: 2

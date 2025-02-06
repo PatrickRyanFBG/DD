@@ -5,9 +5,10 @@ using UnityEngine;
 public class DDEncounter : MonoBehaviour
 {
     private EEncounterPhase currentEncounterPhase = EEncounterPhase.EncounterStart;
-    public EEncounterPhase CurrentPhase { get { return currentEncounterPhase; } }
+    public EEncounterPhase CurrentPhase => currentEncounterPhase;
 
-    List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
+    private List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
+    public List<DDEnemyOnBoard> AllEnemies => enemies;
 
     [SerializeField]
     private DDPlayer_Match player;

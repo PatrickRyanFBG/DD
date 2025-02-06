@@ -1,3 +1,4 @@
+
 Card Attributes
 	- Locked
 		- Cannot be used and not discarded

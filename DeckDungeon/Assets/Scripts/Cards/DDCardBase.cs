@@ -8,35 +8,38 @@ public abstract class DDCardBase : DDScriptableObject
     [Header("Base")]
     [SerializeField]
     private ECardType cardType;
-    public ECardType CardType { get { return cardType; } }
+    public ECardType CardType => cardType;
 
     [SerializeField]
     private Texture image;
-    public Texture Image { get { return image; } }
+    public Texture Image => image;
 
     [SerializeField]
     private new string name;
-    public string Name { get { return name; } }
+    public string Name => name;
 
     [SerializeField, Multiline]
     private string description;
 
     [SerializeField]
+    protected ERangeType rangeType = ERangeType.None;
+
+    [SerializeField]
     private List<ECardFinishing> finishes;
-    public List<ECardFinishing> Finishes { get => finishes; }
+    public List<ECardFinishing> Finishes => finishes;
 
     [SerializeField]
     protected List<Target> targets;
-    public List<Target> Targets { get { return targets; } }
+    public List<Target> Targets => targets;
 
     // Need to make a base between this and player cards
     [SerializeField]
     private int uses = 0;
-    public int Uses { get { return uses; } }
+    public int Uses => uses;
 
     [SerializeField]
     private Vector2 price = new Vector2(100, 200);
-    public int Price { get { return (int)Random.Range(price.x, price.y); } }
+    public int Price => (int)Random.Range(price.x, price.y);
 
     public virtual bool SelectCard()
     {
@@ -89,19 +92,9 @@ public abstract class DDCardBase : DDScriptableObject
 [System.Serializable]
 public class Target
 {
-    public enum ETargetType
-    {
-        PlayerCard = 6,
-        Location = 7,
-        Row = 8,
-        Column = 9,
-        EntireOrEmpty = 10,
-        Enemy = 13
-    }
-
     [SerializeField]
     private ETargetType targetType;
-    public ETargetType TargetType { get { return targetType; } }
+    public ETargetType TargetType => targetType;
 
     public int GetTargetTypeLayer()
     {

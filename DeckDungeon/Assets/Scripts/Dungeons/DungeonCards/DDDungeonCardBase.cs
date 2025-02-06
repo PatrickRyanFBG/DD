@@ -7,19 +7,19 @@ public abstract class DDDungeonCardBase : DDScriptableObject
 {
     [SerializeField]
     private EDungeonCardType type;
-    public EDungeonCardType Type { get { return type; } }
+    public EDungeonCardType Type => type;
 
     [SerializeField]
     private Texture image;
-    public Texture Image { get { return image; } }
+    public Texture Image => image;
 
     [SerializeField]
     private new string name;
-    public string Name { get { return name; } }
+    public string Name => name;
 
     [SerializeField, Multiline]
     private string description;
-    public string Description { get { return description; } }
+    public string Description => description;
 
     public virtual bool SelectCard()
     {
@@ -53,15 +53,15 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 {
     [SerializeField]
     protected bool testingHasKey;
-    public bool TestingHasKey { get => testingHasKey; }
+    public bool TestingHasKey => testingHasKey;
 
     [SerializeField]
     protected bool testingHasChest;
-    public bool TestingHasChest { get => testingHasChest; }
+    public bool TestingHasChest => testingHasChest;
 
     [SerializeField]
     private int goldToGive;
-    public int GoldToGive { get => goldToGive; }
+    public int GoldToGive => goldToGive;
 
     [SerializeField]
     private List<DDDungeonCardBase> cardsToShuffleInAfter;

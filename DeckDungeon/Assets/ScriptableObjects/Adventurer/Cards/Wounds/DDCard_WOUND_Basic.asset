@@ -20,6 +20,7 @@ MonoBehaviour:
     Fleeting
 
     Deals 5 Damage At End of Round'
+  rangeType: 2
   finishes: 01000000
   targets: []
   uses: 0

@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de6d2abaa4395145ae7a45539e4ee70, type: 3}
   m_Name: DDCard_VALK_Bandage
   m_EditorClassIdentifier: 
+  cardType: 0
   image: {fileID: 2800000, guid: 7943948997908424e90fa76fa6d2afd6, type: 3}
   name: Bandage
   description: Heals 10
+  rangeType: 2
+  finishes: 
   targets:
   - targetType: 10
   uses: 1
+  price: {x: 100, y: 200}
   momentumCost: 1
   momentumGain: 0
   healAmount: 10

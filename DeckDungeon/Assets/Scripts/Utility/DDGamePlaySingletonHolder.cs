@@ -5,7 +5,7 @@ using UnityEngine;
 public class DDGamePlaySingletonHolder : MonoBehaviour
 {
     private static DDGamePlaySingletonHolder instance;
-    public static DDGamePlaySingletonHolder Instance { get { return instance; } }
+    public static DDGamePlaySingletonHolder Instance => instance;
 
     public DDDungeon Dungeon;
     public DDEncounter Encounter;

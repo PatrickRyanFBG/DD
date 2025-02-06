@@ -5,29 +5,29 @@ using UnityEngine;
 public class DDGlobalManager : MonoBehaviour
 {
     private static DDGlobalManager instance;
-    public static DDGlobalManager Instance 
-    { 
-        get 
-        { 
-            if(instance == null)
+    public static DDGlobalManager Instance
+    {
+        get
+        {
+            if (instance == null)
             {
                 Instantiate(Resources.Load<GameObject>("Prefabs/GlobalManager"));
             }
-            return instance; 
-        } 
+            return instance;
+        }
     }
 
     [Header("Global Singletons")]
     [SerializeField]
     private DDAdventurerDataLibrary adventurerDataLibrary;
-    public DDAdventurerDataLibrary AdventurerDataLibrary { get => adventurerDataLibrary; }
+    public DDAdventurerDataLibrary AdventurerDataLibrary => adventurerDataLibrary;
 
     private DDAdventurerData selectedAdventurer;
     public DDAdventurerData SelectedAdventurer
     {
         get
         {
-            if(FromMainMenu)
+            if (FromMainMenu)
             {
                 return selectedAdventurer;
             }
@@ -39,9 +39,9 @@ public class DDGlobalManager : MonoBehaviour
         }
     }
 
-        [SerializeField]
+    [SerializeField]
     private DDDungeonDataLibrary dungeonDataLibrary;
-    public DDDungeonDataLibrary DungeonDataLibrary { get => dungeonDataLibrary; }
+    public DDDungeonDataLibrary DungeonDataLibrary => dungeonDataLibrary;
 
     private DDDungeonMetaData selectedDungeon;
     public DDDungeonMetaData SelectedDungeon
@@ -59,7 +59,6 @@ public class DDGlobalManager : MonoBehaviour
         }
     }
 
-
     private List<DDDungeonSideQuestData> sideQuests = new List<DDDungeonSideQuestData>();
     public List<DDDungeonSideQuestData> SideQuests
     {
@@ -75,6 +74,10 @@ public class DDGlobalManager : MonoBehaviour
             }
         }
     }
+
+    [SerializeField]
+    private DDAffixLibrary affixLibrary;
+    public DDAffixLibrary AffixLibrary => affixLibrary;
 
     [Header("Testing")]
     public bool FromMainMenu;
@@ -107,7 +110,7 @@ public class DDGlobalManager : MonoBehaviour
 
     public void AddRemoveSideQuest(DDDungeonSideQuestData data, bool adding)
     {
-        if(adding)
+        if (adding)
         {
             sideQuests.Add(data);
         }

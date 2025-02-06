@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd896b89e0f3f60498da7961d830649a, type: 3}
+  m_Name: DDEnemy_GoblinAirRange
+  m_EditorClassIdentifier: 
+  image: {fileID: 2800000, guid: 26b7274d6e4822749a5183418626842a, type: 3}
+  StartingHealth: 10
+  StartingArmor: 5
+  enemyName: Whirligig
+  immovable: 0
+  friendly: 0
+  damage: 5
+  armorBuff: 5

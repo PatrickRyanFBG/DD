@@ -19,7 +19,7 @@ public class DDFakeUIScrollbar : MonoBehaviour
     private bool grabbed = false;
 
     private float value = 1;
-    public float Value { get { return value; } }
+    public float Value => value;
 
     private void Update()
     {
