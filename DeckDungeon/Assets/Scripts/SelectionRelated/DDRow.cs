@@ -8,6 +8,9 @@ public class DDRow : DDSelection
     private DDLocation[] locations;
     public DDLocation[] Locations => locations;
 
+    private int index;
+    public int Index => index;
+
 #if UNITY_EDITOR
     [ContextMenu("Fix Coord")]
     private void FixCoord()
@@ -38,7 +41,12 @@ public class DDRow : DDSelection
         }
     }
 #endif
-
+    
+    public void SetIndex(int val)
+    {
+        index = val;
+    }
+    
     public override void FillSelectionList(ref List<DDSelection> selections)
     {
         for (int i = 0; i < locations.Length; i++)

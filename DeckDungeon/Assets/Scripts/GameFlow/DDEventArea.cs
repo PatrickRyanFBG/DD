@@ -30,7 +30,7 @@ public class DDEventArea : MonoBehaviour
     public void DisplayEvent(DDDungeonCardEvent eventCard)
     {
         currentEvent = eventCard;
-
+        
         CleanUpButtons();
         gameObject.SetActive(true);
         currentEvent.DisplayEvent(this);

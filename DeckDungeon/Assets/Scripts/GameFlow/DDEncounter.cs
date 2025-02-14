@@ -176,6 +176,7 @@ public class DDEncounter : MonoBehaviour
 
     private IEnumerator DoPlayersEndTurn()
     {
+        
         yield return player.DiscardHand();
         ChangeCurrentPhase(EEncounterPhase.MonstersAct);
     }

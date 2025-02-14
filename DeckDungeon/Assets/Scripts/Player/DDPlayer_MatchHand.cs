@@ -24,19 +24,21 @@ public class DDPlayer_MatchHand : MonoBehaviour
         }
     }
 
+    public IEnumerator EndOfTurn()
+    {
+        for (int i = cards.Count - 1; i >= 0; i--)
+        {
+            yield return cards[i].CurrentCard.EndOfTurn();
+        }
+    }
+    
     public IEnumerator DiscardHand(DDPlayer_MatchDiscard discard)
     {
         for (int i = cards.Count - 1; i >= 0; i--)
         {
-            // TODO :: Change this to bit wise enum
-            if(cards[i].CurrentCard.Finishes.Contains(ECardFinishing.Fleeting))
+            yield return cards[i].CurrentCard.DiscardCard(true);
+            if (cards[i])
             {
-                yield return cards[i].CurrentCard.DestroyedCard();
-                Destroy(cards[i].gameObject);
-            }
-            else
-            {
-                yield return cards[i].CurrentCard.DiscardCard();
                 discard.CardDiscarded(cards[i]);
             }
 
@@ -44,10 +46,14 @@ public class DDPlayer_MatchHand : MonoBehaviour
         }
     }
 
-    public void DiscardCard(DDCardInHand card, DDPlayer_MatchDiscard discard)
+    public IEnumerator DiscardCard(DDCardInHand card, DDPlayer_MatchDiscard discard)
     {
-        discard.CardDiscarded(card);
         cards.Remove(card);
+        yield return card.CurrentCard.DiscardCard(false);
+        if (card)
+        {
+            discard.CardDiscarded(card);
+        }
     }
 
     private void UpdateCardsPosition()

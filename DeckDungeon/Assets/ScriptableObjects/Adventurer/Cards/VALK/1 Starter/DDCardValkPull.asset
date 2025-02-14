@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3355ae0e150bee84abd80b2c0dc3ea55, type: 3}
+  m_Name: DDCardValkPull
+  m_EditorClassIdentifier: 
+  <GUID>k__BackingField: 0089dadc028d5194291d769ee5e8ab36
+  cardType: 0
+  cardRarity: 0
+  image: {fileID: 0}
+  cardName: DDCardValkPull
+  description: 
+  rangeType: 2
+  finishes: 
+  uses: 0
+  price: {x: 100, y: 200}
+  effects:
+  - rid: 7815311197493264610
+  momentumCost: 0
+  momentumGain: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 7815311197493264610
+      type: {class: DDCardEffectMoveEnemy, ns: , asm: Assembly-CSharp}
+      data:
+        targetType: 13
+        differentTarget: 0
+        useLastTarget: 0
+        direction: 0
+        amount: 1

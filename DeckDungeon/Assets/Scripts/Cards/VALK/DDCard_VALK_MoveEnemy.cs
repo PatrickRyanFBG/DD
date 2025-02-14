@@ -12,7 +12,7 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
     [SerializeField]
     private int amount;
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
         // Should put this into a helperf unction somewere
         List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
@@ -31,12 +31,12 @@ public class DDCard_VALK_MoveEnemy : DDCard_VALKBase
             }
         }
 
-        yield return base.ExecuteCard(selections);
+        yield return base.Execute(selections);
     }
 
     public override bool IsSelectionValid(DDSelection selection, int targetIndex)
     {
-        if(targets[targetIndex].TargetType == ETargetType.Enemy)
+        if(GetTargets()[targetIndex] == ETargetType.Enemy)
         {
             DDEnemyOnBoard eob = selection as DDEnemyOnBoard;
             if (eob)

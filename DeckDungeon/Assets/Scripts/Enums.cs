@@ -52,6 +52,13 @@ public enum ECardType
     Curses
 }
 
+public enum ECardRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+}
+
 public enum ERangeType
 {
     Melee,
@@ -66,10 +73,20 @@ public enum ECardLocation
     Discard
 }
 
-public enum ECardFinishing
+public enum EPlayerCardFinish
 {
     None,
-    Fleeting
+    // Positive
+    Energized,
+    Serrated,
+    Coarse,
+    Weighty,
+    // Neutral
+    Fleeting = 100, 
+    Sticky,
+    // Negative
+    Fragile = 200,
+    Siphon,
 }
 
 public enum EAffixType
@@ -78,7 +95,8 @@ public enum EAffixType
     Armor,
     Vigor,
     Retaliate,
-    Bleed
+    Bleed,
+    Immobile,
 }
 
 public enum ETargetType
@@ -89,4 +107,13 @@ public enum ETargetType
     Column = 9,
     EntireOrEmpty = 10,
     Enemy = 13
+}
+
+public enum ECardExecutionTime
+{
+    None,
+    Drawn,
+    Played,
+    EndOfRound,
+    Discarded,
 }

@@ -9,9 +9,9 @@ public class DDCard_VALK_QuickThinking : DDCard_VALKBase
     [SerializeField]
     private int drawAmount;
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
-        yield return base.ExecuteCard(selections);
+        yield return base.Execute(selections);
 
         for (int i = 0; i < drawAmount; i++)
         {

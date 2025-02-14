@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3355ae0e150bee84abd80b2c0dc3ea55, type: 3}
+  m_Name: DDCardValkSpearThrow
+  m_EditorClassIdentifier: 
+  <GUID>k__BackingField: af5840839b4d7fe4487f0c710631fce5
+  cardType: 0
+  cardRarity: 0
+  image: {fileID: 0}
+  cardName: DDCardValkSpearThrow
+  description: 
+  rangeType: 1
+  finishes: 
+  uses: 0
+  price: {x: 100, y: 200}
+  effects:
+  - rid: 7815311197493264611
+  momentumCost: 1
+  momentumGain: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 7815311197493264611
+      type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
+      data:
+        targetType: 13
+        differentTarget: 0
+        useLastTarget: 0
+        damage: 5

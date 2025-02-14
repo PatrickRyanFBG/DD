@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3355ae0e150bee84abd80b2c0dc3ea55, type: 3}
+  m_Name: DDCardValkGainRicochet
+  m_EditorClassIdentifier: 
+  <GUID>k__BackingField: a9665a8fda1116845b4bb7aa4283a159
+  cardType: 1
+  cardRarity: 0
+  image: {fileID: 0}
+  name: 
+  description: 
+  rangeType: 2
+  finishes: 
+  uses: 0
+  price: {x: 100, y: 200}
+  effects:
+  - rid: 7815311197493264622
+  - rid: 7815311197493264623
+  momentumCost: 1
+  momentumGain: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 7815311197493264622
+      type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
+      data:
+        targetType: 13
+        differentTarget: 0
+        useLastTarget: 0
+        affixType: 4
+        amount: 5
+        shouldSetValue: 0
+    - rid: 7815311197493264623
+      type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
+      data:
+        targetType: 13
+        differentTarget: 1
+        useLastTarget: 0
+        affixType: 4
+        amount: 5
+        shouldSetValue: 0

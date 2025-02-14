@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: DDDungeonData_GoblinPrince
   m_EditorClassIdentifier: 
   dungeonName: Goblin Prince
-  dungeonDecsription: He is spoiled rotten.
-  heroShot: {fileID: 2800000, guid: 0377ddd4df32ff94499283d2ad3d6a93, type: 3}
   cards:
-  - {fileID: 11400000, guid: ed87a5c5f62a9d644872ad18a987364a, type: 2}
-  - {fileID: 11400000, guid: ba1964b6f0cfc5d46a18cb1b9c6c53c3, type: 2}
+  - {fileID: 11400000, guid: a04d9c6ab386e524d8894ed942b8c660, type: 2}
+  - {fileID: 11400000, guid: a04d9c6ab386e524d8894ed942b8c660, type: 2}
   - {fileID: 11400000, guid: 5e4b772b81437dd49bf8f14984bcfb17, type: 2}
   - {fileID: 11400000, guid: 041bf8820407410449a2f5d883627e64, type: 2}
   - {fileID: 11400000, guid: c1f407cdc4574e9498283aaab1a6c5f7, type: 2}

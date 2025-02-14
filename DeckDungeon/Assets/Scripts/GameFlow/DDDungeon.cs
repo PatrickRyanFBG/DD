@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+public class DDDungeonStats
+{
+    public int EventsCompleted;
+    public int EncountersCompleted;
+}
+
 public class DDDungeon : MonoBehaviour
 {
     // The current card, so we don't add it to discard before it is finished.
@@ -11,9 +17,10 @@ public class DDDungeon : MonoBehaviour
     private List<DDDungeonCardBase> dungeonDeck = new List<DDDungeonCardBase>();
     // Dungeon Discard
     private List<DDDungeonCardBase> dungeonDiscard = new List<DDDungeonCardBase>();
-
-    private int dungeonCardCount = 0;
-    public int DungeonCardCount => dungeonCardCount;
+    public int DungeonDiscardCount => dungeonDiscard.Count;
+    
+    private DDDungeonStats dungeonStats;
+    public DDDungeonStats DungeonStats => dungeonStats;
 
     [Header("Player")]
     // Players Deck
@@ -139,6 +146,8 @@ public class DDDungeon : MonoBehaviour
 
         UpdateHealthText();
 
+        dungeonStats = new DDDungeonStats();
+        
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";
@@ -221,8 +230,6 @@ public class DDDungeon : MonoBehaviour
 
     public void PromptDungeonCard()
     {
-        ++dungeonCardCount;
-
         if(currentDungeonCard != null)
         {
             dungeonDiscard.Add(currentDungeonCard);
@@ -284,6 +291,8 @@ public class DDDungeon : MonoBehaviour
     {
         TurnOffAreas();
 
+        ++dungeonStats.EncountersCompleted;
+        
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";
@@ -351,6 +360,13 @@ public class DDDungeon : MonoBehaviour
         TurnOffAreas();
         eventArea.DisplayEvent(eventCard);
         ChangeDungeonPhase(EDungeonPhase.Event);
+    }
+
+    public void EndEvent()
+    {
+        ++dungeonStats.EventsCompleted;
+        
+        DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
     }
 
     public void StartLeisure(DDDungeonCardLeisure leisureCard)

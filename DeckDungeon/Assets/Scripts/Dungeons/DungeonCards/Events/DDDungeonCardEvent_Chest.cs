@@ -10,7 +10,7 @@ public class DDDungeonCardEvent_Chest : DDDungeonCardEvent
 
     public override void DisplayEvent(DDEventArea area)
     {
-        base.DisplayEvent(area);
+        //base.DisplayEvent(area);
 
         artifactOne = DDGamePlaySingletonHolder.Instance.Dungeon.GrabArtifact();
         artifactTwo = DDGamePlaySingletonHolder.Instance.Dungeon.GrabArtifact();

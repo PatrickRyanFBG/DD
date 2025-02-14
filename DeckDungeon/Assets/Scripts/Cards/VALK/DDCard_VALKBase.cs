@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class DDCard_VALKBase : DDCardBase
+public abstract class DDCard_VALKBase : DDCardGeneric
 {
     [Header("Valkyrie")]
     [SerializeField]
@@ -18,14 +18,14 @@ public abstract class DDCard_VALKBase : DDCardBase
         return DDGamePlaySingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
     }
 
-    public override void DisplayInformation(DDCardInHand cardInHand)
+    public override void RuntimeInit(DDCardInHand cardInHand)
     {
-        base.DisplayInformation(cardInHand);
+        base.RuntimeInit(cardInHand);
 
         cardInHand.MomentumNumber.text = momentumCost.ToString();
     }
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
         if(momentumGain > 0)
         {
@@ -36,7 +36,7 @@ public abstract class DDCard_VALKBase : DDCardBase
         {
             DDGamePlaySingletonHolder.Instance.Player.RemoveFromMomentum(momentumCost);
         }
-
-        yield return null;
+        
+        yield return base.Execute(selections);
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 [System.Serializable]
 public class DDQuestEventOption
 {
@@ -36,7 +35,8 @@ public class DDDungeonCardEvent_Quest : DDDungeonCardEvent
 
     public override void DisplayEvent(DDEventArea area)
     {
-        base.DisplayEvent(area);
+        // TODO::Gotta seperate quests from events?
+        // base.DisplayEvent(area);
 
         for (int i = 0; i < options.Count; i++)
         {

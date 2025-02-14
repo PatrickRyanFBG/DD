@@ -31,7 +31,7 @@ public class DDPlayer_MatchDeck : MonoBehaviour
         {
             // Do another deep copy here to allow for in-match modifications?
             DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, transform);
-            cardInHand.SetUpCard(otherCards[i]);
+            cardInHand.SetUpCard(otherCards[i].Clone());
             ShuffleInCard(cardInHand, true);
         }
 

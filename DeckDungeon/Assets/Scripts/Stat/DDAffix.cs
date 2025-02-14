@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class DDAffix
 {
-    [SerializeField]
-    private EAffixType affixType;
+    [SerializeField] private EAffixType affixType;
     public EAffixType AffixType => affixType;
 
-    [SerializeField]
-    private Texture image;
+    [SerializeField] private Texture image;
     public Texture Image => image;
 
-    [SerializeField]
-    private bool existsAtOrBelowZero;
-    public bool ExistsAtOrBelowZero => existsAtOrBelowZero;
+    [FormerlySerializedAs("existsAtOrBelowZero")] [SerializeField]
+    private bool existsAtZero;
+
+    public bool ExistsAtZero => existsAtZero;
+
+    private bool existsNegative;
+    public bool ExistsNegative => existsNegative;
 }

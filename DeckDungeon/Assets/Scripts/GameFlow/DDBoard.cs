@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DDBoard : MonoBehaviour
 {
-    [SerializeField]
-    private DDColumn[] columns;
+    [SerializeField] private DDColumn[] columns;
+
+    [SerializeField] private DDRow[] rows;
 
     [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("meleeRangeBonus")]
     private Vector2Int[] meleeRangedBonus;
@@ -18,13 +19,10 @@ public class DDBoard : MonoBehaviour
     public int RowCount => rowCount;
     public int RowCountIndex => rowCount - 1;
 
-    [Header("Testing")]
-    [SerializeField]
-    private DDEnemyOnBoard dummyPrefab;
+    [Header("Testing")] [SerializeField] private DDEnemyOnBoard dummyPrefab;
 
     // Gotta put this somewhere else?
-    [SerializeField]
-    private int bonkDamage = 5;
+    [SerializeField] private int bonkDamage = 5;
 
     // TODO change this to turn number and not frame
     private List<DDEnemyOnBoard> currentFrameEnemyList = null;
@@ -37,13 +35,18 @@ public class DDBoard : MonoBehaviour
             columns[i].SetIndex(i);
         }
 
+        for (int i = 0; i < rows.Length; i++)
+        {
+            rows[i].SetIndex(i);
+        }
+        
         columnsCount = columns.Length;
-        rowCount = columns[0].Locations.Length;
+        rowCount = rows.Length;
     }
 
     public void SpawnEnemy(int x, int y, DDEnemyBase enemy)
     {
-        if(columns[x].Locations[y].GetEnemy() == null)
+        if (columns[x].Locations[y].GetEnemy() == null)
         {
             DDEnemyOnBoard currentEnemy = Instantiate(dummyPrefab, transform);
             DDGamePlaySingletonHolder.Instance.Encounter.RegisterEnemy(currentEnemy);
@@ -55,7 +58,7 @@ public class DDBoard : MonoBehaviour
     public IEnumerator MoveEnemy(DDEnemyOnBoard enemy, EMoveDirection direction, int amount, bool fromPlayer)
     {
         Vector2Int currentCoord = enemy.CurrentLocaton.Coord;
-        if(direction == EMoveDirection.Up || direction == EMoveDirection.Down)
+        if (direction == EMoveDirection.Up || direction == EMoveDirection.Down)
         {
             int toAdd = direction == EMoveDirection.Up ? 1 : -1;
             int destination = Mathf.Clamp(currentCoord.y + (toAdd * amount), 0, (rowCount - 1));
@@ -67,12 +70,13 @@ public class DDBoard : MonoBehaviour
                 {
                     // The next position has an enemy so we can't move any more
                     // We bonk though?!
-                    if(fromPlayer)
+                    if (fromPlayer)
                     {
                         yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
                         enemy.DoDamage(bonkDamage);
                         occupiedEnemy.DoDamage(bonkDamage);
                     }
+
                     break;
                 }
 
@@ -80,7 +84,7 @@ public class DDBoard : MonoBehaviour
             }
 
             // We have moved any amount
-            if(enemy.CurrentLocaton.Coord.y != currentCoord.y)
+            if (enemy.CurrentLocaton.Coord.y != currentCoord.y)
             {
                 yield return enemy.CurrentLocaton.SetEnemy(null);
                 yield return columns[currentCoord.x].Locations[currentCoord.y].SetEnemy(enemy);
@@ -104,6 +108,7 @@ public class DDBoard : MonoBehaviour
                         enemy.DoDamage(bonkDamage);
                         occupiedEnemy.DoDamage(bonkDamage);
                     }
+
                     break;
                 }
 
@@ -148,7 +153,7 @@ public class DDBoard : MonoBehaviour
     public void GetAllEnemies(ref List<DDEnemyOnBoard> enemyList)
     {
         // To avoid the need to gather every enemy each time it is need in the same frame (but will be turn number later)
-        if(lastFrameEnemyListGathered == Time.frameCount)
+        if (lastFrameEnemyListGathered == Time.frameCount)
         {
             enemyList = currentFrameEnemyList;
         }
@@ -174,12 +179,23 @@ public class DDBoard : MonoBehaviour
         return columns[x].Locations[y];
     }
 
+    public DDRow GetRow(int index)
+    {
+        return rows[index];
+    }
+
+    public DDColumn GetColumn(int index)
+    {
+        return columns[index];
+    }
+
     public int GetMeleeRangedBonus(ERangeType type, int row)
     {
-        if(type == ERangeType.None)
+        if (type == ERangeType.None)
         {
             return 0;
         }
+
         return type == ERangeType.Melee ? meleeRangedBonus[row].x : meleeRangedBonus[row].y;
     }
 }

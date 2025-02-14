@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cf5b57da58314488370626bb7b3a28, type: 3}
+  m_Name: DDCardWoundBasic
+  m_EditorClassIdentifier: 
+  <GUID>k__BackingField: 3a78ae5e23217b0449300b6bb525b6f2
+  cardType: 4
+  cardRarity: 0
+  image: {fileID: 2800000, guid: 39ee71076a4fb534181e173b9d753fd1, type: 3}
+  cardName: DDCardWoundBasic
+  description: 'Cannot be played
+
+    Fleeting
+
+    Deals 5 Damage At End of Round'
+  rangeType: 2
+  defaultCardFinishes: 64000000
+  price: {x: 100, y: 200}
+  damage: 5

@@ -44,12 +44,6 @@ public class DDCardInHand : DDSelection
     private bool selected = false;
     private Vector3 prevLocation;
 
-    private int amountUsed = 0;
-    public int AmountUsed => amountUsed;
-
-    // If the currentCard uses == 0, then it doesn't have use mechanic.
-    public bool AllUsed => currentCard.Uses == 0 ? false : amountUsed >= currentCard.Uses;
-
     public virtual void SetUpCard(DDCardBase cardBase)
     {
         currentCard = cardBase;
@@ -60,12 +54,12 @@ public class DDCardInHand : DDSelection
 
     public void UpdateDisplayInformation()
     {
-        currentCard.DisplayInformation(this);
+        currentCard.RuntimeInit(this);
     }
 
-    public List<Target> GetCardTarget()
+    public List<ETargetType> GetCardTarget()
     {
-        return currentCard.Targets;
+        return currentCard.GetTargets();
     }
 
     public bool IsSelectionValid(DDSelection selection, int targetIndex)
@@ -105,7 +99,6 @@ public class DDCardInHand : DDSelection
 
     public IEnumerator ExecuteCard(List<DDSelection> selections)
     {
-        ++amountUsed;
         selected = false;
         return currentCard.ExecuteCard(selections);
     }

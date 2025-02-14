@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3355ae0e150bee84abd80b2c0dc3ea55, type: 3}
+  m_Name: DDCardValkGainArmor
+  m_EditorClassIdentifier: 
+  <GUID>k__BackingField: 303afd7ebd1a0d243a92beadda630aed
+  cardType: 1
+  cardRarity: 0
+  image: {fileID: 0}
+  cardName: DDCardValkGainArmor
+  description: 
+  rangeType: 2
+  finishes: 
+  uses: 0
+  price: {x: 100, y: 200}
+  effects:
+  - rid: 7815311280090120255
+  momentumCost: 1
+  momentumGain: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 7815311280090120255
+      type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
+      data:
+        targetType: 9
+        differentTarget: 0
+        useLastTarget: 0
+        affixType: 1
+        amount: 10
+        shouldSetValue: 1

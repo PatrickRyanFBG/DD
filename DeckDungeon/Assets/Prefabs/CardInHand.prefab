@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1769dacda28f44380276a6892e88c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetType: 6
   hoverTime: 0.3
   selectedTime: 0.2
   image: {fileID: 3575770809403320178}

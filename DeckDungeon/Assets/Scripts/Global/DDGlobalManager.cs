@@ -5,6 +5,7 @@ using UnityEngine;
 public class DDGlobalManager : MonoBehaviour
 {
     private static DDGlobalManager instance;
+
     public static DDGlobalManager Instance
     {
         get
@@ -13,16 +14,18 @@ public class DDGlobalManager : MonoBehaviour
             {
                 Instantiate(Resources.Load<GameObject>("Prefabs/GlobalManager"));
             }
+
             return instance;
         }
     }
 
-    [Header("Global Singletons")]
-    [SerializeField]
+    [Header("Global Singletons")] [SerializeField]
     private DDAdventurerDataLibrary adventurerDataLibrary;
+
     public DDAdventurerDataLibrary AdventurerDataLibrary => adventurerDataLibrary;
 
     private DDAdventurerData selectedAdventurer;
+
     public DDAdventurerData SelectedAdventurer
     {
         get
@@ -39,11 +42,11 @@ public class DDGlobalManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private DDDungeonDataLibrary dungeonDataLibrary;
+    [SerializeField] private DDDungeonDataLibrary dungeonDataLibrary;
     public DDDungeonDataLibrary DungeonDataLibrary => dungeonDataLibrary;
 
     private DDDungeonMetaData selectedDungeon;
+
     public DDDungeonMetaData SelectedDungeon
     {
         get
@@ -60,6 +63,7 @@ public class DDGlobalManager : MonoBehaviour
     }
 
     private List<DDDungeonSideQuestData> sideQuests = new List<DDDungeonSideQuestData>();
+
     public List<DDDungeonSideQuestData> SideQuests
     {
         get
@@ -75,21 +79,19 @@ public class DDGlobalManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private DDAffixLibrary affixLibrary;
+    [SerializeField] private DDAffixLibrary affixLibrary;
     public DDAffixLibrary AffixLibrary => affixLibrary;
 
-    [Header("Testing")]
-    public bool FromMainMenu;
+    [SerializeField] private DDCardFinishLibrary cardFinishLibrary;
+    public DDCardFinishLibrary CardFinishLibrary => cardFinishLibrary;
+    
+    [Header("Testing")] public bool FromMainMenu;
 
-    [SerializeField]
-    private DDAdventurerData debugAdventurer;
+    [SerializeField] private DDAdventurerData debugAdventurer;
 
-    [SerializeField]
-    private DDDungeonMetaData debugDungeon;
+    [SerializeField] private DDDungeonMetaData debugDungeon;
 
-    [SerializeField]
-    private List<DDDungeonSideQuestData> debugSideQuests;
+    [SerializeField] private List<DDDungeonSideQuestData> debugSideQuests;
 
     private void Awake()
     {

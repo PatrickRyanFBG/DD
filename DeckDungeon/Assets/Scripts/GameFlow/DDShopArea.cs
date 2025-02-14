@@ -143,7 +143,7 @@ public class DDShopArea : MonoBehaviour
         currentShop.DisplayShop(this);
 
         //int amountOfCards = Random.Range(0, cards.Length);
-        List<DDCardBase> generatedCards = DDGlobalManager.Instance.SelectedAdventurer.GenerateCards(cards.Length);
+        List<DDCardBase> generatedCards = DDGlobalManager.Instance.SelectedAdventurer.CardData.GenerateCards(cards.Length);
         for (int i = 0; i < generatedCards.Count; i++)
         {
             cards[i].SetUpShopCard(generatedCards[i]);

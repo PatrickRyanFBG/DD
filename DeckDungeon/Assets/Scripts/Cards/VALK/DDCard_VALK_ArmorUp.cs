@@ -9,13 +9,13 @@ public class DDCard_VALK_ArmorUp : DDCard_VALKBase
     [SerializeField]
     private int armorAmount;
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
-        yield return base.ExecuteCard(selections);
+        yield return base.Execute(selections);
 
         DDColumn col = selections[0] as DDColumn;
 
-        DDGamePlaySingletonHolder.Instance.Player.AddArmorToLane(armorAmount, col.Index);
+        //DDGamePlaySingletonHolder.Instance.Player.AddArmorToLane(armorAmount, col.Index);
 
         yield return null;
     }

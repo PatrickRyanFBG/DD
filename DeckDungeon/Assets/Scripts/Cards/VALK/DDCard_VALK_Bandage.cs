@@ -9,9 +9,9 @@ public class DDCard_VALK_Bandage : DDCard_VALKBase
     [SerializeField]
     private int healAmount;
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
-        yield return base.ExecuteCard(selections);
+        yield return base.Execute(selections);
 
         DDGamePlaySingletonHolder.Instance.Dungeon.HealDamage(healAmount);
 

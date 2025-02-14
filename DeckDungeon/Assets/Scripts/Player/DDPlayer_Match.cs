@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DDPlayer_Match : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class DDPlayer_Match : MonoBehaviour
     public List<DDCardInHand> CurrentDiscard => discard.Cards;
 
     private DDCardInHand selectedCard;
-    private List<Target> cardTargets;
+    private List<ETargetType> cardTargets;
     private List<DDSelection> cardSelections;
     private int currentTargetIndex;
 
@@ -39,10 +40,12 @@ public class DDPlayer_Match : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent GainedMomentum;
 
-    private int[] laneArmors;
-    [SerializeField] private DDPlayerLaneArmorUI[] laneArmorUI;
+    private DDAffixManager[] laneAffixes;
+    [SerializeField] private DDAffixVisualsManager[] lanesAffixVisualsManager;
 
-    private DDAffixManager affixManager = new DDAffixManager();
+    [SerializeField] private DDAffixVisualsManager playersAffixVisualsManager;
+    
+    private DDAffixManager affixManager;
 
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI momentum;
 
@@ -59,11 +62,15 @@ public class DDPlayer_Match : MonoBehaviour
 
     public void EncounterStarted()
     {
-        laneArmors = new int[laneArmorUI.Length];
+        playersAffixVisualsManager.ClearVisuals();
+        affixManager = new DDAffixManager(playersAffixVisualsManager);
+        
+        laneAffixes = new DDAffixManager[lanesAffixVisualsManager.Length];
 
-        for (int i = 0; i < laneArmorUI.Length; i++)
+        for (int i = 0; i < lanesAffixVisualsManager.Length; i++)
         {
-            laneArmorUI[i].SetAmount(0);
+            lanesAffixVisualsManager[i].ClearVisuals();
+            laneAffixes[i] = new DDAffixManager(lanesAffixVisualsManager[i]);
         }
 
         deck.DestroyCards();
@@ -148,21 +155,18 @@ public class DDPlayer_Match : MonoBehaviour
 
     public bool IsLaneArmored(int lane)
     {
-        return laneArmors[lane] > 0;
+        return (laneAffixes[lane].TryGetAffixValue(EAffixType.Armor) ?? 0) > 0;
     }
 
-    public void AddArmorToLane(int amount, int lane)
+    public void ModifyLaneAffix(EAffixType affix, int amount, int lane, bool shouldSet)
     {
-        laneArmors[lane] += amount;
-        laneArmorUI[lane].SetAmount(laneArmors[lane]);
+        laneAffixes[lane].ModifyValueOfAffix(affix, amount, shouldSet);
     }
 
     public int DealDamageInLane(int damage, int lane)
     {
-        int leftOverDamage = laneArmors[lane] - damage;
-        laneArmors[lane] = Mathf.Max(leftOverDamage, 0);
-
-        laneArmorUI[lane].SetAmount(laneArmors[lane]);
+        int leftOverDamage = (laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, -damage, false) ?? -damage);
+        laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, Mathf.Max(leftOverDamage, 0), true);
 
         if (leftOverDamage >= 0)
         {
@@ -195,14 +199,19 @@ public class DDPlayer_Match : MonoBehaviour
         }
     }
 
+    public IEnumerator EndOfTurn()
+    {
+        yield return hand.EndOfTurn();
+    }
+    
     public IEnumerator DiscardHand()
     {
         yield return hand.DiscardHand(discard);
     }
 
-    public void DiscardCard(DDCardInHand card)
+    public IEnumerator DiscardCard(DDCardInHand card)
     {
-        hand.DiscardCard(card, discard);
+        yield return hand.DiscardCard(card, discard);
     }
 
     public void SomethingSelected(DDSelection selection)
@@ -225,8 +234,7 @@ public class DDPlayer_Match : MonoBehaviour
                         cardTargets = selectedCard.GetCardTarget();
                         cardSelections = new List<DDSelection>(cardTargets.Count);
                         currentTargetIndex = 0;
-                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(
-                            cardTargets[currentTargetIndex].GetTargetTypeLayer());
+                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetLayer());
                     }
                 }
             }
@@ -240,12 +248,14 @@ public class DDPlayer_Match : MonoBehaviour
                 {
                     cardResolving = StartCoroutine(WaitingForCard());
                     hand.CardRemoved(selectedCard);
+                    /*
                     if (selectedCard.AllUsed)
                     {
                         // Show some effect the card being used the final time.
                         Destroy(selectedCard.gameObject);
                     }
                     else
+                    */
                     {
                         discard.CardDiscarded(selectedCard);
                     }
@@ -255,8 +265,7 @@ public class DDPlayer_Match : MonoBehaviour
                 }
                 else
                 {
-                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex]
-                        .GetTargetTypeLayer());
+                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetLayer());
                 }
             }
         }

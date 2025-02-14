@@ -43,11 +43,11 @@ public class DDAdventurerData : DDScriptableObject
     public List<DDArtifactBase> Artifacts { get => artifacts; set => artifacts = value; }
 
     [SerializeField]
-    private List<DDCardBase> cards;
-    public List<DDCardBase> Cards => cards;
+    private DDAdventurerCardData cardData;
+    public DDAdventurerCardData CardData => cardData;
 
     [SerializeField]
-    private int[] startingDeckByIndex;
+    private DDCardBase[] startingDeckByScriptable;
 
     [Header("Testing")]
     [SerializeField]
@@ -63,6 +63,7 @@ public class DDAdventurerData : DDScriptableObject
         selectionUI.HeroShotImage.texture = heroShot;
     }
 
+    [System.NonSerialized]
     private List<DDCardBase> startingDeck;
     public List<DDCardBase> StartingDeck => startingDeck;
 
@@ -77,52 +78,33 @@ public class DDAdventurerData : DDScriptableObject
 
         didInit = true;
 
+        cardData.Init();
+        
+        startingDeck = new List<DDCardBase>(startingDeckByScriptable.Length);
+        
         string lastStartingDeck = PlayerPrefs.GetString(adventureName + PlayerPrefKeys.StartingDeckPostfix, "");
         if (string.IsNullOrEmpty(lastStartingDeck))
         {
-            GenerateStartingDeck(startingDeckByIndex);
+            for (int i = 0; i < startingDeckByScriptable.Length; i++)
+            {
+                startingDeck.Add(startingDeckByScriptable[i].Clone());
+            }
         }
         else
         {
             string[] split = lastStartingDeck.Split(',');
-            int[] savedStartingDeckIndexes = new int[split.Length];
-
-            for (int i = 0; i < split.Length; i++)
-            {
-                savedStartingDeckIndexes[i] = int.Parse(split[i]);
-            }
-
-            GenerateStartingDeck(savedStartingDeckIndexes);
+            GenerateStartingDeck(split);
         }
     }
 
-    private void GenerateStartingDeck(int[] indexes)
+    private void GenerateStartingDeck(string[] guids)
     {
         startingDeck = new List<DDCardBase>(10);
 
-        for (int i = 0; i < indexes.Length; i++)
+        for (int i = 0; i < guids.Length; i++)
         {
             // Now deep cloned to allow for in-game modifications
-            startingDeck.Add(cards[indexes[i]].Clone());
+            startingDeck.Add(cardData.GetCardByGUID(guids[i]).Clone());
         }
-    }
-
-    public List<DDCardBase> GenerateCards(int amount)
-    {
-        List<DDCardBase> cards = new List<DDCardBase>(amount);
-
-        for (int i = 0; i < amount; i++)
-        {
-            int randNum = Random.Range(0, cards.Count);
-
-            while (cards.Contains(cards[randNum]))
-            {
-                randNum = Random.Range(0, cards.Count);
-            }
-
-            cards.Add(cards[randNum]);
-        }
-
-        return cards;
     }
 }

@@ -23,13 +23,15 @@ public static class IListExtensions
             ts[r] = tmp;
         }
     }
+
+    public static T GetRandomElement<T>(this IList<T> list)
+    {
+        return list[UnityEngine.Random.Range(0, list.Count)];
+    }
 }
 
 public static class ScriptableObjectExtensions
 {
-    /// <summary>
-    /// Creates and returns a clone of any given scriptable object.
-    /// </summary>
     public static T Clone<T>(this T scriptableObject) where T : ScriptableObject
     {
         if (scriptableObject == null)
@@ -39,7 +41,7 @@ public static class ScriptableObjectExtensions
         }
 
         T instance = Object.Instantiate(scriptableObject);
-        instance.name = scriptableObject.name; // remove (Clone) from name
+        instance.name = scriptableObject.name;
         return instance;
     }
 }

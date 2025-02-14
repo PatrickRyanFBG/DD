@@ -12,8 +12,16 @@ public class DDAffixManager
 
     public UnityEngine.Events.UnityEvent<EAffixType> AffixAdjusted = new UnityEngine.Events.UnityEvent<EAffixType>();
 
-    public int ModifyValueOfAffix(EAffixType affixType, int value, bool shouldSet)
+    private DDAffixVisualsManager affixVisualsManager;
+    
+    public DDAffixManager(DDAffixVisualsManager visualsManager)
     {
+        affixVisualsManager = visualsManager;
+    }
+    
+    public int? ModifyValueOfAffix(EAffixType affixType, int value, bool shouldSet)
+    {
+        // Does exist
         if (currentAffixes.TryGetValue(affixType, out DDRuntimeAffix affix))
         {
             int total = affix.Number + value;
@@ -22,25 +30,31 @@ public class DDAffixManager
                 total = value;
             }
 
-            if(affix.Affix.ExistsAtOrBelowZero)
+            affix.Number = total;
+            AffixAdjusted?.Invoke(affixType);
+            affixVisualsManager.ModifyVisual(affixType, affix.Number);
+
+            if(affix.Number > 0 || (affix.Number == 0 && affix.Affix.ExistsAtZero) || (affix.Number < 0 && affix.Affix.ExistsNegative))
             {
-                affix.Number = total;
+                return affix.Number;
             }
             else
             {
                 currentAffixes.Remove(affixType);
+                return null;
             }
-            AffixAdjusted?.Invoke(affixType);
-            return total;
         }
 
         DDAffix affixInfo = DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affixType);
-        if (value > 0 || affixInfo.ExistsAtOrBelowZero)
+        if (value > 0 || (value == 0 && affixInfo.ExistsAtZero) || (value < 0 && affixInfo.ExistsNegative))
         {
             currentAffixes[affixType] = new DDRuntimeAffix { Number = value, Affix = affixInfo };
+            affixVisualsManager.AddVisual(affixType, value);
+            AffixAdjusted?.Invoke(affixType);
+            return value;
         }
-        AffixAdjusted?.Invoke(affixType);
-        return value;
+
+        return null;
     }
 
     public int? TryGetAffixValue(EAffixType affixType)

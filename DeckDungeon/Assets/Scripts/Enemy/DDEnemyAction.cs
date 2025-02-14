@@ -442,7 +442,7 @@ public class DDEnemyAction_AddCardTo : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will add " + cardAmount + " " + cardToAdd.Name + " to your " + location.ToString() + ".";
+        return "This enemy will add " + cardAmount + " " + cardToAdd.CardName + " to your " + location.ToString() + ".";
     }
 
     public override Texture GetIcon()

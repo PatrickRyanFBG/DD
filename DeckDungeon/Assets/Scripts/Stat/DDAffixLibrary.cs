@@ -5,14 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class DDAffixLibrary : DDScriptableObject
 {
-    [SerializeField]
-    private List<DDAffix> allAffixes = new List<DDAffix>();
+    [SerializeField] private List<DDAffix> allAffixes = new List<DDAffix>();
 
-    private Dictionary<EAffixType, DDAffix> affixDictionary = null;
+    [System.NonSerialized] Dictionary<EAffixType, DDAffix> affixDictionary = null;
 
     public DDAffix GetAffixByType(EAffixType targetAffix)
     {
-        if(affixDictionary == null)
+        if (affixDictionary == null)
         {
             affixDictionary = new Dictionary<EAffixType, DDAffix>(allAffixes.Count);
 

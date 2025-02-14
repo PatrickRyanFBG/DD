@@ -144,6 +144,7 @@ MonoBehaviour:
   adventurerDataLibrary: {fileID: 873701654962025081}
   dungeonDataLibrary: {fileID: 5132569686143927953}
   affixLibrary: {fileID: 11400000, guid: d6f3270c91ac0ca489619edec5f699ed, type: 2}
+  cardFinishLibrary: {fileID: 11400000, guid: 1526b924f8631b1408d571df75ce08d6, type: 2}
   FromMainMenu: 0
   debugAdventurer: {fileID: 11400000, guid: f1ac0433c11647c4b8e53acf65d1c67e, type: 2}
   debugDungeon: {fileID: 11400000, guid: dc90439ce851e8f44b74f140e62ed833, type: 2}

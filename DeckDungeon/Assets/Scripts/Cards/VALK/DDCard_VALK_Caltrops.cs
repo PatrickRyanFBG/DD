@@ -14,9 +14,9 @@ public class DDCard_VALK_Caltrops : DDCard_VALKBase
     [SerializeField]
     private Texture caltropsImage;
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
-        yield return base.ExecuteCard(selections);
+        yield return base.Execute(selections);
 
         DDLocation loc = selections[0] as DDLocation;
         if (loc != null)

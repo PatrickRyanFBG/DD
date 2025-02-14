@@ -5,20 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public abstract class DDDungeonCardBase : DDScriptableObject
 {
-    [SerializeField]
-    private EDungeonCardType type;
+    [SerializeField] private EDungeonCardType type;
     public EDungeonCardType Type => type;
 
-    [SerializeField]
-    private Texture image;
+    [SerializeField] private Texture image;
     public Texture Image => image;
 
-    [SerializeField]
-    private new string name;
+    [SerializeField] private new string name;
     public string Name => name;
 
-    [SerializeField, Multiline]
-    private string description;
+    [SerializeField, Multiline] private string description;
     public string Description => description;
 
     public virtual bool SelectCard()
@@ -51,29 +47,24 @@ public abstract class DDDungeonCardBase : DDScriptableObject
 [System.Serializable]
 public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 {
-    [SerializeField]
-    protected bool testingHasKey;
+    [SerializeField] protected bool testingHasKey;
     public bool TestingHasKey => testingHasKey;
 
-    [SerializeField]
-    protected bool testingHasChest;
+    [SerializeField] protected bool testingHasChest;
     public bool TestingHasChest => testingHasChest;
 
-    [SerializeField]
-    private int goldToGive;
+    [SerializeField] private int goldToGive;
     public int GoldToGive => goldToGive;
 
-    [SerializeField]
-    private List<DDDungeonCardBase> cardsToShuffleInAfter;
+    [SerializeField] private List<DDDungeonCardBase> cardsToShuffleInAfter;
 
-    [SerializeField]
-    private DDDungeonData dungeonAddedUponDefeat;
+    [SerializeField] private DDDungeonData dungeonAddedUponDefeat;
 
     public abstract void SpawnEnemies();
 
     public virtual IEnumerator EncounterCompleted()
     {
-        if(cardsToShuffleInAfter != null)
+        if (cardsToShuffleInAfter != null)
         {
             yield return DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDungeonDeckOvertime(cardsToShuffleInAfter);
         }
@@ -85,36 +76,17 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 [System.Serializable]
 public abstract class DDDungeonCardEvent : DDDungeonCardBase
 {
-    [Header("Event")]
-    [SerializeField]
-    protected string eventName;
-
-    [SerializeField, Multiline]
-    protected string eventDescription;
-
-    [SerializeField]
-    protected Texture eventImage;
-
-    public virtual void DisplayEvent(DDEventArea area)
-    {
-        area.EventName.text = eventName;
-        area.Description.text = eventDescription;
-        area.Image.texture = eventImage;
-    }
+    public abstract void DisplayEvent(DDEventArea area);
 }
 
 [System.Serializable]
 public abstract class DDDungeonCardLeisure : DDDungeonCardBase
 {
-    [Header("Leisure")]
-    [SerializeField]
-    private string leisureName;
+    [Header("Leisure")] [SerializeField] private string leisureName;
 
-    [SerializeField, Multiline]
-    private string leisureDescription;
+    [SerializeField, Multiline] private string leisureDescription;
 
-    [SerializeField]
-    private Texture leisureImage;
+    [SerializeField] private Texture leisureImage;
 
     public virtual void DisplayLeisure(DDLeisureArea area)
     {
@@ -127,15 +99,11 @@ public abstract class DDDungeonCardLeisure : DDDungeonCardBase
 [System.Serializable]
 public abstract class DDDungeonCardShop : DDDungeonCardBase
 {
-    [Header("Shop")]
-    [SerializeField]
-    private string shopKeepName;
+    [Header("Shop")] [SerializeField] private string shopKeepName;
 
-    [SerializeField, Multiline]
-    private string shopDialogue;
+    [SerializeField, Multiline] private string shopDialogue;
 
-    [SerializeField]
-    private Texture shopImage;
+    [SerializeField] private Texture shopImage;
 
     public virtual void DisplayShop(DDShopArea area)
     {

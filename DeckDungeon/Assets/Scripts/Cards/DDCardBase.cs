@@ -1,45 +1,96 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public abstract class DDCardBase : DDScriptableObject
 {
-    [Header("Base")]
-    [SerializeField]
-    private ECardType cardType;
+    [field: SerializeField]
+    [field: ReadOnly]
+    public string GUID { get; private set; }
+
+    [Header("Base")] [SerializeField] private ECardType cardType;
     public ECardType CardType => cardType;
 
-    [SerializeField]
-    private Texture image;
+    [SerializeField] private ECardRarity cardRarity;
+
+    [SerializeField] private Texture image;
     public Texture Image => image;
 
-    [SerializeField]
-    private new string name;
-    public string Name => name;
+    [SerializeField] private string cardName;
+    public string CardName => cardName;
 
-    [SerializeField, Multiline]
-    private string description;
+    [SerializeField, Multiline] private string description;
 
-    [SerializeField]
-    protected ERangeType rangeType = ERangeType.None;
+    [SerializeField] protected ERangeType rangeType = ERangeType.None;
+    public ERangeType RangeType => rangeType;
 
-    [SerializeField]
-    private List<ECardFinishing> finishes;
-    public List<ECardFinishing> Finishes => finishes;
+    [SerializeField] EPlayerCardFinish[] defaultCardFinishes;
 
-    [SerializeField]
-    protected List<Target> targets;
-    public List<Target> Targets => targets;
-
-    // Need to make a base between this and player cards
-    [SerializeField]
-    private int uses = 0;
-    public int Uses => uses;
-
-    [SerializeField]
-    private Vector2 price = new Vector2(100, 200);
+    [SerializeField] private Vector2 price = new Vector2(100, 200);
     public int Price => (int)Random.Range(price.x, price.y);
+
+
+    protected List<ETargetType> targets = null;
+
+    // Run-time
+    [System.NonSerialized] protected DDCardInHand cardInHand;
+    public DDCardInHand CardInHand => cardInHand;
+
+    [System.NonSerialized] protected Dictionary<EPlayerCardFinish, DDPlayerCardFinish> allCardFinishes;
+    [System.NonSerialized] protected Dictionary<ECardExecutionTime, List<DDPlayerCardFinish>> cardExecutionActions;
+
+    public virtual void RuntimeInit(DDCardInHand inHand)
+    {
+        cardInHand = inHand;
+
+        allCardFinishes = new();
+        cardExecutionActions = new();
+
+        for (int i = 0; i < defaultCardFinishes.Length; i++)
+        {
+            AddCardFinishByType(defaultCardFinishes[i]);
+        }
+
+        CardInHand.Image.texture = image;
+        CardInHand.CardTypeText.text = cardType.ToString();
+        CardInHand.NameText.text = CardName;
+        CardInHand.DescText.text = description;
+    }
+
+    public virtual bool AddCardFinishByType(EPlayerCardFinish finishType)
+    {
+        // Cards can only have 1 type of finish
+        if (allCardFinishes.ContainsKey(finishType))
+        {
+            return false;
+        }
+        
+        DDPlayerCardFinish finish =
+            DDGlobalManager.Instance.CardFinishLibrary.GetFinishByType(finishType);
+        allCardFinishes.Add(finishType, finish);
+
+        if (cardExecutionActions.TryGetValue(finish.CardExecutionTime, out List<DDPlayerCardFinish> finishes))
+        {
+            finishes.Add(finish);
+        }
+        
+        return true;
+    }
+
+    private IEnumerator ExecuteFinishes(ECardExecutionTime executionTime)
+    {
+        if (cardExecutionActions.TryGetValue(executionTime, out List<DDPlayerCardFinish> finishes))
+        {
+            foreach (var finish in finishes)
+            {
+                yield return finish.ExecuteFinish(this);
+            }
+        }
+    }
 
     public virtual bool SelectCard()
     {
@@ -48,56 +99,96 @@ public abstract class DDCardBase : DDScriptableObject
 
     public virtual void UnselectCard()
     {
-
     }
 
     public virtual IEnumerator DrawCard()
     {
+        yield return ExecuteFinishes(ECardExecutionTime.Drawn);
+        
         yield return null;
     }
 
-    public abstract IEnumerator ExecuteCard(List<DDSelection> selections);
+    public IEnumerator ExecuteCard(List<DDSelection> selections)
+    {
+        yield return PreExecute(selections);
 
-    public virtual IEnumerator DiscardCard()
+        yield return Execute(selections);
+
+        yield return ExecuteFinishes(ECardExecutionTime.Played);
+        
+        yield return PostExecute(selections);
+    }
+
+    protected virtual IEnumerator PreExecute(List<DDSelection> selections)
     {
         yield return null;
     }
 
-    public virtual IEnumerator DestroyedCard()
+    protected abstract IEnumerator Execute(List<DDSelection> selections);
+
+    protected virtual IEnumerator PostExecute(List<DDSelection> selections)
     {
         yield return null;
     }
 
-    public virtual void DisplayInformation(DDCardInHand cardInHand)
+    public virtual IEnumerator EndOfTurn()
     {
-        cardInHand.Image.texture = image;
-        cardInHand.CardTypeText.text = cardType.ToString();
-        cardInHand.NameText.text = name;
-        cardInHand.DescText.text = description;
-        if (uses > 0)
-        {
-            cardInHand.DescText.text += "\r\nUses: " + (uses - cardInHand.AmountUsed).ToString();
-        }
+        yield return ExecuteFinishes(ECardExecutionTime.EndOfRound);
+        
+        yield return null;
+    }
+    
+    public virtual IEnumerator DiscardCard(bool endOfTurn)
+    {
+        yield return ExecuteFinishes(ECardExecutionTime.Discarded);
+        
+        yield return null;
+    }
+
+    public virtual IEnumerator DestroyCard()
+    {
+        yield return null;
     }
 
     public virtual bool IsSelectionValid(DDSelection selection, int targetIndex)
     {
         return true;
     }
-}
 
-// Selection
-// Type
-// Complete
-[System.Serializable]
-public class Target
-{
-    [SerializeField]
-    private ETargetType targetType;
-    public ETargetType TargetType => targetType;
-
-    public int GetTargetTypeLayer()
+    public virtual List<ETargetType> GetTargets()
     {
-        return 1 << (int)targetType;
+        return targets;
     }
+
+    #region GUID
+
+    private void OnValidate()
+    {
+        if (string.IsNullOrWhiteSpace(GUID))
+        {
+            AssignNewGUID();
+        }
+
+        if (string.IsNullOrWhiteSpace(cardName))
+        {
+#if UNITY_EDITOR
+            cardName = name;
+            UnityEditor.EditorUtility.SetDirty(this);
+#else
+            cardName = "MISSING NAME";
+#endif
+        }
+    }
+
+    private void AssignNewGUID()
+    {
+#if UNITY_EDITOR
+        GUID = UnityEditor.AssetDatabase.AssetPathToGUID(UnityEditor.AssetDatabase.GetAssetPath(this));
+        UnityEditor.EditorUtility.SetDirty(this);
+#else
+        GUID = Guid.NewGuid().ToString();
+#endif
+    }
+
+    #endregion
 }

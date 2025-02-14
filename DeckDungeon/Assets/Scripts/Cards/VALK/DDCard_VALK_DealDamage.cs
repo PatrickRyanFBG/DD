@@ -9,9 +9,9 @@ public class DDCard_VALK_DealDamage : DDCard_VALKBase
     [SerializeField]
     private int damage;
 
-    public override IEnumerator ExecuteCard(List<DDSelection> selections)
+    protected override IEnumerator Execute(List<DDSelection> selections)
     {
-        yield return base.ExecuteCard(selections);
+        yield return base.Execute(selections);
 
         List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
 
@@ -26,7 +26,7 @@ public class DDCard_VALK_DealDamage : DDCard_VALKBase
 
             if (enemy)
             {
-                DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, rangeType, enemy);
+                DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, RangeType, enemy);
             }
         }
 

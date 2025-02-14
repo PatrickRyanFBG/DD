@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d2346185ab3524e9a161ba119666b6, type: 3}
+  m_Name: DDCardValkImproviseWeapon
+  m_EditorClassIdentifier: 
+  <GUID>k__BackingField: 868a6908abaf18d408beb632516b0bb5
+  cardType: 2
+  cardRarity: 0
+  image: {fileID: 2800000, guid: 9ee3ace4a697b1349b3877cb321ac401, type: 3}
+  cardName: DDCardValkImproviseWeapon
+  description: Discard a card to deal 10 damage.
+  rangeType: 1
+  finishes: 
+  uses: 0
+  price: {x: 100, y: 200}
+  effects: []
+  momentumCost: 1
+  momentumGain: 0
+  damage: 10
+  references:
+    version: 2
+    RefIds: []
