@@ -73,8 +73,8 @@ public class DDBoard : MonoBehaviour
                     if (fromPlayer)
                     {
                         yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
-                        enemy.DoDamage(bonkDamage);
-                        occupiedEnemy.DoDamage(bonkDamage);
+                        enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                        occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
                     }
 
                     break;
@@ -105,8 +105,8 @@ public class DDBoard : MonoBehaviour
                     if (fromPlayer)
                     {
                         yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
-                        enemy.DoDamage(bonkDamage);
-                        occupiedEnemy.DoDamage(bonkDamage);
+                        enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                        occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
                     }
 
                     break;
@@ -197,5 +197,13 @@ public class DDBoard : MonoBehaviour
         }
 
         return type == ERangeType.Melee ? meleeRangedBonus[row].x : meleeRangedBonus[row].y;
+    }
+
+    public int GetTotalBonkDamage()
+    {
+        int playerVigor = DDGamePlaySingletonHolder.Instance.Player.GetAffixValue(EAffixType.Vigor);
+        int handVigor = DDGamePlaySingletonHolder.Instance.Player.GetFinishCountByType(EPlayerCardFinish.Weighty);
+        int handFragile = DDGamePlaySingletonHolder.Instance.Player.GetFinishCountByType(EPlayerCardFinish.Fragile);
+        return bonkDamage + playerVigor + handVigor - handFragile;
     }
 }

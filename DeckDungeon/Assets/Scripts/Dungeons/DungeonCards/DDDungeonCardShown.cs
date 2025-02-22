@@ -56,9 +56,10 @@ public class DDDungeonCardShown : DDSelection
         col.enabled = interactable;
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
         descText.enabled = true;
+        return true;
     }
 
     public override void Unhovered()

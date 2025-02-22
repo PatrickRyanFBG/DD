@@ -7,17 +7,7 @@ using UnityEngine;
 public class DDCardFinishLibrary : DDScriptableObject
 {
     [SerializeReferenceDropdown, SerializeReference]
-    private List<DDPlayerCardFinish> playerCardFishes = new()
-    {
-        new DDCardFinishSerrated(),
-        new DDCardFinishEnergized(),
-        new DDCardFinishCoarse(),
-        new DDCardFinishWeighty(),
-        new DDCardFinishSticky(),
-        new DDCardFinishFleeting(),
-        new DDCardFinishFragile(),
-        new DDCardFinishSiphon(),
-    };
+    private List<DDPlayerCardFinish> playerCardFishes = new();
 
     [System.NonSerialized] Dictionary<EPlayerCardFinish, DDPlayerCardFinish> playerCardFinishDictionary = null;
 

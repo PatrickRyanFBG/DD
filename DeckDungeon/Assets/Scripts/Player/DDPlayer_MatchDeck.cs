@@ -54,6 +54,11 @@ public class DDPlayer_MatchDeck : MonoBehaviour
         cards.Shuffle();
     }
 
+    public DDCardInHand PeakTopCard()
+    {
+        return cards[cards.Count - 1];
+    }
+    
     public DDCardInHand GetTopCard()
     {
         DDCardInHand outGoingCard = cards[cards.Count - 1];

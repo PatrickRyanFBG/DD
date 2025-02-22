@@ -18,5 +18,6 @@ MonoBehaviour:
   enemyName: Whirligig
   immovable: 0
   friendly: 0
+  rangeType: 1
   damage: 5
   armorBuff: 5

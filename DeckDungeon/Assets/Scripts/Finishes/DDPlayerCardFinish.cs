@@ -7,12 +7,13 @@ using UnityEngine.Serialization;
 public abstract class DDPlayerCardFinish
 {
     public abstract EPlayerCardFinish PlayerCardFinish { get; }
-    public abstract ECardExecutionTime CardExecutionTime { get; }
+    public abstract EPlayerCardLifeTime PlayerCardLifeTime { get; }
 
     [SerializeField, Multiline] private string description;
     
-    // Need to add something about effect or layer or something here.
-    [SerializeField] private Material material;
+    // This needs to go from icon to shader/material for actual finish
+    [SerializeField] private Texture icon;
+    public Texture Icon => icon;
     
     public virtual IEnumerator ExecuteFinish(DDCardBase card)
     {
@@ -29,7 +30,7 @@ public abstract class DDPlayerCardFinish
 public class DDCardFinishSerrated : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Serrated;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.Drawn;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Drawn;
 
     [SerializeField] private int numberOfBleeds = 2;
     [SerializeField] private int bleedAmount = 2;
@@ -57,7 +58,7 @@ public class DDCardFinishSerrated : DDPlayerCardFinish
 public class DDCardFinishEnergized : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Energized;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.Drawn;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Drawn;
 
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
@@ -67,29 +68,29 @@ public class DDCardFinishEnergized : DDPlayerCardFinish
     }
 }
 
-public class DDCardFinishCoarse : DDPlayerCardFinish
+public class DDCardFinishSharp : DDPlayerCardFinish
 {
-    public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Coarse;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.None;
+    public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Sharp;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 public class DDCardFinishWeighty : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Weighty;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.None;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 // Neutral
 public class DDCardFinishSticky : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Sticky;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.None;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 public class DDCardFinishFleeting : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Fleeting;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.Discarded;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Discarded;
     
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
@@ -104,11 +105,11 @@ public class DDCardFinishFleeting : DDPlayerCardFinish
 public class DDCardFinishFragile : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Fragile;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.None;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 public class DDCardFinishSiphon : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Siphon;
-    public override ECardExecutionTime CardExecutionTime => ECardExecutionTime.None;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }

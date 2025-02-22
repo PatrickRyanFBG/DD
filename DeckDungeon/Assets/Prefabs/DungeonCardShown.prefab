@@ -46,11 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca9b86987bfd704292a04811bda2199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetType: 6
   image: {fileID: 7053806347560366457}
   nameText: {fileID: 4572672138017517339}
   descText: {fileID: 5265609244541031470}
   locked: {fileID: 6095952090526936507}
   col: {fileID: 4365107899325166508}
+  OnCardSelected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &4365107899325166508
 BoxCollider:
   m_ObjectHideFlags: 0

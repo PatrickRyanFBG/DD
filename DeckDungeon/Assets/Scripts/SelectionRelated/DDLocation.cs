@@ -94,9 +94,11 @@ public class DDLocation : DDSelection
         gameObject.name = "Location " + coord.x + " " + coord.y;
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
         hoveredRender.enabled = true;
+        
+        return true;
     }
 
     public override void Unhovered()

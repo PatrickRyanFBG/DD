@@ -32,7 +32,7 @@ public class DDEnemyOnBoard : DDSelection
     [SerializeField] private RawImage actionTwoImage;
     [SerializeField] private TMPro.TextMeshProUGUI actionTwoText;
 
-    [SerializeField] private Renderer hoveredRenderer;
+    [SerializeField] private RawImage hoveredImage;
 
     private List<DDEnemyActionBase> nextActions = new List<DDEnemyActionBase>();
 
@@ -130,15 +130,19 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public void DoDamage(int amount, ERangeType rangeType = ERangeType.None)
+    // Probably make this enumerator?
+    public void TakeDamage(int amount, ERangeType rangeType, bool bypassArmor)
     {
         int rowBonus = DDGamePlaySingletonHolder.Instance.Board.GetMeleeRangedBonus(rangeType, currentLocation.Coord.y);
         int totalDamage = amount + rowBonus;
-        int reducedArmorAmount = affixManager.ModifyValueOfAffix(EAffixType.Armor, -totalDamage, false) ?? -totalDamage;
-
-        if (reducedArmorAmount <= 0)
+        if (!bypassArmor)
         {
-            totalDamage = reducedArmorAmount * -1;
+            totalDamage = affixManager.ModifyValueOfAffix(EAffixType.Armor, -totalDamage, false) ?? -totalDamage;
+        }
+
+        if (totalDamage <= 0)
+        {
+            totalDamage = totalDamage * -1;
 
             if (totalDamage > 0)
             {
@@ -168,7 +172,7 @@ public class DDEnemyOnBoard : DDSelection
     public int GetAffixValue(EAffixType affixType)
     {
         int? value = affixManager.TryGetAffixValue(affixType);
-        return value == null ? 0 : value.Value;
+        return value ?? 0;
     }
 
     public void DoHeal(int amount)
@@ -185,7 +189,7 @@ public class DDEnemyOnBoard : DDSelection
 
     private void UpdateHealthUI()
     {
-        healthUI.text = string.Format("{0}/{1}", currentHealth, maxHealth);
+        healthUI.text = $"{currentHealth}/{maxHealth}";
     }
 
     public void ForecastActions(int turnNumber)
@@ -224,14 +228,15 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
-        hoveredRenderer.enabled = true;
+        hoveredImage.enabled = true;
+        return true;
     }
 
     public override void Unhovered()
     {
-        hoveredRenderer.enabled = false;
+        hoveredImage.enabled = false;
     }
 
     public override void FillEnemyList(ref List<DDEnemyOnBoard> enemies)
@@ -258,7 +263,7 @@ public class DDEnemyOnBoard : DDSelection
             }
         }
 
-        DDGamePlaySingletonHolder.Instance.Encounter.SetActionDescription(actionDesc);
+        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip(actionDesc);
     }
 
     public void NonActionableUnhover()
@@ -272,7 +277,7 @@ public class DDEnemyOnBoard : DDSelection
             }
         }
 
-        DDGamePlaySingletonHolder.Instance.Encounter.SetActionDescription("");
+        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip("");
     }
 
     public bool IsPlanningToMove()
@@ -284,5 +289,19 @@ public class DDEnemyOnBoard : DDSelection
         }
 
         return false;
+    }
+
+    public IEnumerator DoAffixes()
+    {
+        // Bleed
+        int? bleedValue = affixManager.TryGetAffixValue(EAffixType.Bleed);
+        if (bleedValue != null)
+        {
+            TakeDamage(bleedValue.Value, ERangeType.None, true);
+
+            yield return null;
+
+            affixManager.ModifyValueOfAffix(EAffixType.Bleed, -1, false);
+        }
     }
 }

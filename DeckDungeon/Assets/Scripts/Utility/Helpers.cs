@@ -30,18 +30,19 @@ public static class IListExtensions
     }
 }
 
-public static class ScriptableObjectExtensions
+public static class DDCardBaseExtensions
 {
-    public static T Clone<T>(this T scriptableObject) where T : ScriptableObject
+    public static DDCardBase Clone(this DDCardBase scriptableObject)
     {
-        if (scriptableObject == null)
+        if (!scriptableObject)
         {
-            Debug.LogError($"ScriptableObject was null. Returning default {typeof(T)} object.");
-            return (T)ScriptableObject.CreateInstance(typeof(T));
+            Debug.LogError($"ScriptableObject was null. Returning default {typeof(DDCardBase)} object.");
+            return (DDCardBase)ScriptableObject.CreateInstance(typeof(DDCardBase));
         }
 
-        T instance = Object.Instantiate(scriptableObject);
+        DDCardBase instance = Object.Instantiate(scriptableObject);
         instance.name = scriptableObject.name;
+        instance.RuntimeInit();
         return instance;
     }
 }

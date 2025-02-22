@@ -33,57 +33,70 @@ public abstract class DDCardBase : DDScriptableObject
     [SerializeField] private Vector2 price = new Vector2(100, 200);
     public int Price => (int)Random.Range(price.x, price.y);
 
-
     protected List<ETargetType> targets = null;
 
     // Run-time
     [System.NonSerialized] protected DDCardInHand cardInHand;
     public DDCardInHand CardInHand => cardInHand;
 
-    [System.NonSerialized] protected Dictionary<EPlayerCardFinish, DDPlayerCardFinish> allCardFinishes;
-    [System.NonSerialized] protected Dictionary<ECardExecutionTime, List<DDPlayerCardFinish>> cardExecutionActions;
+    public Dictionary<EPlayerCardFinish, DDPlayerCardFinish> AllCardFinishes { get; private set; }
+    [System.NonSerialized] protected Dictionary<EPlayerCardLifeTime, List<DDPlayerCardFinish>> cardExecutionActions;
 
-    public virtual void RuntimeInit(DDCardInHand inHand)
+    public virtual void RuntimeInit()
     {
-        cardInHand = inHand;
-
-        allCardFinishes = new();
+        AllCardFinishes = new();
         cardExecutionActions = new();
 
         for (int i = 0; i < defaultCardFinishes.Length; i++)
         {
             AddCardFinishByType(defaultCardFinishes[i]);
         }
+    }
+    
+    public virtual void SetCardInHand(DDCardInHand inHand)
+    {
+        cardInHand = inHand;
 
-        CardInHand.Image.texture = image;
-        CardInHand.CardTypeText.text = cardType.ToString();
-        CardInHand.NameText.text = CardName;
-        CardInHand.DescText.text = description;
+        cardInHand.Image.texture = image;
+        cardInHand.CardTypeText.text = cardType.ToString();
+        cardInHand.NameText.text = CardName;
+        cardInHand.DescText.text = description;
     }
 
+    public virtual void AddRandomFinish()
+    {
+        for (int i = 1; i <= (int)EPlayerCardFinish.Weighty; i++)
+        {
+            if (AddCardFinishByType((EPlayerCardFinish)Random.Range(1, (int)(EPlayerCardFinish.Weighty + 1))))
+            {
+                return;
+            }
+        }
+    }
+    
     public virtual bool AddCardFinishByType(EPlayerCardFinish finishType)
     {
         // Cards can only have 1 type of finish
-        if (allCardFinishes.ContainsKey(finishType))
+        if (AllCardFinishes.ContainsKey(finishType))
         {
             return false;
         }
-        
+
         DDPlayerCardFinish finish =
             DDGlobalManager.Instance.CardFinishLibrary.GetFinishByType(finishType);
-        allCardFinishes.Add(finishType, finish);
+        AllCardFinishes.Add(finishType, finish);
 
-        if (cardExecutionActions.TryGetValue(finish.CardExecutionTime, out List<DDPlayerCardFinish> finishes))
+        if (cardExecutionActions.TryGetValue(finish.PlayerCardLifeTime, out List<DDPlayerCardFinish> finishes))
         {
             finishes.Add(finish);
         }
-        
+
         return true;
     }
 
-    private IEnumerator ExecuteFinishes(ECardExecutionTime executionTime)
+    private IEnumerator ExecuteFinishes(EPlayerCardLifeTime lifeTime)
     {
-        if (cardExecutionActions.TryGetValue(executionTime, out List<DDPlayerCardFinish> finishes))
+        if (cardExecutionActions.TryGetValue(lifeTime, out List<DDPlayerCardFinish> finishes))
         {
             foreach (var finish in finishes)
             {
@@ -103,8 +116,8 @@ public abstract class DDCardBase : DDScriptableObject
 
     public virtual IEnumerator DrawCard()
     {
-        yield return ExecuteFinishes(ECardExecutionTime.Drawn);
-        
+        yield return ExecuteFinishes(EPlayerCardLifeTime.Drawn);
+
         yield return null;
     }
 
@@ -114,8 +127,8 @@ public abstract class DDCardBase : DDScriptableObject
 
         yield return Execute(selections);
 
-        yield return ExecuteFinishes(ECardExecutionTime.Played);
-        
+        yield return ExecuteFinishes(EPlayerCardLifeTime.Played);
+
         yield return PostExecute(selections);
     }
 
@@ -133,15 +146,15 @@ public abstract class DDCardBase : DDScriptableObject
 
     public virtual IEnumerator EndOfTurn()
     {
-        yield return ExecuteFinishes(ECardExecutionTime.EndOfRound);
-        
+        yield return ExecuteFinishes(EPlayerCardLifeTime.EndOfRound);
+
         yield return null;
     }
-    
+
     public virtual IEnumerator DiscardCard(bool endOfTurn)
     {
-        yield return ExecuteFinishes(ECardExecutionTime.Discarded);
-        
+        yield return ExecuteFinishes(EPlayerCardLifeTime.Discarded);
+
         yield return null;
     }
 

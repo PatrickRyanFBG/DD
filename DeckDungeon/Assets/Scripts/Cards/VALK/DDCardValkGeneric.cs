@@ -15,9 +15,9 @@ public class DDCardValkGeneric : DDCardGeneric
         return true;//DDGamePlaySingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
     }
 
-    public override void RuntimeInit(DDCardInHand cardInHand)
+    public override void SetCardInHand(DDCardInHand cardInHand)
     {
-        base.RuntimeInit(cardInHand);
+        base.SetCardInHand(cardInHand);
 
         cardInHand.MomentumNumber.text = momentumCost.ToString();
     }

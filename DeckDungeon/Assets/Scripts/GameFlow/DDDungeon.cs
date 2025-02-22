@@ -13,23 +13,25 @@ public class DDDungeon : MonoBehaviour
 {
     // The current card, so we don't add it to discard before it is finished.
     private DDDungeonCardBase currentDungeonCard = null;
+
     // Dungeon Deck
     private List<DDDungeonCardBase> dungeonDeck = new List<DDDungeonCardBase>();
+
     // Dungeon Discard
     private List<DDDungeonCardBase> dungeonDiscard = new List<DDDungeonCardBase>();
     public int DungeonDiscardCount => dungeonDiscard.Count;
-    
+
     private DDDungeonStats dungeonStats;
     public DDDungeonStats DungeonStats => dungeonStats;
 
     [Header("Player")]
     // Players Deck
     private List<DDCardBase> playerDeck = new List<DDCardBase>();
+
     public List<DDCardBase> PlayerDeck => playerDeck;
 
     // Players Health
-    [SerializeField]
-    private int startingHealth;
+    [SerializeField] private int startingHealth;
 
     private int maxHealth;
     private int currentHealth;
@@ -38,93 +40,65 @@ public class DDDungeon : MonoBehaviour
 
     public bool HasKey;
 
-    [SerializeField]
-    private List<DDArtifactBase> artifacts = new List<DDArtifactBase>();
+    [SerializeField] private List<DDArtifactBase> artifacts = new List<DDArtifactBase>();
 
-    [Header("Areas")]
-    [SerializeField]
-    private DDEncounter encounter;
-    [SerializeField]
-    private DDDungeonCardSelection dungeonCardSelection;
-    [SerializeField]
-    private DDCardSelection playerCardSelection;
-    [SerializeField]
-    private DDEventArea eventArea;
-    [SerializeField]
-    private DDLeisureArea leisureArea;
-    [SerializeField]
-    private DDShowDeckArea showDeckArea;
-    [SerializeField]
-    private DDShopArea shopArea;
+    [Header("Areas")] [SerializeField] private DDEncounter encounter;
+    [SerializeField] private DDDungeonCardSelection dungeonCardSelection;
+    [SerializeField] private DDCardSelection playerCardSelection;
+    [SerializeField] private DDEventArea eventArea;
+    [SerializeField] private DDLeisureArea leisureArea;
+    [SerializeField] private DDShowDeckArea showDeckArea;
+    [SerializeField] private DDShopArea shopArea;
 
     public UnityEngine.Events.UnityEvent<EDungeonPhase> PhaseChanged;
 
     // Gold
-    [Header("Gold")]
-    private int goldAmount;
+    [Header("Gold")] private int goldAmount;
     public int GoldAmount => goldAmount;
 
     public UnityEngine.Events.UnityEvent<int> GoldAmountChanged;
 
     // Artifacts/Equipment
-    [Header("Testing")]
-    [SerializeField]
-    private bool forceInternalData;
+    [Header("Testing")] [SerializeField] private bool forceInternalData;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI healthText;
-    [SerializeField]
-    private TMPro.TextMeshProUGUI goldText;
+    [SerializeField] private TMPro.TextMeshProUGUI healthText;
+    [SerializeField] private TMPro.TextMeshProUGUI goldText;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI dungeonDeckCount;
-    [SerializeField]
-    private TMPro.TextMeshProUGUI dungeonDiscardCount;
+    [SerializeField] private TMPro.TextMeshProUGUI dungeonDeckCount;
+    [SerializeField] private TMPro.TextMeshProUGUI dungeonDiscardCount;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI playerDeckCount;
-    [SerializeField]
-    private TMPro.TextMeshProUGUI playerDiscardCount;
+    [SerializeField] private TMPro.TextMeshProUGUI playerDeckCount;
+    [SerializeField] private TMPro.TextMeshProUGUI playerDiscardCount;
 
-    [SerializeField]
-    private List<DDDungeonCardBase> startingDungeonDeck;
-    [SerializeField]
-    private List<DDCardBase> startingPlayerDeck;
-    [SerializeField]
-    private List<DDArtifactBase> startingArtifacts;
+    [SerializeField] private List<DDDungeonCardBase> startingDungeonDeck;
+    [SerializeField] private List<DDCardBase> startingPlayerDeck;
+    [SerializeField] private List<DDArtifactBase> startingArtifacts;
 
-    [SerializeField]
-    private DDCardShown cardPrefabForAdded;
-    [SerializeField]
-    private Transform cardAddedEnd;
+    [SerializeField] private DDCardShown cardPrefabForAdded;
+    [SerializeField] private Transform cardAddedEnd;
 
-    [SerializeField]
-    private DDDungeonCardShown dungeonCardPrefabForAdded;
-    [SerializeField]
-    private Transform dungeonCardAddedStart;
-    [SerializeField]
-    private Transform dungeonCardAddedEnd;
+    [SerializeField] private DDDungeonCardShown dungeonCardPrefabForAdded;
+    [SerializeField] private Transform dungeonCardAddedStart;
+    [SerializeField] private Transform dungeonCardAddedEnd;
 
-    [SerializeField]
-    private GameObject keyImage;
+    [SerializeField] private GameObject keyImage;
 
-    [SerializeField]
-    private Transform artifactUIParent;
+    [SerializeField] private Transform artifactUIParent;
 
-    [SerializeField]
-    private DDArtifactUI artifactUIPrefab;
+    [SerializeField] private DDArtifactUI artifactUIPrefab;
 
-    [SerializeField]
-    private int startingGold = 500;
+    [SerializeField] private int startingGold = 500;
+
+    [SerializeField] private TMPro.TextMeshProUGUI toolTip;
 
     private void Awake()
     {
-        if(!forceInternalData)
+        if (!forceInternalData)
         {
             DDAdventurerData adventurerData = DDGlobalManager.Instance.SelectedAdventurer;
             maxHealth = adventurerData.StartingHealth;
             currentHealth = maxHealth;
-            
+
             goldAmount = adventurerData.StartingGold;
 
             playerDeck.AddRange(adventurerData.StartingDeck);
@@ -147,7 +121,7 @@ public class DDDungeon : MonoBehaviour
         UpdateHealthText();
 
         dungeonStats = new DDDungeonStats();
-        
+
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";
@@ -159,6 +133,11 @@ public class DDDungeon : MonoBehaviour
         DDGamePlaySingletonHolder.Instance.ShowDeckArea.OnClose.AddListener(DisplayDeckClosed);
     }
 
+    public void SetToolTip(string value)
+    {
+        toolTip.text = value;
+    }
+    
     private void TurnOffAreas()
     {
         if (eventArea.gameObject.activeInHierarchy)
@@ -181,13 +160,14 @@ public class DDDungeon : MonoBehaviour
             dungeonCardSelection.gameObject.SetActive(false);
         }
 
-        if(shopArea.gameObject.activeInHierarchy)
+        if (shopArea.gameObject.activeInHierarchy)
         {
             shopArea.gameObject.SetActive(false);
         }
     }
 
     #region Dungeon Deck Related
+
     public void RemoveCardFromDungeonDiscard(DDDungeonCardBase card)
     {
         dungeonDiscard.Remove(card);
@@ -198,7 +178,8 @@ public class DDDungeon : MonoBehaviour
     {
         dungeonDeck.Add(card);
 
-        DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
+        DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position,
+            Quaternion.identity);
         shown.SetUpDungeonCard(card, 0, false);
         shown.transform.DOMove(dungeonCardAddedEnd.position, .6f, false);
         Destroy(shown.gameObject, .61f);
@@ -217,7 +198,8 @@ public class DDDungeon : MonoBehaviour
         {
             DDDungeonCardBase card = cards[i];
 
-            DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position, Quaternion.identity);
+            DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position,
+                Quaternion.identity);
             shown.SetUpDungeonCard(card, 0, false);
             shown.transform.DOMove(dungeonCardAddedEnd.position, .3f, false);
             Destroy(shown.gameObject, .35f);
@@ -230,7 +212,7 @@ public class DDDungeon : MonoBehaviour
 
     public void PromptDungeonCard()
     {
-        if(currentDungeonCard != null)
+        if (currentDungeonCard != null)
         {
             dungeonDiscard.Add(currentDungeonCard);
             dungeonDiscardCount.text = dungeonDiscard.Count.ToString();
@@ -260,6 +242,7 @@ public class DDDungeon : MonoBehaviour
                 {
                     StartEncounter(encounterCard);
                 }
+
                 break;
             case EDungeonCardType.Event:
                 DDDungeonCardEvent eventCard = card as DDDungeonCardEvent;
@@ -267,6 +250,7 @@ public class DDDungeon : MonoBehaviour
                 {
                     StartEvent(eventCard);
                 }
+
                 break;
             case EDungeonCardType.Leisure:
                 DDDungeonCardLeisure leisureCard = card as DDDungeonCardLeisure;
@@ -274,6 +258,7 @@ public class DDDungeon : MonoBehaviour
                 {
                     StartLeisure(leisureCard);
                 }
+
                 break;
             case EDungeonCardType.Shop:
                 DDDungeonCardShop shopCard = card as DDDungeonCardShop;
@@ -281,18 +266,21 @@ public class DDDungeon : MonoBehaviour
                 {
                     StartShop(shopCard);
                 }
+
                 break;
         }
     }
+
     #endregion
 
     #region Player Card Related
+
     public void EncounterCompleted(DDDungeonCardEncounter encounterCard)
     {
         TurnOffAreas();
 
         ++dungeonStats.EncountersCompleted;
-        
+
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";
@@ -342,9 +330,11 @@ public class DDDungeon : MonoBehaviour
         playerDeck.Remove(card);
         playerDeckCount.text = playerDeck.Count.ToString();
     }
+
     #endregion
 
     #region Artifacts
+
     public void EquipArtifact(DDArtifactBase artifact)
     {
         artifacts.Add(artifact);
@@ -353,6 +343,7 @@ public class DDDungeon : MonoBehaviour
         DDArtifactUI artifactUI = Instantiate(artifactUIPrefab, artifactUIParent);
         artifactUI.SetUpArtifact(artifact);
     }
+
     #endregion
 
     public void StartEvent(DDDungeonCardEvent eventCard)
@@ -365,7 +356,7 @@ public class DDDungeon : MonoBehaviour
     public void EndEvent()
     {
         ++dungeonStats.EventsCompleted;
-        
+
         DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
     }
 
@@ -421,10 +412,11 @@ public class DDDungeon : MonoBehaviour
 
     public DDArtifactBase GrabArtifact()
     {
-        if(startingArtifacts.Count == 0)
+        if (startingArtifacts.Count == 0)
         {
             return null;
         }
+
         int index = Random.Range(0, startingArtifacts.Count);
         DDArtifactBase artifact = startingArtifacts[index];
         startingArtifacts.RemoveAt(index);

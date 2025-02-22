@@ -14,8 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allAffixes:
   - affixType: 0
-    image: {fileID: 2800000, guid: c324c92c2e5d798438fa02591ce910eb, type: 3}
-    existsAtOrBelowZero: 0
+    affixDescription: Increased Attack Cards
+    image: {fileID: 2800000, guid: 478e996e902284b4d82e47661f69eb58, type: 3}
+    existsAtZero: 0
+    existsNegative: 1
   - affixType: 1
+    affixDescription: Prevents Damage
     image: {fileID: 2800000, guid: 793f872522048ce4e833989c43cc4749, type: 3}
-    existsAtOrBelowZero: 0
+    existsAtZero: 0
+    existsNegative: 0
+  - affixType: 4
+    affixDescription: 'By passes Armor.
+
+      Deals Damage then decreases'
+    image: {fileID: 2800000, guid: a108bd67391fe734eaa407f29e202aad, type: 3}
+    existsAtZero: 0
+    existsNegative: 0
+  - affixType: 3
+    affixDescription: Deals Damage when Attacked.
+    image: {fileID: 2800000, guid: e49ae1b66389f4e44824c15b00280e31, type: 3}
+    existsAtZero: 0
+    existsNegative: 0
+  - affixType: 2
+    affixDescription: Increased push damage.
+    image: {fileID: 2800000, guid: b89e79177a41f0d4ab1938e84708c155, type: 3}
+    existsAtZero: 0
+    existsNegative: 1
+  - affixType: 5
+    affixDescription: Prevents the Next enemy Move.
+    image: {fileID: 2800000, guid: 629767894891a654ab200fb50024eddf, type: 3}
+    existsAtZero: 0
+    existsNegative: 0

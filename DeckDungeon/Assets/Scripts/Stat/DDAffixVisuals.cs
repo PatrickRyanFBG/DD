@@ -40,4 +40,14 @@ public class DDAffixVisuals : MonoBehaviour
         text.text = value.ToString();
         return false;
     }
+
+    public void Hovered()
+    {
+        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip(affix.AffixDescription);
+    }
+
+    public void Unhovered()
+    {
+        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip("");
+    }
 }

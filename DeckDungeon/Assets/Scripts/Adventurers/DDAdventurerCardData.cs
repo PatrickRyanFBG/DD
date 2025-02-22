@@ -65,7 +65,7 @@ public class DDAdventurerCardData
 
         foreach (KeyValuePair<string, DDCardBase> card in cards)
         {
-            card.Value.AddCardFinishByType((EPlayerCardFinish)Random.Range(1, (int)(EPlayerCardFinish.Weighty + 1)));
+            card.Value.AddRandomFinish();
         }
 
         return new List<DDCardBase>(cards.Values);

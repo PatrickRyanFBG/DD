@@ -17,8 +17,9 @@ public class DDSelection : MonoBehaviour
     {
     }
 
-    public virtual void Hovered()
+    public virtual bool Hovered()
     {
+        return true;
     }
 
     public virtual void Unhovered()

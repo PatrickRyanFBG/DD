@@ -49,7 +49,16 @@ public class DDEnemyAction_Move : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        yield return DDGamePlaySingletonHolder.Instance.Board.MoveEnemy(enemy, moveDirection, 1, false);
+        if (enemy.GetAffixValue(EAffixType.Immobile) > 0)
+        {
+            enemy.ModifyAffix(EAffixType.Immobile, -1, false);
+            
+            yield return null;
+        }
+        else
+        {
+            yield return DDGamePlaySingletonHolder.Instance.Board.MoveEnemy(enemy, moveDirection, 1, false);
+        }
     }
 
     public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
@@ -215,6 +224,14 @@ public class DDEnemyAction_Attack : DDEnemyActionBase
         }
 
         GameObject.Destroy(attackPrefab);
+        
+        // Retaliate
+        int? retaliateNumber = DDGamePlaySingletonHolder.Instance.Player.GetLaneAffix(EAffixType.Retaliate);
+
+        if (retaliateNumber != null)
+        {
+            enemy.TakeDamage(retaliateNumber.Value, ERangeType.None, false);
+        }
 
         yield return new WaitForSeconds(0.1f);
     }

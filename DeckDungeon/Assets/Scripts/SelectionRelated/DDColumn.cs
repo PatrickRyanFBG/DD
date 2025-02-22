@@ -61,12 +61,14 @@ public class DDColumn : DDSelection
         }
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
         for (int i = 0; i < locations.Length; i++)
         {
             locations[i].Hovered();
         }
+
+        return true;
     }
 
     public override void Unhovered()

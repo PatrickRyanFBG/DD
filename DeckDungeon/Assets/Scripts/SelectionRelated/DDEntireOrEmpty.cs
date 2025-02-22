@@ -23,12 +23,14 @@ public class DDEntireOrEmpty : DDSelection
         }
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
         for (int i = 0; i < rows.Length; i++)
         {
             rows[i].Hovered();
         }
+
+        return true;
     }
 
     public override void Unhovered()

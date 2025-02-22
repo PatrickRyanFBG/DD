@@ -85,4 +85,19 @@ public class DDPlayer_MatchHand : MonoBehaviour
 
         cards.Clear();
     }
+
+    public int GetFinishCountByType(EPlayerCardFinish finishType)
+    {
+        int count = 0;
+
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].CurrentCard.AllCardFinishes.ContainsKey(finishType))
+            {
+                ++count;
+            }
+        }
+        
+        return count;
+    }
 }

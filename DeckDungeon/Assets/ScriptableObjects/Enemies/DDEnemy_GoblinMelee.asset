@@ -18,6 +18,6 @@ MonoBehaviour:
   enemyName: Scrapper
   immovable: 0
   friendly: 0
+  rangeType: 0
   damage: 5
   dexGain: 3
-  woundCard: {fileID: 11400000, guid: 3a78ae5e23217b0449300b6bb525b6f2, type: 2}

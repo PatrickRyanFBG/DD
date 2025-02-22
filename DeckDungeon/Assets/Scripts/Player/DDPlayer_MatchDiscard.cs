@@ -19,10 +19,12 @@ public class DDPlayer_MatchDiscard : MonoBehaviour
     {
         DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, cardSpawnLocation.position, Quaternion.identity, transform);
         cardInHand.transform.DOMove(transform.position, .3f, false);
-        cardInHand.SetUpCard(card);
+        cardInHand.SetUpCard(card, false);
         
         yield return new WaitForSeconds(.3f);
 
+        cardInHand.SetCanHover(true);
+        
         CardDiscarded(cardInHand);
     }
 

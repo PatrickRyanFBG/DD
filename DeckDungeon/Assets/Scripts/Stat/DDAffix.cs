@@ -8,15 +8,18 @@ public class DDAffix
 {
     [SerializeField] private EAffixType affixType;
     public EAffixType AffixType => affixType;
+    
+    [SerializeField, Multiline] private string affixDescription;
+    public string AffixDescription => affixDescription;
 
     [SerializeField] private Texture image;
     public Texture Image => image;
 
-    [FormerlySerializedAs("existsAtOrBelowZero")] [SerializeField]
-    private bool existsAtZero;
+    [SerializeField] private bool existsAtZero;
 
     public bool ExistsAtZero => existsAtZero;
 
-    private bool existsNegative;
+    [SerializeField] bool existsNegative;
     public bool ExistsNegative => existsNegative;
+
 }

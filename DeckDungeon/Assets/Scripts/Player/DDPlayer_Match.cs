@@ -14,7 +14,8 @@ public class DDPlayer_Match : MonoBehaviour
     private int currentHandSize;
 
     [SerializeField] private DDPlayer_MatchDeck deck;
-
+    public DDPlayer_MatchDeck Deck => deck;
+    
     public List<DDCardInHand> CurrentDeck => deck.Cards;
 
     [SerializeField] private DDPlayer_MatchHand hand;
@@ -47,6 +48,8 @@ public class DDPlayer_Match : MonoBehaviour
     
     private DDAffixManager affixManager;
 
+    [FormerlySerializedAs("CardLifeTimeChangedEvent")] public UnityEngine.Events.UnityEvent<DDCardInHand, EPlayerCardLifeTime> CardLifeTimeChanged;
+    
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI momentum;
 
     private void OnEnable()
@@ -163,6 +166,11 @@ public class DDPlayer_Match : MonoBehaviour
         laneAffixes[lane].ModifyValueOfAffix(affix, amount, shouldSet);
     }
 
+    public int? GetLaneAffix(EAffixType affixType)
+    {
+        return laneAffixes[(int)affixType].TryGetAffixValue(affixType);
+    }
+
     public int DealDamageInLane(int damage, int lane)
     {
         int leftOverDamage = (laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, -damage, false) ?? -damage);
@@ -246,19 +254,10 @@ public class DDPlayer_Match : MonoBehaviour
                 cardSelections.Add(selection);
                 if (++currentTargetIndex >= cardTargets.Count)
                 {
-                    cardResolving = StartCoroutine(WaitingForCard());
+                    cardResolving = StartCoroutine(WaitingForCardExecution());
                     hand.CardRemoved(selectedCard);
-                    /*
-                    if (selectedCard.AllUsed)
-                    {
-                        // Show some effect the card being used the final time.
-                        Destroy(selectedCard.gameObject);
-                    }
-                    else
-                    */
-                    {
-                        discard.CardDiscarded(selectedCard);
-                    }
+                    // Check if this works with fleeting cards?
+                    discard.CardDiscarded(selectedCard);
 
                     DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                     selectedCard = null;
@@ -299,7 +298,7 @@ public class DDPlayer_Match : MonoBehaviour
         momentum.text = momentumCounter.ToString();
     }
 
-    private IEnumerator WaitingForCard()
+    private IEnumerator WaitingForCardExecution()
     {
         yield return selectedCard.ExecuteCard(cardSelections);
 
@@ -315,6 +314,13 @@ public class DDPlayer_Match : MonoBehaviour
             totalDamage += dex.Value;
         }
 
-        enemyOnBoard.DoDamage(totalDamage, rangeType);
+        totalDamage += GetFinishCountByType(EPlayerCardFinish.Sharp);
+
+        enemyOnBoard.TakeDamage(totalDamage, rangeType, false);
+    }
+
+    public int GetFinishCountByType(EPlayerCardFinish finishType)
+    {
+        return hand.GetFinishCountByType(finishType);
     }
 }

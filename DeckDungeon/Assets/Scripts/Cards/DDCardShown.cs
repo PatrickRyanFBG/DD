@@ -12,8 +12,9 @@ public class DDCardShown : DDCardInHand
         OnCardSelected.Invoke(this);
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
+        return false;
     }
 
     public override void Unhovered()

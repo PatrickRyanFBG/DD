@@ -19,8 +19,7 @@ MonoBehaviour:
   cardName: DDCardValkLeft
   description: 
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264610
@@ -35,5 +34,5 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
-        direction: 0
+        direction: 3
         amount: 1

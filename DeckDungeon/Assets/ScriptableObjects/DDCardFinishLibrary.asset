@@ -15,7 +15,7 @@ MonoBehaviour:
   playerCardFishes:
   - rid: 7815311280090120288
   - rid: 7815311280090120289
-  - rid: 7815311280090120290
+  - rid: 7815311417950339135
   - rid: 7815311280090120291
   - rid: 7815311280090120292
   - rid: 7815311280090120293
@@ -27,42 +27,42 @@ MonoBehaviour:
     - rid: 7815311280090120288
       type: {class: DDCardFinishSerrated, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
+        description: Deals 2 Bleed to 2 Random Enemies when Drawn.
+        icon: {fileID: 2800000, guid: d4a36c5cf9f217c499b9f088aa2498f0, type: 3}
         numberOfBleeds: 2
         bleedAmount: 2
     - rid: 7815311280090120289
       type: {class: DDCardFinishEnergized, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
-    - rid: 7815311280090120290
-      type: {class: DDCardFinishCoarse, ns: , asm: Assembly-CSharp}
-      data:
-        description: 
-        executionTimes: 
+        description: Gain one <sprite name=momentum> when Drawn.
+        icon: {fileID: 2800000, guid: 71d8cd8706f18ff47a7951d28e6668c1, type: 3}
     - rid: 7815311280090120291
       type: {class: DDCardFinishWeighty, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
+        description: Have +1 Vigor while in Hand.
+        icon: {fileID: 2800000, guid: 90b6b55bce4e38143a3dc48f28122ae5, type: 3}
     - rid: 7815311280090120292
       type: {class: DDCardFinishSticky, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
+        description: Not discard at the end of the round.
+        icon: {fileID: 0}
     - rid: 7815311280090120293
       type: {class: DDCardFinishFleeting, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
+        description: Destroyed when Discarded.
+        icon: {fileID: 2800000, guid: 57d9a633bf9d19943b336485a06d6bbc, type: 3}
     - rid: 7815311280090120294
       type: {class: DDCardFinishFragile, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
+        description: Have -1 Vigor while in Hand.
+        icon: {fileID: 0}
     - rid: 7815311280090120295
       type: {class: DDCardFinishSiphon, ns: , asm: Assembly-CSharp}
       data:
-        description: 
-        executionTimes: 
+        description: Cost an additional <sprite name=momentum>.
+        icon: {fileID: 0}
+    - rid: 7815311417950339135
+      type: {class: DDCardFinishSharp, ns: , asm: Assembly-CSharp}
+      data:
+        description: Have +1 Expertise while in Hand.
+        icon: {fileID: 2800000, guid: a5772864adca4554690d5bdd8e750289, type: 3}

@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a405e89bcf9fd4bbfea978b320677c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetType: 6
   hoverTime: 1
   selectedTime: 1
   image: {fileID: 655028833739009794}
@@ -598,6 +599,8 @@ MonoBehaviour:
   nameText: {fileID: 3323011241681729714}
   descText: {fileID: 6920603001089496711}
   momentumNumber: {fileID: 8680296588577172453}
+  finishParent: {fileID: 0}
+  iconPrefab: {fileID: 0}
   OnCardSelected:
     m_PersistentCalls:
       m_Calls: []

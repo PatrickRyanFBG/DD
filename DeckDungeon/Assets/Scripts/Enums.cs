@@ -79,7 +79,7 @@ public enum EPlayerCardFinish
     // Positive
     Energized,
     Serrated,
-    Coarse,
+    Sharp,
     Weighty,
     // Neutral
     Fleeting = 100, 
@@ -87,6 +87,11 @@ public enum EPlayerCardFinish
     // Negative
     Fragile = 200,
     Siphon,
+}
+
+public enum EDungeonCardFinish
+{
+    None,
 }
 
 public enum EAffixType
@@ -109,11 +114,20 @@ public enum ETargetType
     Enemy = 13
 }
 
-public enum ECardExecutionTime
+public enum EPlayerCardLifeTime
 {
     None,
     Drawn,
     Played,
     EndOfRound,
     Discarded,
+}
+
+public enum EDungeonCardExecutionTime
+{
+    None,
+    Drawn,
+    Selected,
+    ShuffledIn,
+    Completed
 }

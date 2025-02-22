@@ -6,31 +6,28 @@ using UnityEngine.UI;
 
 public class DDCardInHand : DDSelection
 {
-    [SerializeField]
-    private float hoverTime = 1;
+    [SerializeField] private float hoverTime = 1;
+    private bool canHover = true;
 
-    [SerializeField]
-    private float selectedTime = 1;
+    [SerializeField] private float selectedTime = 1;
 
-    [SerializeField]
-    private RawImage image;
+    [SerializeField] private RawImage image;
     public RawImage Image => image;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI cardTypeText;
+    [SerializeField] private TMPro.TextMeshProUGUI cardTypeText;
     public TextMeshProUGUI CardTypeText => cardTypeText;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI nameText;
+    [SerializeField] private TMPro.TextMeshProUGUI nameText;
     public TextMeshProUGUI NameText => nameText;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI descText;
+    [SerializeField] private TMPro.TextMeshProUGUI descText;
     public TextMeshProUGUI DescText => descText;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI momentumNumber;
+    [SerializeField] private TMPro.TextMeshProUGUI momentumNumber;
     public TextMeshProUGUI MomentumNumber => momentumNumber;
+
+    [SerializeField] protected Transform finishParent;
+    [SerializeField] protected DDCardFinishIcon iconPrefab;
 
     protected DDCardBase currentCard;
     public DDCardBase CurrentCard => currentCard;
@@ -44,17 +41,30 @@ public class DDCardInHand : DDSelection
     private bool selected = false;
     private Vector3 prevLocation;
 
-    public virtual void SetUpCard(DDCardBase cardBase)
+    public void SetUpCard(DDCardBase cardBase, bool hover = true)
     {
         currentCard = cardBase;
         UpdateDisplayInformation();
 
+        canHover = hover;
+
         gameObject.SetActive(true);
+    }
+
+    public void SetCanHover(bool hover)
+    {
+        canHover = hover;
     }
 
     public void UpdateDisplayInformation()
     {
-        currentCard.RuntimeInit(this);
+        currentCard.SetCardInHand(this);
+        foreach (var finish in currentCard.AllCardFinishes)
+        {
+            DDCardFinishIcon icon = Instantiate(iconPrefab, finishParent);
+            icon.SetUp(finish.Value);
+            icon.gameObject.SetActive(true);
+        }
     }
 
     public List<ETargetType> GetCardTarget()
@@ -67,11 +77,11 @@ public class DDCardInHand : DDSelection
         return currentCard.IsSelectionValid(selection, targetIndex);
     }
 
-    public override void Hovered()
+    public override bool Hovered()
     {
         if (selected)
         {
-            return;
+            return false;
         }
 
         if (moveDownCoroutine != null)
@@ -79,7 +89,9 @@ public class DDCardInHand : DDSelection
             StopCoroutine(moveDownCoroutine);
             moveDownCoroutine = null;
         }
+
         moveUpCoroutine = StartCoroutine(MoveUp());
+        return true;
     }
 
     public override void Unhovered()
@@ -94,6 +106,7 @@ public class DDCardInHand : DDSelection
             StopCoroutine(moveUpCoroutine);
             moveUpCoroutine = null;
         }
+
         moveDownCoroutine = StartCoroutine(MoveDown());
     }
 
@@ -121,7 +134,6 @@ public class DDCardInHand : DDSelection
             transform.localPosition = pos;
 
             yield return null;
-
         }
 
         moveUpCoroutine = null;
@@ -157,6 +169,7 @@ public class DDCardInHand : DDSelection
             StopCoroutine(moveUpCoroutine);
             moveUpCoroutine = null;
         }
+
         if (moveDownCoroutine != null)
         {
             StopCoroutine(moveDownCoroutine);
@@ -175,7 +188,7 @@ public class DDCardInHand : DDSelection
     private IEnumerator CardSelectedOverTime(Vector3 location)
     {
         Vector3 pos = transform.localPosition;
-        float time = 0;//(1 - (pos.z / 2f)) * selectedTime;
+        float time = 0; //(1 - (pos.z / 2f)) * selectedTime;
 
         while (time < selectedTime)
         {
@@ -203,7 +216,7 @@ public class DDCardInHand : DDSelection
     private IEnumerator CardDeselectedOverTime()
     {
         Vector3 pos = transform.localPosition;
-        float time = 0;//(1 - (pos.z / 2f)) * selectedTime;
+        float time = 0; //(1 - (pos.z / 2f)) * selectedTime;
 
         while (time < selectedTime)
         {

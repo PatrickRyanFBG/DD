@@ -43,7 +43,7 @@ public class DDLocationEffect_Caltrops : DDLocationEffectBase
 
         if (enemy)
         {
-            enemy.DoDamage(damage);
+            //enemy.DoDamage(damage);
         }
 
         return base.DoEffect(loc);

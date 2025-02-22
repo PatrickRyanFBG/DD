@@ -10,19 +10,15 @@ public class DDEncounter : MonoBehaviour
     private List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
     public List<DDEnemyOnBoard> AllEnemies => enemies;
 
-    [SerializeField]
-    private DDPlayer_Match player;
+    [SerializeField] private DDPlayer_Match player;
 
     public UnityEngine.Events.UnityEvent<EEncounterPhase> PhaseChanged;
 
-    [Header("Testing")]
-    [SerializeField]
-    private TMPro.TextMeshProUGUI phaseDebug;
-
-    [SerializeField]
-    private TMPro.TextMeshProUGUI actionDescription;
+    [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI phaseDebug;
 
     private DDDungeonCardEncounter currentEncounter;
+    
+    private bool playersTurnEnding;
 
     public void SetUpEncounter(DDDungeonCardEncounter encounter)
     {
@@ -34,13 +30,6 @@ public class DDEncounter : MonoBehaviour
         player.EncounterStarted();
         player.ShuffleInDeck();
         ChangeCurrentPhase(EEncounterPhase.EncounterStart);
-
-        actionDescription.text = "";
-    }
-
-    public void SetActionDescription(string value)
-    {
-        actionDescription.text = value;
     }
 
     public void RegisterEnemy(DDEnemyOnBoard enemy)
@@ -61,20 +50,21 @@ public class DDEncounter : MonoBehaviour
                 bool allFriendly = true;
                 for (int i = 0; i < enemies.Count; i++)
                 {
-                    if(!enemies[i].CurrentEnemy.Friendly)
+                    if (!enemies[i].CurrentEnemy.Friendly)
                     {
                         allFriendly = false;
                         break;
                     }
                 }
 
-                if(allFriendly)
+                if (allFriendly)
                 {
                     for (int i = enemies.Count - 1; i >= 0; i--)
                     {
                         Destroy(enemies[i].gameObject);
                         enemies.RemoveAt(i);
                     }
+
                     ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
                 }
             }
@@ -176,7 +166,8 @@ public class DDEncounter : MonoBehaviour
 
     private IEnumerator DoPlayersEndTurn()
     {
-        
+        playersTurnEnding = true;
+        yield return player.EndOfTurn();
         yield return player.DiscardHand();
         ChangeCurrentPhase(EEncounterPhase.MonstersAct);
     }
@@ -185,6 +176,8 @@ public class DDEncounter : MonoBehaviour
     {
         DDGamePlaySingletonHolder.Instance.Board.DoAllEffects();
 
+        yield return DoMonsterAffixes();
+        
         // Something destroyed this enemy mid action (probably bombs exploding for now).
         // So we are going backwards for now for safety
         for (int i = enemies.Count - 1; i >= 0; i--)
@@ -198,6 +191,14 @@ public class DDEncounter : MonoBehaviour
         }
     }
 
+    private IEnumerator DoMonsterAffixes()
+    {
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            yield return enemies[i].DoAffixes();
+        }
+    }
+
     private void DoEncounterEnd()
     {
         DDGamePlaySingletonHolder.Instance.Board.ClearAllEffects();
@@ -207,7 +208,7 @@ public class DDEncounter : MonoBehaviour
 
     public void PlayerEndedTurn()
     {
-        if(currentEncounterPhase == EEncounterPhase.PlayersTurn)
+        if (currentEncounterPhase == EEncounterPhase.PlayersTurn && !playersTurnEnding)
         {
             ChangeCurrentPhase(EEncounterPhase.PlayersEndTurn);
         }
@@ -233,6 +234,7 @@ public class DDEncounter : MonoBehaviour
                 StartCoroutine(DoPlayersEndTurn());
                 break;
             case EEncounterPhase.MonstersAct:
+                playersTurnEnding = false;
                 StartCoroutine(DoMonstersAct());
                 break;
             case EEncounterPhase.EncounterEnd:

@@ -84,11 +84,13 @@ public class DDPlayerSelector : MonoBehaviour
                     currentlyHovered.Unhovered();
                 }
 
-                currentlyHovered = mousedOver;
 
-                if(currentlyHovered)
+                if(mousedOver)
                 {
-                    currentlyHovered.Hovered();
+                    if (mousedOver.Hovered())
+                    {
+                        currentlyHovered = mousedOver;
+                    }
                 }
             }
         }

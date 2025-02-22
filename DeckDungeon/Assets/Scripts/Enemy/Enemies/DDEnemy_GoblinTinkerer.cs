@@ -60,7 +60,7 @@ public class DDEnemy_GoblinTinkerer : DDEnemyBase
                     continue;
                 }
 
-                if (DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
+                if (!DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY))
                 {
                     bombAction = new DDEnemyAction_SpawnEnemy(bombEnemy, new Vector2Int(randX, randY), bombIcon);
                     break;
@@ -74,12 +74,7 @@ public class DDEnemy_GoblinTinkerer : DDEnemyBase
         }
         else
         {
-            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Up, true);
-            if (moveAction != null)
-            {
-                actions.Add(moveAction);
-            }
-            actions.Add(new DDEnemyAction_Attack(damage));
+            actingEnemy.GenericRangeAttackActions(ref actions, damage);
         }
 
         return actions;
