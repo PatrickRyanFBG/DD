@@ -1,12 +1,22 @@
+GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!!!
+
+2/27
+    - Design 2 Elites
+    - Design Boss
+
+2/25
+    - Split Dungeon class with UI.
+    x Move EventData to a library
+
 2/19
-    - Finish Artifacts
-    - Finish Events
-    - Rework Encounters
-        - Key -> Chest
-        - Rare Encounters
+    x Finish Artifacts
+    x Finish Events (Partial still need 3 dungeon and 1 deck)
+    x Rework Encounters
+        x Key -> Chest
+        x Rare Encounters
             (Need Elites)
-    - Rework Card Selection
-        - Always shows 1 encounter
+    x Rework Card Selection
+        x Always shows 1 encounter
 
 CardEffect
     Has Target

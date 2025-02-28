@@ -10584,6 +10584,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   phaseDebug: {fileID: 718117573}
+  AffixModified:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1161323821
 Transform:
   m_ObjectHideFlags: 0
@@ -16173,6 +16176,9 @@ MonoBehaviour:
   - {fileID: 1938518465}
   - {fileID: 287519815}
   playersAffixVisualsManager: {fileID: 1077356779}
+  CardLifeTimeChanged:
+    m_PersistentCalls:
+      m_Calls: []
   momentum: {fileID: 785620157}
 --- !u!4 &1941480982
 Transform:

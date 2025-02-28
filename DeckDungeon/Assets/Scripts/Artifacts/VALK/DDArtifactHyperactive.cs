@@ -5,14 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class DDArtifactHyperactive : DDArtifactBase
 {
-    [SerializeField]
-    private int damagePerMomentum = 1;
+    [SerializeField] private int damagePerMomentum = 1;
 
     public override void Equipped()
     {
         DDGamePlaySingletonHolder.Instance.Player.GainedMomentum.AddListener(GainedMomentum);
     }
 
+    public override void Unequipped()
+    {
+        DDGamePlaySingletonHolder.Instance.Player.GainedMomentum.RemoveListener(GainedMomentum);
+    }
+    
     private void GainedMomentum()
     {
         List<DDEnemyOnBoard> allEnemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies;

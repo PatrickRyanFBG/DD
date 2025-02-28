@@ -27,7 +27,7 @@ public class DDAffixVisuals : MonoBehaviour
 
     public bool UpdateInfo(int value)
     {
-        if (!affix.ExistsAtZero && value != 0)
+        if (!affix.ExistsAtZero && value == 0)
         {
             return true;
         }

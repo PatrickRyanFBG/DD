@@ -13,14 +13,21 @@ public class DDAffixManager
     public UnityEngine.Events.UnityEvent<EAffixType> AffixAdjusted = new UnityEngine.Events.UnityEvent<EAffixType>();
 
     private DDAffixVisualsManager affixVisualsManager;
-    
-    public DDAffixManager(DDAffixVisualsManager visualsManager)
+
+    private EAffixOwner owner;
+    public EAffixOwner Owner => owner;
+
+    public DDAffixManager(DDAffixVisualsManager visualsManager, EAffixOwner affixOwner)
     {
         affixVisualsManager = visualsManager;
+        owner = affixOwner;
     }
-    
-    public int? ModifyValueOfAffix(EAffixType affixType, int value, bool shouldSet)
+
+    public int? ModifyValueOfAffix(EAffixType affixType, int value, bool shouldSet, bool useEvent = true)
     {
+        int before = 0;
+        int? after = null;
+        
         // Does exist
         if (currentAffixes.TryGetValue(affixType, out DDRuntimeAffix affix))
         {
@@ -36,12 +43,11 @@ public class DDAffixManager
 
             if(affix.Number > 0 || (affix.Number == 0 && affix.Affix.ExistsAtZero) || (affix.Number < 0 && affix.Affix.ExistsNegative))
             {
-                return affix.Number;
+                after = affix.Number;
             }
             else
             {
                 currentAffixes.Remove(affixType);
-                return null;
             }
         }
 
@@ -51,10 +57,15 @@ public class DDAffixManager
             currentAffixes[affixType] = new DDRuntimeAffix { Number = value, Affix = affixInfo };
             affixVisualsManager.AddVisual(affixType, value);
             AffixAdjusted?.Invoke(affixType);
-            return value;
+            after = value;
         }
 
-        return null;
+        if (useEvent)
+        {
+            DDGamePlaySingletonHolder.Instance.Encounter.AffixModified?.Invoke(this, affixType, before, after ?? 0);
+        }
+        
+        return after;
     }
 
     public int? TryGetAffixValue(EAffixType affixType)

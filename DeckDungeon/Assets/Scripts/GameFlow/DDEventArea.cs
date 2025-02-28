@@ -46,9 +46,10 @@ public class DDEventArea : MonoBehaviour
         options.Clear();
     }
 
-    public DDButton GenerateButton()
+    public DDButton GenerateButton(string buttonText)
     {
         DDButton button = Instantiate(optionPrefab, optionParent);
+        button.ButtonText.text = buttonText;
         options.Add(button.gameObject);
         return button;
     }

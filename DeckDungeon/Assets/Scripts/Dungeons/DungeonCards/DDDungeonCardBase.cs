@@ -47,17 +47,17 @@ public abstract class DDDungeonCardBase : DDScriptableObject
 [System.Serializable]
 public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 {
-    [SerializeField] protected bool testingHasKey;
-    public bool TestingHasKey => testingHasKey;
-
-    [SerializeField] protected bool testingHasChest;
-    public bool TestingHasChest => testingHasChest;
-
+    [SerializeField] private EEncounterType encounterType;
+    public EEncounterType EncounterType => encounterType;
+    
     [SerializeField] private int goldToGive;
     public int GoldToGive => goldToGive;
 
     [SerializeField] private List<DDDungeonCardBase> cardsToShuffleInAfter;
 
+    [SerializeField] private DDDungeonCardEvent eventAfterComplete;
+    public DDDungeonCardEvent EventAfterComplete => eventAfterComplete;
+    
     [SerializeField] private DDDungeonData dungeonAddedUponDefeat;
 
     public abstract void SpawnEnemies();

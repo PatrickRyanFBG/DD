@@ -34,11 +34,11 @@ public class DDDungeon : MonoBehaviour
     [SerializeField] private int startingHealth;
 
     private int maxHealth;
+    public int MaxHealth => maxHealth;
+
     private int currentHealth;
 
     private EDungeonPhase currentDungeonPhase = EDungeonPhase.DungeonStart;
-
-    public bool HasKey;
 
     [SerializeField] private List<DDArtifactBase> artifacts = new List<DDArtifactBase>();
 
@@ -79,9 +79,8 @@ public class DDDungeon : MonoBehaviour
 
     [SerializeField] private DDDungeonCardShown dungeonCardPrefabForAdded;
     [SerializeField] private Transform dungeonCardAddedStart;
+    public Vector3 DungeonCardStartPosition => dungeonCardAddedStart.position;
     [SerializeField] private Transform dungeonCardAddedEnd;
-
-    [SerializeField] private GameObject keyImage;
 
     [SerializeField] private Transform artifactUIParent;
 
@@ -383,7 +382,6 @@ public class DDDungeon : MonoBehaviour
 
     private void ChangeDungeonPhase(EDungeonPhase toPhase)
     {
-        keyImage.gameObject.SetActive(HasKey);
         currentDungeonPhase = toPhase;
         PhaseChanged.Invoke(currentDungeonPhase);
     }

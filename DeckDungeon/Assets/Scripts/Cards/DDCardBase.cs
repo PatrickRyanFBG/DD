@@ -174,7 +174,6 @@ public abstract class DDCardBase : DDScriptableObject
     }
 
     #region GUID
-
     private void OnValidate()
     {
         if (string.IsNullOrWhiteSpace(GUID))

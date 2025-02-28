@@ -5,25 +5,13 @@ using UnityEngine.UI;
 
 public class DDCardSelection : MonoBehaviour
 {
-    [SerializeField]
-    private DDCardShown[] playerCards;
+    [SerializeField] private DDCardShown[] playerCards;
 
-    [SerializeField]
-    private LayerMask playerCardLayer;
+    [SerializeField] private LayerMask playerCardLayer;
 
-    [SerializeField]
-    private RawImage extraImage;
+    [SerializeField] private RawImage extraImage;
 
     private DDDungeonCardEncounter fromEncounter;
-
-    [SerializeField]
-    private Texture keyImage;
-
-    [SerializeField]
-    private Texture chestImage;
-
-    [SerializeField]
-    private DDDungeonCardEvent chestEvent;
 
     private void OnEnable()
     {
@@ -39,18 +27,12 @@ public class DDCardSelection : MonoBehaviour
     {
         if (fromEncounter != null)
         {
-            if (fromEncounter.TestingHasChest)
+            if (fromEncounter.EventAfterComplete)
             {
-                DDGamePlaySingletonHolder.Instance.Dungeon.StartEvent(chestEvent);
-                DDGamePlaySingletonHolder.Instance.Dungeon.HasKey = false;
+                DDGamePlaySingletonHolder.Instance.Dungeon.StartEvent(fromEncounter.EventAfterComplete);
             }
             else
             {
-                if (fromEncounter.TestingHasKey)
-                {
-                    DDGamePlaySingletonHolder.Instance.Dungeon.HasKey = true;
-                }
-
                 DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
             }
         }
@@ -83,21 +65,6 @@ public class DDCardSelection : MonoBehaviour
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(playerCardLayer);
 
         fromEncounter = encounterCard;
-
-        if (fromEncounter.TestingHasKey)
-        {
-            extraImage.gameObject.SetActive(true);
-            extraImage.texture = keyImage;
-        }
-        else if (fromEncounter.TestingHasChest)
-        {
-            extraImage.gameObject.SetActive(true);
-            extraImage.texture = chestImage;
-        }
-        else
-        {
-            extraImage.gameObject.SetActive(false);
-        }
 
         gameObject.SetActive(true);
     }

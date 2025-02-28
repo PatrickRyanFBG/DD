@@ -11,7 +11,7 @@ public class DDEnemyLibrary : MonoBehaviour
 [System.Serializable]
 public class Enemies
 {
-    public DDEnemy_GoblinMelee GoblinMelee;
+    public DDEnemyGoblinMelee GoblinMelee;
 }
 
 [System.Serializable]

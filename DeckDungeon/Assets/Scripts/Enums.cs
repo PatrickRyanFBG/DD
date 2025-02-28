@@ -14,6 +14,14 @@ public enum EDungeonCardType
     Shop
 }
 
+public enum EEncounterType
+{
+    Normal,
+    Elite,
+    Unique,
+    Boss
+}
+
 public enum EDungeonCardExtra
 {
     Key,
@@ -104,6 +112,13 @@ public enum EAffixType
     Immobile,
 }
 
+public enum EAffixOwner
+{
+    Player,
+    Lane,
+    Enemy
+}
+
 public enum ETargetType
 {
     PlayerCard = 6,
@@ -130,4 +145,12 @@ public enum EDungeonCardExecutionTime
     Selected,
     ShuffledIn,
     Completed
+}
+
+public enum ECombatTier
+{
+    Intro,
+    One,
+    Two,
+    Three,
 }

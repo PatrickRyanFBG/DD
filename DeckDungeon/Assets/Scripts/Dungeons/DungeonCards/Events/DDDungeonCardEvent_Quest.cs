@@ -37,7 +37,7 @@ public class DDDungeonCardEvent_Quest : DDDungeonCardEvent
     {
         // TODO::Gotta seperate quests from events?
         // base.DisplayEvent(area);
-
+        /*
         for (int i = 0; i < options.Count; i++)
         {
             DDButton button = area.GenerateButton();
@@ -56,6 +56,7 @@ public class DDDungeonCardEvent_Quest : DDDungeonCardEvent
                 });
             });
         }
+        */
         /*
         DDButton buttonOne = area.GenerateButton();
         buttonOne.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Follow the mysterious figure.";

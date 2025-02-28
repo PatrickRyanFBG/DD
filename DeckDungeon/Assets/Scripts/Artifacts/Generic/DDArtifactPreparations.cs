@@ -5,14 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class DDArtifactPreparations : DDArtifactBase
 {
-    [SerializeField]
-    private int extraDrawCount = 1;
+    [SerializeField] private int extraDrawCount = 1;
 
     public override void Equipped()
     {
         DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
     }
 
+    public override void Unequipped()
+    {
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+    }
+    
     private void EncounterPhaseChanged(EEncounterPhase phase)
     {
         if (phase == EEncounterPhase.EncounterStart)

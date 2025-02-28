@@ -55,41 +55,64 @@ public class DDDungeonCardSelection : MonoBehaviour
     public void DisplayDungeonCards(ref List<DDDungeonCardBase> dungeonDeck)
     {
         cachedDungeonDeck = dungeonDeck;
+        
+        List<int> indexes = new List<int>();
 
-        int cardOne = testCardOne >= 0 ? testCardOne : Random.Range(0, dungeonDeck.Count);
-        dungeonCards[0].SetUpDungeonCard(dungeonDeck[cardOne], cardOne);
-
-        if (dungeonDeck.Count > 1)
+        if (dungeonDeck.Count < 4)
         {
-            int cardTwo = Random.Range(0, dungeonDeck.Count);
-            while (cardTwo == cardOne)
+            for (int i = 0; i < dungeonDeck.Count; i++)
             {
-                cardTwo = Random.Range(0, dungeonDeck.Count);
-            }
-
-            dungeonCards[1].SetUpDungeonCard(dungeonDeck[cardTwo], cardTwo);
-
-            int cardThree = Random.Range(0, dungeonDeck.Count);
-            if (dungeonDeck.Count > 2)
-            {
-                while (cardThree == cardOne || cardThree == cardTwo)
-                {
-                    cardThree = Random.Range(0, dungeonDeck.Count);
-                }
-
-                dungeonCards[2].SetUpDungeonCard(dungeonDeck[cardThree], cardThree);
-            }
-            else
-            {
-                dungeonCards[2].gameObject.SetActive(false);
+                indexes.Add(i);
             }
         }
         else
         {
-            dungeonCards[1].gameObject.SetActive(false);
-            dungeonCards[2].gameObject.SetActive(false);
+            bool debugging = testCardOne >= 0;
+            if (debugging)
+            {
+                indexes.Add(testCardOne);
+            }
+            else
+            {
+                // Lets try to find a normal encounter to always show atleast one
+                for (int i = 0; i < dungeonDeck.Count; i++)
+                {
+                    if (dungeonDeck[i].Type == EDungeonCardType.Encounter)
+                    {
+                        if((dungeonDeck[i] as DDDungeonCardEncounter).EncounterType == EEncounterType.Normal)
+                        {
+                            indexes.Add(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (int i = indexes.Count; i < 3; i++)
+            {
+                int randomIndex = Random.Range(0, dungeonDeck.Count);
+                while (indexes.Contains(randomIndex))
+                {
+                    randomIndex = Random.Range(0, dungeonDeck.Count);
+                }
+                indexes.Add(randomIndex);
+            }
         }
 
+        indexes.Shuffle();
+        
+        for (int i = 0; i < dungeonCards.Length; i++)
+        {
+            if (i > indexes.Count)
+            {
+                dungeonCards[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                dungeonCards[i].SetUpDungeonCard(dungeonDeck[indexes[i]], indexes[i]);
+            }
+        }
+        
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(dungeonCardLayer);
 
         gameObject.SetActive(true);

@@ -9,6 +9,11 @@ public class DDArtifactAlpha : DDArtifactBase
         DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
     }
 
+    public override void Unequipped()
+    {
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+    }
+
     private void EncounterPhaseChanged(EEncounterPhase phase)
     {
         // Monster Forecast happens right before PlayerTurn

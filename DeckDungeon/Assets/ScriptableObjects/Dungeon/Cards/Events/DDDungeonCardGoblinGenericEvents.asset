@@ -17,6 +17,11 @@ MonoBehaviour:
   name: Event
   description: A Random Event
   eventDatas:
+  - {fileID: 11400000, guid: 5245c7859e2c1f848b1dac1177c9359e, type: 2}
   - {fileID: 11400000, guid: ed87a5c5f62a9d644872ad18a987364a, type: 2}
+  - {fileID: 11400000, guid: 4f90c742e08827243ba6b2958386bcf4, type: 2}
+  - {fileID: 11400000, guid: 88687572e5bd7bf44b52a6991157e4ed, type: 2}
+  - {fileID: 11400000, guid: c1e3ababe48a835459bde2b4fb7f4294, type: 2}
+  - {fileID: 11400000, guid: 16175177ebf804147879bafd0f7fe1cc, type: 2}
   - {fileID: 11400000, guid: ba1964b6f0cfc5d46a18cb1b9c6c53c3, type: 2}
   - {fileID: 11400000, guid: 5bf7ea241205a1e46b7746a5eb1fac01, type: 2}

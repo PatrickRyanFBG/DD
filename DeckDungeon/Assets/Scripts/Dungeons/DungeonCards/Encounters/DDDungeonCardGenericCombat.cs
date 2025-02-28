@@ -4,45 +4,27 @@ using UnityEngine;
 
 public class DDDungeonCardGenericCombat : DDDungeonCardEncounter
 {
-    [Header("Generic Combat")]
-    [SerializeField]
-    private List<DDDungeonCombatData> introCombats;
-
-    [SerializeField]
-    private List<DDDungeonCombatData> fullCombats;
-
-    public override bool CanSelect()
-    {
-        if(testingHasChest)
-        {
-            if(!DDGamePlaySingletonHolder.Instance.Dungeon.HasKey)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
+    [Header("Generic Combat")] [SerializeField] private DDDungeonCombatData data;
 
     public override void SpawnEnemies()
     {
         DDBoard board = DDGamePlaySingletonHolder.Instance.Board;
 
-        DDDungeonCombatData combatData = null;
+        DDCombatEnemySetup enemySetup = null;
 
-        if(DDGamePlaySingletonHolder.Instance.Dungeon.DungeonStats.EncountersCompleted < 3)
+        if (DDGamePlaySingletonHolder.Instance.Dungeon.DungeonStats.EncountersCompleted < 3)
         {
-            combatData = introCombats[Random.Range(0, introCombats.Count)];
+            enemySetup = data.GetRandomEnemySetup(ECombatTier.Intro);
         }
         else
         {
-            combatData = fullCombats[Random.Range(0, fullCombats.Count)];
+            enemySetup = data.GetRandomEnemySetup(ECombatTier.One);
         }
 
         List<Vector2Int> locs = new List<Vector2Int>();
-        for (int i = 0; i < combatData.Enemies.Count; i++)
+        for (int i = 0; i < enemySetup.Enemies.Count; i++)
         {
-            int count = combatData.Enemies[i].Amount;
+            int count = enemySetup.Enemies[i].Amount;
             for (int j = 0; j < count; j++)
             {
                 int x = Random.Range(0, board.ColumnsCount);
@@ -59,7 +41,7 @@ public class DDDungeonCardGenericCombat : DDDungeonCardEncounter
                 }
 
                 locs.Add(nextPos);
-                board.SpawnEnemy(x, y, combatData.Enemies[i].Enemy);
+                board.SpawnEnemy(x, y, enemySetup.Enemies[i].Enemy);
             }
         }
     }

@@ -10,7 +10,7 @@ public class DDGlobalManager : MonoBehaviour
     {
         get
         {
-            if (instance == null)
+            if (!instance)
             {
                 Instantiate(Resources.Load<GameObject>("Prefabs/GlobalManager"));
             }
@@ -79,6 +79,9 @@ public class DDGlobalManager : MonoBehaviour
         }
     }
 
+    [SerializeField] private DDEventDataLibrary eventDataLibrary;
+    public DDEventDataLibrary EventDataLibrary => eventDataLibrary;
+    
     [SerializeField] private DDAffixLibrary affixLibrary;
     public DDAffixLibrary AffixLibrary => affixLibrary;
 

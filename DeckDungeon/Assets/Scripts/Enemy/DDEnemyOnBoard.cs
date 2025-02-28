@@ -49,7 +49,7 @@ public class DDEnemyOnBoard : DDSelection
         maxHealth = enemyBase.StartingHealth;
         currentHealth = maxHealth;
         UpdateHealthUI();
-        affixManager = new DDAffixManager(affixVisualsManager);
+        affixManager = new DDAffixManager(affixVisualsManager, EAffixOwner.Enemy);
         affixManager.AffixAdjusted.AddListener(AffixAdjusted);
         affixManager.ModifyValueOfAffix(EAffixType.Armor, enemyBase.StartingArmor, true);
     }

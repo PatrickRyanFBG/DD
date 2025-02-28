@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class DDDungeonDataLibrary : MonoBehaviour
 {
-    [SerializeField]
-    private List<DDDungeonMetaData> metaDatas;
+    [SerializeField] private List<DDDungeonMetaData> metaDatas;
     public List<DDDungeonMetaData> MetaDatas => metaDatas;
 
-    [SerializeField]
-    private List<DDDungeonSideQuestData> sideQuestDatas;
+    [SerializeField] private List<DDDungeonSideQuestData> sideQuestDatas;
     public List<DDDungeonSideQuestData> SideQuestDatas => sideQuestDatas;
 }

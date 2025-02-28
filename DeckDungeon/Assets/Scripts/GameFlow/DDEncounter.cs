@@ -10,7 +10,7 @@ public class DDEncounter : MonoBehaviour
     private List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
     public List<DDEnemyOnBoard> AllEnemies => enemies;
 
-    [SerializeField] private DDPlayer_Match player;
+    [SerializeField] private DDPlayerMatch player;
 
     public UnityEngine.Events.UnityEvent<EEncounterPhase> PhaseChanged;
 
@@ -20,6 +20,8 @@ public class DDEncounter : MonoBehaviour
     
     private bool playersTurnEnding;
 
+    public UnityEngine.Events.UnityEvent<DDAffixManager, EAffixType, int, int?> AffixModified;
+    
     public void SetUpEncounter(DDDungeonCardEncounter encounter)
     {
         gameObject.SetActive(true);

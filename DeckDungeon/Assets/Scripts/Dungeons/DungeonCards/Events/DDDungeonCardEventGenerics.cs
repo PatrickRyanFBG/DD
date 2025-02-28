@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class DDDungeonCardEventGenerics : DDDungeonCardEvent
 {
-    [SerializeField] private List<DDDungeonEventData> eventDatas;
-    
     [System.NonSerialized]
     private DDDungeonEventData currentEvent;
     
     public override void DisplayEvent(DDEventArea area)
     {
-        currentEvent = eventDatas.GetRandomElement();
+        currentEvent = DDGlobalManager.Instance.EventDataLibrary.GetUnusedEvent();
         
         currentEvent.DisplayEvent(area);
     }
