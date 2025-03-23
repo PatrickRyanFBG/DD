@@ -17,11 +17,11 @@ public class DDCardFinishIcon : MonoBehaviour
 
     public void Hovered()
     {
-        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip(cardFinish.GetDescription());
+        DDGlobalManager.Instance.ToolTip.SetText(cardFinish.GetDescription());
     }
 
     public void Unhovered()
     {
-        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip("");
+        DDGlobalManager.Instance.ToolTip.SetText("");
     }
 }

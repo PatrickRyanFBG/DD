@@ -6,10 +6,11 @@ public class DDAffixVisualsManager : MonoBehaviour
 {
     [SerializeField] private DDAffixVisuals visualsPrefab;
     [SerializeField] private RectTransform visualsParent;
+    /* Ths is for organizing affix as the list gets larger
     [SerializeField] private EMoveDirection rowDirection = EMoveDirection.Right;
     [SerializeField] private int rowMax = 4;
     [SerializeField] private EMoveDirection columnDirection = EMoveDirection.Up;
-    
+    */
     private Dictionary<EAffixType, DDAffixVisuals> visualsList = new Dictionary<EAffixType, DDAffixVisuals>();
 
     public void AddVisual(EAffixType type, int value)

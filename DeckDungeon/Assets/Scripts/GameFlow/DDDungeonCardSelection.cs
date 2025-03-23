@@ -79,7 +79,7 @@ public class DDDungeonCardSelection : MonoBehaviour
                 {
                     if (dungeonDeck[i].Type == EDungeonCardType.Encounter)
                     {
-                        if((dungeonDeck[i] as DDDungeonCardEncounter).EncounterType == EEncounterType.Normal)
+                        if(dungeonDeck[i].Get<DDDungeonCardEncounter>().EncounterType == EEncounterType.Normal)
                         {
                             indexes.Add(i);
                             break;

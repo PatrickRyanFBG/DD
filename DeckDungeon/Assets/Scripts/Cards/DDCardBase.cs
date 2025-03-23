@@ -201,6 +201,5 @@ public abstract class DDCardBase : DDScriptableObject
         GUID = Guid.NewGuid().ToString();
 #endif
     }
-
     #endregion
 }

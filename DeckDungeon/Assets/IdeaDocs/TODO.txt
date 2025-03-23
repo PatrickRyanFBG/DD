@@ -1,11 +1,30 @@
 GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!!!
+CONVERT ALL CARDS TO FLAT CANVAS
 
+
+Add some flexibility to actions to be able to modify them a little for enemies
+
+3/7
+    - Need feedback for melee/range
+        - enemies
+        - cards
+        - board
+
+3/3
+    - Quest
+    - "time line" order for enemies
+
+2/28
+    x Feedback for enemies taking damage
+    x Tool tip hover
+    x 3rd camera for overlay over 3d objects
+    
 2/27
-    - Design 2 Elites
+    x Design 2 Elites
     - Design Boss
 
 2/25
-    - Split Dungeon class with UI.
+    LATER Split Dungeon class with UI.
     x Move EventData to a library
 
 2/19
@@ -14,7 +33,6 @@ GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!
     x Rework Encounters
         x Key -> Chest
         x Rare Encounters
-            (Need Elites)
     x Rework Card Selection
         x Always shows 1 encounter
 

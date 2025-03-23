@@ -40,10 +40,11 @@ public class DDAffixManager
             affix.Number = total;
             AffixAdjusted?.Invoke(affixType);
             affixVisualsManager.ModifyVisual(affixType, affix.Number);
+            
+            after = affix.Number;
 
             if(affix.Number > 0 || (affix.Number == 0 && affix.Affix.ExistsAtZero) || (affix.Number < 0 && affix.Affix.ExistsNegative))
             {
-                after = affix.Number;
             }
             else
             {

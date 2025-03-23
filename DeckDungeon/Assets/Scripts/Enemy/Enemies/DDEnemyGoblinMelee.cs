@@ -21,13 +21,13 @@ public class DDEnemyGoblinMelee : DDEnemyBase
         if ((dexValue <= 0 && Random.Range(0, 10) < 5) ||
             (dexValue > 0 && Random.Range(0, 10) < 3))
         {
-            buffAction = new DDEnemyAction_ModifyAffix(EAffixType.Expertise, dexGain, false);
+            buffAction = new DDEnemyActionModifyAffix(EAffixType.Expertise, dexGain, false);
         }
 
         if (buffAction != null)
         {
-            DDEnemyAction_Move moveAction =
-                DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Down, false);
+            DDEnemyActionMove moveAction =
+                DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Down, false);
             if (moveAction != null)
             {
                 actions.Add(moveAction);
@@ -37,7 +37,7 @@ public class DDEnemyGoblinMelee : DDEnemyBase
         }
         else
         {
-            actingEnemy.GenericMeleeAttackActions(ref actions, damage);
+            actingEnemy.GenericMeleeAttackActions(ref actions, new DDEnemyActionAttack(damage));
         }
 
         return actions;

@@ -113,7 +113,7 @@ public class DDCardInHand : DDSelection
     public IEnumerator ExecuteCard(List<DDSelection> selections)
     {
         selected = false;
-        return currentCard.ExecuteCard(selections);
+        yield return currentCard.ExecuteCard(selections);
     }
 
     private IEnumerator MoveUp()

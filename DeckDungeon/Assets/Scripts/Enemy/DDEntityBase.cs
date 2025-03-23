@@ -29,4 +29,9 @@ public abstract class DDEntityBase : DDScriptableObject
     public ERangeType RangeType => rangeType;
 
     public abstract List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy);
+
+    public virtual IEnumerator OnDeath()
+    {
+        yield return null;
+    }
 }

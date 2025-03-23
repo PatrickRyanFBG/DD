@@ -12,17 +12,17 @@ public class DDEnemyGoblinBomb : DDEnemyBase
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(1);
 
-        actions.Add(new DDEnemyAction_Explode(damage));
+        actions.Add(new DDEnemyActionExplode(damage));
 
         return actions;
     }
 }
 
-public class DDEnemyAction_Explode : DDEnemyActionBase
+public class DDEnemyActionExplode : DDEnemyActionBase
 {
     private int damage;
 
-    public DDEnemyAction_Explode(int damage)
+    public DDEnemyActionExplode(int damage)
     {
         this.damage = damage;
     }
@@ -51,6 +51,6 @@ public class DDEnemyAction_Explode : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.Attack_Explode;
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackExplode;
     }
 }

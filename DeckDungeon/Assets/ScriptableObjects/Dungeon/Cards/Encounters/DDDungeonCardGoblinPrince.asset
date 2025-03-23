@@ -19,19 +19,9 @@ MonoBehaviour:
 
     (Defeating this shuffles in the
     Goblin Queen''s deck).'
-  testingHasKey: 0
-  testingHasChest: 0
+  encounterType: 0
   goldToGive: 150
-  cardsToShuffleInAfter:
-  - {fileID: 11400000, guid: c1f407cdc4574e9498283aaab1a6c5f7, type: 2}
-  - {fileID: 11400000, guid: 24f04e1a90469c245986cbc096e0b436, type: 2}
-  - {fileID: 11400000, guid: 5e4b772b81437dd49bf8f14984bcfb17, type: 2}
-  - {fileID: 11400000, guid: 5bf7ea241205a1e46b7746a5eb1fac01, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
-  - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
+  cardsToShuffleInAfter: []
+  eventAfterComplete: {fileID: 0}
   dungeonAddedUponDefeat: {fileID: 0}
   enemies: []

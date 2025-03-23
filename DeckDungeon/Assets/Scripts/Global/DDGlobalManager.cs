@@ -87,6 +87,9 @@ public class DDGlobalManager : MonoBehaviour
 
     [SerializeField] private DDCardFinishLibrary cardFinishLibrary;
     public DDCardFinishLibrary CardFinishLibrary => cardFinishLibrary;
+
+    [SerializeField] private DDHoverToolTip toolTip;
+    public DDHoverToolTip ToolTip => toolTip;
     
     [Header("Testing")] public bool FromMainMenu;
 

@@ -13,8 +13,8 @@ public class DDEnemyRat : DDEnemyBase
 
         EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
 
-        actions.Add(new DDEnemyAction_Move(randomDirection));
-        actions.Add(new DDEnemyAction_Attack(damage));
+        actions.Add(new DDEnemyActionMove(randomDirection));
+        actions.Add(new DDEnemyActionAttack(damage));
 
         return actions;
     }

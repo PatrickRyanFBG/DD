@@ -10,7 +10,7 @@ public abstract class DDEnemyBase : DDEntityBase
 
 public static class EnemyHelperExtensions
 {
-    public static void GenericMeleeAttackActions(this DDEnemyOnBoard actingEnemy, ref List<DDEnemyActionBase> actions, int damage)
+    public static void GenericMeleeAttackActions(this DDEnemyOnBoard actingEnemy, ref List<DDEnemyActionBase> actions, DDEnemyActionBase attackAction)
     {
         bool shouldMove = false;
 
@@ -32,7 +32,7 @@ public static class EnemyHelperExtensions
 
         if (shouldMove)
         {
-            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Down, true);
+            DDEnemyActionMove moveAction = DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Down, true);
             if (moveAction != null)
             {
                 actions.Add(moveAction);
@@ -40,13 +40,13 @@ public static class EnemyHelperExtensions
         }
         else
         {
-            actions.Add(new DDEnemyAction_Attack(damage));
+            actions.Add(attackAction);
         }
 
-        actions.Add(new DDEnemyAction_Attack(damage));
+        actions.Add(attackAction);
     }
 
-    public static void GenericRangeAttackActions(this DDEnemyOnBoard actingEnemy, ref List<DDEnemyActionBase> actions, int damage)
+    public static void GenericRangeAttackActions(this DDEnemyOnBoard actingEnemy, ref List<DDEnemyActionBase> actions, DDEnemyActionBase attackAction)
     {
         bool shouldMove = false;
 
@@ -68,7 +68,7 @@ public static class EnemyHelperExtensions
 
         if (shouldMove)
         {
-            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Up, true);
+            DDEnemyActionMove moveAction = DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Up, true);
             if (moveAction != null)
             {
                 actions.Add(moveAction);
@@ -76,9 +76,9 @@ public static class EnemyHelperExtensions
         }
         else
         {
-            actions.Add(new DDEnemyAction_Attack(damage));
+            actions.Add(attackAction);
         }
 
-        actions.Add(new DDEnemyAction_Attack(damage));
+        actions.Add(attackAction);
     }
 }

@@ -66,7 +66,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
                 if (DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
                 {
                     summonGoblin =
-                        new DDEnemyAction_SpawnEnemy(meleeGoblin, new Vector2Int(randX, randY), meleeGoblinIcon);
+                        new DDEnemyActionSpawnEnemy(meleeGoblin, new Vector2Int(randX, randY), meleeGoblinIcon);
                     break;
                 }
             }
@@ -78,7 +78,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
         }
         else
         {
-            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Up, false);
+            DDEnemyActionMove moveAction = DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Up, false);
             if (moveAction != null)
             {
                 actions.Add(moveAction);
@@ -93,7 +93,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
                 DDEnemyOnBoard eob = allEnemies[i];
                 if (eob != null && eob != actingEnemy)
                 {
-                    buffAction = new DDEnemyAction_ModifyAffix(EAffixType.Expertise, dexterityBuff, false,
+                    buffAction = new DDEnemyActionModifyAffix(EAffixType.Expertise, dexterityBuff, false,
                         eob.CurrentLocaton.Coord);
                 }
             }
@@ -104,7 +104,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
             }
             else
             {
-                actions.Add(new DDEnemyAction_Attack(damage));
+                actions.Add(new DDEnemyActionAttack(damage));
             }
         }
 

@@ -206,4 +206,19 @@ public class DDBoard : MonoBehaviour
         int handFragile = DDGamePlaySingletonHolder.Instance.Player.GetFinishCountByType(EPlayerCardFinish.Fragile);
         return bonkDamage + playerVigor + handVigor - handFragile;
     }
+
+    public int GetRandomRowIndex()
+    {
+        return Random.Range(0, rows.Length);
+    }
+
+    public int GetRandomColumnIndex()
+    {
+        return Random.Range(0, columns.Length);
+    }
+
+    public Vector2Int GetRandomLocation()
+    {
+        return new Vector2Int(GetRandomRowIndex(), GetRandomColumnIndex());
+    }
 }

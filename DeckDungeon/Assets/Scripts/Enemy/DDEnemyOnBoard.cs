@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class DDEnemyOnBoard : DDSelection
 {
     private int maxHealth;
     private int currentHealth;
+    public int CurrentHealth => currentHealth;
 
     private DDEnemyBase currentEnemy;
     public DDEnemyBase CurrentEnemy => currentEnemy;
@@ -152,11 +154,11 @@ public class DDEnemyOnBoard : DDSelection
                 {
                     currentHealth = 0;
                     DDGamePlaySingletonHolder.Instance.Encounter.EnemyDefeated(this);
-                    Destroy(gameObject);
                 }
                 else
                 {
                     // Take Damage Feedback.
+                    image.DOColor(Color.red, .2f).SetLoops(4, LoopType.Yoyo);
                 }
 
                 UpdateHealthUI();
@@ -263,7 +265,7 @@ public class DDEnemyOnBoard : DDSelection
             }
         }
 
-        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip(actionDesc);
+        DDGlobalManager.Instance.ToolTip.SetText(actionDesc);
     }
 
     public void NonActionableUnhover()
@@ -277,18 +279,23 @@ public class DDEnemyOnBoard : DDSelection
             }
         }
 
-        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip("");
+        DDGlobalManager.Instance.ToolTip.SetText("");
     }
 
     public bool IsPlanningToMove()
     {
         if (nextActions.Count > 0)
         {
-            DDEnemyAction_Move move = nextActions[0] as DDEnemyAction_Move;
+            DDEnemyActionMove move = nextActions[0] as DDEnemyActionMove;
             return move != null;
         }
 
         return false;
+    }
+
+    public float CurrentHealthPercent()
+    {
+        return currentHealth / (float)maxHealth;
     }
 
     public IEnumerator DoAffixes()

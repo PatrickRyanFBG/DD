@@ -24,7 +24,7 @@ public class DDEnemyCreatureMelee : DDEnemyBase
             if (eob != null && eob != actingEnemy && eob.GetAffixValue(EAffixType.Armor) < armorBuff)
             {
                 buffArmorAction =
-                    new DDEnemyAction_ModifyAffix(EAffixType.Armor, armorBuff, true, eob.CurrentLocaton.Coord);
+                    new DDEnemyActionModifyAffix(EAffixType.Armor, armorBuff, true, eob.CurrentLocaton.Coord);
             }
         }
 
@@ -34,7 +34,7 @@ public class DDEnemyCreatureMelee : DDEnemyBase
         }
         else
         {
-            actingEnemy.GenericMeleeAttackActions(ref actions, damage);
+            actingEnemy.GenericMeleeAttackActions(ref actions, new DDEnemyActionAttack(damage));
         }
 
         return actions;

@@ -39,7 +39,7 @@ public class DDPlayerMatch : MonoBehaviour
 
     public int MomentumCounter => momentumCounter;
 
-    public UnityEngine.Events.UnityEvent GainedMomentum;
+    public IEnumeratorHelper.EventHandler GainedMomentum;
 
     private DDAffixManager[] laneAffixes;
     [SerializeField] private DDAffixVisualsManager[] lanesAffixVisualsManager;
@@ -166,9 +166,9 @@ public class DDPlayerMatch : MonoBehaviour
         laneAffixes[lane].ModifyValueOfAffix(affix, amount, shouldSet);
     }
 
-    public int? GetLaneAffix(EAffixType affixType)
+    public int? GetLaneAffix(EAffixType affixType, int lane)
     {
-        return laneAffixes[(int)affixType].TryGetAffixValue(affixType);
+        return laneAffixes[lane].TryGetAffixValue(affixType);
     }
 
     public int DealDamageInLane(int damage, int lane)
@@ -280,15 +280,19 @@ public class DDPlayerMatch : MonoBehaviour
         momentum.text = momentumCounter.ToString();
     }
 
-    public void AddToMomentum(int value)
+    public IEnumerator AddToMomentum(int value)
     {
         momentumCounter += value;
 
+        yield return null;
+        
         for (int i = 0; i < value; i++)
         {
-            GainedMomentum?.Invoke();
+            yield return GainedMomentum.Occured(this);
         }
 
+        yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
+        
         momentum.text = momentumCounter.ToString();
     }
 
@@ -302,6 +306,8 @@ public class DDPlayerMatch : MonoBehaviour
     {
         yield return selectedCard.ExecuteCard(cardSelections);
 
+        yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
+        
         cardResolving = null;
     }
 

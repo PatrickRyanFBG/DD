@@ -42,6 +42,11 @@ public abstract class DDDungeonCardBase : DDScriptableObject
 
     // Card Drawn
     // Card Discard
+
+    public virtual T Get<T>() where T : DDDungeonCardBase
+    {
+        return (T)this;
+    }
 }
 
 [System.Serializable]

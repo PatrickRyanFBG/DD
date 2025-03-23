@@ -23,7 +23,7 @@ public class DDEnemyGoblinShaman : DDEnemyBase
             DDEnemyOnBoard eob = allEnemies[i];
             if (eob != null && eob.IsDamaged())
             {
-                healAction = new DDEnemyAction_HealAlly(healAmount, eob.CurrentLocaton.Coord);
+                healAction = new DDEnemyActionHealAlly(healAmount, eob.CurrentLocaton.Coord);
             }
         }
 
@@ -33,13 +33,13 @@ public class DDEnemyGoblinShaman : DDEnemyBase
         }
         else
         {
-            DDEnemyAction_Move moveAction = DDEnemyAction_Move.CalculateBestMove(actingEnemy, EMoveDirection.Up, true);
+            DDEnemyActionMove moveAction = DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Up, true);
             if (moveAction != null)
             {
                 actions.Add(moveAction);
             }
 
-            actions.Add(new DDEnemyAction_Attack(damage));
+            actions.Add(new DDEnemyActionAttack(damage));
         }
 
         return actions;

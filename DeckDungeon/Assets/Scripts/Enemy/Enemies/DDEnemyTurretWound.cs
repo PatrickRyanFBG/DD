@@ -14,8 +14,8 @@ public class DDEnemyTurretWound : DDEnemyBase
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
-        actions.Add(new DDEnemyAction_Attack(damage));
-        actions.Add(new DDEnemyAction_AddCardTo(amountOfWounds, woundCard, ECardLocation.Discard));
+        actions.Add(new DDEnemyActionAttack(damage));
+        actions.Add(new DDEnemyActionAddCardTo(amountOfWounds, woundCard, ECardLocation.Discard));
 
         return actions;
     }

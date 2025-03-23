@@ -88,8 +88,6 @@ public class DDDungeon : MonoBehaviour
 
     [SerializeField] private int startingGold = 500;
 
-    [SerializeField] private TMPro.TextMeshProUGUI toolTip;
-
     private void Awake()
     {
         if (!forceInternalData)
@@ -130,11 +128,6 @@ public class DDDungeon : MonoBehaviour
         PromptDungeonCard();
 
         DDGamePlaySingletonHolder.Instance.ShowDeckArea.OnClose.AddListener(DisplayDeckClosed);
-    }
-
-    public void SetToolTip(string value)
-    {
-        toolTip.text = value;
     }
     
     private void TurnOffAreas()

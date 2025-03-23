@@ -21,7 +21,7 @@ public class DDEventDataLibrary : MonoBehaviour
         do
         {
             data = genericEventDatas.GetRandomElement();
-        } while (data.EventIsValid() || usedEvents.Contains(data));
+        } while (!data.EventIsValid() || usedEvents.Contains(data));
         
         usedEvents.Add(data);
         

@@ -10,6 +10,8 @@ public class DDEncounter : MonoBehaviour
     private List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
     public List<DDEnemyOnBoard> AllEnemies => enemies;
 
+    private List<DDEnemyOnBoard> destroyedEnemies = new();
+
     [SerializeField] private DDPlayerMatch player;
 
     public UnityEngine.Events.UnityEvent<EEncounterPhase> PhaseChanged;
@@ -17,11 +19,11 @@ public class DDEncounter : MonoBehaviour
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI phaseDebug;
 
     private DDDungeonCardEncounter currentEncounter;
-    
+
     private bool playersTurnEnding;
 
     public UnityEngine.Events.UnityEvent<DDAffixManager, EAffixType, int, int?> AffixModified;
-    
+
     public void SetUpEncounter(DDDungeonCardEncounter encounter)
     {
         gameObject.SetActive(true);
@@ -43,6 +45,8 @@ public class DDEncounter : MonoBehaviour
     {
         if (enemies.Remove(enemy))
         {
+            destroyedEnemies.Add(enemy);
+            
             if (enemies.Count == 0)
             {
                 ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
@@ -70,6 +74,20 @@ public class DDEncounter : MonoBehaviour
                     ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
                 }
             }
+        }
+    }
+
+    public IEnumerator CheckDestroyedEnemies()
+    {
+        for (int i = 0; i < destroyedEnemies.Count; i++)
+        {
+            // Death animations happen here.
+            // On death effects happen.
+            yield return destroyedEnemies[i].CurrentEnemy.OnDeath();
+            // Destroy object.
+            Destroy(destroyedEnemies[i].gameObject);
+            // Remove enemies.
+            destroyedEnemies.RemoveAt(i--);
         }
     }
 
@@ -179,12 +197,14 @@ public class DDEncounter : MonoBehaviour
         DDGamePlaySingletonHolder.Instance.Board.DoAllEffects();
 
         yield return DoMonsterAffixes();
-        
+
         // Something destroyed this enemy mid action (probably bombs exploding for now).
         // So we are going backwards for now for safety
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             yield return enemies[i].DoActions();
+            // Sometimes enemies destroy themselves.
+            yield return CheckDestroyedEnemies();
         }
 
         if (currentEncounterPhase != EEncounterPhase.EncounterEnd)
@@ -198,6 +218,7 @@ public class DDEncounter : MonoBehaviour
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             yield return enemies[i].DoAffixes();
+            yield return CheckDestroyedEnemies();
         }
     }
 

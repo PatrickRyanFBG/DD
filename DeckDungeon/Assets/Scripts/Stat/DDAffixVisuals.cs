@@ -43,11 +43,11 @@ public class DDAffixVisuals : MonoBehaviour
 
     public void Hovered()
     {
-        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip(affix.AffixDescription);
+        DDGlobalManager.Instance.ToolTip.SetText(affix.AffixDescription);
     }
 
     public void Unhovered()
     {
-        DDGamePlaySingletonHolder.Instance.Dungeon.SetToolTip("");
+        DDGlobalManager.Instance.ToolTip.SetText("");
     }
 }

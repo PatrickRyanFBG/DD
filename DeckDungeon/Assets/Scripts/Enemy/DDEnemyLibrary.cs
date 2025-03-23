@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DDEnemyLibrary : MonoBehaviour
 {
@@ -17,17 +18,20 @@ public class Enemies
 [System.Serializable]
 public class SharedActionIcons
 {
-    public Texture Move_Up;
-    public Texture Move_Right;
-    public Texture Move_Down;
-    public Texture Move_Left;
+    public Texture MoveUp;
+    public Texture MoveRight;
+    public Texture MoveDown;
+    public Texture MoveLeft;
 
-    public Texture Attack_Melee;
-    public Texture Attack_Explode;
+    public Texture AttackMelee;
+    public Texture AttackExplode;
+    public Texture AttackArmorBased;
 
-    public Texture Action_Heal;
-    public Texture Action_GainDexterity;
-    public Texture Action_GainArmor;
-    public Texture Action_AddCard;
-    public Texture Action_LockCard;
+    public Texture ActionHeal;
+    public Texture ActionGainDexterity;
+    public Texture ActionGainArmor;
+    public Texture ActionAddCard;
+    public Texture ActionLockCard;
+    public Texture ActionArmorAbsorb;
+    public Texture ActionHealPerBleed;
 }

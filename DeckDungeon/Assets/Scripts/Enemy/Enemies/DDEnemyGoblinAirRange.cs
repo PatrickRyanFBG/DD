@@ -16,7 +16,7 @@ public class DDEnemyGoblinAirRange : DDEnemyBase
 
         if (actingEnemy.GetAffixValue(EAffixType.Armor) < armorBuff)
         {
-            buffArmorAction = new DDEnemyAction_ModifyAffix(EAffixType.Armor, armorBuff, true);
+            buffArmorAction = new DDEnemyActionModifyAffix(EAffixType.Armor, armorBuff, true);
         }
 
         if (buffArmorAction != null)
@@ -25,7 +25,7 @@ public class DDEnemyGoblinAirRange : DDEnemyBase
         }
         else
         {
-            actingEnemy.GenericRangeAttackActions(ref actions, damage);
+            actingEnemy.GenericRangeAttackActions(ref actions, new DDEnemyActionAttack(damage));
         }
 
         return actions;
