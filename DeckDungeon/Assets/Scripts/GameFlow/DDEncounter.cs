@@ -29,7 +29,7 @@ public class DDEncounter : MonoBehaviour
         gameObject.SetActive(true);
 
         currentEncounter = encounter;
-        currentEncounter.SpawnEnemies();
+        currentEncounter.StartEncounter();
 
         player.EncounterStarted();
         player.ShuffleInDeck();
@@ -83,7 +83,7 @@ public class DDEncounter : MonoBehaviour
         {
             // Death animations happen here.
             // On death effects happen.
-            yield return destroyedEnemies[i].CurrentEnemy.OnDeath();
+            yield return destroyedEnemies[i].DoDeath();
             // Destroy object.
             Destroy(destroyedEnemies[i].gameObject);
             // Remove enemies.
@@ -114,45 +114,6 @@ public class DDEncounter : MonoBehaviour
         phaseDebug.text = currentEncounterPhase.ToString();
     }
 
-    /*
-    private void SwitchPhase(EEncounterPhase target)
-    {
-        switch (currentPhase)
-        {
-            case EEncounterPhase.EncounterStart:
-                break;
-            case EEncounterPhase.MonsterForecast:
-                break;
-            case EEncounterPhase.PlayersTurn:
-                break;
-            case EEncounterPhase.MonstersAct:
-                break;
-            case EEncounterPhase.EncounterEnd:
-                break;
-            default:
-                break;
-        }
-
-        switch (target)
-        {
-            case EEncounterPhase.EncounterStart:
-                break;
-            case EEncounterPhase.MonsterForecast:
-                break;
-            case EEncounterPhase.PlayersTurn:
-                break;
-            case EEncounterPhase.MonstersAct:
-                break;
-            case EEncounterPhase.EncounterEnd:
-                break;
-            default:
-                break;
-        }
-
-        currentPhase = target;
-    }
-    */
-
     private void DoEncounterStart()
     {
         // Do checks
@@ -168,7 +129,7 @@ public class DDEncounter : MonoBehaviour
             enemies[i].ForecastActions(enemies.Count - i);
         }
 
-        ChangeCurrentPhase(EEncounterPhase.PlayersTurn);
+        ChangeCurrentPhase(EEncounterPhase.PlayersStartTurn);
     }
 
     private void DoPlayersTurn()
@@ -184,6 +145,22 @@ public class DDEncounter : MonoBehaviour
         }
     }
 
+    private IEnumerator DoPlayersStartTurn()
+    {
+        yield return null;
+
+        int bleedAmount = player.GetAffixValue(EAffixType.Bleed);
+        if (bleedAmount > 0)
+        {
+            DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(bleedAmount);
+            player.ModifyAffix(EAffixType.Bleed, -1, false);
+        }
+
+        yield return null;
+        
+        ChangeCurrentPhase(EEncounterPhase.PlayersTurn);
+    }
+    
     private IEnumerator DoPlayersEndTurn()
     {
         playersTurnEnding = true;
@@ -247,6 +224,9 @@ public class DDEncounter : MonoBehaviour
                 player.SetHandSizeToDefault();
                 break;
             case EEncounterPhase.MonsterForecast:
+                break;
+            case EEncounterPhase.PlayersStartTurn:
+                StartCoroutine(DoPlayersStartTurn());
                 break;
             case EEncounterPhase.PlayersTurn:
                 DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();

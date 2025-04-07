@@ -63,7 +63,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
                     continue;
                 }
 
-                if (DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY) == null)
+                if (!DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(randX, randY))
                 {
                     summonGoblin =
                         new DDEnemyActionSpawnEnemy(meleeGoblin, new Vector2Int(randX, randY), meleeGoblinIcon);

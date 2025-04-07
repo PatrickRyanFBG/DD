@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01f4f4ac0cbabdd4e97b27a6a6ef2a84, type: 3}
-  m_Name: DDEnemy_Rat
+  m_Script: {fileID: 11500000, guid: 8093cebb7c9de1a46bf784388c6f88c0, type: 3}
+  m_Name: DDEnemyBush
   m_EditorClassIdentifier: 
-  image: {fileID: 2800000, guid: 52462c7db81add04faef82fcbb7fa187, type: 3}
+  image: {fileID: 2800000, guid: 1787f9da64e4c9248bee8996be98cedd, type: 3}
   StartingHealth: 5
-  damage: 1
+  StartingArmor: 0
+  enemyName: Bush
+  immovable: 0
+  friendly: 0
+  rangeType: 2
+  retaliateGain: 1

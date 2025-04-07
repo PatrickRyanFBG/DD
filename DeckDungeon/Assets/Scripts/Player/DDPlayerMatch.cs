@@ -171,18 +171,14 @@ public class DDPlayerMatch : MonoBehaviour
         return laneAffixes[lane].TryGetAffixValue(affixType);
     }
 
-    public int DealDamageInLane(int damage, int lane)
+    public void DealDamageInLane(int damage, int lane)
     {
         int leftOverDamage = (laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, -damage, false) ?? -damage);
         laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, Mathf.Max(leftOverDamage, 0), true);
 
-        if (leftOverDamage >= 0)
+        if (leftOverDamage < 0)
         {
-            return 0;
-        }
-        else
-        {
-            return Mathf.Abs(leftOverDamage);
+            DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(Mathf.Abs(leftOverDamage));
         }
     }
 

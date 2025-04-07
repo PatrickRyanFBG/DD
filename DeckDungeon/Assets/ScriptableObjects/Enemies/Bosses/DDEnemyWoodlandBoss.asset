@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f097329396fc54cb747e18ee2db545, type: 3}
+  m_Name: DDEnemyWoodlandBoss
+  m_EditorClassIdentifier: 
+  image: {fileID: 2800000, guid: e9af3f685da35d342ae19ab03d6e293b, type: 3}
+  StartingHealth: 50
+  StartingArmor: 0
+  entityName: Foreman
+  immovable: 0
+  friendly: 0
+  rangeType: 1
+  xSpawnPreference: 1
+  xMinMax: {x: 2, y: 3}
+  ySpawnPreference: 1
+  yMinMax: {x: 2, y: 3}
+  emptyLocSpawnOver: 4
+  attackDamage: 5
+  sneakAttackDamage: 10

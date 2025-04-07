@@ -13,7 +13,16 @@ public abstract class DDEnemyActionBase
     
     public abstract Texture GetIcon();
 
-    public abstract void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text);
+    public virtual void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
+    {
+        if (text.enabled)
+        {
+            text.enabled = false;
+        }
+
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
 
     public abstract IEnumerator ExecuteAction(DDEnemyOnBoard enemy);
 
@@ -39,7 +48,7 @@ public class DDEnemyActionEmpty : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        throw new NotImplementedException();
+        yield return null;
     }
 
     public override string GetDescription()
@@ -112,7 +121,7 @@ public class DDEnemyActionMove : DDEnemyActionBase
 
         bool canMove = false;
 
-        if (eob != null)
+        if (eob)
         {
             // If we are after the one we are moving to
             if (turnNumber > eob.TurnNumber && eob.IsPlanningToMove())
@@ -297,13 +306,8 @@ public class DDEnemyActionAttack : DDEnemyActionBase
         totalDamage +=
             DDGamePlaySingletonHolder.Instance.Board.GetMeleeRangedBonus(enemy.CurrentEnemy.RangeType,
                 enemy.CurrentLocaton.Coord.y);
-        int leftOverDamage =
-            DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
 
-        if (leftOverDamage > 0)
-        {
-            DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(leftOverDamage);
-        }
+        DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
 
         GameObject.Destroy(attackPrefab);
 
@@ -370,7 +374,7 @@ public class DDEnemyActionSpawnEnemy : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will attempt to spawn a " + enemyToSpawn.EnemyName + " on an empty location";
+        return "This enemy will attempt to spawn a " + enemyToSpawn.EntityName + " on an empty location";
     }
 }
 
@@ -482,7 +486,7 @@ public class DDEnemyActionModifyAffix : DDEnemyActionBase
         else
         {
             DDEnemyOnBoard target = DDGamePlaySingletonHolder.Instance.Board.GetEnemyAtLocation(targetLocation.Value);
-            if (target != null)
+            if (target)
             {
                 target.ModifyAffix(affix, buffAmount, shouldSetValue);
             }
@@ -631,13 +635,7 @@ public class DDEnemyActionBleedAttack : DDEnemyActionBase
         totalDamage +=
             DDGamePlaySingletonHolder.Instance.Board.GetMeleeRangedBonus(enemy.CurrentEnemy.RangeType,
                 enemy.CurrentLocaton.Coord.y);
-        int leftOverDamage =
-            DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
-
-        if (leftOverDamage > 0)
-        {
-            DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(leftOverDamage);
-        }
+        DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
 
         GameObject.Destroy(attackPrefab);
 
@@ -664,63 +662,48 @@ public class DDEnemyActionBleedAttack : DDEnemyActionBase
     }
 }
 
-public class DDEnemyActionAbsorbArmor : DDEnemyActionBase
+public class DDEnemyActionModifyPlayerAffix : DDEnemyActionBase
 {
-    public override Texture GetIcon()
+    private EAffixType affixType;
+    private int amount;
+
+    public DDEnemyActionModifyPlayerAffix(EAffixType type, int amt)
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.ActionArmorAbsorb;
+        affixType = type;
+        amount = amt;
     }
-
-    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    
+    public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
     {
-        int armorAmount =
-            DDGamePlaySingletonHolder.Instance.Player.GetLaneAffix(EAffixType.Armor, enemy.CurrentLocaton.Coord.x) ?? 0;
+        if (amount != 0)
+        {
+            text.text = amount.ToString();
+            text.enabled = true;
+        }
+        else if (text.enabled)
+        {
+            text.enabled = false;
+        }
 
-        yield return null;
-
-        enemy.ModifyAffix(EAffixType.Armor, armorAmount, true);
-    }
-
-    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
-    {
-        text.enabled = false;
         image.texture = GetIcon();
         image.enabled = true;
     }
 
-    public override string GetDescription()
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        return "This enemy will absorb armor in lane.";
-    }
-}
+        DDGamePlaySingletonHolder.Instance.Player.ModifyAffix(affixType, amount, false);
 
-public class DDEnemyActionAttackArmorBased : DDEnemyActionAttack
-{
-    public DDEnemyActionAttackArmorBased() : base(0)
-    {
+        yield return new WaitForSeconds(1f);
     }
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackArmorBased;
+        return DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affixType).Image;
     }
 
-    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
-    {
-        damage = enemy.GetAffixValue(EAffixType.Armor);
-
-        yield return base.ExecuteAction(enemy);
-    }
-
-    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
-    {
-        text.enabled = false;
-        image.texture = GetIcon();
-        image.enabled = true;
-    }
 
     public override string GetDescription()
     {
-        return "This enemy will deal its armor in damage to you";
+        return "This enemy will modify player's " + affixType.ToString() + " for " + amount;
     }
-}
+} 

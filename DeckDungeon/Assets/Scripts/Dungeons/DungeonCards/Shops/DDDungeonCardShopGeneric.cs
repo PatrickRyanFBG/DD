@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DDDungeonCardShop_Generic : DDDungeonCardShop
+public class DDDungeonCardShopGeneric : DDDungeonCardShop
 {
     public override void DisplayShop(DDShopArea area)
     {

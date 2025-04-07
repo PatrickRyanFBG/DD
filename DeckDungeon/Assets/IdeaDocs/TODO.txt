@@ -1,18 +1,28 @@
+~HELLA FUTURE~
 GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!!!
 CONVERT ALL CARDS TO FLAT CANVAS
+Expand on EnemyActionBase "is hidden" at some point
 
+3/3 (4/7)
+    - Quest
+    - "time line" order for enemies
+    
+4/6
+    x Make retaliate work on enemies
+    x Combat let enemies spawn in more specific spots
 
-Add some flexibility to actions to be able to modify them a little for enemies
+4/5 (DO LATER?)
+- Need a Multi-Action action
+    - IE Attack x2
+    - Spawn Multiple Enemies
 
-3/7
+Add some flexibility to actions to be able to modify them a little for enemies (4/6 - no idea what this was for)
+
+3/7 (4/6 no idea what this is)
     - Need feedback for melee/range
         - enemies
         - cards
         - board
-
-3/3
-    - Quest
-    - "time line" order for enemies
 
 2/28
     x Feedback for enemies taking damage
@@ -21,7 +31,7 @@ Add some flexibility to actions to be able to modify them a little for enemies
     
 2/27
     x Design 2 Elites
-    - Design Boss
+    x Design Boss
 
 2/25
     LATER Split Dungeon class with UI.

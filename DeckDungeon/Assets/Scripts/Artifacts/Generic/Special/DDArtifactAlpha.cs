@@ -16,10 +16,7 @@ public class DDArtifactAlpha : DDArtifactBase
 
     private void EncounterPhaseChanged(EEncounterPhase phase)
     {
-        // Monster Forecast happens right before PlayerTurn
-        // So we are just cheating here a little bit
-        // Maybe need a "BeforePlayerTurn" to catch this before draw
-        if (phase == EEncounterPhase.MonsterForecast)
+        if (phase == EEncounterPhase.PlayersStartTurn)
         {
             DDGamePlaySingletonHolder.Instance.Player.Deck.PeakTopCard().CurrentCard.AddRandomFinish();
         }

@@ -13,6 +13,7 @@ public class DDEnemyLibrary : MonoBehaviour
 public class Enemies
 {
     public DDEnemyGoblinMelee GoblinMelee;
+    public DDEnemyBush Bush;
 }
 
 [System.Serializable]
@@ -34,4 +35,7 @@ public class SharedActionIcons
     public Texture ActionLockCard;
     public Texture ActionArmorAbsorb;
     public Texture ActionHealPerBleed;
+
+    public Texture ActionHide;
+    public Texture ActionReveal;
 }

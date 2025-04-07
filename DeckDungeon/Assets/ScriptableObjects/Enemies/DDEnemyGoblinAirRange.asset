@@ -15,9 +15,13 @@ MonoBehaviour:
   image: {fileID: 2800000, guid: 26b7274d6e4822749a5183418626842a, type: 3}
   StartingHealth: 10
   StartingArmor: 5
-  enemyName: Whirligig
+  entityName: Whirligig
   immovable: 0
   friendly: 0
   rangeType: 1
+  xSpawnPreference: 0
+  xMinMax: {x: 0, y: 0}
+  ySpawnPreference: 1
+  yMinMax: {x: 1, y: 3}
   damage: 5
   armorBuff: 5

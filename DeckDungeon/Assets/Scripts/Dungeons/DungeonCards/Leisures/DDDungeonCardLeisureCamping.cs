@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class DDDungeonCardLeisure_Camping : DDDungeonCardLeisure
+public class DDDungeonCardLeisureCamping : DDDungeonCardLeisure
 {
     [Header("Camping")]
     [SerializeField]

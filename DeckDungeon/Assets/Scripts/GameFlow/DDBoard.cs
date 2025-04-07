@@ -44,9 +44,14 @@ public class DDBoard : MonoBehaviour
         rowCount = rows.Length;
     }
 
+    public void SpawnEnemy(Vector2Int loc, DDEnemyBase enemy)
+    {
+        SpawnEnemy(loc.x, loc.y, enemy);
+    }
+    
     public void SpawnEnemy(int x, int y, DDEnemyBase enemy)
     {
-        if (columns[x].Locations[y].GetEnemy() == null)
+        if (!columns[x].Locations[y].GetEnemy())
         {
             DDEnemyOnBoard currentEnemy = Instantiate(dummyPrefab, transform);
             DDGamePlaySingletonHolder.Instance.Encounter.RegisterEnemy(currentEnemy);
@@ -54,7 +59,7 @@ public class DDBoard : MonoBehaviour
             columns[x].Locations[y].SnapEnemyToHere(currentEnemy);
         }
     }
-
+    
     public IEnumerator MoveEnemy(DDEnemyOnBoard enemy, EMoveDirection direction, int amount, bool fromPlayer)
     {
         Vector2Int currentCoord = enemy.CurrentLocaton.Coord;
@@ -169,6 +174,31 @@ public class DDBoard : MonoBehaviour
         }
     }
 
+    public List<DDLocation> GetSurroundingLocations(Vector2Int location)
+    {
+        List<DDLocation> locations = new();
+
+        for (int x = location.x - 1; x <= location.x + 1; x++)
+        {
+            for (int y = location.y - 1; y <= location.y + 1; y++)
+            {
+                if (x == location.x && y == location.y)
+                {
+                    continue;
+                }
+
+                if (x < 0 || x >= columnsCount || y < 0 || y >= rowCount)
+                {
+                    continue;
+                }
+                
+                locations.Add(columns[x].Locations[y]);
+            }
+        }
+        
+        return locations;
+    }
+    
     public DDLocation GetLocation(Vector2Int location)
     {
         return GetLocation(location.x, location.y);

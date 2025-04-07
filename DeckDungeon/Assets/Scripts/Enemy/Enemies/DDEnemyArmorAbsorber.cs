@@ -132,3 +132,69 @@ public class DDEnemyArmorAbsorber : DDEnemyBase
         }
     }
 }
+
+public class DDEnemyActionAbsorbArmor : DDEnemyActionBase
+{
+    public override Texture GetIcon()
+    {
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.ActionArmorAbsorb;
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        int armorAmount =
+            DDGamePlaySingletonHolder.Instance.Player.GetLaneAffix(EAffixType.Armor, enemy.CurrentLocaton.Coord.x) ?? 0;
+
+        if (armorAmount > 0)
+        {
+            DDGamePlaySingletonHolder.Instance.Player.ModifyAffix(EAffixType.Armor, 0, true);
+        }
+        
+        yield return null;
+
+        enemy.ModifyAffix(EAffixType.Armor, armorAmount, true);
+    }
+
+    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
+    {
+        text.enabled = false;
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
+
+    public override string GetDescription()
+    {
+        return "This enemy will absorb armor in lane.";
+    }
+}
+
+public class DDEnemyActionAttackArmorBased : DDEnemyActionAttack
+{
+    public DDEnemyActionAttackArmorBased() : base(0)
+    {
+    }
+
+    public override Texture GetIcon()
+    {
+        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackArmorBased;
+    }
+
+    public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
+    {
+        damage = enemy.GetAffixValue(EAffixType.Armor);
+
+        yield return base.ExecuteAction(enemy);
+    }
+
+    public override void DisplayInformation(RawImage image, TextMeshProUGUI text)
+    {
+        text.enabled = false;
+        image.texture = GetIcon();
+        image.enabled = true;
+    }
+
+    public override string GetDescription()
+    {
+        return "This enemy will deal its armor in damage to you";
+    }
+}

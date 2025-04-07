@@ -37,6 +37,7 @@ public class DDEnemyOnBoard : DDSelection
     [SerializeField] private RawImage hoveredImage;
 
     private List<DDEnemyActionBase> nextActions = new List<DDEnemyActionBase>();
+    public List<IEnumerator> DeathActions = new();
 
     private DDLocation currentLocation;
     public DDLocation CurrentLocaton => currentLocation;
@@ -76,7 +77,7 @@ public class DDEnemyOnBoard : DDSelection
     public void SnapLocation(DDLocation location)
     {
         currentLocation = location;
-        if (currentLocation != null)
+        if (currentLocation)
         {
             transform.parent = currentLocation.transform;
             transform.localPosition = Vector3.zero;
@@ -86,7 +87,7 @@ public class DDEnemyOnBoard : DDSelection
     public IEnumerator SetLocation(DDLocation location)
     {
         currentLocation = location;
-        if (currentLocation != null)
+        if (currentLocation)
         {
             transform.parent = currentLocation.transform;
             yield return StartCoroutine(MoveToLocation());
@@ -141,6 +142,10 @@ public class DDEnemyOnBoard : DDSelection
         {
             totalDamage = affixManager.ModifyValueOfAffix(EAffixType.Armor, -totalDamage, false) ?? -totalDamage;
         }
+        else
+        {
+            totalDamage *= -1;
+        }
 
         if (totalDamage <= 0)
         {
@@ -163,6 +168,12 @@ public class DDEnemyOnBoard : DDSelection
 
                 UpdateHealthUI();
             }
+        }
+
+        int retaliate = GetAffixValue(EAffixType.Retaliate);
+        if(retaliate > 0)
+        {
+            DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(retaliate, currentLocation.Coord.y);
         }
     }
 
@@ -279,7 +290,10 @@ public class DDEnemyOnBoard : DDSelection
             }
         }
 
-        DDGlobalManager.Instance.ToolTip.SetText("");
+#if UNITY_EDITOR
+        if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+#endif
+            DDGlobalManager.Instance.ToolTip.SetText("");
     }
 
     public bool IsPlanningToMove()
@@ -310,5 +324,15 @@ public class DDEnemyOnBoard : DDSelection
 
             affixManager.ModifyValueOfAffix(EAffixType.Bleed, -1, false);
         }
+    }
+
+    public IEnumerator DoDeath()
+    {
+        foreach (var action in DeathActions)
+        {
+            yield return action;
+        }
+
+        yield return CurrentEnemy.OnDeath();
     }
 }

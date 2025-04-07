@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52b8e8f1602ff754081f20256b6b4959, type: 3}
-  m_Name: DDDungeonMetaData_Goblins
+  m_Name: DDDungeonMetaDataGoblins
   m_EditorClassIdentifier: 
   dungeonChainName: Scrapyard Scrap
   dungeonDecsription: Goblins have taken over an old workshop and started producing

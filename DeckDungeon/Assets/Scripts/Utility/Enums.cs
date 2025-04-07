@@ -31,6 +31,7 @@ public enum EEncounterPhase
 {
     EncounterStart,
     MonsterForecast,
+    PlayersStartTurn,
     PlayersTurn,
     PlayersEndTurn,
     MonstersAct,

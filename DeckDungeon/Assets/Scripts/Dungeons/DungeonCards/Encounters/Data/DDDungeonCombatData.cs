@@ -7,6 +7,7 @@ public class DDDungeonCombatData : DDScriptableObject
     [SerializeField] private List<DDCombatTier> tiers;
 
     [System.NonSerialized] private Dictionary<ECombatTier, DDCombatTier> tiersDictionary;
+    
     public DDCombatEnemySetup GetRandomEnemySetup(ECombatTier tier)
     {
         if (tiersDictionary == null)
@@ -17,8 +18,21 @@ public class DDDungeonCombatData : DDScriptableObject
                 tiersDictionary[tiers[i].Tier] = tiers[i];
             }
         }
-        
-        DDCombatEnemySetup setup = tiersDictionary[tier].EnemySetups.GetRandomElement();
+
+        DDCombatEnemySetup setup = null;
+
+        // Get setup from a tier by atleast the value entered
+        while (setup == null)
+        {
+            if (tiersDictionary.TryGetValue(tier, out var combatTier))
+            {
+                setup = combatTier.EnemySetups.GetRandomElement();
+            }
+            else
+            {
+                tier = tier++;
+            }
+        }
 
         return setup;
     }

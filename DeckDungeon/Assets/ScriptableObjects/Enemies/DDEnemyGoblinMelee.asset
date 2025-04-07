@@ -15,9 +15,13 @@ MonoBehaviour:
   image: {fileID: 2800000, guid: 93c46debd92e4bd4b919565eae65226e, type: 3}
   StartingHealth: 15
   StartingArmor: 0
-  enemyName: Scrapper
+  entityName: Scrapper
   immovable: 0
   friendly: 0
   rangeType: 0
+  xSpawnPreference: 0
+  xMinMax: {x: 0, y: 0}
+  ySpawnPreference: 1
+  yMinMax: {x: 2, y: 4}
   damage: 5
   dexGain: 3

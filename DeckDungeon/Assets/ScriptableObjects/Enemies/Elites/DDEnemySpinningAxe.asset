@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c753e2e6a63c094cacad8af94279877, type: 3}
+  m_Name: DDEnemySpinningAxe
+  m_EditorClassIdentifier: 
+  image: {fileID: 2800000, guid: ba58a85cb331301478e84b39ff94a569, type: 3}
+  StartingHealth: 10
+  StartingArmor: 0
+  enemyName: Spinning Axe
+  immovable: 0
+  friendly: 0
+  rangeType: 2
+  bleedAmount: 1

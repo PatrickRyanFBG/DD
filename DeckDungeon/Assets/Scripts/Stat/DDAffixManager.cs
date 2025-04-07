@@ -51,14 +51,16 @@ public class DDAffixManager
                 currentAffixes.Remove(affixType);
             }
         }
-
-        DDAffix affixInfo = DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affixType);
-        if (value > 0 || (value == 0 && affixInfo.ExistsAtZero) || (value < 0 && affixInfo.ExistsNegative))
+        else
         {
-            currentAffixes[affixType] = new DDRuntimeAffix { Number = value, Affix = affixInfo };
-            affixVisualsManager.AddVisual(affixType, value);
-            AffixAdjusted?.Invoke(affixType);
-            after = value;
+            DDAffix affixInfo = DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affixType);
+            if (value > 0 || (value == 0 && affixInfo.ExistsAtZero) || (value < 0 && affixInfo.ExistsNegative))
+            {
+                currentAffixes[affixType] = new DDRuntimeAffix { Number = value, Affix = affixInfo };
+                affixVisualsManager.AddVisual(affixType, value);
+                AffixAdjusted?.Invoke(affixType);
+                after = value;
+            }
         }
 
         if (useEvent)

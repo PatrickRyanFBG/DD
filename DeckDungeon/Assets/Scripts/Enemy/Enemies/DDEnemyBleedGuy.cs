@@ -6,8 +6,6 @@ public class DDEnemyBleedGuy : DDEnemyBase
 {
     [Header("Bleed Guy")] [SerializeField] private DDEnemyBase spinningAxe;
 
-    [SerializeField] private Texture spinningAxeIcon;
-
     [SerializeField] private int damage = 5;
 
     [SerializeField] private int expertiseGain = 1;
@@ -45,8 +43,8 @@ public class DDEnemyBleedGuy : DDEnemyBase
             }
 
             // Two actions of spawning random axes
-            actions.Add(new DDEnemyActionSpawnEnemy(spinningAxe, firstLoc, spinningAxeIcon));
-            actions.Add(new DDEnemyActionSpawnEnemy(spinningAxe, secondLoc, spinningAxeIcon));
+            actions.Add(new DDEnemyActionSpawnEnemy(spinningAxe, firstLoc, spinningAxe.Image));
+            actions.Add(new DDEnemyActionSpawnEnemy(spinningAxe, secondLoc, spinningAxe.Image));
         }
         // If 1 axes
         else if (axesCount == 1)
@@ -58,7 +56,7 @@ public class DDEnemyBleedGuy : DDEnemyBase
             }
 
             // spawn axe, melee move or attack
-            actions.Add(new DDEnemyActionSpawnEnemy(spinningAxe, firstLoc, spinningAxeIcon));
+            actions.Add(new DDEnemyActionSpawnEnemy(spinningAxe, firstLoc, spinningAxe.Image));
 
             if (RandomHelpers.GetRandomBool(50))
             {

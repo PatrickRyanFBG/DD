@@ -47,6 +47,22 @@ public static class DDCardBaseExtensions
     }
 }
 
+public static class DDEnemyBasextensions
+{
+    public static DDEnemyBase Clone(this DDEnemyBase scriptableObject)
+    {
+        if (!scriptableObject)
+        {
+            Debug.LogError($"ScriptableObject was null. Returning default {typeof(DDEnemyBase)} object.");
+            return (DDEnemyBase)ScriptableObject.CreateInstance(typeof(DDEnemyBase));
+        }
+
+        DDEnemyBase instance = Object.Instantiate(scriptableObject);
+        instance.name = scriptableObject.name;
+        return instance;
+    }
+}
+
 public static class EnumExtensions
 {
     public static int GetLayer(this ETargetType enumValue)

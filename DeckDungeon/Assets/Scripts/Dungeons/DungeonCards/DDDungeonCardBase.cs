@@ -54,7 +54,7 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 {
     [SerializeField] private EEncounterType encounterType;
     public EEncounterType EncounterType => encounterType;
-    
+
     [SerializeField] private int goldToGive;
     public int GoldToGive => goldToGive;
 
@@ -62,10 +62,50 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 
     [SerializeField] private DDDungeonCardEvent eventAfterComplete;
     public DDDungeonCardEvent EventAfterComplete => eventAfterComplete;
-    
+
     [SerializeField] private DDDungeonData dungeonAddedUponDefeat;
 
-    public abstract void SpawnEnemies();
+    public abstract void StartEncounter();
+
+    public virtual void SpawnEnemies(DDCombatEnemySetup enemySetup)
+    {
+        DDBoard board = DDGamePlaySingletonHolder.Instance.Board;
+
+        List<Vector2Int> locs = new List<Vector2Int>();
+        for (int i = 0; i < enemySetup.Enemies.Count; i++)
+        {
+            int count = enemySetup.Enemies[i].Amount;
+            for (int j = 0; j < count; j++)
+            {
+                int xMin = enemySetup.Enemies[i].Enemy.XSpawnPreference ? enemySetup.Enemies[i].Enemy.XMinMax.x : 0;
+                int xMax = enemySetup.Enemies[i].Enemy.XSpawnPreference
+                    ? (enemySetup.Enemies[i].Enemy.XMinMax.y + 1)
+                    : board.ColumnsCount;
+                int x = Random.Range(xMin, xMax);
+
+                int yMin = enemySetup.Enemies[i].Enemy.YSpawnPreference ? enemySetup.Enemies[i].Enemy.YMinMax.x : 0;
+                int yMax = enemySetup.Enemies[i].Enemy.YSpawnPreference
+                    ? (enemySetup.Enemies[i].Enemy.YMinMax.y + 1)
+                    : board.RowCount;
+                int y = Random.Range(yMin, yMax);
+
+                Vector2Int nextPos = new Vector2Int(x, y);
+
+                // TODO:: put some safety in to check if we've tried to spawn in all positions and can't find a spot
+                // in the case of woodland boss the entire board is full sooooooooooooooo?
+                while (locs.Contains(nextPos))
+                {
+                    x = Random.Range(xMin, xMax);
+                    y = Random.Range(yMin, yMax);
+
+                    nextPos = new Vector2Int(x, y);
+                }
+
+                locs.Add(nextPos);
+                board.SpawnEnemy(x, y, enemySetup.Enemies[i].Enemy);
+            }
+        }
+    }
 
     public virtual IEnumerator EncounterCompleted()
     {

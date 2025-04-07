@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c6c85168081c9949960826e22cfa3ca, type: 3}
-  m_Name: DDDungeonData_GoblinKing
+  m_Name: DDDungeonDataGoblinBossesQuarters
   m_EditorClassIdentifier: 
-  dungeonName: Goblin King
-  dungeonDecsription: Large and "in charge".
-  heroShot: {fileID: 2800000, guid: 0f21bbaa70f3e54488518f7c41416e2e, type: 3}
+  dungeonName: Goblin Queen
+  dungeonDecsription: The real boss around.
+  heroShot: {fileID: 2800000, guid: 1878d55f60c864f439f57bbf2ce6619b, type: 3}
   cards:
   - {fileID: 11400000, guid: c1f407cdc4574e9498283aaab1a6c5f7, type: 2}
   - {fileID: 11400000, guid: 24f04e1a90469c245986cbc096e0b436, type: 2}

@@ -116,6 +116,11 @@ public class DDLocation : DDSelection
         highlightRenderer.enabled = false;
     }
 
+    public bool HasEnemy()
+    {
+        return currentEnemy;
+    }
+    
     public DDEnemyOnBoard GetEnemy()
     {
         return currentEnemy;
@@ -129,14 +134,14 @@ public class DDLocation : DDSelection
 
     public IEnumerator SetEnemy(DDEnemyOnBoard enemy)
     {
-        if(currentEnemy != null)
+        if(currentEnemy)
         {
             yield return currentEnemy.SetLocation(null);
         }
 
         currentEnemy = enemy;
 
-        if (currentEnemy != null)
+        if (currentEnemy)
         {
             yield return currentEnemy.SetLocation(this);
         }

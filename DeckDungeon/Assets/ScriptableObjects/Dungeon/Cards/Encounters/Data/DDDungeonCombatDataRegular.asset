@@ -18,7 +18,3 @@ MonoBehaviour:
     - enemies:
       - amount: 2
         enemy: {fileID: 11400000, guid: fc3d601df88156e4d98fd3ab9dd9fe5f, type: 2}
-      - amount: 2
-        enemy: {fileID: 11400000, guid: 1497c56dd2efdfc47badb75c61b35de3, type: 2}
-  - tier: 1
-    enemySetups: []

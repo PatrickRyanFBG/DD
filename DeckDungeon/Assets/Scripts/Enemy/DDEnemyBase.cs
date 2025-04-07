@@ -2,10 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public abstract class DDEnemyBase : DDEntityBase
 {
+    [SerializeField] private bool xSpawnPreference = false;
+    public bool XSpawnPreference => xSpawnPreference;
+
+    [SerializeField] private Vector2Int xMinMax;
+    public Vector2Int XMinMax => xMinMax;
+    
+    [SerializeField] private bool ySpawnPreference = false;
+    public bool YSpawnPreference => ySpawnPreference;
+
+    [SerializeField] private Vector2Int yMinMax;
+    public Vector2Int YMinMax => yMinMax;
 }
 
 public static class EnemyHelperExtensions

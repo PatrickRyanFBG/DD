@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class DDEntityBase : DDScriptableObject
 {
@@ -12,9 +13,9 @@ public abstract class DDEntityBase : DDScriptableObject
 
     public int StartingArmor;
 
-    [SerializeField]
-    private string enemyName;
-    public string EnemyName => enemyName;
+    [FormerlySerializedAs("enemyName")] [SerializeField]
+    private string entityName;
+    public string EntityName => entityName;
 
     [SerializeField]
     private bool immovable = false;

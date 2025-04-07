@@ -11,7 +11,7 @@ public class DDEnemySpinningAxe : DDEnemyBase
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>();
 
-        actions.Add(new DDEnemyActionModifyAffix(EAffixType.Bleed, bleedAmount, false));
+        actions.Add(new DDEnemyActionModifyPlayerAffix(EAffixType.Bleed, bleedAmount));
         
         return actions;
     }
