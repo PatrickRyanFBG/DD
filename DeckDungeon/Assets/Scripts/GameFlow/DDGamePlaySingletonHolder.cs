@@ -7,6 +7,7 @@ public class DDGamePlaySingletonHolder : MonoBehaviour
     private static DDGamePlaySingletonHolder instance;
     public static DDGamePlaySingletonHolder Instance => instance;
 
+    public Camera MainCamera;
     public DDDungeon Dungeon;
     public DDEncounter Encounter;
     public DDBoard Board;
@@ -14,7 +15,7 @@ public class DDGamePlaySingletonHolder : MonoBehaviour
     public DDEnemyLibrary EnemyLibrary;
     public DDPlayerMatch Player;
     public DDPlayerSelector PlayerSelector;
-    public DDShowDeckArea ShowDeckArea;
+    public DDCanvasShowDeckArea ShowDeckArea;
 
     private void Awake()
     {

@@ -42,6 +42,24 @@ public abstract class DDCardBase : DDScriptableObject
     public Dictionary<EPlayerCardFinish, DDPlayerCardFinish> AllCardFinishes { get; private set; }
     [System.NonSerialized] protected Dictionary<EPlayerCardLifeTime, List<DDPlayerCardFinish>> cardExecutionActions;
 
+    public DDCardBase Clone(bool withInit)
+    {
+        DDCardBase clone = UnityEngine.Object.Instantiate(this);
+        clone.name = name;
+
+        if (withInit)
+        {
+            clone.RuntimeInit();
+        }
+        else
+        {
+            clone.AllCardFinishes = new Dictionary<EPlayerCardFinish, DDPlayerCardFinish>(AllCardFinishes);
+            clone.cardExecutionActions = new Dictionary<EPlayerCardLifeTime, List<DDPlayerCardFinish>>(cardExecutionActions);
+        }
+        
+        return clone;
+    }
+    
     public virtual void RuntimeInit()
     {
         AllCardFinishes = new();

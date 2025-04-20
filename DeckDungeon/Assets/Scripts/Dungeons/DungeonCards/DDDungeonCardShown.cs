@@ -6,20 +6,18 @@ using UnityEngine.UI;
 
 public class DDDungeonCardShown : DDSelection
 {
-    [SerializeField]
-    private RawImage image;
+    [SerializeField] private RawImage image;
     public RawImage Image => image;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI nameText;
+    [SerializeField] private TMPro.TextMeshProUGUI nameText;
     public TextMeshProUGUI NameText => nameText;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI descText;
+    [SerializeField] private TMPro.TextMeshProUGUI descText;
     public TextMeshProUGUI DescText => descText;
 
-    [SerializeField]
-    private GameObject locked;
+    [SerializeField] private GameObject descParent;
+
+    [SerializeField] private GameObject locked;
 
     private DDDungeonCardBase currentDungeonCard;
     public DDDungeonCardBase CurrentDungeonCard => currentDungeonCard;
@@ -27,14 +25,14 @@ public class DDDungeonCardShown : DDSelection
     private int index;
     public int Index => index;
 
-    [SerializeField]
-    private Collider col;
-
     public UnityEngine.Events.UnityEvent<DDDungeonCardShown> OnCardSelected;
+
+    [SerializeField] private RectTransform rectTransform;
+    public RectTransform RectTransform => rectTransform;
 
     public void DungeonCardSelected()
     {
-        if(currentDungeonCard.CanSelect())
+        if (currentDungeonCard.CanSelect())
         {
             OnCardSelected.Invoke(this);
         }
@@ -42,6 +40,8 @@ public class DDDungeonCardShown : DDSelection
 
     public void SetUpDungeonCard(DDDungeonCardBase dungeonCard, int cardIndex, bool interactable = true)
     {
+        gameObject.name = "DCS: " + dungeonCard.Name;
+
         currentDungeonCard = dungeonCard;
         currentDungeonCard.DisplayInformation(this);
 
@@ -49,21 +49,18 @@ public class DDDungeonCardShown : DDSelection
 
         index = cardIndex;
 
-        descText.enabled = false;
+        descParent.SetActive(false);
 
         gameObject.SetActive(true);
-
-        col.enabled = interactable;
     }
 
-    public override bool Hovered()
+    public override void Hovered()
     {
-        descText.enabled = true;
-        return true;
+        descParent.SetActive(true);
     }
 
     public override void Unhovered()
     {
-        descText.enabled = false;
+        descParent.SetActive(false);
     }
 }

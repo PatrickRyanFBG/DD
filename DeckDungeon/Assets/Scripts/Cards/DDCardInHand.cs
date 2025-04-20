@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class DDCardInHand : DDSelection
 {
+    [SerializeField] private float hoverDistance = 160f;
+    
     [SerializeField] private float hoverTime = 1;
     private bool canHover = true;
 
@@ -14,16 +17,16 @@ public class DDCardInHand : DDSelection
     [SerializeField] private RawImage image;
     public RawImage Image => image;
 
-    [SerializeField] private TMPro.TextMeshProUGUI cardTypeText;
+    [SerializeField] private TextMeshProUGUI cardTypeText;
     public TextMeshProUGUI CardTypeText => cardTypeText;
 
-    [SerializeField] private TMPro.TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI nameText;
     public TextMeshProUGUI NameText => nameText;
 
-    [SerializeField] private TMPro.TextMeshProUGUI descText;
+    [SerializeField] private TextMeshProUGUI descText;
     public TextMeshProUGUI DescText => descText;
 
-    [SerializeField] private TMPro.TextMeshProUGUI momentumNumber;
+    [SerializeField] private TextMeshProUGUI momentumNumber;
     public TextMeshProUGUI MomentumNumber => momentumNumber;
 
     [SerializeField] protected Transform finishParent;
@@ -41,9 +44,12 @@ public class DDCardInHand : DDSelection
     private bool selected = false;
     private Vector3 prevLocation;
 
-    public void SetUpCard(DDCardBase cardBase, bool hover = true)
+    public virtual void SetUpCard(DDCardBase cardBase, bool hover = true)
     {
         currentCard = cardBase;
+
+        transform.name = "CIH: " + currentCard.CardName;
+        
         UpdateDisplayInformation();
 
         canHover = hover;
@@ -67,6 +73,14 @@ public class DDCardInHand : DDSelection
         }
     }
 
+    private void OnDisable()
+    {
+        for (int i = 1; i < finishParent.childCount; i++)
+        {
+            Destroy(finishParent.GetChild(i).gameObject);
+        }
+    }
+
     public List<ETargetType> GetCardTarget()
     {
         return currentCard.GetTargets();
@@ -77,11 +91,20 @@ public class DDCardInHand : DDSelection
         return currentCard.IsSelectionValid(selection, targetIndex);
     }
 
-    public override bool Hovered()
+    // Called from UI
+    public virtual void UI_Clicked()
     {
-        if (selected)
+        // Put some check here?
+        // Also don't like how we are sort of jacking this callback
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected?.Invoke(this);
+    }
+    
+    // Called from UI
+    public override void Hovered()
+    {
+        if (selected || !canHover)
         {
-            return false;
+            return;
         }
 
         if (moveDownCoroutine != null)
@@ -91,12 +114,12 @@ public class DDCardInHand : DDSelection
         }
 
         moveUpCoroutine = StartCoroutine(MoveUp());
-        return true;
     }
 
+    // Called from UI
     public override void Unhovered()
     {
-        if (selected)
+        if (selected || !canHover)
         {
             return;
         }
@@ -118,19 +141,20 @@ public class DDCardInHand : DDSelection
 
     private IEnumerator MoveUp()
     {
+        // Maybe add canHover in here?
         while (deselectedCoroutine != null)
         {
             yield return null;
         }
 
         Vector3 pos = transform.localPosition;
-        float time = (pos.z / 2f) * hoverTime;
+        float time = (pos.y / hoverDistance) * hoverTime;
 
         while (time < hoverTime)
         {
             time += Time.deltaTime;
 
-            pos.z = Mathf.Lerp(0f, 2f, time / hoverTime);
+            pos.y = Mathf.Lerp(0f, hoverDistance, time / hoverTime);
             transform.localPosition = pos;
 
             yield return null;
@@ -142,13 +166,13 @@ public class DDCardInHand : DDSelection
     private IEnumerator MoveDown()
     {
         Vector3 pos = transform.localPosition;
-        float time = (1 - (pos.z / 2f)) * hoverTime;
+        float time = (1 - (pos.y / hoverDistance)) * hoverTime;
 
         while (time < hoverTime)
         {
             time += Time.deltaTime;
 
-            pos.z = Mathf.Lerp(2f, 0f, time / hoverTime);
+            pos.y = Mathf.Lerp(hoverDistance, 0f, time / hoverTime);
             transform.localPosition = pos;
 
             yield return null;
@@ -177,7 +201,7 @@ public class DDCardInHand : DDSelection
         }
 
         prevLocation = transform.localPosition;
-        prevLocation.z = 0;
+        prevLocation.y = 0;
 
         selected = true;
         selectedCoroutine = StartCoroutine(CardSelectedOverTime(location));
@@ -187,8 +211,10 @@ public class DDCardInHand : DDSelection
 
     private IEnumerator CardSelectedOverTime(Vector3 location)
     {
+        canHover = false;
+        
         Vector3 pos = transform.localPosition;
-        float time = 0; //(1 - (pos.z / 2f)) * selectedTime;
+        float time = 0;
 
         while (time < selectedTime)
         {
@@ -216,7 +242,7 @@ public class DDCardInHand : DDSelection
     private IEnumerator CardDeselectedOverTime()
     {
         Vector3 pos = transform.localPosition;
-        float time = 0; //(1 - (pos.z / 2f)) * selectedTime;
+        float time = 0;
 
         while (time < selectedTime)
         {
@@ -227,6 +253,10 @@ public class DDCardInHand : DDSelection
             yield return null;
         }
 
+        transform.localPosition = prevLocation;
+        
         deselectedCoroutine = null;
+
+        canHover = true;
     }
 }

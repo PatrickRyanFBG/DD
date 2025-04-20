@@ -5,53 +5,31 @@ using UnityEngine.UI;
 
 public class DDShopArea : MonoBehaviour
 {
-    [SerializeField]
-    private TMPro.TextMeshProUGUI shopName;
+    [SerializeField] private TMPro.TextMeshProUGUI shopName;
     public TMPro.TextMeshProUGUI ShopName => shopName;
 
-    [SerializeField]
-    private RawImage image;
+    [SerializeField] private RawImage image;
     public RawImage Image => image;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI description;
+    [SerializeField] private TMPro.TextMeshProUGUI description;
     public TMPro.TextMeshProUGUI Description => description;
 
-    [SerializeField]
-    private DDCardShownShop[] cards;
+    [SerializeField] private DDCardShownShop[] cards;
 
-    [SerializeField]
-    private DDDungeonCardShown[] dungeonCards;
+    // Shop to buy DungeonCards
+    //[SerializeField] private DDDungeonCardShown[] dungeonCards;
 
-    [SerializeField]
-    private DDArtifactUI[] artifacts;
-
-    [SerializeField]
-    private Camera cardAreaCamera;
-
-    [SerializeField]
-    private Camera mainUICamera;
-
-    private Ray camRay;
-    public Ray CamRay => camRay;
-
-    private RaycastHit hit;
-    private DDSelection currentlyHovered;
+    [SerializeField] private DDArtifactUI[] artifacts;
 
     private DDDungeonCardShop currentShop;
 
-    [SerializeField]
-    private RawImage renderTexture;
-    Vector3[] corners = new Vector3[4];
+    [SerializeField] private Camera mainUICamera;
 
-    private void Awake()
-    {
-        renderTexture.rectTransform.GetWorldCorners(corners);
-    }
-
+    /*
     private void Update()
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(renderTexture.rectTransform, Input.mousePosition, null, out var localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(renderTexture.rectTransform, Input.mousePosition, null,
+            out var localPoint);
         bool camHitSomething = false;
         localPoint.x = localPoint.x / renderTexture.rectTransform.sizeDelta.x;
         localPoint.x *= Screen.width;
@@ -126,13 +104,36 @@ public class DDShopArea : MonoBehaviour
 
                             DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, worldSpace);
                         }
+
                         break;
-                        //case DDDungeonCardShown:
-                        //    DDDungeonCardShown dungeonCardShown = currentlyHovered as DDDungeonCardShown;
-                        //    dungeonCardShown.DungeonCardSelected();
-                        //    break;
+                    //case DDDungeonCardShown:
+                    //    DDDungeonCardShown dungeonCardShown = currentlyHovered as DDDungeonCardShown;
+                    //    dungeonCardShown.DungeonCardSelected();
+                    //    break;
                 }
             }
+        }
+    }
+    */
+
+    public void CardSelected(DDCardShown cardShownBase)
+    {
+        DDCardShownShop cardShown = cardShownBase as DDCardShownShop;
+        if(!cardShown)
+        {
+            // This shouldn't happen
+            return;
+        }
+        
+        if (DDGamePlaySingletonHolder.Instance.Dungeon.HasEnoughGold(cardShown.CurrentPrice))
+        {
+            DDGamePlaySingletonHolder.Instance.Dungeon.AddOrRemoveGold(-cardShown.CurrentPrice);
+
+            cardShown.gameObject.SetActive(false);
+
+            Vector3 worldSpace = mainUICamera.ScreenToWorldPoint(cardShown.transform.position);
+
+            DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, worldSpace);
         }
     }
 
@@ -143,10 +144,12 @@ public class DDShopArea : MonoBehaviour
         currentShop.DisplayShop(this);
 
         //int amountOfCards = Random.Range(0, cards.Length);
-        List<DDCardBase> generatedCards = DDGlobalManager.Instance.SelectedAdventurer.CardData.GenerateCards(cards.Length);
+        List<DDCardBase> generatedCards =
+            DDGlobalManager.Instance.SelectedAdventurer.CardData.GenerateCards(cards.Length);
         for (int i = 0; i < generatedCards.Count; i++)
         {
             cards[i].SetUpShopCard(generatedCards[i]);
+            //cards[i].OnCardSelected.AddListener(CardSelected);
         }
     }
 

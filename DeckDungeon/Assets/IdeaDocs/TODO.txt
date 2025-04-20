@@ -3,6 +3,25 @@ GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!
 CONVERT ALL CARDS TO FLAT CANVAS
 Expand on EnemyActionBase "is hidden" at some point
 
+4/20
+    - Make sure Finishes work when drawn
+
+4/16
+    x Port Shop
+
+4/14
+    x Port PlayerCard to Canvas 
+    x Port DungeonCard to Canvas
+    x Port DeckArea
+    - Gotta check all Encounters (one was broken once, no idea what)
+
+4/13
+    x Working on moving cards to full Canvas UI.
+        The current player selection is based on DDSelection which is all 3d objects
+        Gotta massage this so player card selections work
+        Probably just break Cards from DDSelection. They should always be hoverable, 
+        but only can be selected if we don't have a card unless we are targetting player cards
+
 3/3 (4/7)
     - Quest
     - "time line" order for enemies

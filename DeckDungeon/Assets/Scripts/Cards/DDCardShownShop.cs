@@ -41,13 +41,13 @@ public class DDCardShownShop : DDCardShown
 
     public void SetUpShopCard(DDCardBase cardBase)
     {
-        base.SetUpCard(cardBase);
-
         if (!priceParent.activeSelf)
         {
             priceParent.SetActive(true);
         }
         currentPrice = cardBase.Price;
         priceText.text = currentPrice.ToString();
+        
+        base.SetUpCard(cardBase);
     }
 }

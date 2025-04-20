@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DDPlayerMatchHand : MonoBehaviour
 {
+    [SerializeField] private float cardSpreadDistance = 160;
+    
     private List<DDCardInHand> cards = new List<DDCardInHand>();
 
     public void AddCard(DDCardInHand card)
@@ -11,7 +13,7 @@ public class DDPlayerMatchHand : MonoBehaviour
         cards.Add(card);
         card.UpdateDisplayInformation();
         card.gameObject.SetActive(true);
-        card.transform.parent = transform;
+        card.transform.SetParent(transform);
 
         UpdateCardsPosition();
     }
@@ -64,14 +66,15 @@ public class DDPlayerMatchHand : MonoBehaviour
         }
         else
         {
-            float minMax = cards.Count - 1f;
+            float minMax = (cards.Count - 1f) * .5f * cardSpreadDistance;
+            
             for (float i = 0; i < cards.Count; i++)
             {
-                float percent = i / ((float)cards.Count - 1);
+                float percent = i / (cards.Count - 1);
                 
-                Vector3 pos = transform.localPosition;
+                Vector3 pos = Vector3.zero;
                 pos.x = Mathf.Lerp(-minMax, minMax, percent);
-                cards[(int)i].transform.position = pos; 
+                cards[(int)i].transform.localPosition = pos; 
             }
         }
     }

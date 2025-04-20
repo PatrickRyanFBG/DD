@@ -40,7 +40,7 @@ public class DDDungeonEventDataDuplicatePlayer : DDDungeonEventData
 
     private void PlayerCardSelected(DDCardBase selectedCard)
     {
-        DDCardBase copy = selectedCard.Clone();
+        DDCardBase copy = selectedCard.Clone(false);
         DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(copy, DDGamePlaySingletonHolder.Instance.Dungeon.DungeonCardStartPosition);
         DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(PlayerCardSelected);
         DDGamePlaySingletonHolder.Instance.Dungeon.DisplayDeckClosed();

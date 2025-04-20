@@ -60,7 +60,7 @@ public class DDAdventurerCardData
                 card = commonCards[randNum];
             }
 
-            cards.Add(card.GUID, card.Clone());
+            cards.Add(card.GUID, card.Clone(true));
         }
 
         foreach (KeyValuePair<string, DDCardBase> card in cards)

@@ -7,18 +7,32 @@ public class DDCardShown : DDCardInHand
 {
     public UnityEngine.Events.UnityEvent<DDCardShown> OnCardSelected;
 
-    public void CardSelected()
+    [SerializeField] private RectTransform rectTransform;
+    public RectTransform RectTransform => rectTransform;
+
+    public override void SetUpCard(DDCardBase cardBase, bool hover = true)
     {
-        OnCardSelected.Invoke(this);
+        base.SetUpCard(cardBase, hover);
+
+        transform.name = "CS: " + currentCard.CardName;
     }
 
-    public override bool Hovered()
+    // Called from UI
+    public override void UI_Clicked()
     {
-        return false;
+        CardSelected();
+    }
+
+    public override void Hovered()
+    {
     }
 
     public override void Unhovered()
     {
     }
-}
 
+    public void CardSelected()
+    {
+        OnCardSelected.Invoke(this);
+    }
+}

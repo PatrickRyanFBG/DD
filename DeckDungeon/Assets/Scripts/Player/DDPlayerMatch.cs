@@ -48,7 +48,7 @@ public class DDPlayerMatch : MonoBehaviour
     
     private DDAffixManager affixManager;
 
-    [FormerlySerializedAs("CardLifeTimeChangedEvent")] public UnityEngine.Events.UnityEvent<DDCardInHand, EPlayerCardLifeTime> CardLifeTimeChanged;
+    public UnityEngine.Events.UnityEvent<DDCardInHand, EPlayerCardLifeTime> CardLifeTimeChanged;
     
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI momentum;
 
@@ -108,9 +108,9 @@ public class DDPlayerMatch : MonoBehaviour
         deck.ShuffleInCards(DDGamePlaySingletonHolder.Instance.Dungeon.PlayerDeck);
     }
 
-    public IEnumerator AddCardToDiscard(DDCardBase card)
+    public IEnumerator AddCardToDiscard(DDCardBase card, Vector3? spawnPosition)
     {
-        return discard.AddCardOverTime(card);
+        return discard.AddCardOverTime(card, spawnPosition);
     }
 
     public void SetHandSizeToDefault()
@@ -225,12 +225,12 @@ public class DDPlayerMatch : MonoBehaviour
             return;
         }
 
-        if (selectedCard == null)
+        if (!selectedCard)
         {
             if (DDGamePlaySingletonHolder.Instance.Encounter.CurrentPhase == EEncounterPhase.PlayersTurn)
             {
                 DDCardInHand card = selection as DDCardInHand;
-                if (card != null)
+                if (card)
                 {
                     if (card.CardSelected(selectedCardLocation.localPosition))
                     {
@@ -243,7 +243,7 @@ public class DDPlayerMatch : MonoBehaviour
                 }
             }
         }
-        else if (selectedCard != null)
+        else if (selectedCard)
         {
             if (selectedCard.IsSelectionValid(selection, currentTargetIndex))
             {

@@ -32,19 +32,7 @@ public static class IListExtensions
 
 public static class DDCardBaseExtensions
 {
-    public static DDCardBase Clone(this DDCardBase scriptableObject)
-    {
-        if (!scriptableObject)
-        {
-            Debug.LogError($"ScriptableObject was null. Returning default {typeof(DDCardBase)} object.");
-            return (DDCardBase)ScriptableObject.CreateInstance(typeof(DDCardBase));
-        }
 
-        DDCardBase instance = Object.Instantiate(scriptableObject);
-        instance.name = scriptableObject.name;
-        instance.RuntimeInit();
-        return instance;
-    }
 }
 
 public static class DDEnemyBasextensions

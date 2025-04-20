@@ -90,6 +90,9 @@ public class DDGlobalManager : MonoBehaviour
 
     [SerializeField] private DDHoverToolTip toolTip;
     public DDHoverToolTip ToolTip => toolTip;
+
+    [Header("Card Prefabs")] [SerializeField]
+    private DDCardInHand cardInHandPrefab;
     
     [Header("Testing")] public bool FromMainMenu;
 
@@ -126,5 +129,12 @@ public class DDGlobalManager : MonoBehaviour
         {
             sideQuests.Remove(data);
         }
+    }
+    
+    public DDCardInHand SpawnNewCardInHand(DDCardBase card, bool hoverable, Transform parent, Vector3 startingLocation)
+    {
+        DDCardInHand cardInHand = Instantiate(cardInHandPrefab, startingLocation, Quaternion.identity, parent);
+        cardInHand.SetUpCard(card.Clone(false), hoverable);        
+        return cardInHand;
     }
 }

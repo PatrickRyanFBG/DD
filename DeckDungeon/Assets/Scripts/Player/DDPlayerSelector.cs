@@ -72,9 +72,10 @@ public class DDPlayerSelector : MonoBehaviour
         
         Debug.DrawLine(boardRay.origin, boardRay.origin + boardRay.direction * 1000, Color.cyan);
 
+        // This ray cast looks at board spots: Default, TransparentFX, IgnoreRaycast, Water, Location, Row, Column, EntireOrEmpty, Enemy
         if (Physics.Raycast(boardRay, out hit, 1000, currentAndCameraMask))
         {
-            DDSelection mousedOver = hit.transform.GetComponent<DDSelection>();
+            hit.transform.TryGetComponent(out DDSelection mousedOver);
             camHitSomething = true;
 
             if (currentlyHovered != mousedOver)
@@ -84,18 +85,17 @@ public class DDPlayerSelector : MonoBehaviour
                     currentlyHovered.Unhovered();
                 }
 
-
-                if(mousedOver)
+                currentlyHovered = mousedOver;
+                    
+                if (currentlyHovered)
                 {
-                    if (mousedOver.Hovered())
-                    {
-                        currentlyHovered = mousedOver;
-                    }
+                    currentlyHovered.Hovered();
                 }
             }
         }
         else
         {
+            // This ray cast looks at "UI" which was: UI, PlayerCard, DungeonCardShown, PlayerCardShown
             uiRay = uiCam.ScreenPointToRay(Input.mousePosition);
             currentAndCameraMask = currentMask & uiCam.cullingMask;
 
@@ -103,7 +103,7 @@ public class DDPlayerSelector : MonoBehaviour
 
             if (Physics.Raycast(uiRay, out hit, 1000, currentAndCameraMask))
             {
-                DDSelection mousedOver = hit.transform.GetComponent<DDSelection>();
+                hit.transform.TryGetComponent(out DDSelection mousedOver);
                 camHitSomething = true;
 
                 if (currentlyHovered != mousedOver)
@@ -144,7 +144,7 @@ public class DDPlayerSelector : MonoBehaviour
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        if(hit.collider != null)
+        if(hit.collider)
         {
             GUI.Label(new Rect(Screen.width / 2 - 150, Screen.height - 50, 150, 50), hit.collider.gameObject.ToString());
         }

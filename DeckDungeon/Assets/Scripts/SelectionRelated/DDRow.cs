@@ -63,14 +63,12 @@ public class DDRow : DDSelection
         }
     }
 
-    public override bool Hovered()
+    public override void Hovered()
     {
         for (int i = 0; i < locations.Length; i++)
         {
             locations[i].Hovered();
         }
-
-        return true;
     }
 
     public override void Unhovered()

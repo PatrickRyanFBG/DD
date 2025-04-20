@@ -25,7 +25,7 @@ public class DDCardSelection : MonoBehaviour
 
     public void EndCardSelection()
     {
-        if (fromEncounter != null)
+        if (fromEncounter)
         {
             if (fromEncounter.EventAfterComplete)
             {
@@ -45,7 +45,7 @@ public class DDCardSelection : MonoBehaviour
     private void SomethingSelected(DDSelection selection)
     {
         DDCardShown playerCard = selection as DDCardShown;
-        if (playerCard != null)
+        if (playerCard)
         {
             playerCard.CardSelected();
             EndCardSelection();

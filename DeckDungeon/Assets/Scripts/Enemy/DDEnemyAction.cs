@@ -548,6 +548,8 @@ public class DDEnemyActionAddCardTo : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
+        Vector3 position = DDGamePlaySingletonHolder.Instance.MainCamera.WorldToScreenPoint(enemy.transform.position);
+        
         for (int i = 0; i < cardAmount; i++)
         {
             switch (location)
@@ -557,7 +559,7 @@ public class DDEnemyActionAddCardTo : DDEnemyActionBase
                 case ECardLocation.Hard:
                     break;
                 case ECardLocation.Discard:
-                    yield return DDGamePlaySingletonHolder.Instance.Player.AddCardToDiscard(cardToAdd);
+                    yield return DDGamePlaySingletonHolder.Instance.Player.AddCardToDiscard(cardToAdd, position);
                     break;
             }
 

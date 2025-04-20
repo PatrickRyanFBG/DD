@@ -8,16 +8,14 @@ public class DDPlayerMatchDiscard : MonoBehaviour
     [SerializeField]
     private Transform cardSpawnLocation;
 
-    [Header("Testing")]
-    [SerializeField]
-    private TMPro.TextMeshProUGUI numberText;
-
     private List<DDCardInHand> cards = new List<DDCardInHand>();
     public List<DDCardInHand> Cards => cards;
 
-    public IEnumerator AddCardOverTime(DDCardBase card)
+    public IEnumerator AddCardOverTime(DDCardBase card, Vector3? position)
     {
-        DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, cardSpawnLocation.position, Quaternion.identity, transform);
+        DDCardInHand cardInHand =
+            DDGlobalManager.Instance.SpawnNewCardInHand(card, false, transform, position ?? cardSpawnLocation.position);
+        //DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, cardSpawnLocation.position, Quaternion.identity, transform);
         cardInHand.transform.DOMove(transform.position, .3f, false);
         cardInHand.SetUpCard(card, false);
         
@@ -33,18 +31,15 @@ public class DDPlayerMatchDiscard : MonoBehaviour
         cards.Add(card);
 
         // DO ANIMATION OF CARD MOVING TO DISCARD
-        card.transform.parent = transform;
-        card.transform.position = transform.position;
+        card.transform.SetParent(transform);
+        card.transform.localPosition = Vector3.zero;
         card.gameObject.SetActive(false);
-
-        numberText.text = cards.Count.ToString();
     }
 
     public List<DDCardInHand> GetAndClearDiscard()
     {
         List<DDCardInHand> outgoing = cards;
         cards = new List<DDCardInHand>();
-        numberText.text = "0";
         return outgoing;
     }
 
@@ -61,6 +56,5 @@ public class DDPlayerMatchDiscard : MonoBehaviour
         }
 
         cards.Clear();
-        numberText.text = "0";
     }
 }

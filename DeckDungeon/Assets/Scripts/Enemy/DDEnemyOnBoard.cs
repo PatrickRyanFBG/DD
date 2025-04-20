@@ -241,10 +241,9 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public override bool Hovered()
+    public override void Hovered()
     {
         hoveredImage.enabled = true;
-        return true;
     }
 
     public override void Unhovered()

@@ -47,7 +47,7 @@ public class DDDungeon : MonoBehaviour
     [SerializeField] private DDCardSelection playerCardSelection;
     [SerializeField] private DDEventArea eventArea;
     [SerializeField] private DDLeisureArea leisureArea;
-    [SerializeField] private DDShowDeckArea showDeckArea;
+    [SerializeField] private DDCanvasShowDeckArea showDeckArea;
     [SerializeField] private DDShopArea shopArea;
 
     public UnityEngine.Events.UnityEvent<EDungeonPhase> PhaseChanged;
@@ -422,14 +422,12 @@ public class DDDungeon : MonoBehaviour
     public void DisplayDungeonDeck()
     {
         TurnOffAreas();
-        showDeckArea.gameObject.SetActive(true);
         showDeckArea.ShowDungeonDeck(dungeonDeck);
     }
 
     public void DisplayDungeonDiscard()
     {
         TurnOffAreas();
-        showDeckArea.gameObject.SetActive(true);
         showDeckArea.ShowDungeonDeck(dungeonDiscard);
     }
 
@@ -453,7 +451,6 @@ public class DDDungeon : MonoBehaviour
         if (currentDungeonPhase == EDungeonPhase.Encounter)
         {
             TurnOffAreas();
-            showDeckArea.gameObject.SetActive(true);
             showDeckArea.ShowPlayerDeck(DDGamePlaySingletonHolder.Instance.Player.CurrentDiscard);
         }
         else
@@ -465,8 +462,6 @@ public class DDDungeon : MonoBehaviour
 
     public void DisplayDeckClosed()
     {
-        showDeckArea.gameObject.SetActive(false);
-
         switch (currentDungeonPhase)
         {
             case EDungeonPhase.DungeonStart:
@@ -482,6 +477,9 @@ public class DDDungeon : MonoBehaviour
                 break;
             case EDungeonPhase.Encounter:
                 encounter.gameObject.SetActive(true);
+                break;
+            case EDungeonPhase.Shop:
+                shopArea.gameObject.SetActive(true);
                 break;
             case EDungeonPhase.PlayerCardSelection:
                 playerCardSelection.gameObject.SetActive(true);

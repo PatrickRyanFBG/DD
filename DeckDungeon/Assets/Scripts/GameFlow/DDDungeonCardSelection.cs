@@ -28,7 +28,7 @@ public class DDDungeonCardSelection : MonoBehaviour
     private void SomethingSelected(DDSelection selection)
     {
         DDDungeonCardShown dungeonCard = selection as DDDungeonCardShown;
-        if (dungeonCard != null)
+        if (dungeonCard)
         {
             dungeonCard.DungeonCardSelected();
         }
