@@ -16,11 +16,12 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  name: 
-  description: 
+  cardName: Flex
+  description: 'Move One Right
+
+    Gain 1 Expertise'
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264616

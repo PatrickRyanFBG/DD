@@ -181,9 +181,7 @@ public class DDCardEffectDrawCard : DDCardEffectBase
     {
         for (int i = 0; i < amount; i++)
         {
-            DDGamePlaySingletonHolder.Instance.Player.DrawACard();
-
-            yield return new WaitForSeconds(.25f);
+            yield return DDGamePlaySingletonHolder.Instance.Player.DrawACard();
         }
     }
 }

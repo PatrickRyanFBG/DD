@@ -127,7 +127,10 @@ public class DDLocation : DDSelection
     public void SnapEnemyToHere(DDEnemyOnBoard enemy)
     {
         currentEnemy = enemy;
-        enemy.SnapLocation(this);
+        if (enemy)
+        {
+            enemy.SnapLocation(this);
+        }
     }
 
     public IEnumerator SetEnemy(DDEnemyOnBoard enemy)

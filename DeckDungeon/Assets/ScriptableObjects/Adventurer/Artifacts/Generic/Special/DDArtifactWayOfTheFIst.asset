@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8f844c4cf109b64b8d89de7bdc23a8b, type: 3}
-  m_Name: DDArtifactAlpha
+  m_Script: {fileID: 11500000, guid: a1bb0fa6b40fd844797e16242f2af657, type: 3}
+  m_Name: DDArtifactWayOfTheFIst
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactAlpha
-  description: 
+  artifactName: DDArtifactWayOfTheBlade
+  description: Gain 5 Vigor at the start of every Encounter.
   icon: {fileID: 0}
+  affixType: 2
+  amount: 5
+  encounterPhase: 0

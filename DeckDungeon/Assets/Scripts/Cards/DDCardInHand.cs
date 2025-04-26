@@ -75,6 +75,7 @@ public class DDCardInHand : DDSelection
 
     private void OnDisable()
     {
+        // pool these
         for (int i = 1; i < finishParent.childCount; i++)
         {
             Destroy(finishParent.GetChild(i).gameObject);

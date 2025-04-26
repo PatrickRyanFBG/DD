@@ -16,11 +16,10 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  name: 
-  description: 
+  cardName: GainRetaliate
+  description: Gain 2 Retaliate
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264613
@@ -35,6 +34,6 @@ MonoBehaviour:
         targetType: 9
         differentTarget: 0
         useLastTarget: 0
-        affixType: 0
+        affixType: 3
         amount: 2
         shouldSetValue: 0

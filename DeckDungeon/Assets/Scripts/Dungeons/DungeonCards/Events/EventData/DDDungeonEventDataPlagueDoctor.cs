@@ -8,6 +8,8 @@ public class DDDungeonEventDataPlagueDoctor : DDDungeonEventData
 
     [SerializeField] private float[] healValues;
 
+    [SerializeField] private int[] costValues;
+
     [SerializeField, Multiline] private string afterHealDescription;
 
     public override void DisplayEvent(DDEventArea area)
@@ -17,6 +19,12 @@ public class DDDungeonEventDataPlagueDoctor : DDDungeonEventData
         for (int i = 0; i < healTexts.Length; i++)
         {
             DDButton button = area.GenerateButton(healTexts[i]);
+            if (!DDGamePlaySingletonHolder.Instance.Dungeon.HasEnoughGold(costValues[i]))
+            {
+                button.Button.interactable = false;
+                continue;
+            }
+            
             float healPercent = healValues[i];
             button.Button.onClick.AddListener(() =>
             {
@@ -26,7 +34,6 @@ public class DDDungeonEventDataPlagueDoctor : DDDungeonEventData
                 AfterSelection(area);
             });
         }
-
 
         DDButton leaveButton = area.GenerateButton("Leave");
         leaveButton.Button.onClick.AddListener(() => { DDGamePlaySingletonHolder.Instance.Dungeon.EndEvent(); });

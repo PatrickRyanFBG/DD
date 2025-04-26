@@ -16,11 +16,12 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  name: 
-  description: 
+  cardName: Feint
+  description: 'Move One Left
+
+    Draw 1 Card'
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264616
@@ -36,7 +37,7 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
-        direction: 0
+        direction: 3
         amount: 1
     - rid: 7815311197493264620
       type: {class: DDCardEffectDrawCard, ns: , asm: Assembly-CSharp}

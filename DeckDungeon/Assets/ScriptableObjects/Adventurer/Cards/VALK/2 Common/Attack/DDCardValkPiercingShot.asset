@@ -16,11 +16,10 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DDCardValkPiercingShot
-  description: 
+  cardName: PiercingShot
+  description: Deal 10 Damage To Lane
   rangeType: 1
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264611
@@ -32,7 +31,7 @@ MonoBehaviour:
     - rid: 7815311197493264611
       type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 6
+        targetType: 9
         differentTarget: 0
         useLastTarget: 0
-        damage: 5
+        damage: 10

@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4e01177b4bf3e4cb6e498ac7ab7d06, type: 3}
-  m_Name: DDArtifactOldOneTwo
+  m_Script: {fileID: 11500000, guid: a1bb0fa6b40fd844797e16242f2af657, type: 3}
+  m_Name: DDArtifactWayOfTheBlade
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactOldOneTwo
-  description: Start encounters with 2 Retaliate in even lanes.
+  artifactName: DDArtifactWayOfTheBlade
+  description: Gain 5 Expertise at the start of every Encounter.
   icon: {fileID: 0}
-  retaliateGained: 2
+  affixType: 0
+  amount: 5
+  encounterPhase: 0

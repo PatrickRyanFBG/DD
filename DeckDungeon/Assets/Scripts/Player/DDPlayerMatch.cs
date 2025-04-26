@@ -148,11 +148,11 @@ public class DDPlayerMatch : MonoBehaviour
         }
     }
 
-    public void DrawFullHand()
+    public IEnumerator DrawFullHand()
     {
         for (int i = 0; i < currentHandSize; i++)
         {
-            DrawACard();
+            yield return DrawACard();
         }
     }
 
@@ -182,7 +182,7 @@ public class DDPlayerMatch : MonoBehaviour
         }
     }
 
-    public void DrawACard()
+    public IEnumerator DrawACard()
     {
         bool cardAvail = true;
         if (deck.GetNumberInDeck() == 0)
@@ -194,12 +194,15 @@ public class DDPlayerMatch : MonoBehaviour
             else
             {
                 deck.ShuffleInCards(discard.GetAndClearDiscard());
+                
+                // Do some shuffle animation
+                yield return new WaitForSeconds(.25f);
             }
         }
 
         if (cardAvail)
         {
-            hand.AddCard(deck.GetTopCard());
+            yield return hand.AddCard(deck.GetTopCard());
         }
     }
 

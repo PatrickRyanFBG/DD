@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DDArtifactWeightLifting
   m_EditorClassIdentifier: 
   artifactName: DDArtifactWeightLifting
-  description: 
+  description: When you play an Offense card, gain 1 Vigor.
   icon: {fileID: 0}
   vigorGained: 1

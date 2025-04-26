@@ -8,14 +8,17 @@ public class DDPlayerMatchHand : MonoBehaviour
     
     private List<DDCardInHand> cards = new List<DDCardInHand>();
 
-    public void AddCard(DDCardInHand card)
+    public IEnumerator AddCard(DDCardInHand card)
     {
         cards.Add(card);
+        card.SetCanHover(false);
         card.UpdateDisplayInformation();
         card.gameObject.SetActive(true);
         card.transform.SetParent(transform);
 
+        yield return card.CurrentCard.DrawCard();
         UpdateCardsPosition();
+        card.SetCanHover(true);
     }
 
     public void CardRemoved(DDCardInHand card)

@@ -16,6 +16,8 @@ public class DDEncounter : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent<EEncounterPhase> PhaseChanged;
 
+    [SerializeField] private DDEncounterEnemyTimeline timeline;
+    
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI phaseDebug;
 
     private DDDungeonCardEncounter currentEncounter;
@@ -84,6 +86,8 @@ public class DDEncounter : MonoBehaviour
             // Death animations happen here.
             // On death effects happen.
             yield return destroyedEnemies[i].DoDeath();
+            // Remove from timeline
+            timeline.RemoveEnemyFromTimeline(destroyedEnemies[i]);
             // Destroy object.
             Destroy(destroyedEnemies[i].gameObject);
             // Remove enemies.
@@ -128,7 +132,9 @@ public class DDEncounter : MonoBehaviour
         {
             enemies[i].ForecastActions(enemies.Count - i);
         }
-
+        
+        timeline.SetTimeline(enemies);
+        
         ChangeCurrentPhase(EEncounterPhase.PlayersStartTurn);
     }
 
@@ -180,6 +186,9 @@ public class DDEncounter : MonoBehaviour
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             yield return enemies[i].DoActions();
+            
+            timeline.RemoveEnemyFromTimeline(enemies[i]);
+            
             // Sometimes enemies destroy themselves.
             yield return CheckDestroyedEnemies();
         }
@@ -231,7 +240,7 @@ public class DDEncounter : MonoBehaviour
             case EEncounterPhase.PlayersTurn:
                 DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
                 player.ResetMomentum();
-                player.DrawFullHand();
+                StartCoroutine(player.DrawFullHand());
                 break;
             case EEncounterPhase.PlayersEndTurn:
                 StartCoroutine(DoPlayersEndTurn());

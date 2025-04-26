@@ -13,16 +13,6 @@ public class DDCardSelection : MonoBehaviour
 
     private DDDungeonCardEncounter fromEncounter;
 
-    private void OnEnable()
-    {
-        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
-    }
-
-    private void OnDisable()
-    {
-        DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
-    }
-
     public void EndCardSelection()
     {
         if (fromEncounter)
@@ -39,16 +29,6 @@ public class DDCardSelection : MonoBehaviour
         else
         {
             DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
-        }
-    }
-
-    private void SomethingSelected(DDSelection selection)
-    {
-        DDCardShown playerCard = selection as DDCardShown;
-        if (playerCard)
-        {
-            playerCard.CardSelected();
-            EndCardSelection();
         }
     }
 
@@ -84,8 +64,10 @@ public class DDCardSelection : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    // From UI Cards
     public void CardSelected(DDCardShown cardShown)
     {
         DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(cardShown.CurrentCard, cardShown.transform.position);
+        EndCardSelection();
     }
 }

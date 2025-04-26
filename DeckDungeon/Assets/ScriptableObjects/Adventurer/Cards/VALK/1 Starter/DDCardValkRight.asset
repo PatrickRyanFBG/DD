@@ -16,9 +16,9 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DDCardValkRight
-  description: 
-  rangeType: 2
+  cardName: Right
+  description: Move One Right
+  rangeType: 0
   defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:

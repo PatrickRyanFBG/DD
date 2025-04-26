@@ -16,11 +16,10 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DDCardValkSpearThrow
-  description: 
-  rangeType: 1
-  finishes: 
-  uses: 0
+  cardName: SpearThrow
+  description: Deal 5 Ranged Damage
+  rangeType: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264611

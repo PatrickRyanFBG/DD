@@ -125,7 +125,7 @@ public class DDShopArea : MonoBehaviour
             return;
         }
         
-        if (DDGamePlaySingletonHolder.Instance.Dungeon.HasEnoughGold(cardShown.CurrentPrice))
+        //if (DDGamePlaySingletonHolder.Instance.Dungeon.HasEnoughGold(cardShown.CurrentPrice))
         {
             DDGamePlaySingletonHolder.Instance.Dungeon.AddOrRemoveGold(-cardShown.CurrentPrice);
 

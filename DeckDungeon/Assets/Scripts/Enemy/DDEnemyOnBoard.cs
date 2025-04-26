@@ -28,15 +28,13 @@ public class DDEnemyOnBoard : DDSelection
 
     [SerializeField] private RawImage image;
 
-    [SerializeField] private RawImage actionOneImage;
-    [SerializeField] private TMPro.TextMeshProUGUI actionOneText;
-
-    [SerializeField] private RawImage actionTwoImage;
-    [SerializeField] private TMPro.TextMeshProUGUI actionTwoText;
+    [SerializeField] private DDEnemyActionIcon actionOneIcon;
+    [SerializeField] private DDEnemyActionIcon actionTwoIcon;
 
     [SerializeField] private RawImage hoveredImage;
 
     private List<DDEnemyActionBase> nextActions = new List<DDEnemyActionBase>();
+    public int ActionCount => nextActions.Count;
     public List<IEnumerator> DeathActions = new();
 
     private DDLocation currentLocation;
@@ -171,7 +169,7 @@ public class DDEnemyOnBoard : DDSelection
         }
 
         int retaliate = GetAffixValue(EAffixType.Retaliate);
-        if(retaliate > 0)
+        if (retaliate > 0)
         {
             DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(retaliate, currentLocation.Coord.y);
         }
@@ -209,19 +207,17 @@ public class DDEnemyOnBoard : DDSelection
     {
         nextActions = currentEnemy.CalculateActions(2, this);
 
-        actionOneImage.enabled = false;
-        actionOneText.enabled = false;
-        actionTwoImage.enabled = false;
-        actionTwoText.enabled = false;
+        actionOneIcon.Clear();
+        actionTwoIcon.Clear();
 
         if (nextActions.Count > 0)
         {
-            nextActions[0].DisplayInformation(actionOneImage, actionOneText);
+            actionOneIcon.SetUpAction(nextActions[0]);
         }
 
         if (nextActions.Count > 1)
         {
-            nextActions[1].DisplayInformation(actionTwoImage, actionTwoText);
+            actionTwoIcon.SetUpAction(nextActions[1]);
         }
 
         turnUI.text = "#" + turnNumber;
@@ -258,7 +254,6 @@ public class DDEnemyOnBoard : DDSelection
 
     public void NonActionableHover()
     {
-        string actionDesc = "";
         for (int i = 0; i < nextActions.Count; i++)
         {
             Vector2Int loc = Vector2Int.zero;
@@ -266,16 +261,7 @@ public class DDEnemyOnBoard : DDSelection
             {
                 DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Highlight();
             }
-
-            actionDesc += nextActions[i].GetDescription();
-
-            if (i != nextActions.Count - 1)
-            {
-                actionDesc += "\r\n";
-            }
         }
-
-        DDGlobalManager.Instance.ToolTip.SetText(actionDesc);
     }
 
     public void NonActionableUnhover()
@@ -319,7 +305,7 @@ public class DDEnemyOnBoard : DDSelection
         {
             TakeDamage(bleedValue.Value, ERangeType.None, true);
 
-            yield return null;
+            yield return new WaitForSeconds(.25f);
 
             affixManager.ModifyValueOfAffix(EAffixType.Bleed, -1, false);
         }

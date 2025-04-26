@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3355ae0e150bee84abd80b2c0dc3ea55, type: 3}
-  m_Name: DDCardValkGainMuscleCut
+  m_Name: DDCardValkRicochet
   m_EditorClassIdentifier: 
-  <GUID>k__BackingField: 6a2afa65d3da3ff48bdc709c6d00980a
+  <GUID>k__BackingField: a9665a8fda1116845b4bb7aa4283a159
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  name: 
-  description: 
+  cardName: Ricochet
+  description: Apply 5 Bleed To Two Enemies
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264622
@@ -43,8 +42,8 @@ MonoBehaviour:
       type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
       data:
         targetType: 13
-        differentTarget: 0
+        differentTarget: 1
         useLastTarget: 0
-        affixType: 0
-        amount: -2
+        affixType: 4
+        amount: 5
         shouldSetValue: 0

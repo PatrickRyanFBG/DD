@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DDArtifactHyperactive
   m_EditorClassIdentifier: 
   artifactName: Hyper Active
-  description: Deals 1 damage to all enemys when you gain momentum.
+  description: Deals 1 damage to all enemys when you gain Momentum.
   icon: {fileID: 2800000, guid: f64edb5b218f00b4eb4f5652c3c4cdc1, type: 3}
   damagePerMomentum: 1

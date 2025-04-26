@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: DDArtifactWingedBoots
   m_EditorClassIdentifier: 
   artifactName: Winged Boots
-  description: Start each turn with 1 momentum.
+  description: Start each turn with 1 Momentum.
   icon: {fileID: 2800000, guid: f0a68bac6ae26b346a5b42f33ac001e4, type: 3}
+  momentumGain: 1

@@ -17,6 +17,8 @@ public class DDGamePlaySingletonHolder : MonoBehaviour
     public DDPlayerSelector PlayerSelector;
     public DDCanvasShowDeckArea ShowDeckArea;
 
+    [Header("Debug")] public bool DEBUG_SkipCosts = false;
+    
     private void Awake()
     {
         instance = this;

@@ -54,12 +54,13 @@ public abstract class DDCardBase : DDScriptableObject
         else
         {
             clone.AllCardFinishes = new Dictionary<EPlayerCardFinish, DDPlayerCardFinish>(AllCardFinishes);
-            clone.cardExecutionActions = new Dictionary<EPlayerCardLifeTime, List<DDPlayerCardFinish>>(cardExecutionActions);
+            clone.cardExecutionActions =
+                new Dictionary<EPlayerCardLifeTime, List<DDPlayerCardFinish>>(cardExecutionActions);
         }
-        
+
         return clone;
     }
-    
+
     public virtual void RuntimeInit()
     {
         AllCardFinishes = new();
@@ -70,7 +71,7 @@ public abstract class DDCardBase : DDScriptableObject
             AddCardFinishByType(defaultCardFinishes[i]);
         }
     }
-    
+
     public virtual void SetCardInHand(DDCardInHand inHand)
     {
         cardInHand = inHand;
@@ -91,7 +92,7 @@ public abstract class DDCardBase : DDScriptableObject
             }
         }
     }
-    
+
     public virtual bool AddCardFinishByType(EPlayerCardFinish finishType)
     {
         // Cards can only have 1 type of finish
@@ -107,6 +108,10 @@ public abstract class DDCardBase : DDScriptableObject
         if (cardExecutionActions.TryGetValue(finish.PlayerCardLifeTime, out List<DDPlayerCardFinish> finishes))
         {
             finishes.Add(finish);
+        }
+        else
+        {
+            cardExecutionActions.Add(finish.PlayerCardLifeTime, new() { finish });
         }
 
         return true;
@@ -192,6 +197,7 @@ public abstract class DDCardBase : DDScriptableObject
     }
 
     #region GUID
+
     private void OnValidate()
     {
         if (string.IsNullOrWhiteSpace(GUID))
@@ -199,10 +205,10 @@ public abstract class DDCardBase : DDScriptableObject
             AssignNewGUID();
         }
 
-        if (string.IsNullOrWhiteSpace(cardName))
+        if (string.IsNullOrWhiteSpace(cardName) || cardName.Contains("DDCardValk"))
         {
 #if UNITY_EDITOR
-            cardName = name;
+            cardName = name.Remove(0, 10);
             UnityEditor.EditorUtility.SetDirty(this);
 #else
             cardName = "MISSING NAME";
@@ -219,5 +225,6 @@ public abstract class DDCardBase : DDScriptableObject
         GUID = Guid.NewGuid().ToString();
 #endif
     }
+
     #endregion
 }

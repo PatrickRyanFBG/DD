@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9faf329225e83754da8ceaef9565aa94, type: 3}
   m_Name: DDDungeonEventDataJunkHeap
   m_EditorClassIdentifier: 
-  eventName: 
-  eventDescription: 
+  eventName: A Junk Heap
+  eventDescription: You come accross a messy pile of junk.
   eventImage: {fileID: 0}
-  rummageText: 
-  afterRummageDescription: 
-  removeCardText: 
-  removeCardTextDescription: 
+  rummageText: Pick Through
+  afterRummageDescription: You found something worth wild after all.
+  removeCardText: Add To The Pile
+  removeCardTextDescription: Nothing of value lost.

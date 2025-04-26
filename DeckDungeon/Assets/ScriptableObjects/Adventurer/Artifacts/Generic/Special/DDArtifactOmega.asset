@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee4e01177b4bf3e4cb6e498ac7ab7d06, type: 3}
-  m_Name: DDArtifactOldOneTwo
+  m_Script: {fileID: 11500000, guid: 6c0a92c3b88ba014c99c8dabb3f5458c, type: 3}
+  m_Name: DDArtifactOmega
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactOldOneTwo
-  description: Start encounters with 2 Retaliate in even lanes.
+  artifactName: DDArtifactOmega
+  description: The last played card in each round gains a temporary finish.
   icon: {fileID: 0}
-  retaliateGained: 2

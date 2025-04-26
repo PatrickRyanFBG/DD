@@ -15,8 +15,7 @@ public class DDCard_VALK_QuickThinking : DDCard_VALKBase
 
         for (int i = 0; i < drawAmount; i++)
         {
-            DDGamePlaySingletonHolder.Instance.Player.DrawACard();
-            yield return new WaitForSeconds(.25f);
+            yield return DDGamePlaySingletonHolder.Instance.Player.DrawACard();
         }
     }
 }

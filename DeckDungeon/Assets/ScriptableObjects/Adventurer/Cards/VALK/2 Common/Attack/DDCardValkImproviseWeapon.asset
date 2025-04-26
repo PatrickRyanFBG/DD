@@ -16,11 +16,12 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 2800000, guid: 9ee3ace4a697b1349b3877cb321ac401, type: 3}
-  cardName: DDCardValkImproviseWeapon
-  description: Discard a card to deal 10 damage.
+  cardName: ImproviseWeapon
+  description: 'Discard A Card
+
+    Deal 10 Damage'
   rangeType: 1
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects: []
   momentumCost: 1

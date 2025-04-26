@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280adc98031e2b44cb0c3178264b69a6, type: 3}
   m_Name: DDDungeonEventDataDuplicatePlayer
   m_EditorClassIdentifier: 
-  eventName: 
-  eventDescription: 
+  eventName: Mirror
+  eventDescription: You come accross a mirror that seems perfect.
   eventImage: {fileID: 0}
-  duplicateText: 
-  afterDuplicateDescription: 
+  duplicateText: Touch Mirror
+  afterDuplicateDescription: Mirrors are sometimes more than meets the eye.

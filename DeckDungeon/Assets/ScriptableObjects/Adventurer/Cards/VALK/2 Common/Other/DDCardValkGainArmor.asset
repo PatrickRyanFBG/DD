@@ -16,11 +16,10 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DDCardValkGainArmor
-  description: 
+  cardName: GainArmor
+  description: Gain 10 Armor
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311280090120255

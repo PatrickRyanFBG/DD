@@ -16,11 +16,10 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DDCardValkSlash
-  description: 
+  cardName: Slash
+  description: Deal 5 Melee Damage
   rangeType: 0
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264611

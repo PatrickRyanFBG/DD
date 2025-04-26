@@ -16,9 +16,9 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DDCardValkPull
-  description: 
-  rangeType: 2
+  cardName: Pull
+  description: Move One Forward
+  rangeType: 0
   defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:

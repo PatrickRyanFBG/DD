@@ -12,7 +12,12 @@ public class DDCardValkGeneric : DDCardGeneric
     
     public override bool SelectCard()
     {
-        return true;//DDGamePlaySingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
+        if (DDGamePlaySingletonHolder.Instance.DEBUG_SkipCosts)
+        {
+            return true;
+        }
+        
+        return DDGamePlaySingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
     }
 
     public override void SetCardInHand(DDCardInHand cardInHand)
@@ -41,9 +46,9 @@ public class DDCardValkGeneric : DDCardGeneric
     {
         if(momentumGain > 0)
         {
-            DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(momentumGain);
+            yield return DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(momentumGain);
         }
         
-        return base.PostExecute(selections);
+        yield return base.PostExecute(selections);
     }
 }

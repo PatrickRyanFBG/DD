@@ -16,11 +16,12 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  name: 
-  description: 
+  cardName: Grapple
+  description: 'Move One Forward
+
+    Gain 1 Vigor'
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264616
@@ -44,6 +45,6 @@ MonoBehaviour:
         targetType: 6
         differentTarget: 0
         useLastTarget: 1
-        affixType: 0
+        affixType: 2
         amount: 1
         shouldSetValue: 0

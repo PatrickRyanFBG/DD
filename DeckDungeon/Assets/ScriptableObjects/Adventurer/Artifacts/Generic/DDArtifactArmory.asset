@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DDArtifactArmory
   m_EditorClassIdentifier: 
   artifactName: DDArtifactArmory
-  description: 
+  description: Start encounters with 5 Armor in odd lanes.
   icon: {fileID: 0}
   armorGained: 5

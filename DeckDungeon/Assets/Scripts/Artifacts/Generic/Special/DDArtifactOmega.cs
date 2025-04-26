@@ -30,7 +30,7 @@ public class DDArtifactOmega : DDArtifactBase
     {
         if (phase == EEncounterPhase.PlayersEndTurn)
         {
-            if (lastCardPlayed != null)
+            if (lastCardPlayed)
             {
                 lastCardPlayed.CurrentCard.AddRandomFinish();
             }

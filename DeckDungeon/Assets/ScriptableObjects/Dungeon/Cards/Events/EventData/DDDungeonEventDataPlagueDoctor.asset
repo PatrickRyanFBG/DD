@@ -12,9 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4eb635938c620f44afd47a1e956996d, type: 3}
   m_Name: DDDungeonEventDataPlagueDoctor
   m_EditorClassIdentifier: 
-  eventName: 
-  eventDescription: 
+  eventName: A "Doctor"
+  eventDescription: 'A man dressed in a beaked mask approaches you.
+
+    He offers
+    healing services at a cost.'
   eventImage: {fileID: 0}
-  healTexts: []
-  healValues: []
-  afterHealDescription: 
+  healTexts:
+  - 25% for "free"
+  - 50% for 50g
+  - 75% for 100g
+  healValues:
+  - 0.25
+  - 0.5
+  - 0.75
+  costValues: 000000003200000064000000
+  afterHealDescription: You feel better in some way.

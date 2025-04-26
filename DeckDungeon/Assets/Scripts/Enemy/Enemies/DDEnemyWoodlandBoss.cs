@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class DDEnemyWoodlandBoss : DDEnemyBase
 {
     [Header("Woodland Boss")] 
-    [SerializeField] private int emptyLocSpawnOver = 4;
+    [SerializeField] private float emptyLocSpawnOverPercent = .5f;
 
     [SerializeField] private int attackDamage = 5;
     [SerializeField] private int sneakAttackDamage = 10;
@@ -18,29 +18,44 @@ public class DDEnemyWoodlandBoss : DDEnemyBase
         
         if (actingEnemy.gameObject.activeInHierarchy)
         {
-            List<DDLocation> surroundingLocations =
-                DDGamePlaySingletonHolder.Instance.Board.GetSurroundingLocations(actingEnemy.CurrentLocaton.Coord);
-        
-            List<Vector2Int> emptyLocations = new List<Vector2Int>();
-
-            foreach (DDLocation location in surroundingLocations)
+            /*
+            Vector2Int enemyLoc = actingEnemy.CurrentLocaton.Coord;
+            if (enemyLoc.x == 0 || enemyLoc.x == DDGamePlaySingletonHolder.Instance.Board.RowCountIndex)
             {
-                if (!location.HasEnemy())
-                {
-                    emptyLocations.Add(location.Coord);
-                }
+                // We are on the edge somewhere, lets try to move
+                
             }
-
-            if (emptyLocations.Count > emptyLocSpawnOver)
+            else if (enemyLoc.y == 0 || enemyLoc.y == DDGamePlaySingletonHolder.Instance.Board.ColumnCountIndex)
             {
-                actions.Add(new DDEnemyActionPlantBushes(actingEnemy.CurrentLocaton.Coord));
+                
             }
             else
+            */
             {
-                actions.Add(new DDEnemyActionAttack(attackDamage));
-            }
+                List<DDLocation> surroundingLocations =
+                    DDGamePlaySingletonHolder.Instance.Board.GetSurroundingLocations(actingEnemy.CurrentLocaton.Coord);
             
-            actions.Add(new DDEnemyActionHideInEnemy());
+                List<Vector2Int> emptyLocations = new List<Vector2Int>();
+
+                foreach (DDLocation location in surroundingLocations)
+                {
+                    if (!location.HasEnemy())
+                    {
+                        emptyLocations.Add(location.Coord);
+                    }
+                }
+                
+                if (emptyLocations.Count / (float)surroundingLocations.Count > emptyLocSpawnOverPercent)
+                {
+                    actions.Add(new DDEnemyActionPlantBushes(actingEnemy.CurrentLocaton.Coord));
+                }
+                else
+                {
+                    actions.Add(new DDEnemyActionAttack(attackDamage));
+                }
+            
+                actions.Add(new DDEnemyActionHideInEnemy());
+            }
         }
         else
         {
@@ -83,6 +98,7 @@ public class DDEnemyActionHideInEnemy : DDEnemyActionBase
             // If it is a bush
             if (bush)
             {
+                enemy.CurrentLocaton.SnapEnemyToHere(null);
                 // We hide
                 enemy.gameObject.SetActive(false);
                 enemy.SnapLocation(eob.CurrentLocaton);

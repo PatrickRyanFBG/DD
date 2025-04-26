@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DDArtifactDeepCut
   m_EditorClassIdentifier: 
   artifactName: DDArtifactDeepCut
-  description: 
+  description: When you apply a bleed, apply one more.
   icon: {fileID: 0}
   additionalBleed: 1

@@ -3,8 +3,24 @@ GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!
 CONVERT ALL CARDS TO FLAT CANVAS
 Expand on EnemyActionBase "is hidden" at some point
 
+4/26
+    - Polish up player image area with health and affixes
+
+4/25
+    x Do proper hover on forcasted actions on enemies
+    x Revamp "board". Maybe shrink? (4/26: tiles shrunk, board now flat cam rotated, EOBs polished)
+    x Fix Foreman
+    x Fix selecting card after battle
+    
+3/3 (4/7) (4/21)
+    - Quest ?
+    x "time line" order for enemies
+
+4/21
+    x Fill in all card desc
+
 4/20
-    - Make sure Finishes work when drawn
+    x Make sure Finishes work when drawn
 
 4/16
     x Port Shop
@@ -13,7 +29,7 @@ Expand on EnemyActionBase "is hidden" at some point
     x Port PlayerCard to Canvas 
     x Port DungeonCard to Canvas
     x Port DeckArea
-    - Gotta check all Encounters (one was broken once, no idea what)
+    x Gotta check all Encounters (one was broken once, no idea what) [4/21 I am assuming these are working now filled in. :)]
 
 4/13
     x Working on moving cards to full Canvas UI.
@@ -21,10 +37,6 @@ Expand on EnemyActionBase "is hidden" at some point
         Gotta massage this so player card selections work
         Probably just break Cards from DDSelection. They should always be hoverable, 
         but only can be selected if we don't have a card unless we are targetting player cards
-
-3/3 (4/7)
-    - Quest
-    - "time line" order for enemies
     
 4/6
     x Make retaliate work on enemies

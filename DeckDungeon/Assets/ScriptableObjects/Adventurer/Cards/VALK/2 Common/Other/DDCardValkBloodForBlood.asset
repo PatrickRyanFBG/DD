@@ -16,11 +16,12 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  name: 
-  description: 
+  cardName: BloodForBlood
+  description: 'Take 4 Damage
+
+    Apply 8 Bleed'
   rangeType: 2
-  finishes: 
-  uses: 0
+  defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects: []
   momentumCost: 1

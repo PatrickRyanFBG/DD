@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c69d42ae421f274a9731b5f2dae164b, type: 3}
   m_Name: DDDungeonEventDataAddFinishes
   m_EditorClassIdentifier: 
-  eventName: 
-  eventDescription: 
+  eventName: Cold Forge
+  eventDescription: A cold forge lies ahead. Looks like it could still function.
   eventImage: {fileID: 0}
-  finishesText: 
+  finishesText: Forge Away
   amountToFinish: 5
-  afterFinishesDescription: 
+  afterFinishesDescription: You leave feeling stronger.
