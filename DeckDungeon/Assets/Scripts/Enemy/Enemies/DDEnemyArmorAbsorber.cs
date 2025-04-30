@@ -19,7 +19,7 @@ public class DDEnemyArmorAbsorber : DDEnemyBase
             // Regular Range Move
             actions.Add(DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Up, true));
             // Deal Damage equal to Armor
-            actions.Add(new DDEnemyActionAttackArmorBased());
+            actions.Add(new DDEnemyActionAttackArmorBased(actingEnemy.CurrentEnemy));
         }
         else
         {
@@ -34,7 +34,7 @@ public class DDEnemyArmorAbsorber : DDEnemyBase
                 // Asorb Armor action
                 actions.Add(new DDEnemyActionAbsorbArmor());
                 // Regular Attack
-                actions.Add(new DDEnemyActionAttack(regularDamage));
+                actions.Add(new DDEnemyActionAttack(regularDamage, actingEnemy.CurrentEnemy));
             }
             else
             {
@@ -99,7 +99,7 @@ public class DDEnemyArmorAbsorber : DDEnemyBase
                 else
                 {
                     // No Armor Found
-                    actingEnemy.GenericRangeAttackActions(ref actions, new DDEnemyActionAttack(regularDamage));
+                    actingEnemy.GenericRangeAttackActions(ref actions, new DDEnemyActionAttack(regularDamage, actingEnemy.CurrentEnemy));
                 }
             }
         }
@@ -112,7 +112,7 @@ public class DDEnemyArmorAbsorber : DDEnemyBase
         if (amount == 1)
         {
             // Attack
-            actions.Add(new DDEnemyActionAttack(regularDamage));
+            actions.Add(new DDEnemyActionAttack(regularDamage, actingEnemy.CurrentEnemy));
             // Move
             actions.Add(DDEnemyActionMove.CalculateBestMove(actingEnemy, dir, false));
         }
@@ -128,7 +128,7 @@ public class DDEnemyArmorAbsorber : DDEnemyBase
             // Move
             actions.Add(DDEnemyActionMove.CalculateBestMove(actingEnemy, dir, false));
             // Attack
-            actions.Add(new DDEnemyActionAttack(regularDamage));
+            actions.Add(new DDEnemyActionAttack(regularDamage, actingEnemy.CurrentEnemy));
         }
     }
 }
@@ -164,13 +164,13 @@ public class DDEnemyActionAbsorbArmor : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will absorb armor in lane.";
+        return "Steals lane's armor.";
     }
 }
 
 public class DDEnemyActionAttackArmorBased : DDEnemyActionAttack
 {
-    public DDEnemyActionAttackArmorBased() : base(0)
+    public DDEnemyActionAttackArmorBased(DDEnemyBase enemy) : base(0, enemy)
     {
     }
 
@@ -195,6 +195,6 @@ public class DDEnemyActionAttackArmorBased : DDEnemyActionAttack
 
     public override string GetDescription()
     {
-        return "This enemy will deal its armor in damage to you";
+        return "Deals [Ranged] damage based on armor.";
     }
 }

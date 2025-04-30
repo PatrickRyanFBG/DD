@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDCardValkSpearThrow
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: af5840839b4d7fe4487f0c710631fce5
-  cardType: 0
+  cardType: 2
   cardRarity: 0
   image: {fileID: 0}
   cardName: SpearThrow

@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 0}
-  cardName: ShieldBash
+  cardName: Shield Bash
   description: 'Deal 5 Damage
 
     Apply 5 Armor'

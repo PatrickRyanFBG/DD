@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  cardName: BloodForBlood
+  cardName: Blood For Blood
   description: 'Take 4 Damage
 
     Apply 8 Bleed'

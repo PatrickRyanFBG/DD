@@ -91,7 +91,7 @@ public class DDCardEffectDamageEnemy : DDCardEffectBase
 
             if (enemy)
             {
-                DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, card.RangeType, enemy);
+                DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, card.RangeType, enemy, true);
             }
         }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 0}
-  cardName: HailOfThorns
+  cardName: Hail Of Thorns
   description: 'Deal 5 Damage To Lane
 
     Add 2 Retaliate'

@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  cardName: ShieldRush
+  cardName: Shield Rush
   description: 'Move One Up
 
     Gain 5 Armor'

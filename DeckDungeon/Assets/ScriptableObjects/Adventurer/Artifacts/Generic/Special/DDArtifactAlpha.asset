@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f844c4cf109b64b8d89de7bdc23a8b, type: 3}
   m_Name: DDArtifactAlpha
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactAlpha
+  artifactName: Alpha
   description: The first card drawn each round gets a temporary finish.
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 32a3ef31d78168c4ca7260391202a1fb, type: 3}

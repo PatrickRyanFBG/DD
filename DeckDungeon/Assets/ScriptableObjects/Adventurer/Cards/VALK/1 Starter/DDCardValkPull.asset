@@ -18,7 +18,7 @@ MonoBehaviour:
   image: {fileID: 0}
   cardName: Pull
   description: Move One Forward
-  rangeType: 0
+  rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:

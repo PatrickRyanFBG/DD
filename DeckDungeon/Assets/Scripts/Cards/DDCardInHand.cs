@@ -17,14 +17,14 @@ public class DDCardInHand : DDSelection
     [SerializeField] private RawImage image;
     public RawImage Image => image;
 
-    [SerializeField] private TextMeshProUGUI cardTypeText;
-    public TextMeshProUGUI CardTypeText => cardTypeText;
-
     [SerializeField] private TextMeshProUGUI nameText;
     public TextMeshProUGUI NameText => nameText;
 
     [SerializeField] private TextMeshProUGUI descText;
     public TextMeshProUGUI DescText => descText;
+    
+    [SerializeField] private TextMeshProUGUI typesText;
+    public TextMeshProUGUI TypesText => typesText;
 
     [SerializeField] private TextMeshProUGUI momentumNumber;
     public TextMeshProUGUI MomentumNumber => momentumNumber;

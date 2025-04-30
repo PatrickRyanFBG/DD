@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1bb0fa6b40fd844797e16242f2af657, type: 3}
-  m_Name: DDArtifactWayOfTheFIst
+  m_Name: DDArtifactWayOfTheFist
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactWayOfTheBlade
+  artifactName: Way Of The Fist
   description: Gain 5 Vigor at the start of every Encounter.
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 6bd045480f0c7164992609027bea564a, type: 3}
   affixType: 2
   amount: 5
   encounterPhase: 0

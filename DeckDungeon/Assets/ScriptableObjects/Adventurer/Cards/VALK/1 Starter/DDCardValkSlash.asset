@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDCardValkSlash
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 163dbac06ad21f84785428cb7be015d6
-  cardType: 0
+  cardType: 2
   cardRarity: 0
   image: {fileID: 0}
   cardName: Slash

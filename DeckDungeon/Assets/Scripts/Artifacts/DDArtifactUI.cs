@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class DDArtifactUI : MonoBehaviour
 {
-    [SerializeField]
-    private RawImage icon;
-
-    [SerializeField]
-    private TMPro.TextMeshProUGUI description;
+    [SerializeField] private RawImage icon;
 
     private DDArtifactBase currentArtifact;
 
@@ -17,16 +13,15 @@ public class DDArtifactUI : MonoBehaviour
     {
         currentArtifact = artifact;
         icon.texture = currentArtifact.Icon;
-        description.text = currentArtifact.ArtifactName + "\r\n" + currentArtifact.Description;
     }
 
     public void StartHover()
     {
-        description.enabled = true;
+        DDGlobalManager.Instance.ToolTip.SetText(currentArtifact.ArtifactName + "\r\n" + currentArtifact.Description);
     }
 
     public void EndHover()
     {
-        description.enabled = false;
+        DDGlobalManager.Instance.ToolTip.SetText("");
     }
 }

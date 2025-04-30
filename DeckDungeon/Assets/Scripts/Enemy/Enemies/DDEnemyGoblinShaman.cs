@@ -39,7 +39,7 @@ public class DDEnemyGoblinShaman : DDEnemyBase
                 actions.Add(moveAction);
             }
 
-            actions.Add(new DDEnemyActionAttack(damage));
+            actions.Add(new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
         }
 
         return actions;

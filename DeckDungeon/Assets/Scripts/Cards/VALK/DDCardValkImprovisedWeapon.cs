@@ -28,7 +28,7 @@ public class DDCardValkImprovisedWeapon : DDCardValkGeneric
         yield return new WaitForSeconds(.25f);
 
         DDEnemyOnBoard enemy = selections[1] as DDEnemyOnBoard;
-        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, rangeType, enemy);
+        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, rangeType, enemy, true);
 
         yield return new WaitForSeconds(.1f);
     }

@@ -104,7 +104,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
             }
             else
             {
-                actions.Add(new DDEnemyActionAttack(damage));
+                actions.Add(new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
             }
         }
 

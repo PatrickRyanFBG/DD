@@ -25,7 +25,7 @@ public class DDEnemyGoblinAirRange : DDEnemyBase
         }
         else
         {
-            actingEnemy.GenericRangeAttackActions(ref actions, new DDEnemyActionAttack(damage));
+            actingEnemy.GenericRangeAttackActions(ref actions, new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
         }
 
         return actions;

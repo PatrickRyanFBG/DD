@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc629297f8fa3e74ebfe68624bdbddb2, type: 3}
   m_Name: DDArtifactFlatFooted
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactFlatFooted
+  artifactName: Flat Footed
   description: Catch enemies off gaurd and reduce their Expertise by 1.
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: bdfed9ae7e444c1468af93fa9deaf7a1, type: 3}
   enemyExpertiseReduced: 1

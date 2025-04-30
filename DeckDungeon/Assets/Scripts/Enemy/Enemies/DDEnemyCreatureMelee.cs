@@ -34,7 +34,7 @@ public class DDEnemyCreatureMelee : DDEnemyBase
         }
         else
         {
-            actingEnemy.GenericMeleeAttackActions(ref actions, new DDEnemyActionAttack(damage));
+            actingEnemy.GenericMeleeAttackActions(ref actions, new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
         }
 
         return actions;

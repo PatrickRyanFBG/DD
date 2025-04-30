@@ -17,7 +17,7 @@ public class DDHoverToolTip : MonoBehaviour
         bool left = mousePos.x < Screen.width / 2f;
         bool bottom = mousePos.y < Screen.height / 2f;
         
-        rect.pivot = new Vector2(left ? 0 : 1, bottom ? 0 : 1);
+        rect.pivot = new Vector2(left ? -.125f : 1.125f, bottom ? 0 : 1);
         rect.anchoredPosition = new Vector2(mousePos.x - Screen.width / 2f, mousePos.y - Screen.height / 2f);
     }
 

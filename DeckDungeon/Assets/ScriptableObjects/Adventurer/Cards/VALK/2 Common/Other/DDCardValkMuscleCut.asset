@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  cardName: MuscleCut
+  cardName: Muscle Cut
   description: 'Apply 5 Bleed
 
     Reduce Enemy Expertise 2'

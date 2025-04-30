@@ -21,9 +21,16 @@ MonoBehaviour:
   - rid: 7815311280090120293
   - rid: 7815311280090120294
   - rid: 7815311280090120295
+  - rid: 5728038381076086849
   references:
     version: 2
     RefIds:
+    - rid: 5728038381076086849
+      type: {class: DDCardFinishExplosive, ns: , asm: Assembly-CSharp}
+      data:
+        description: Deals 10 damage to a random enemy when Discarded.
+        icon: {fileID: 2800000, guid: fb8bde40d3b645248b5d10f702c2ae14, type: 3}
+        damage: 10
     - rid: 7815311280090120288
       type: {class: DDCardFinishSerrated, ns: , asm: Assembly-CSharp}
       data:
@@ -45,7 +52,7 @@ MonoBehaviour:
       type: {class: DDCardFinishSticky, ns: , asm: Assembly-CSharp}
       data:
         description: Not discard at the end of the round.
-        icon: {fileID: 0}
+        icon: {fileID: 2800000, guid: b705b834a8a34b34da2d968085963f14, type: 3}
     - rid: 7815311280090120293
       type: {class: DDCardFinishFleeting, ns: , asm: Assembly-CSharp}
       data:

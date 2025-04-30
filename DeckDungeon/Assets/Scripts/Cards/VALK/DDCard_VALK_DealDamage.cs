@@ -26,7 +26,7 @@ public class DDCard_VALK_DealDamage : DDCard_VALKBase
 
             if (enemy)
             {
-                DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, RangeType, enemy);
+                DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, RangeType, enemy, true);
             }
         }
 

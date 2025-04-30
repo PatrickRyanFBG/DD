@@ -64,7 +64,7 @@ public class DDEnemyBleedGuy : DDEnemyBase
             }
             else
             {
-                actions.Add(new DDEnemyActionAttack(damage));
+                actions.Add(new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
             }
         }
         // If 2 axes
@@ -90,7 +90,7 @@ public class DDEnemyBleedGuy : DDEnemyBase
                     // Attack But gains damage per bleed
                     actions.Add(new DDEnemyActionModifyAffix(EAffixType.Expertise, expertiseGain, false));
                     // Self Heal?
-                    actions.Add(new DDEnemyActionAttack(damage));
+                    actions.Add(new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
                 }
                 else
                 {
@@ -98,7 +98,7 @@ public class DDEnemyBleedGuy : DDEnemyBase
                     // Melee move
                     actions.Add(DDEnemyActionMove.CalculateBestMove(actingEnemy, EMoveDirection.Down, true));
                     // Attack but gains damage per bleed
-                    actions.Add(new DDEnemyActionAttack(damage));
+                    actions.Add(new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
                 }
             }
         }
@@ -131,6 +131,6 @@ public class DDEnemyActionHealPerBleed : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will heal equal to your bleed";
+        return "Heals self equal to your bleed.";
     }
 }

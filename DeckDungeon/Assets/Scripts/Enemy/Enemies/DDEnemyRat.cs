@@ -14,7 +14,7 @@ public class DDEnemyRat : DDEnemyBase
         EMoveDirection randomDirection = (EMoveDirection)Random.Range(0, 4);
 
         actions.Add(new DDEnemyActionMove(randomDirection));
-        actions.Add(new DDEnemyActionAttack(damage));
+        actions.Add(new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
 
         return actions;
     }

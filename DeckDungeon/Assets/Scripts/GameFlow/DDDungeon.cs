@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class DDDungeonStats
 {
@@ -37,7 +38,10 @@ public class DDDungeon : MonoBehaviour
     public int MaxHealth => maxHealth;
 
     private int currentHealth;
-
+    public int CurrentHealth => currentHealth;
+    
+    public UnityEvent<int, int> OnHealthChange;
+    
     private EDungeonPhase currentDungeonPhase = EDungeonPhase.DungeonStart;
 
     [SerializeField] private List<DDArtifactBase> artifacts = new List<DDArtifactBase>();
@@ -50,7 +54,7 @@ public class DDDungeon : MonoBehaviour
     [SerializeField] private DDCanvasShowDeckArea showDeckArea;
     [SerializeField] private DDShopArea shopArea;
 
-    public UnityEngine.Events.UnityEvent<EDungeonPhase> PhaseChanged;
+    public UnityEvent<EDungeonPhase> PhaseChanged;
 
     // Gold
     [Header("Gold")] private int goldAmount;
@@ -58,6 +62,8 @@ public class DDDungeon : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent<int> GoldAmountChanged;
 
+    [Header("UI")] [SerializeField] private RectTransform ui;
+    
     // Artifacts/Equipment
     [Header("Testing")] [SerializeField] private bool forceInternalData;
 
@@ -306,7 +312,7 @@ public class DDDungeon : MonoBehaviour
 
     public IEnumerator AddCardToDeckOvertime(DDCardBase card, Vector3 startPos)
     {
-        DDCardShown shown = GameObject.Instantiate(cardPrefabForAdded, startPos, Quaternion.identity);
+        DDCardShown shown = Instantiate(cardPrefabForAdded, startPos, Quaternion.identity, ui);
         shown.SetUpCard(card);
         shown.transform.DOMove(cardAddedEnd.position, .3f, false);
         Destroy(shown.gameObject, .35f);
@@ -381,6 +387,7 @@ public class DDDungeon : MonoBehaviour
 
     private void UpdateHealthText()
     {
+        OnHealthChange?.Invoke(currentHealth, maxHealth);
         healthText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
     }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  cardName: GainExpertise
+  cardName: Gain Expertise
   description: Gain 3 Expertise
   rangeType: 2
   defaultCardFinishes: 
@@ -31,7 +31,7 @@ MonoBehaviour:
     - rid: 7815311197493264618
       type: {class: DDCardEffectApplyAffixToPlayer, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 10
+        targetType: 14
         differentTarget: 0
         useLastTarget: 0
         affixType: 0

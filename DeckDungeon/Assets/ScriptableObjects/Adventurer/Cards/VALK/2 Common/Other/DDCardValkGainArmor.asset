@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 1
   cardRarity: 0
   image: {fileID: 0}
-  cardName: GainArmor
+  cardName: Gain Armor
   description: Gain 10 Armor
   rangeType: 2
   defaultCardFinishes: 

@@ -41,6 +41,13 @@ public class DDPlayerMatchHand : MonoBehaviour
     {
         for (int i = cards.Count - 1; i >= 0; i--)
         {
+            if (cards[i].CurrentCard.AllCardFinishes.ContainsKey(EPlayerCardFinish.Sticky))
+            {
+                // play sticky animation
+                yield return null;
+                continue;
+            }
+            
             yield return cards[i].CurrentCard.DiscardCard(true);
             if (cards[i])
             {

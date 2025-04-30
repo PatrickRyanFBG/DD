@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventName: A Junk Heap
   eventDescription: You come accross a messy pile of junk.
-  eventImage: {fileID: 0}
+  eventImage: {fileID: 2800000, guid: 6637435aa6432b248a014391305a4fdd, type: 3}
   rummageText: Pick Through
   afterRummageDescription: You found something worth wild after all.
   removeCardText: Add To The Pile

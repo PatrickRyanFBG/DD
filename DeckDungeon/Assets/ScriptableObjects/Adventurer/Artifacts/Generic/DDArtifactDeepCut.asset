@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61226d02dd5795645bfd227982931160, type: 3}
   m_Name: DDArtifactDeepCut
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactDeepCut
+  artifactName: Deep Cut
   description: When you apply a bleed, apply one more.
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: e74531e639731f64f9e1b30737a71de6, type: 3}
   additionalBleed: 1

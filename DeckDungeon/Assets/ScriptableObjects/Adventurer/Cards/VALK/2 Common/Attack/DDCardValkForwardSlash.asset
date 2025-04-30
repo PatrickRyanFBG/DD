@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 0}
-  cardName: ForwardSlash
+  cardName: Forward Slash
   description: 'Deal 5 Damage
 
     Draw 1 Card'

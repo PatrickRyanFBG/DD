@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public class DDEnemyWoodlandBoss : DDEnemyBase
 {
-    [Header("Woodland Boss")] 
-    [SerializeField] private float emptyLocSpawnOverPercent = .5f;
+    [Header("Woodland Boss")] [SerializeField]
+    private float emptyLocSpawnOverPercent = .5f;
 
     [SerializeField] private int attackDamage = 5;
     [SerializeField] private int sneakAttackDamage = 10;
-    
+
     public override List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy)
     {
         List<DDEnemyActionBase> actions = new();
-        
+
         if (actingEnemy.gameObject.activeInHierarchy)
         {
             /*
@@ -23,18 +23,18 @@ public class DDEnemyWoodlandBoss : DDEnemyBase
             if (enemyLoc.x == 0 || enemyLoc.x == DDGamePlaySingletonHolder.Instance.Board.RowCountIndex)
             {
                 // We are on the edge somewhere, lets try to move
-                
+
             }
             else if (enemyLoc.y == 0 || enemyLoc.y == DDGamePlaySingletonHolder.Instance.Board.ColumnCountIndex)
             {
-                
+
             }
             else
             */
             {
                 List<DDLocation> surroundingLocations =
                     DDGamePlaySingletonHolder.Instance.Board.GetSurroundingLocations(actingEnemy.CurrentLocaton.Coord);
-            
+
                 List<Vector2Int> emptyLocations = new List<Vector2Int>();
 
                 foreach (DDLocation location in surroundingLocations)
@@ -44,23 +44,24 @@ public class DDEnemyWoodlandBoss : DDEnemyBase
                         emptyLocations.Add(location.Coord);
                     }
                 }
-                
+
                 if (emptyLocations.Count / (float)surroundingLocations.Count > emptyLocSpawnOverPercent)
                 {
                     actions.Add(new DDEnemyActionPlantBushes(actingEnemy.CurrentLocaton.Coord));
                 }
                 else
                 {
-                    actions.Add(new DDEnemyActionAttack(attackDamage));
+                    actions.Add(new DDEnemyActionAttack(attackDamage, actingEnemy.CurrentEnemy));
                 }
-            
+
                 actions.Add(new DDEnemyActionHideInEnemy());
             }
         }
         else
         {
-            actions.Add(new DDEnemyActionRevealAndSneakAttack(attackDamage, sneakAttackDamage));
+            actions.Add(new DDEnemyActionRevealAndSneakAttack(attackDamage, actingEnemy.CurrentEnemy, sneakAttackDamage));
         }
+
         return actions;
     }
 }
@@ -76,7 +77,7 @@ public class DDEnemyActionHideInEnemy : DDEnemyActionBase
     {
         List<DDLocation> surroundingLocations =
             DDGamePlaySingletonHolder.Instance.Board.GetSurroundingLocations(enemy.CurrentLocaton.Coord);
-        
+
         List<DDEnemyOnBoard> bushes = new();
 
         foreach (DDLocation location in surroundingLocations)
@@ -106,7 +107,7 @@ public class DDEnemyActionHideInEnemy : DDEnemyActionBase
                 eob.DeathActions.Add(BushDestroyed(enemy, eob.CurrentLocaton.Coord));
             }
         }
-        
+
         yield return null;
     }
 
@@ -115,13 +116,13 @@ public class DDEnemyActionHideInEnemy : DDEnemyActionBase
         var loc = DDGamePlaySingletonHolder.Instance.Board.GetLocation(location);
         loc.SnapEnemyToHere(enemy);
         enemy.gameObject.SetActive(true);
-        
+
         yield return null;
     }
 
     public override string GetDescription()
     {
-        return "Attempts to hide in a nearby bush.";
+        return "Attempts to hide in a surrounding Bush.";
     }
 }
 
@@ -129,11 +130,11 @@ public class DDEnemyActionRevealAndSneakAttack : DDEnemyActionAttack
 {
     private int sneakAttackDamage;
 
-    public DDEnemyActionRevealAndSneakAttack(int regDamage, int sneakDamage) : base(regDamage)
+    public DDEnemyActionRevealAndSneakAttack(int regDamage, DDEnemyBase enemy, int sneakDamage) : base(regDamage, enemy)
     {
         sneakAttackDamage = sneakDamage;
     }
-    
+
     public override Texture GetIcon()
     {
         return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.ActionReveal;
@@ -162,19 +163,19 @@ public class DDEnemyActionRevealAndSneakAttack : DDEnemyActionAttack
 
     public override string GetDescription()
     {
-        return "If you are seeing this, the enemy is already revealed.";
+        return "Deals " + damage + " [Ranged], but " + sneakAttackDamage + " if hidden.";
     }
 }
 
 public class DDEnemyActionPlantBushes : DDEnemyActionBase
 {
     private List<DDLocation> surroundingLocations;
-    
+
     public DDEnemyActionPlantBushes(Vector2Int loc)
     {
         surroundingLocations = DDGamePlaySingletonHolder.Instance.Board.GetSurroundingLocations(loc);
     }
-    
+
     public override Texture GetIcon()
     {
         return DDGamePlaySingletonHolder.Instance.EnemyLibrary.EnemyDictionary.Bush.Image;
@@ -186,14 +187,15 @@ public class DDEnemyActionPlantBushes : DDEnemyActionBase
 
         foreach (var loc in surroundingLocations)
         {
-            DDGamePlaySingletonHolder.Instance.Board.SpawnEnemy(loc.Coord, DDGamePlaySingletonHolder.Instance.EnemyLibrary.EnemyDictionary.Bush);
-            
+            DDGamePlaySingletonHolder.Instance.Board.SpawnEnemy(loc.Coord,
+                DDGamePlaySingletonHolder.Instance.EnemyLibrary.EnemyDictionary.Bush);
+
             yield return new WaitForSeconds(0.1f);
         }
     }
 
     public override string GetDescription()
     {
-        return "Plants bushed in surrounding locations.";
+        return "Spawns Bushes in surrounding locations.";
     }
 }

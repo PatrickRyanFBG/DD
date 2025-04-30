@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public abstract class DDEnemyActionBase
 {
     public bool HiddenAction = false;
-    
+
     public abstract Texture GetIcon();
 
     public virtual void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
@@ -106,7 +106,7 @@ public class DDEnemyActionMove : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will attempt to move " + moveDirection.ToString();
+        return "Attempts to [Move] " + moveDirection.ToString() + ".";
     }
 
     private static bool CanMoveToSpot(int turnNumber, Vector2Int checkLoc)
@@ -276,10 +276,12 @@ public class DDEnemyActionMove : DDEnemyActionBase
 public class DDEnemyActionAttack : DDEnemyActionBase
 {
     protected int damage;
+    protected ERangeType rangedType = ERangeType.None;
 
-    public DDEnemyActionAttack(int dam)
+    public DDEnemyActionAttack(int dam, DDEnemyBase enemy)
     {
         damage = dam;
+        rangedType = enemy.RangeType;
     }
 
     public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
@@ -330,7 +332,7 @@ public class DDEnemyActionAttack : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will deal " + damage + " to you";
+        return "Deals [" + rangedType + "]" + damage + ".";
     }
 }
 
@@ -374,7 +376,7 @@ public class DDEnemyActionSpawnEnemy : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will attempt to spawn a " + enemyToSpawn.EntityName + " on an empty location";
+        return "Spawn a " + enemyToSpawn.EntityName + " at location.";
     }
 }
 
@@ -436,11 +438,11 @@ public class DDEnemyActionHealAlly : DDEnemyActionBase
     {
         if (targetLocation == null)
         {
-            return "This enemy will heal itself for " + healAmount;
+            return "Heal self for " + healAmount + ".";
         }
         else
         {
-            return "This enemy will attempt to heal a specific location for " + healAmount;
+            return "Heal at location for " + healAmount + ".";
         }
     }
 }
@@ -515,11 +517,11 @@ public class DDEnemyActionModifyAffix : DDEnemyActionBase
     {
         if (targetLocation == null)
         {
-            return "This enemy will buff their own " + affix.ToString() + " for " + buffAmount;
+            return "Buffs own " + affix.ToString() + " for " + buffAmount + ".";
         }
         else
         {
-            return "This enemy will attempt to buff " + affix.ToString() + " at a location for " + buffAmount;
+            return "Buffs ally's " + affix.ToString() + " at location for " + buffAmount + ".";
         }
     }
 }
@@ -549,7 +551,7 @@ public class DDEnemyActionAddCardTo : DDEnemyActionBase
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
         Vector3 position = DDGamePlaySingletonHolder.Instance.MainCamera.WorldToScreenPoint(enemy.transform.position);
-        
+
         for (int i = 0; i < cardAmount; i++)
         {
             switch (location)
@@ -569,7 +571,7 @@ public class DDEnemyActionAddCardTo : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will add " + cardAmount + " " + cardToAdd.CardName + " to your " + location.ToString() + ".";
+        return "Adds " + cardAmount + " " + cardToAdd.CardName + " to " + location.ToString() + ".";
     }
 
     public override Texture GetIcon()
@@ -660,7 +662,7 @@ public class DDEnemyActionBleedAttack : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will deal " + damage + " to you";
+        return "Applies " + damage + " to you";
     }
 }
 
@@ -674,7 +676,7 @@ public class DDEnemyActionModifyPlayerAffix : DDEnemyActionBase
         affixType = type;
         amount = amt;
     }
-    
+
     public override void DisplayInformation(UnityEngine.UI.RawImage image, TMPro.TextMeshProUGUI text)
     {
         if (amount != 0)
@@ -703,9 +705,8 @@ public class DDEnemyActionModifyPlayerAffix : DDEnemyActionBase
         return DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affixType).Image;
     }
 
-
     public override string GetDescription()
     {
-        return "This enemy will modify player's " + affixType.ToString() + " for " + amount;
+        return "Applies " + amount + affixType.ToString() + " to you.";
     }
-} 
+}

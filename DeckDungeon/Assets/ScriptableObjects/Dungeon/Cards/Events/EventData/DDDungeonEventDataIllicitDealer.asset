@@ -15,7 +15,7 @@ MonoBehaviour:
   eventName: An Illicit Dealer
   eventDescription: "A cloaked figure approaches you. \nThey say they've obtained
     off market artifacts. \nWill you purchase one?"
-  eventImage: {fileID: 0}
+  eventImage: {fileID: 2800000, guid: 1f03ded9e23ff3947bb1527c5d68bcc8, type: 3}
   alphaArtifact: {fileID: 11400000, guid: 1a08cb69e279d8647911937e45cbf8df, type: 2}
   omegaArtifact: {fileID: 11400000, guid: df48cebfe8e6c694cb70c3c5f34e238d, type: 2}
   alphaText: Alpha

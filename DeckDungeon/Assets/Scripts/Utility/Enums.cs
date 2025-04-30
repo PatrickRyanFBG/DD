@@ -90,12 +90,21 @@ public enum EPlayerCardFinish
     Serrated,
     Sharp,
     Weighty,
+    Explosive,
+    Sticky,
+    END_OF_POSITIVE,
     // Neutral
     Fleeting = 100, 
-    Sticky,
     // Negative
     Fragile = 200,
     Siphon,
+}
+
+public enum EPlayerCardFinishPriority
+{
+    First,
+    None,
+    Last
 }
 
 public enum EDungeonCardFinish
@@ -126,8 +135,9 @@ public enum ETargetType
     Location = 7,
     Row = 8,
     Column = 9,
-    EntireOrEmpty = 10,
-    Enemy = 13
+    Entire = 10,
+    Enemy = 13,
+    Player
 }
 
 public enum EPlayerCardLifeTime

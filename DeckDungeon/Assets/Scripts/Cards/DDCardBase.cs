@@ -77,16 +77,20 @@ public abstract class DDCardBase : DDScriptableObject
         cardInHand = inHand;
 
         cardInHand.Image.texture = image;
-        cardInHand.CardTypeText.text = cardType.ToString();
         cardInHand.NameText.text = CardName;
         cardInHand.DescText.text = description;
+        cardInHand.TypesText.text = cardType.ToString();
+        if (rangeType != ERangeType.None)
+        {
+            cardInHand.TypesText.text += " | " + rangeType.ToString();
+        }
     }
 
     public virtual void AddRandomFinish()
     {
-        for (int i = 1; i <= (int)EPlayerCardFinish.Weighty; i++)
+        for (int i = 1; i < (int)EPlayerCardFinish.END_OF_POSITIVE; i++)
         {
-            if (AddCardFinishByType((EPlayerCardFinish)Random.Range(1, (int)(EPlayerCardFinish.Weighty + 1))))
+            if (AddCardFinishByType((EPlayerCardFinish)Random.Range(1, (int)EPlayerCardFinish.END_OF_POSITIVE)))
             {
                 return;
             }
@@ -107,7 +111,21 @@ public abstract class DDCardBase : DDScriptableObject
 
         if (cardExecutionActions.TryGetValue(finish.PlayerCardLifeTime, out List<DDPlayerCardFinish> finishes))
         {
-            finishes.Add(finish);
+            bool added = false;
+            for (int i = 0; i < finishes.Count; i++)
+            {
+                if (finish.PlayerCardFinishPriority < finishes[i].PlayerCardFinishPriority)
+                {
+                    finishes.Insert(i, finish);
+                    added = true;
+                    break;
+                }
+            }
+
+            if (!added)
+            {
+                finishes.Add(finish);
+            }
         }
         else
         {

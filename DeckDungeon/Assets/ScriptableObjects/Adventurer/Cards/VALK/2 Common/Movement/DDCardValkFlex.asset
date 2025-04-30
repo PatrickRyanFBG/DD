@@ -42,7 +42,7 @@ MonoBehaviour:
     - rid: 7815311197493264617
       type: {class: DDCardEffectApplyAffixToPlayer, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 6
+        targetType: 14
         differentTarget: 0
         useLastTarget: 1
         affixType: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a487f04e2d1154baae889c872a9efd, type: 3}
   m_Name: DDArtifactArmory
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactArmory
+  artifactName: Armory
   description: Start encounters with 5 Armor in odd lanes.
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 8ce77e114dc779c4ba18e22bb3e0cee8, type: 3}
   armorGained: 5

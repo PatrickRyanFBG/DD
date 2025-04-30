@@ -8,6 +8,7 @@ public abstract class DDPlayerCardFinish
 {
     public abstract EPlayerCardFinish PlayerCardFinish { get; }
     public abstract EPlayerCardLifeTime PlayerCardLifeTime { get; }
+    public virtual EPlayerCardFinishPriority PlayerCardFinishPriority => EPlayerCardFinishPriority.None;
 
     [SerializeField, Multiline] private string description;
     
@@ -80,18 +81,39 @@ public class DDCardFinishWeighty : DDPlayerCardFinish
     public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
-// Neutral
 public class DDCardFinishSticky : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Sticky;
     public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
+public class DDCardFinishExplosive : DDPlayerCardFinish
+{
+    public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Explosive;
+    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Discarded;
+
+    [SerializeField] private int damage;
+    
+    public override IEnumerator ExecuteFinish(DDCardBase card)
+    {
+        List<DDEnemyOnBoard> allEnemies = new();
+        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        DDEnemyOnBoard randomEnemy = allEnemies.GetRandomElement();
+        
+        // ANIMATE SHIT HERE
+        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, ERangeType.None, randomEnemy, false);
+        
+        yield return new WaitForSeconds(0.1f);
+    }
+}
+
+// Neutral
 public class DDCardFinishFleeting : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Fleeting;
     public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Discarded;
-    
+    public override EPlayerCardFinishPriority PlayerCardFinishPriority => EPlayerCardFinishPriority.Last;
+
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
         // Animate discard shit

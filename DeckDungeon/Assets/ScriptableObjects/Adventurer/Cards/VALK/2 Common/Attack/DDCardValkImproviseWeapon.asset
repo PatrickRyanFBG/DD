@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 2800000, guid: 9ee3ace4a697b1349b3877cb321ac401, type: 3}
-  cardName: ImproviseWeapon
+  cardName: Improvise Weapon
   description: 'Discard A Card
 
     Deal 10 Damage'

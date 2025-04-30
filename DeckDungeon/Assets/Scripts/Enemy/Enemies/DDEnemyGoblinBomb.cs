@@ -46,7 +46,7 @@ public class DDEnemyActionExplode : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "This enemy will destroy it self and deal " + damage + " to you";
+        return "Destroy self and deal " + damage + ".";
     }
 
     public override Texture GetIcon()

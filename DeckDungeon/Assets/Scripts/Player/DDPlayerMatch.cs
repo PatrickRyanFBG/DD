@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Serialization;
 
 public class DDPlayerMatch : MonoBehaviour
@@ -34,6 +35,8 @@ public class DDPlayerMatch : MonoBehaviour
 
     [SerializeField] private Arrow.ArrowRenderer arrow;
 
+    [SerializeField] private Transform arrowStart;
+    
     // This is resource, possible Player_Match will have child classes for different characters?
     private int momentumCounter;
 
@@ -49,18 +52,31 @@ public class DDPlayerMatch : MonoBehaviour
     private DDAffixManager affixManager;
 
     public UnityEngine.Events.UnityEvent<DDCardInHand, EPlayerCardLifeTime> CardLifeTimeChanged;
+
+    [Header("Health")] [SerializeField] private TMPro.TextMeshProUGUI healthText;
+    
+    [SerializeField] private Image healthBar;
     
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI momentum;
 
     private void OnEnable()
     {
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.Dungeon.OnHealthChange.AddListener(HealthChanged);
+        HealthChanged(DDGamePlaySingletonHolder.Instance.Dungeon.CurrentHealth, DDGamePlaySingletonHolder.Instance.Dungeon.MaxHealth);
     }
 
     private void OnDisable()
     {
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
+        DDGamePlaySingletonHolder.Instance.Dungeon.OnHealthChange.RemoveListener(HealthChanged);
         cardResolving = null;
+    }
+
+    public void HealthChanged(int current, int max)
+    {
+        healthText.text = $"{current} / {max}";
+        healthBar.fillAmount = (float)current/max;
     }
 
     public void EncounterStarted()
@@ -132,7 +148,7 @@ public class DDPlayerMatch : MonoBehaviour
                 arrow.gameObject.SetActive(true);
             }
 
-            arrow.SetPositions(selectedCardLocation.position + Vector3.up,
+            arrow.SetPositions(arrowStart.position,
                 DDGamePlaySingletonHolder.Instance.PlayerSelector.GetMousePos());
 
             if (Input.GetMouseButtonDown(1))
@@ -248,7 +264,8 @@ public class DDPlayerMatch : MonoBehaviour
         }
         else if (selectedCard)
         {
-            if (selectedCard.IsSelectionValid(selection, currentTargetIndex))
+            // Safety check here for targettype because cards/player are now UI based and can be selected
+            if (selection.TargetType == cardTargets[currentTargetIndex] && selectedCard.IsSelectionValid(selection, currentTargetIndex))
             {
                 cardSelections.Add(selection);
                 if (++currentTargetIndex >= cardTargets.Count)
@@ -310,16 +327,20 @@ public class DDPlayerMatch : MonoBehaviour
         cardResolving = null;
     }
 
-    public void DealDamageToEnemy(int damage, ERangeType rangeType, DDEnemyOnBoard enemyOnBoard)
+    public void DealDamageToEnemy(int damage, ERangeType rangeType, DDEnemyOnBoard enemyOnBoard, bool useExpertise)
     {
         int totalDamage = damage;
-        int? dex = affixManager.TryGetAffixValue(EAffixType.Expertise);
-        if (dex != null)
+        
+        if (useExpertise)
         {
-            totalDamage += dex.Value;
-        }
+            int? dex = affixManager.TryGetAffixValue(EAffixType.Expertise);
+            if (dex != null)
+            {
+                totalDamage += dex.Value;
+            }
 
-        totalDamage += GetFinishCountByType(EPlayerCardFinish.Sharp);
+            totalDamage += GetFinishCountByType(EPlayerCardFinish.Sharp);
+        }
 
         enemyOnBoard.TakeDamage(totalDamage, rangeType, false);
     }

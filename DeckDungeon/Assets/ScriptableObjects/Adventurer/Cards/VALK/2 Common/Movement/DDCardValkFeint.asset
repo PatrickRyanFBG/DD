@@ -42,7 +42,7 @@ MonoBehaviour:
     - rid: 7815311197493264620
       type: {class: DDCardEffectDrawCard, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 6
+        targetType: 14
         differentTarget: 0
         useLastTarget: 1
         amount: 1

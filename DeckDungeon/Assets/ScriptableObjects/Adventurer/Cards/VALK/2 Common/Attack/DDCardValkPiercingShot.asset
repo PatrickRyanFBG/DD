@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 0}
-  cardName: PiercingShot
+  cardName: Piercing Shot
   description: Deal 10 Damage To Lane
   rangeType: 1
   defaultCardFinishes: 

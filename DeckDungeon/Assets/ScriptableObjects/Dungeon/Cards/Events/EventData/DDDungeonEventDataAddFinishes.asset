@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventName: Cold Forge
   eventDescription: A cold forge lies ahead. Looks like it could still function.
-  eventImage: {fileID: 0}
+  eventImage: {fileID: 2800000, guid: ea2d550176e182747a60fce2a775f316, type: 3}
   finishesText: Forge Away
   amountToFinish: 5
   afterFinishesDescription: You leave feeling stronger.

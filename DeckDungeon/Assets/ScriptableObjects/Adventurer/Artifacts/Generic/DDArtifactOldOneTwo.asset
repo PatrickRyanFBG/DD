@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4e01177b4bf3e4cb6e498ac7ab7d06, type: 3}
   m_Name: DDArtifactOldOneTwo
   m_EditorClassIdentifier: 
-  artifactName: DDArtifactOldOneTwo
+  artifactName: Old One Two
   description: Start encounters with 2 Retaliate in even lanes.
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 3c026bcd83f16f34a863006d574ef42f, type: 3}
   retaliateGained: 2
