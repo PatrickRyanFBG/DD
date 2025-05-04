@@ -60,6 +60,9 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 
     [SerializeField] private List<DDDungeonCardBase> cardsToShuffleInAfter;
 
+    [SerializeField] private bool awardsArtifacts;
+    public bool AwardsArtifacts => awardsArtifacts;
+    
     [SerializeField] private DDDungeonCardEvent eventAfterComplete;
     public DDDungeonCardEvent EventAfterComplete => eventAfterComplete;
 
@@ -109,7 +112,7 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 
     public virtual IEnumerator EncounterCompleted()
     {
-        if (cardsToShuffleInAfter != null)
+        if (cardsToShuffleInAfter.Count > 0)
         {
             yield return DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDungeonDeckOvertime(cardsToShuffleInAfter);
         }

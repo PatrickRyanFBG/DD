@@ -8,13 +8,14 @@ public class DDArtifactOmega : DDArtifactBase
     
     public override void Equipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
+
         DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged.AddListener(CardLifeTimeChanged);
     }
     
     public override void Unequipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
         DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged.RemoveListener(CardLifeTimeChanged);
     }
 
@@ -26,9 +27,10 @@ public class DDArtifactOmega : DDArtifactBase
         }
     }
 
-    private void EncounterPhaseChanged(EEncounterPhase phase)
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
     {
-        if (phase == EEncounterPhase.PlayersEndTurn)
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == EEncounterPhase.PlayersEndTurn)
         {
             if (lastCardPlayed)
             {
@@ -36,5 +38,7 @@ public class DDArtifactOmega : DDArtifactBase
             }
             lastCardPlayed = null;
         }
+        
+        yield return null;
     }
 }

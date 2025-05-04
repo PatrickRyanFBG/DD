@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690613110923967300, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690613110923967300, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690613110923967300, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690613110923967300, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
       propertyPath: m_AnchorMin.x
@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8690613110923967300, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8690613110923967300, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -159,17 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1376674656121139672 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6608509270905949575, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
-  m_PrefabInstance: {fileID: 5236783003649948767}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3251020419016752149 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7327703755323031626, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
@@ -213,7 +202,6 @@ MonoBehaviour:
   hoverTime: 0.3
   selectedTime: 0.2
   image: {fileID: 3251020419016752149}
-  cardTypeText: {fileID: 1376674656121139672}
   nameText: {fileID: 644608119518762689}
   descText: {fileID: 6290902745085669777}
   typesText: {fileID: 5967408787374300535}

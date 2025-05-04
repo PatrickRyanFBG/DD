@@ -286,7 +286,7 @@ MonoBehaviour:
         - m_Target: {fileID: 4600203922219708165}
           m_TargetAssemblyTypeName: DDCardInHand, Assembly-CSharp
           m_MethodName: Hovered
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -576,7 +576,6 @@ MonoBehaviour:
   hoverTime: 0.3
   selectedTime: 0.2
   image: {fileID: 7327703755323031626}
-  cardTypeText: {fileID: 0}
   nameText: {fileID: 4638375349827414686}
   descText: {fileID: 2297131381673151950}
   typesText: {fileID: 1908599119671648552}

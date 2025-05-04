@@ -18,7 +18,7 @@ MonoBehaviour:
   image: {fileID: 0}
   cardName: SpearThrow
   description: Deal 5 Ranged Damage
-  rangeType: 0
+  rangeType: 1
   defaultCardFinishes: 
   price: {x: 100, y: 200}
   effects:

@@ -12,19 +12,22 @@ public class DDArtifactGainAffixAtTime : DDArtifactBase
     
     public override void Equipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
     }
     
     public override void Unequipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
     }
 
-    private void EncounterPhaseChanged(EEncounterPhase phase)
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
     {
-        if (phase == encounterPhase)
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == encounterPhase)
         {
             DDGamePlaySingletonHolder.Instance.Player.ModifyAffix(affixType, amount, false);
         }
+        
+        yield return null;
     }
 }

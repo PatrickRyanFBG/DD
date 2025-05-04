@@ -9,19 +9,22 @@ public class DDArtifactPreparations : DDArtifactBase
 
     public override void Equipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
-    }
-
-    public override void Unequipped()
-    {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
     }
     
-    private void EncounterPhaseChanged(EEncounterPhase phase)
+    public override void Unequipped()
     {
-        if (phase == EEncounterPhase.EncounterStart)
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
+    }
+
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
+    {
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == EEncounterPhase.EncounterStart)
         {
             DDGamePlaySingletonHolder.Instance.Player.AdjustHandSize(extraDrawCount);
         }
+        
+        yield return null;
     }
 }

@@ -17,7 +17,11 @@ public class DDCardSelection : MonoBehaviour
     {
         if (fromEncounter)
         {
-            if (fromEncounter.EventAfterComplete)
+            if (fromEncounter.AwardsArtifacts)
+            {
+                DDGamePlaySingletonHolder.Instance.Dungeon.PromptArtifacts();
+            }
+            else if (fromEncounter.EventAfterComplete)
             {
                 DDGamePlaySingletonHolder.Instance.Dungeon.StartEvent(fromEncounter.EventAfterComplete);
             }

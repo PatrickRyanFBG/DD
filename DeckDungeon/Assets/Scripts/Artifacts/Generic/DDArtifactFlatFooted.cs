@@ -8,17 +8,18 @@ public class DDArtifactFlatFooted : DDArtifactBase
 
     public override void Equipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
-    }
-
-    public override void Unequipped()
-    {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
     }
     
-    private void EncounterPhaseChanged(EEncounterPhase phase)
+    public override void Unequipped()
     {
-        if (phase == EEncounterPhase.EncounterStart)
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
+    }
+
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
+    {
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == EEncounterPhase.EncounterStart)
         {
             List<DDEnemyOnBoard> allEnemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies;
             foreach (var e in allEnemies)
@@ -26,5 +27,7 @@ public class DDArtifactFlatFooted : DDArtifactBase
                 e.ModifyAffix(EAffixType.Expertise, -enemyExpertiseReduced, false);
             }
         }
+        
+        yield return null;
     }
 }

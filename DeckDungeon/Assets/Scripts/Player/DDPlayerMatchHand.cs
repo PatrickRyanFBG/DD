@@ -10,14 +10,19 @@ public class DDPlayerMatchHand : MonoBehaviour
 
     public IEnumerator AddCard(DDCardInHand card)
     {
+        DDGlobalManager.Instance.ClipLibrary.DrawCard.PlayNow();
+        
         cards.Add(card);
         card.SetCanHover(false);
         card.UpdateDisplayInformation();
         card.gameObject.SetActive(true);
         card.transform.SetParent(transform);
 
-        yield return card.CurrentCard.DrawCard();
+        yield return card.DrawCard();
         UpdateCardsPosition();
+        
+        yield return new WaitForSeconds(.1f);
+        
         card.SetCanHover(true);
     }
 
@@ -33,7 +38,7 @@ public class DDPlayerMatchHand : MonoBehaviour
     {
         for (int i = cards.Count - 1; i >= 0; i--)
         {
-            yield return cards[i].CurrentCard.EndOfTurn();
+            yield return cards[i].EndOfTurn();
         }
     }
     
@@ -47,24 +52,24 @@ public class DDPlayerMatchHand : MonoBehaviour
                 yield return null;
                 continue;
             }
-            
-            yield return cards[i].CurrentCard.DiscardCard(true);
-            if (cards[i])
-            {
-                discard.CardDiscarded(cards[i]);
-            }
 
-            cards.RemoveAt(i);
+            yield return DiscardCard(cards[i], discard);
+            
+            yield return new WaitForSeconds(.1f);
         }
     }
 
     public IEnumerator DiscardCard(DDCardInHand card, DDPlayerMatchDiscard discard)
     {
-        cards.Remove(card);
-        yield return card.CurrentCard.DiscardCard(false);
-        if (card)
+        if (cards.Remove(card))
         {
-            discard.CardDiscarded(card);
+            DDGlobalManager.Instance.ClipLibrary.DiscardCard.PlayNow();
+            
+            yield return card.DiscardCard(false);
+            if (card)
+            {
+                discard.CardDiscarded(card);
+            }
         }
     }
 

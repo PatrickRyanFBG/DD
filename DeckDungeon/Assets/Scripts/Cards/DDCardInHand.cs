@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DDCardInHand : DDSelection
 {
     [SerializeField] private float hoverDistance = 160f;
-    
+
     [SerializeField] private float hoverTime = 1;
     private bool canHover = true;
 
@@ -22,7 +22,7 @@ public class DDCardInHand : DDSelection
 
     [SerializeField] private TextMeshProUGUI descText;
     public TextMeshProUGUI DescText => descText;
-    
+
     [SerializeField] private TextMeshProUGUI typesText;
     public TextMeshProUGUI TypesText => typesText;
 
@@ -49,7 +49,7 @@ public class DDCardInHand : DDSelection
         currentCard = cardBase;
 
         transform.name = "CIH: " + currentCard.CardName;
-        
+
         UpdateDisplayInformation();
 
         canHover = hover;
@@ -99,9 +99,9 @@ public class DDCardInHand : DDSelection
         // Also don't like how we are sort of jacking this callback
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected?.Invoke(this);
     }
-    
+
     // Called from UI
-    public override void Hovered()
+    public override void Hovered(bool fromAnotherSelection = false)
     {
         if (selected || !canHover)
         {
@@ -113,6 +113,8 @@ public class DDCardInHand : DDSelection
             StopCoroutine(moveDownCoroutine);
             moveDownCoroutine = null;
         }
+
+        DDGlobalManager.Instance.ClipLibrary.HoverCard.PlayNow();
 
         moveUpCoroutine = StartCoroutine(MoveUp());
     }
@@ -134,10 +136,30 @@ public class DDCardInHand : DDSelection
         moveDownCoroutine = StartCoroutine(MoveDown());
     }
 
+    public IEnumerator DrawCard()
+    {
+        yield return CurrentCard.DrawCard();
+
+        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(this, EPlayerCardLifeTime.Drawn);
+    }
+
     public IEnumerator ExecuteCard(List<DDSelection> selections)
     {
         selected = false;
         yield return currentCard.ExecuteCard(selections);
+        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(this, EPlayerCardLifeTime.Played);
+    }
+
+    public IEnumerator EndOfTurn ()
+    {
+        yield return CurrentCard.EndOfTurn();
+    }
+
+    public IEnumerator DiscardCard(bool endOfTurn)
+    {
+        yield return CurrentCard.DiscardCard(endOfTurn);
+        
+        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(this, EPlayerCardLifeTime.Discarded);
     }
 
     private IEnumerator MoveUp()
@@ -201,6 +223,8 @@ public class DDCardInHand : DDSelection
             moveDownCoroutine = null;
         }
 
+        DDGlobalManager.Instance.ClipLibrary.SelectCard.PlayNow();
+
         prevLocation = transform.localPosition;
         prevLocation.y = 0;
 
@@ -213,7 +237,7 @@ public class DDCardInHand : DDSelection
     private IEnumerator CardSelectedOverTime(Vector3 location)
     {
         canHover = false;
-        
+
         Vector3 pos = transform.localPosition;
         float time = 0;
 
@@ -255,7 +279,7 @@ public class DDCardInHand : DDSelection
         }
 
         transform.localPosition = prevLocation;
-        
+
         deselectedCoroutine = null;
 
         canHover = true;

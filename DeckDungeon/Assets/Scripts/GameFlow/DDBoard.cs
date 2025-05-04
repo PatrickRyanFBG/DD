@@ -71,15 +71,19 @@ public class DDBoard : MonoBehaviour
             {
                 int checkCoord = currentCoord.y + toAdd;
                 DDEnemyOnBoard occupiedEnemy = columns[currentCoord.x].Locations[checkCoord].GetEnemy();
-                if (occupiedEnemy != null)
+                if (occupiedEnemy)
                 {
                     // The next position has an enemy so we can't move any more
                     // We bonk though?!
                     if (fromPlayer)
                     {
-                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
-                        enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
-                        occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position,
+                            () =>
+                            {
+                                DDGlobalManager.Instance.ClipLibrary.Bonk.PlayNow();
+                                enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                                occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                            });
                     }
 
                     break;
@@ -103,15 +107,19 @@ public class DDBoard : MonoBehaviour
             {
                 int checkCoord = currentCoord.x + toAdd;
                 DDEnemyOnBoard occupiedEnemy = columns[checkCoord].Locations[currentCoord.y].GetEnemy();
-                if (occupiedEnemy != null)
+                if (occupiedEnemy)
                 {
                     // The next position has an enemy so we can't move any more
                     // We bonk though?!
                     if (fromPlayer)
                     {
-                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position);
-                        enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
-                        occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position,
+                            () =>
+                            {
+                                DDGlobalManager.Instance.ClipLibrary.Bonk.PlayNow();
+                                enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                                occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                            });
                     }
 
                     break;

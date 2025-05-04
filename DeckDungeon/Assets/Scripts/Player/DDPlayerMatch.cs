@@ -141,7 +141,7 @@ public class DDPlayerMatch : MonoBehaviour
 
     private void Update()
     {
-        if (selectedCard)
+        if (selectedCard && cardResolving == null)
         {
             if (!arrow.gameObject.activeInHierarchy)
             {
@@ -267,16 +267,12 @@ public class DDPlayerMatch : MonoBehaviour
             // Safety check here for targettype because cards/player are now UI based and can be selected
             if (selection.TargetType == cardTargets[currentTargetIndex] && selectedCard.IsSelectionValid(selection, currentTargetIndex))
             {
+                DDGlobalManager.Instance.ClipLibrary.SelectTarget.PlayNow();
+                
                 cardSelections.Add(selection);
                 if (++currentTargetIndex >= cardTargets.Count)
                 {
                     cardResolving = StartCoroutine(WaitingForCardExecution());
-                    hand.CardRemoved(selectedCard);
-                    // Check if this works with fleeting cards?
-                    discard.CardDiscarded(selectedCard);
-
-                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
-                    selectedCard = null;
                 }
                 else
                 {
@@ -320,7 +316,17 @@ public class DDPlayerMatch : MonoBehaviour
 
     private IEnumerator WaitingForCardExecution()
     {
+        yield return new WaitForSeconds(.1f);
+        
+        hand.CardRemoved(selectedCard);
+        // Check if this works with fleeting cards?
+        discard.CardDiscarded(selectedCard);
+        
+        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
+        
         yield return selectedCard.ExecuteCard(cardSelections);
+        
+        selectedCard = null;
 
         yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
         

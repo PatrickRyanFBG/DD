@@ -47,6 +47,7 @@ public enum EDungeonPhase
     Encounter,
     Shop,
     PlayerCardSelection,
+    ArtifactSelection,
     DungeonLost,
     DungeonWon,
 }

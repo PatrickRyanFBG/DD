@@ -300,6 +300,16 @@ public class DDEnemyActionAttack : DDEnemyActionBase
         Vector3 goal = attackPrefab.transform.position -
                        (enemy.CurrentLocaton.transform.forward * (1.5f * (enemy.CurrentLocaton.Coord.y + 1)));
         attackPrefab.transform.DOMove(goal, 1);
+        GameObject.Destroy(attackPrefab, 1.05f);
+        
+        if (rangedType == ERangeType.Ranged)
+        {
+            DDGlobalManager.Instance.ClipLibrary.Ranged.PlayNow();
+        }
+        else if (rangedType == ERangeType.Melee)
+        {
+            DDGlobalManager.Instance.ClipLibrary.Melee.PlayNow();
+        }
 
         yield return new WaitForSeconds(1f);
 
@@ -311,7 +321,6 @@ public class DDEnemyActionAttack : DDEnemyActionBase
 
         DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
 
-        GameObject.Destroy(attackPrefab);
 
         // Retaliate
         int? retaliateNumber =
@@ -332,7 +341,7 @@ public class DDEnemyActionAttack : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "Deals [" + rangedType + "]" + damage + ".";
+        return "Deals [" + rangedType + "] " + damage + ".";
     }
 }
 

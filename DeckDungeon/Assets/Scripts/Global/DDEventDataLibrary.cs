@@ -9,6 +9,8 @@ public class DDEventDataLibrary : MonoBehaviour
 
     private HashSet<DDDungeonEventData> usedEvents;
 
+    [Header("Debug")] [SerializeField] private int specificEventIndex = -1;
+    
     private void Awake()
     {
         usedEvents = new HashSet<DDDungeonEventData>();
@@ -16,6 +18,11 @@ public class DDEventDataLibrary : MonoBehaviour
 
     public DDDungeonEventData GetUnusedEvent()
     {
+        if (specificEventIndex >= 0)
+        {
+            return genericEventDatas[specificEventIndex];    
+        }
+        
         DDDungeonEventData data = null;
 
         do

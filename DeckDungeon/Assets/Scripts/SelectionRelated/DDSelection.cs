@@ -17,8 +17,12 @@ public class DDSelection : MonoBehaviour
     {
     }
 
-    public virtual void Hovered()
+    public virtual void Hovered(bool fromAnotherSelection = false)
     {
+        if (!fromAnotherSelection)
+        {
+            DDGlobalManager.Instance.ClipLibrary.HoverTarget.PlayNow();
+        }
     }
 
     public virtual void Unhovered()

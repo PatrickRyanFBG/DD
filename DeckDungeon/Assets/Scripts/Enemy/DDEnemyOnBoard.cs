@@ -109,7 +109,7 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public IEnumerator MoveToLocationAndBack(Vector3 pos)
+    public IEnumerator MoveToLocationAndBack(Vector3 pos, Action midWayAction = null)
     {
         Vector3 startPos = transform.position;
         Vector3 targetPos = Vector3.Lerp(startPos, pos, .75f);
@@ -121,7 +121,9 @@ public class DDEnemyOnBoard : DDSelection
             transform.position = Vector3.Lerp(startPos, targetPos, time / .5f);
             yield return null;
         }
-
+        
+        midWayAction?.Invoke();
+        
         time = 0;
         while (time < .5f)
         {
@@ -161,6 +163,7 @@ public class DDEnemyOnBoard : DDSelection
                 else
                 {
                     // Take Damage Feedback.
+                    image.color = Color.white;
                     image.DOColor(Color.red, .2f).SetLoops(4, LoopType.Yoyo);
                 }
 
@@ -237,8 +240,9 @@ public class DDEnemyOnBoard : DDSelection
         }
     }
 
-    public override void Hovered()
+    public override void Hovered(bool fromAnotherSelection = false)
     {
+        base.Hovered(fromAnotherSelection);
         hoveredImage.enabled = true;
     }
 

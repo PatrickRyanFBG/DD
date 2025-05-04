@@ -18,9 +18,10 @@ MonoBehaviour:
   description: 'The Foreman of the loggers.
 
     [Shuffles in Workshop upon defeat]'
-  encounterType: 0
+  encounterType: 3
   goldToGive: 150
   cardsToShuffleInAfter: []
+  awardsArtifacts: 1
   eventAfterComplete: {fileID: 0}
   dungeonAddedUponDefeat: {fileID: 0}
   enemySetup:

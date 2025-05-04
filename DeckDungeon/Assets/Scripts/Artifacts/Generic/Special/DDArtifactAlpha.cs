@@ -6,19 +6,22 @@ public class DDArtifactAlpha : DDArtifactBase
 {
     public override void Equipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
     }
-
+    
     public override void Unequipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
     }
 
-    private void EncounterPhaseChanged(EEncounterPhase phase)
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
     {
-        if (phase == EEncounterPhase.PlayersStartTurn)
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == EEncounterPhase.PlayersStartTurn)
         {
             DDGamePlaySingletonHolder.Instance.Player.Deck.PeakTopCard().CurrentCard.AddRandomFinish();
         }
+
+        yield return null;
     }
 }

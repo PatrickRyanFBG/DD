@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8067c6826f9c744a507a3a6b08d468, type: 3}
+  m_Name: DDAudioClipLibrary
+  m_EditorClassIdentifier: 
+  Melee:
+    clips:
+    - {fileID: 8300000, guid: 58869338739cc4c4aba8ec67db5f6bd9, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0
+  Ranged:
+    clips:
+    - {fileID: 8300000, guid: 4348edc66954a56419ed1282fa5df37e, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0
+  Bonk:
+    clips:
+    - {fileID: 8300000, guid: faf8ef5a2b3d2584785e9b265da1e484, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0
+  DrawCard:
+    clips:
+    - {fileID: 8300000, guid: c982a60d25a95ea48aafeddd286007ad, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0
+  HoverCard:
+    clips:
+    - {fileID: 8300000, guid: 20bad957c109e9445a16c225659d3c4a, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.1
+    looping: 0
+  SelectCard:
+    clips:
+    - {fileID: 8300000, guid: 400d345e18dbb8c44949ed67f7cd0c39, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0
+  DiscardCard:
+    clips:
+    - {fileID: 8300000, guid: a274c32542a5b994cbe29015f67606c0, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0
+  HoverTarget:
+    clips:
+    - {fileID: 8300000, guid: eb40c990c089f524c8c6648d13f65967, type: 3}
+    - {fileID: 8300000, guid: 8d074d49f8f497248a18b63c1f52048b, type: 3}
+    - {fileID: 8300000, guid: e079b4c4e4d1c284e9c6d6a925c55796, type: 3}
+    - {fileID: 8300000, guid: 425e44794ce814a46ad6c69f4b378482, type: 3}
+    - {fileID: 8300000, guid: dbd5c8d41e3ee8848a569037fdc92be3, type: 3}
+    - {fileID: 8300000, guid: b641b4fe6d93e6741a613dcba5298989, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.25
+    looping: 0
+  SelectTarget:
+    clips:
+    - {fileID: 8300000, guid: a1b752ab83306fa40b51d2501e551c0e, type: 3}
+    mixerGroup: {fileID: -5518022377137311739, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.5
+    looping: 0

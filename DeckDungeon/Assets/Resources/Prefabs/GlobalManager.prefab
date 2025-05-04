@@ -83,14 +83,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   genericEventDatas:
+  - {fileID: 11400000, guid: c1e3ababe48a835459bde2b4fb7f4294, type: 2}
   - {fileID: 11400000, guid: 5245c7859e2c1f848b1dac1177c9359e, type: 2}
   - {fileID: 11400000, guid: ed87a5c5f62a9d644872ad18a987364a, type: 2}
   - {fileID: 11400000, guid: 4f90c742e08827243ba6b2958386bcf4, type: 2}
   - {fileID: 11400000, guid: 88687572e5bd7bf44b52a6991157e4ed, type: 2}
-  - {fileID: 11400000, guid: c1e3ababe48a835459bde2b4fb7f4294, type: 2}
   - {fileID: 11400000, guid: 16175177ebf804147879bafd0f7fe1cc, type: 2}
   - {fileID: 11400000, guid: ba1964b6f0cfc5d46a18cb1b9c6c53c3, type: 2}
   - {fileID: 11400000, guid: 5bf7ea241205a1e46b7746a5eb1fac01, type: 2}
+  specificEventIndex: -1
 --- !u!1 &1321086745219087862
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +510,7 @@ Transform:
   - {fileID: 8433025706560553618}
   - {fileID: 2233043903099570501}
   - {fileID: 922106837162804259}
+  - {fileID: 6177354460238184401}
   - {fileID: 2482511971634451396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -530,11 +532,65 @@ MonoBehaviour:
   affixLibrary: {fileID: 11400000, guid: d6f3270c91ac0ca489619edec5f699ed, type: 2}
   cardFinishLibrary: {fileID: 11400000, guid: 1526b924f8631b1408d571df75ce08d6, type: 2}
   toolTip: {fileID: 3331113012827380809}
+  audioManager: {fileID: 4729707475187732268}
+  clipLibrary: {fileID: 11400000, guid: dcd4f971583f5f6469ad3f18b8e5567f, type: 2}
   cardInHandPrefab: {fileID: 4600203922219708165, guid: d9b2cb35c62d0934487e1a218fa4c22a, type: 3}
   FromMainMenu: 0
   debugAdventurer: {fileID: 11400000, guid: f1ac0433c11647c4b8e53acf65d1c67e, type: 2}
   debugDungeon: {fileID: 11400000, guid: dc90439ce851e8f44b74f140e62ed833, type: 2}
   debugSideQuests: []
+--- !u!1 &6130343047093863416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6177354460238184401}
+  - component: {fileID: 4729707475187732268}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6177354460238184401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6130343047093863416}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8170322321389313316}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4729707475187732268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6130343047093863416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6530537a491a3c0428bf2a973e441c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 48006489281453750, guid: 3cb2a4c706e2b124cb0ac93b6137c411, type: 3}
+  poolInit: 25
+  backgroundMusic:
+    clips:
+    - {fileID: 8300000, guid: 4751ffeb527a4684194728ae2e621ef2, type: 3}
+    mixerGroup: {fileID: -6972416624695726298, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
+    volume: 0.1
+    looping: 1
 --- !u!1 &6906305238190658046
 GameObject:
   m_ObjectHideFlags: 0

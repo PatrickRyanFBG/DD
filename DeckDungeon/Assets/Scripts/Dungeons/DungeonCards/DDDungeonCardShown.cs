@@ -54,8 +54,10 @@ public class DDDungeonCardShown : DDSelection
         gameObject.SetActive(true);
     }
 
-    public override void Hovered()
+    public override void Hovered(bool fromAnotherSelection = false)
     {
+        DDGlobalManager.Instance.ClipLibrary.HoverCard.PlayNow();
+        
         descParent.SetActive(true);
     }
 

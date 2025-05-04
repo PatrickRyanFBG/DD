@@ -50,12 +50,12 @@ public class DDPlayerMatchDeck : MonoBehaviour
 
     public DDCardInHand PeakTopCard()
     {
-        return cards[cards.Count - 1];
+        return cards[^1];
     }
     
     public DDCardInHand GetTopCard()
     {
-        DDCardInHand outGoingCard = cards[cards.Count - 1];
+        DDCardInHand outGoingCard = cards[^1];
         cards.RemoveAt(cards.Count - 1);
         return outGoingCard;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DDCanvasShowDeckArea : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class DDCanvasShowDeckArea : MonoBehaviour
     private List<DDDungeonCardShown> usedDungeonCards = new List<DDDungeonCardShown>(16);
 
     [SerializeField] private RectTransform content;
-
+    [SerializeField] private ScrollRect scrollRect;
+    
     private DDSelection currentlyHovered;
 
     [SerializeField] private Vector2 xMinMax = new Vector2(-320, 320);
@@ -109,10 +111,12 @@ public class DDCanvasShowDeckArea : MonoBehaviour
             usedDungeonCards.RemoveAt(i);
         }
 
-        if (DDGamePlaySingletonHolder.Instance != null)
+        if (DDGamePlaySingletonHolder.Instance)
         {
             DDGamePlaySingletonHolder.Instance.PlayerSelector.BlockClicks(true);
         }
+        
+        scrollRect.verticalNormalizedPosition = 1;
     }
 
     public void ShowDungeonDeck(List<DDDungeonCardBase> cardsToShow)

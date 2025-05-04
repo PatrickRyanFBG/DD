@@ -10,19 +10,20 @@ public class DDArtifactWingedBoots : DDArtifactBase
 
     public override void Equipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.AddListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
     }
     
     public override void Unequipped()
     {
-        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged.RemoveListener(EncounterPhaseChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
     }
 
-    private void EncounterPhaseChanged(EEncounterPhase phase)
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
     {
-        if (phase == EEncounterPhase.PlayersTurn)
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == EEncounterPhase.PlayersTurn)
         {
-            DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(momentumGain);
+            yield return DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(momentumGain);
         }
     }
 }

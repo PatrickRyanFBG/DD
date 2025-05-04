@@ -91,6 +91,12 @@ public class DDGlobalManager : MonoBehaviour
     [SerializeField] private DDHoverToolTip toolTip;
     public DDHoverToolTip ToolTip => toolTip;
 
+    [SerializeField] private DDAudioManager audioManager;
+    public DDAudioManager AudioManager => audioManager;
+        
+    [SerializeField] private DDAudioClipLibrary clipLibrary;
+    public DDAudioClipLibrary ClipLibrary => clipLibrary;
+    
     [Header("Card Prefabs")] [SerializeField]
     private DDCardInHand cardInHandPrefab;
     

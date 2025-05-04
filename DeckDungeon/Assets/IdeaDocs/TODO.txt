@@ -2,14 +2,33 @@
 GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!!!
 Expand on EnemyActionBase "is hidden" at some point
 
+5/3
+    - Template enemy attack action stuff so I can do a melee and ranged attack
+    x Find BGM
+    x Make Artifact Selection Area
+    x Fix Encounter End
+    x Fix color blinking from taking other damage (hyperactive)
+    x Text selecting card from deck
+    
 4/30
     x Fix player click
     - combat balance
-
+    - put back in intro/tier 1 combats
+    
 4/29
     x Set text size and don't use auto size
     x Audit on all text/descriptions
-    - Audio pass
+    x Audio pass (5/3 its okayish for now)
+        x Draw card - Find in KenneyL
+        x Hover card - Find in KenneyL
+        x Select Card - Find in KenneyL
+        x Discard Card - Find in KenneyL
+        - Discard Shuffled Into Deck - Find in KenneyL
+        x Hover Enemy - Audio Pack
+        x Make Selection - Audio Pack
+        x Played Card Noises (generic for now)
+        - Enemy Take Damage
+        x Enemy Action Sounds
 
 4/28
     x Set priority for Finishes (that way fleeting doesn't stop other discarded finishes)

@@ -10,20 +10,16 @@ public class DDDungeonCardEvent_Chest : DDDungeonCardEvent
 
     public override void DisplayEvent(DDEventArea area)
     {
-        //base.DisplayEvent(area);
-        
-        /*
-        artifactOne = DDGamePlaySingletonHolder.Instance.Dungeon.GrabArtifact();
-        artifactTwo = DDGamePlaySingletonHolder.Instance.Dungeon.GrabArtifact();
+        artifactOne = DDGlobalManager.Instance.SelectedAdventurer.GrabArtifact();
+        artifactTwo = DDGlobalManager.Instance.SelectedAdventurer.GrabArtifact();
 
-        DDButton buttonOne = area.GenerateButton();
-        buttonOne.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = artifactOne.ArtifactName;
+        DDButton buttonOne = area.GenerateButton(artifactOne.ArtifactName);
         buttonOne.Button.onClick.AddListener(() =>
         {
             DDGamePlaySingletonHolder.Instance.Dungeon.EquipArtifact(artifactOne);
-            if(artifactTwo != null)
+            if(artifactTwo)
             {
-                DDGamePlaySingletonHolder.Instance.Dungeon.ReturnArtifact(artifactTwo);
+                DDGlobalManager.Instance.SelectedAdventurer.ReturnArtifact(artifactTwo);
             }
             DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
         });
@@ -33,14 +29,13 @@ public class DDDungeonCardEvent_Chest : DDDungeonCardEvent
             area.Description.text = artifactOne.Description;
         });
 
-        if(artifactTwo != null)
+        if(artifactTwo)
         {
-            DDButton buttonTwo = area.GenerateButton();
-            buttonTwo.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = artifactTwo.ArtifactName;
+            DDButton buttonTwo = area.GenerateButton(artifactTwo.ArtifactName);
             buttonTwo.Button.onClick.AddListener(() =>
             {
                 DDGamePlaySingletonHolder.Instance.Dungeon.EquipArtifact(artifactTwo);
-                DDGamePlaySingletonHolder.Instance.Dungeon.ReturnArtifact(artifactOne);
+                DDGlobalManager.Instance.SelectedAdventurer.ReturnArtifact(artifactOne);
                 DDGamePlaySingletonHolder.Instance.Dungeon.PromptDungeonCard();
             });
 
@@ -49,6 +44,5 @@ public class DDDungeonCardEvent_Chest : DDDungeonCardEvent
                 area.Description.text = artifactTwo.Description;
             });
         }
-        */
     }
 }

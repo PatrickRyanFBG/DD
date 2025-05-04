@@ -54,6 +54,6 @@ public class DDDungeonEventDataJunkHeap : DDDungeonEventData
     {
         DDGamePlaySingletonHolder.Instance.Dungeon.RemoveCardFromDeck(selectedCard);
         DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(PlayerCardSelected);
-        DDGamePlaySingletonHolder.Instance.Dungeon.DisplayDeckClosed();
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CloseArea();
     }
 }

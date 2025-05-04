@@ -25,7 +25,7 @@ public class DDCardEffectBase
         {
             DDEnemyOnBoard eob = selection as DDEnemyOnBoard;
 
-            if (eob != null)
+            if (eob)
             {
                 switch (targetType)
                 {
@@ -66,7 +66,7 @@ public class DDCardEffectMoveEnemy : DDCardEffectBase
         for (int i = 0; i < allEnemies.Count; i++)
         {
             DDEnemyOnBoard enemy = allEnemies[i];
-            if (enemy != null && !enemy.CurrentEnemy.Immovable)
+            if (enemy && !enemy.CurrentEnemy.Immovable)
             {
                 yield return DDGamePlaySingletonHolder.Instance.Board.MoveEnemy(enemy, direction, amount, true);
             }
@@ -91,6 +91,19 @@ public class DDCardEffectDamageEnemy : DDCardEffectBase
 
             if (enemy)
             {
+                if (card.RangeType == ERangeType.Ranged)
+                {
+                    DDGlobalManager.Instance.ClipLibrary.Ranged.PlayNow();
+                }
+                else if (card.RangeType == ERangeType.Melee)
+                {
+                    DDGlobalManager.Instance.ClipLibrary.Melee.PlayNow();
+                }
+                else
+                {
+                    
+                }
+                
                 DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, card.RangeType, enemy, true);
             }
         }
