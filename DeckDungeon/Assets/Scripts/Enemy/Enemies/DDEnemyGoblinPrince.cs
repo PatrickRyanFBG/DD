@@ -17,8 +17,7 @@ public class DDEnemyGoblinPrince : DDEnemyBase
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
-        List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
-        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        List<DDEnemyOnBoard> allEnemies = allEnemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies;
 
         DDEnemyActionBase summonGoblin = null;
 

@@ -37,6 +37,10 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
         damage: 5
     - rid: 7815311197493264626
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
@@ -44,6 +48,10 @@ MonoBehaviour:
         targetType: 9
         differentTarget: 0
         useLastTarget: 1
+        targetInfo:
+          targetType: 9
+          differentTarget: 0
+          useLastTarget: 1
         affixType: 1
         amount: 5
         shouldSetValue: 1

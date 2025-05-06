@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Piercing Shot
-  description: Deal 10 Damage To Lane
+  description: Deal 4 Damage To Lane
   rangeType: 1
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -34,4 +34,8 @@ MonoBehaviour:
         targetType: 9
         differentTarget: 0
         useLastTarget: 0
-        damage: 10
+        targetInfo:
+          targetType: 9
+          differentTarget: 0
+          useLastTarget: 0
+        damage: 4

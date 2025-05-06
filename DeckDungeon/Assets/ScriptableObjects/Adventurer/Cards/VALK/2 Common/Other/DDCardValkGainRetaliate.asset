@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDCardValkGainRetaliate
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 2f973688ea262eb46b2989c2fd6c44f8
-  cardType: 1
+  cardType: 0
   cardRarity: 0
   image: {fileID: 0}
   cardName: Gain Retaliate
@@ -34,6 +34,10 @@ MonoBehaviour:
         targetType: 9
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 9
+          differentTarget: 0
+          useLastTarget: 0
         affixType: 3
         amount: 2
         shouldSetValue: 0

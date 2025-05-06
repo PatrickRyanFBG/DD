@@ -7,7 +7,7 @@ public class DDDungeonCardSpecificCombat : DDDungeonCardEncounter
     [Header("Specific Combat")] [SerializeField]
     private DDCombatEnemySetup enemySetup;
 
-    public override void StartEncounter()
+    public override void StartEncounter(ref HashSet<string> usedSetups)
     {
         SpawnEnemies(enemySetup);
     }

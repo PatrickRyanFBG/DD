@@ -307,7 +307,7 @@ public class DDEnemyOnBoard : DDSelection
         int? bleedValue = affixManager.TryGetAffixValue(EAffixType.Bleed);
         if (bleedValue != null)
         {
-            TakeDamage(bleedValue.Value, ERangeType.None, true);
+            TakeDamage(bleedValue.Value, ERangeType.Pure, true);
 
             yield return new WaitForSeconds(.25f);
 

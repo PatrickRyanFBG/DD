@@ -34,5 +34,9 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
         direction: 0
         amount: 1

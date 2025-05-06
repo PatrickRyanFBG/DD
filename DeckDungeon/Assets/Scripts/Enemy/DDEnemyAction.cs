@@ -301,7 +301,7 @@ public class DDEnemyActionAttack : DDEnemyActionBase
                        (enemy.CurrentLocaton.transform.forward * (1.5f * (enemy.CurrentLocaton.Coord.y + 1)));
         attackPrefab.transform.DOMove(goal, 1);
         GameObject.Destroy(attackPrefab, 1.05f);
-        
+
         if (rangedType == ERangeType.Ranged)
         {
             DDGlobalManager.Instance.ClipLibrary.Ranged.PlayNow();
@@ -321,14 +321,13 @@ public class DDEnemyActionAttack : DDEnemyActionBase
 
         DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(totalDamage, (int)enemy.CurrentLocaton.Coord.x);
 
-
         // Retaliate
         int? retaliateNumber =
             DDGamePlaySingletonHolder.Instance.Player.GetLaneAffix(EAffixType.Retaliate, enemy.CurrentLocaton.Coord.x);
 
         if (retaliateNumber != null)
         {
-            enemy.TakeDamage(retaliateNumber.Value, ERangeType.None, false);
+            enemy.TakeDamage(retaliateNumber.Value, ERangeType.Pure, false);
         }
 
         yield return new WaitForSeconds(0.1f);
@@ -336,7 +335,15 @@ public class DDEnemyActionAttack : DDEnemyActionBase
 
     public override Texture GetIcon()
     {
-        return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackMelee;
+        switch (rangedType)
+        {
+            case ERangeType.Ranged:
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackRanged;
+            case ERangeType.Pure:
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackPure;
+            default:
+                return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.AttackMelee;
+        }
     }
 
     public override string GetDescription()
@@ -658,7 +665,7 @@ public class DDEnemyActionBleedAttack : DDEnemyActionBase
 
         if (retaliateNumber != null)
         {
-            enemy.TakeDamage(retaliateNumber.Value, ERangeType.None, false);
+            enemy.TakeDamage(retaliateNumber.Value, ERangeType.Pure, false);
         }
 
         yield return new WaitForSeconds(0.1f);

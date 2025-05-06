@@ -16,13 +16,13 @@ MonoBehaviour:
   cardType: 4
   cardRarity: 0
   image: {fileID: 2800000, guid: 39ee71076a4fb534181e173b9d753fd1, type: 3}
-  cardName: DDCardWoundBasic
+  cardName: Wound
   description: 'Cannot be played
 
     Fleeting
 
-    Deals 5 Damage At End of Round'
+    Deals 4 Damage At End of Round'
   rangeType: 2
   defaultCardFinishes: 64000000
   price: {x: 100, y: 200}
-  damage: 5
+  damage: 4

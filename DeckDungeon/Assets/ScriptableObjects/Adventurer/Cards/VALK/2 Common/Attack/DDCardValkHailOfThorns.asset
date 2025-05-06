@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Hail Of Thorns
-  description: 'Deal 5 Damage To Lane
+  description: 'Deal 3 Damage To Lane
 
     Add 2 Retaliate'
   rangeType: 1
@@ -37,13 +37,21 @@ MonoBehaviour:
         targetType: 9
         differentTarget: 0
         useLastTarget: 0
-        damage: 5
+        targetInfo:
+          targetType: 9
+          differentTarget: 0
+          useLastTarget: 0
+        damage: 3
     - rid: 7815311197493264626
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
       data:
         targetType: 9
         differentTarget: 0
         useLastTarget: 1
+        targetInfo:
+          targetType: 9
+          differentTarget: 0
+          useLastTarget: 1
         affixType: 3
         amount: 2
         shouldSetValue: 0

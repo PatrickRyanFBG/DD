@@ -25,7 +25,7 @@ public class DDPlayerMatch : MonoBehaviour
     public List<DDCardInHand> CurrentDiscard => discard.Cards;
 
     private DDCardInHand selectedCard;
-    private List<ETargetType> cardTargets;
+    private List<DDCardTargetInfo> cardTargets;
     private List<DDSelection> cardSelections;
     private int currentTargetIndex;
 
@@ -189,6 +189,12 @@ public class DDPlayerMatch : MonoBehaviour
 
     public void DealDamageInLane(int damage, int lane)
     {
+        // This means it was already negative
+        if (damage < 0)
+        {
+            return;
+        }
+        
         int leftOverDamage = (laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, -damage, false) ?? -damage);
         laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, Mathf.Max(leftOverDamage, 0), true);
 
@@ -257,7 +263,7 @@ public class DDPlayerMatch : MonoBehaviour
                         cardTargets = selectedCard.GetCardTarget();
                         cardSelections = new List<DDSelection>(cardTargets.Count);
                         currentTargetIndex = 0;
-                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetLayer());
+                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].TargetType.GetLayer());
                     }
                 }
             }
@@ -265,7 +271,7 @@ public class DDPlayerMatch : MonoBehaviour
         else if (selectedCard)
         {
             // Safety check here for targettype because cards/player are now UI based and can be selected
-            if (selection.TargetType == cardTargets[currentTargetIndex] && selectedCard.IsSelectionValid(selection, currentTargetIndex))
+            if (selection.TargetType == cardTargets[currentTargetIndex].TargetType && selectedCard.IsSelectionValid(cardSelections, selection, currentTargetIndex))
             {
                 DDGlobalManager.Instance.ClipLibrary.SelectTarget.PlayNow();
                 
@@ -274,9 +280,19 @@ public class DDPlayerMatch : MonoBehaviour
                 {
                     cardResolving = StartCoroutine(WaitingForCardExecution());
                 }
+                else if (selectedCard.ShouldExecuteEarly(cardSelections))
+                {
+                    // if no valid selections left, execute card
+                    // This is sort of only possible if a card specifically targets 2+ enemies
+                    // Or if a card targets two other cards, but actually this should be up to the card?
+                    // Like we wouldn't want something that says Discard 2 cards and Deal 50 damage, but then allow it if there is only one other card in hand
+                    // But we should allow something to says "Add 2 Finish to 2 Cards", be only select 1 if 1 other card is valid?
+                    // I don't want to use "Up To".
+                    cardResolving = StartCoroutine(WaitingForCardExecution());
+                }
                 else
                 {
-                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].GetLayer());
+                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].TargetType.GetLayer());
                 }
             }
         }

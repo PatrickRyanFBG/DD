@@ -147,7 +147,7 @@ public class DDEnemyActionRevealAndSneakAttack : DDEnemyActionAttack
         if (bush && bush != enemy)
         {
             // Bush will reveal us after being destroyed
-            bush.TakeDamage(99, ERangeType.None, true);
+            bush.TakeDamage(99, ERangeType.Pure, true);
             yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
 
             // if we were hidden we do sneak attack damage

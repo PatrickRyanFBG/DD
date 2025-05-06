@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Bolas
-  description: 'Deal 5 Ranged Damage
+  description: 'Deal 6 Ranged Damage
 
     Apply 1 Immobile'
   rangeType: 1
@@ -37,13 +37,21 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
-        damage: 5
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
+        damage: 6
     - rid: 7815311197493264627
       type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
       data:
         targetType: 13
         differentTarget: 0
-        useLastTarget: 0
+        useLastTarget: 1
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 1
         affixType: 5
         amount: 1
         shouldSetValue: 0

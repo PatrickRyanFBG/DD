@@ -28,6 +28,29 @@ public static class IListExtensions
     {
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
+
+    public static List<T> GetRandomElements<T>(this IList<T> list, int count)
+    {
+        if (list.Count <= count)
+        {
+            return new(list);
+        }
+        
+        var result = new List<T>(count);
+        for (int i = 0; i < count; i++)
+        {
+            T element;
+            do
+            {
+                element = list.GetRandomElement();
+                
+            } while (result.Contains(element));
+            
+            result.Add(element);
+        }
+        
+        return result;
+    }
 }
 
 public static class DDCardBaseExtensions

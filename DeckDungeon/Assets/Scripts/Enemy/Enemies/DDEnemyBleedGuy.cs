@@ -15,8 +15,7 @@ public class DDEnemyBleedGuy : DDEnemyBase
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
         // Get All Enemies
-        List<DDEnemyOnBoard> allEnemies = new();
-        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        List<DDEnemyOnBoard> allEnemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies;
         int axesCount = 0;
         for (int i = 0; i < allEnemies.Count; i++)
         {

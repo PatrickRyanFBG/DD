@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Shield Rush
-  description: 'Move One Up
+  description: 'Move One Backwards
 
     Gain 5 Armor'
   rangeType: 2
@@ -37,6 +37,10 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
         direction: 0
         amount: 1
     - rid: 7815311197493264621
@@ -45,6 +49,10 @@ MonoBehaviour:
         targetType: 6
         differentTarget: 0
         useLastTarget: 1
+        targetInfo:
+          targetType: 6
+          differentTarget: 0
+          useLastTarget: 1
         affixType: 1
         amount: 5
         shouldSetValue: 1

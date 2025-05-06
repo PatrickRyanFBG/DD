@@ -8,6 +8,7 @@ public class DDDungeonStats
 {
     public int EventsCompleted;
     public int EncountersCompleted;
+    public ECombatTier CombatTier = ECombatTier.Intro;
 }
 
 public class DDDungeon : MonoBehaviour
@@ -275,8 +276,11 @@ public class DDDungeon : MonoBehaviour
     {
         TurnOffAreas();
 
-        ++dungeonStats.EncountersCompleted;
-
+        if (++dungeonStats.EncountersCompleted > 3)
+        {
+            dungeonStats.CombatTier = ECombatTier.One;
+        }
+        
         playerDeckCount.text = playerDeck.Count.ToString();
         // Should have a global player discard for cards that will start in an encounter in the discard pile
         playerDiscardCount.text = "0";

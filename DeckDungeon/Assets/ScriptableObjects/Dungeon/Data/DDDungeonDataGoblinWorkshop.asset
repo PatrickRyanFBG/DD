@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6c85168081c9949960826e22cfa3ca, type: 3}
   m_Name: DDDungeonDataGoblinWorkshop
   m_EditorClassIdentifier: 
-  dungeonName: Goblin King
-  dungeonDecsription: Large and "in charge".
-  heroShot: {fileID: 2800000, guid: 0f21bbaa70f3e54488518f7c41416e2e, type: 3}
+  dungeonName: Work Shop
   cards:
   - {fileID: 11400000, guid: c1f407cdc4574e9498283aaab1a6c5f7, type: 2}
   - {fileID: 11400000, guid: 24f04e1a90469c245986cbc096e0b436, type: 2}
   - {fileID: 11400000, guid: 5e4b772b81437dd49bf8f14984bcfb17, type: 2}
-  - {fileID: 11400000, guid: 5bf7ea241205a1e46b7746a5eb1fac01, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
   - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}
   - {fileID: 11400000, guid: 0626a9e06c8ddcb40b7f16bea5d01984, type: 2}

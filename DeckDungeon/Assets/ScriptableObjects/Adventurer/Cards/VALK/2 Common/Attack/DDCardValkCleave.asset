@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Cleave
-  description: Deal 5 Melee Damage To Row
+  description: Deal 4 Melee Damage To Row
   rangeType: 0
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -34,4 +34,8 @@ MonoBehaviour:
         targetType: 8
         differentTarget: 0
         useLastTarget: 0
-        damage: 5
+        targetInfo:
+          targetType: 8
+          differentTarget: 0
+          useLastTarget: 0
+        damage: 4

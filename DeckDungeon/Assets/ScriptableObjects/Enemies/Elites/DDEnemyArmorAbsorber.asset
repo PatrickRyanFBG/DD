@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDEnemyArmorAbsorber
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 5decb1daabef2824c9ea583dad775452, type: 3}
-  StartingHealth: 25
+  StartingHealth: 27
   StartingArmor: 10
   entityName: Junk Master
   immovable: 0

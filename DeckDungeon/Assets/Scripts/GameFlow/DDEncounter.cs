@@ -34,15 +34,35 @@ public class DDEncounter : MonoBehaviour
 
     public UnityEngine.Events.UnityEvent<DDAffixManager, EAffixType, int, int?> AffixModified;
 
+    private ECombatTier lastCombatTier = ECombatTier.Intro;
+    private Dictionary<EEncounterType, HashSet<string>> usedEncounterSetups = new();
+    
     public void SetUpEncounter(DDDungeonCardEncounter encounter)
     {
         changingPhase = false;
         queuedChangingPhase = null;
-        
-        gameObject.SetActive(true);
+        playersTurnEnding = false;
 
         currentEncounter = encounter;
-        currentEncounter.StartEncounter();
+        // Make this coroutine to do spawning animations eventually
+        if (lastCombatTier != DDGamePlaySingletonHolder.Instance.Dungeon.DungeonStats.CombatTier)
+        {
+            usedEncounterSetups.Clear();
+            lastCombatTier = DDGamePlaySingletonHolder.Instance.Dungeon.DungeonStats.CombatTier;
+        }
+
+        if (usedEncounterSetups.TryGetValue(encounter.EncounterType, out var setups))
+        {
+            currentEncounter.StartEncounter(ref setups);
+        }
+        else
+        {
+            HashSet<string> usedSetups = new HashSet<string>();
+            usedEncounterSetups.Add(encounter.EncounterType, usedSetups);
+            currentEncounter.StartEncounter(ref usedSetups);
+        }
+
+        gameObject.SetActive(true);
 
         player.EncounterStarted();
         player.ShuffleInDeck();
@@ -111,10 +131,11 @@ public class DDEncounter : MonoBehaviour
         {
             return;
         }
-        else if(queuedChangingPhase != null)
+        
+        if(queuedChangingPhase != null)
         {
             ChangeCurrentPhase(queuedChangingPhase.Value);
-            queuedChangingPhase = null;
+            return;
         }
         
         switch (currentEncounterPhase)
@@ -186,15 +207,11 @@ public class DDEncounter : MonoBehaviour
         playersTurnEnding = true;
         yield return player.EndOfTurn();
         yield return player.DiscardHand();
-        ChangeCurrentPhase(EEncounterPhase.MonstersAct);
+        ChangeCurrentPhase(EEncounterPhase.MonstersStartTurn);
     }
 
     private IEnumerator DoMonstersAct()
     {
-        DDGamePlaySingletonHolder.Instance.Board.DoAllEffects();
-
-        yield return DoMonsterAffixes();
-
         // Something destroyed this enemy mid action (probably bombs exploding for now).
         // So we are going backwards for now for safety
         for (int i = enemies.Count - 1; i >= 0; i--)
@@ -213,6 +230,16 @@ public class DDEncounter : MonoBehaviour
         }
     }
 
+    private IEnumerator DoMonstersStartTurn()
+    {
+        // make this co routine but also not used so later
+        DDGamePlaySingletonHolder.Instance.Board.DoAllEffects();
+
+        yield return DoMonsterAffixes();
+        
+        ChangeCurrentPhase(EEncounterPhase.MonstersAct);
+    }
+    
     private IEnumerator DoMonsterAffixes()
     {
         for (int i = enemies.Count - 1; i >= 0; i--)
@@ -245,20 +272,29 @@ public class DDEncounter : MonoBehaviour
 
     private void ChangeCurrentPhase(EEncounterPhase toPhase)
     {
-        Debug.Log("Attempt to change phase: " + toPhase);
         if (changingPhase)
         {
             if (queuedChangingPhase != null)
             {
-                Debug.LogError("We are changing phase and also have a queued phase changed. " + currentEncounterPhase + " | " + queuedChangingPhase.Value + " | " + toPhase);
+                if (queuedChangingPhase.Value == EEncounterPhase.EncounterEnd)
+                {
+                    // This happens right now if something kills enemies at the end of players turn like bomb finish
+                    // Or something kills all enemies at the MonstersStartTurn
+                }
+                else
+                {
+                    Debug.LogError("We are changing phase and also have a queued phase changed. " + currentEncounterPhase + " | " + queuedChangingPhase.Value + " | " + toPhase);
+                }
             }
             else
             {
+                Debug.Log("Queueing phase: " + toPhase);
                 queuedChangingPhase = toPhase;                
             }
         }
         else
         {
+            Debug.Log("Changing phase: " + toPhase);
             changingPhaseCoroutine = StartCoroutine(ChangeCurrentPhaseOverTIme(toPhase));
         }
     }
@@ -271,7 +307,8 @@ public class DDEncounter : MonoBehaviour
         changingPhase = true;
         
         currentEncounterPhase = toPhase;
-
+        queuedChangingPhase = null;
+        
         switch (currentEncounterPhase)
         {
             case EEncounterPhase.EncounterStart:
@@ -289,6 +326,9 @@ public class DDEncounter : MonoBehaviour
                 break;
             case EEncounterPhase.PlayersEndTurn:
                 yield return DoPlayersEndTurn();
+                break;
+            case EEncounterPhase.MonstersStartTurn:
+                yield return DoMonstersStartTurn();
                 break;
             case EEncounterPhase.MonstersAct:
                 playersTurnEnding = false;

@@ -8,11 +8,11 @@ public class DDCardValkImprovisedWeapon : DDCardValkGeneric
     [Header("Improvised Weapon")] [SerializeField]
     private int damage;
 
-    public override List<ETargetType> GetTargets()
+    public override List<DDCardTargetInfo> GetTargets()
     {
         if (targets != null) return targets;
 
-        targets = new List<ETargetType>() { ETargetType.PlayerCard, ETargetType.Enemy };
+        targets = new List<DDCardTargetInfo>() { new(ETargetType.PlayerCard), new(ETargetType.Enemy) };
         
         return base.GetTargets();
     }

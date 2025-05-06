@@ -37,6 +37,10 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
         direction: 3
         amount: 1
     - rid: 7815311197493264620
@@ -45,4 +49,8 @@ MonoBehaviour:
         targetType: 14
         differentTarget: 0
         useLastTarget: 1
+        targetInfo:
+          targetType: 14
+          differentTarget: 0
+          useLastTarget: 1
         amount: 1

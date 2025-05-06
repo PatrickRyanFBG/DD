@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDCardValkGainExpertise
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: c2ab2792e38c711478131e76050640aa
-  cardType: 1
+  cardType: 0
   cardRarity: 0
   image: {fileID: 0}
   cardName: Gain Expertise
@@ -34,6 +34,10 @@ MonoBehaviour:
         targetType: 14
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 14
+          differentTarget: 0
+          useLastTarget: 0
         affixType: 0
         amount: 3
         shouldSetValue: 0

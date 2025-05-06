@@ -8,11 +8,11 @@ public class DDCardValkSpawnObject : DDCardValkGeneric
 {
     [SerializeField] private DDEnemyBase objectToSpawn;
 
-    public override List<ETargetType> GetTargets()
+    public override List<DDCardTargetInfo> GetTargets()
     {
         if (targets != null) return targets;
 
-        targets = new List<ETargetType>() { ETargetType.Location };
+        targets = new List<DDCardTargetInfo>() { new(ETargetType.Location) };
         
         return base.GetTargets();
     }
@@ -30,7 +30,7 @@ public class DDCardValkSpawnObject : DDCardValkGeneric
         yield return null;
     }
 
-    public override bool IsSelectionValid(DDSelection selection, int targetIndex)
+    public override bool IsSelectionValid(List<DDSelection> selections, DDSelection selection, int targetIndex)
     {
         DDLocation loc = selection as DDLocation;
         if (loc)

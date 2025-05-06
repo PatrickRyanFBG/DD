@@ -8,11 +8,11 @@ public class DDCardValkBloodForBlood : DDCardValkGeneric
 
     [SerializeField] private int bleedNumber;
     
-    public override List<ETargetType> GetTargets()
+    public override List<DDCardTargetInfo> GetTargets()
     {
         if (targets != null) return targets;
 
-        targets = new List<ETargetType>() { ETargetType.Enemy };
+        targets = new List<DDCardTargetInfo>() { new DDCardTargetInfo(ETargetType.Enemy) };
         
         return base.GetTargets();
     }

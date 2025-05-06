@@ -39,7 +39,7 @@ public class DDEnemyActionExplode : DDEnemyActionBase
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
         DDGamePlaySingletonHolder.Instance.Dungeon.DoDamage(damage);
-        enemy.TakeDamage(damage, ERangeType.None, true);
+        enemy.TakeDamage(damage, ERangeType.Pure, true);
 
         yield return new WaitForSeconds(1f);
     }

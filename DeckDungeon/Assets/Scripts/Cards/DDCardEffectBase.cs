@@ -14,6 +14,9 @@ public class DDCardEffectBase
     [SerializeField] protected bool useLastTarget;
     public bool UseLastTarget => useLastTarget;
 
+    [SerializeField] private DDCardTargetInfo targetInfo;
+    public DDCardTargetInfo TargetInfo => targetInfo;
+    
     public virtual IEnumerator ExecuteEffect(DDSelection selection, DDCardBase card)
     {
         yield return null;

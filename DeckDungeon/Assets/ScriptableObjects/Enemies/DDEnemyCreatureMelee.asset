@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDEnemyCreatureMelee
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 767965e37d8fd244ca4f7a3705d9ebd4, type: 3}
-  StartingHealth: 20
+  StartingHealth: 24
   StartingArmor: 0
   entityName: Cogcrusher
   immovable: 0
@@ -23,5 +23,5 @@ MonoBehaviour:
   xMinMax: {x: 0, y: 0}
   ySpawnPreference: 1
   yMinMax: {x: 2, y: 4}
-  damage: 5
-  armorBuff: 5
+  damage: 3
+  armorBuff: 8

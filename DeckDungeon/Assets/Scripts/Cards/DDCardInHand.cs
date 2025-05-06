@@ -82,14 +82,25 @@ public class DDCardInHand : DDSelection
         }
     }
 
-    public List<ETargetType> GetCardTarget()
+    public List<DDCardTargetInfo> GetCardTarget()
     {
         return currentCard.GetTargets();
     }
 
-    public bool IsSelectionValid(DDSelection selection, int targetIndex)
+    public bool IsSelectionValid(List<DDSelection> selections, DDSelection selection, int targetIndex)
     {
-        return currentCard.IsSelectionValid(selection, targetIndex);
+        // This only happens if by some reason a card is selecting itself
+        if (selection == this)
+        {
+            return false;
+        }
+        
+        return currentCard.IsSelectionValid(selections, selection, targetIndex);
+    }
+
+    public bool ShouldExecuteEarly(List<DDSelection> selections)
+    {
+        return currentCard.ShouldExecuteEarly(selections);
     }
 
     // Called from UI

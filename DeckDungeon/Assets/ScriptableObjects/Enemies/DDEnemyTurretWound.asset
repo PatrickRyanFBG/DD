@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: DDEnemyTurretWound
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 3de5694a38b77914aa41302884190c2e, type: 3}
-  StartingHealth: 20
+  StartingHealth: 24
   StartingArmor: 0
-  enemyName: Shrapnel Spitter
+  entityName: Shrapnel Spitter
   immovable: 1
   friendly: 0
-  damage: 5
-  amountOfWounds: 2
+  rangeType: 2
+  xSpawnPreference: 0
+  xMinMax: {x: 0, y: 0}
+  ySpawnPreference: 0
+  yMinMax: {x: 0, y: 0}
+  damage: 1
+  amountOfWounds: 1
   woundCard: {fileID: 11400000, guid: 3a78ae5e23217b0449300b6bb525b6f2, type: 2}

@@ -1,7 +1,19 @@
 ~HELLA FUTURE~
 GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!!!
+    Gotta get a way to put in dynamic numbers into texts
 Expand on EnemyActionBase "is hidden" at some point
+MeleeRangedBonus on location now but not supported, but could be better utilized?
+Fix enemy action forecast to be dynamic and not hard coded 2
+Implement Click and Drag?
 
+5/4
+    x close after Crypt
+    x Check if can select same enemy with richoette? 
+        (You can, this means 8 bleed on one target, kinda really strong)
+    x What happens if you dont have league targets for cards (such as ricocete)
+    x Make card selection balanced with 1 offesne and 1 movement then 3rd card is random
+    - Do floating combat text? ( also for gold aquired ? )
+    
 5/3
     - Template enemy attack action stuff so I can do a melee and ranged attack
     x Find BGM
@@ -12,8 +24,8 @@ Expand on EnemyActionBase "is hidden" at some point
     
 4/30
     x Fix player click
-    - combat balance
-    - put back in intro/tier 1 combats
+    - combat balance !
+    x put back in intro/tier 1 combats
     
 4/29
     x Set text size and don't use auto size

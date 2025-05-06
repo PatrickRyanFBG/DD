@@ -25,7 +25,7 @@ public abstract class DDCardBase : DDScriptableObject
 
     [SerializeField, Multiline] private string description;
 
-    [SerializeField] protected ERangeType rangeType = ERangeType.None;
+    [SerializeField] protected ERangeType rangeType = ERangeType.Pure;
     public ERangeType RangeType => rangeType;
 
     [SerializeField] EPlayerCardFinish[] defaultCardFinishes;
@@ -33,21 +33,23 @@ public abstract class DDCardBase : DDScriptableObject
     [SerializeField] private Vector2 price = new Vector2(100, 200);
     public int Price => (int)Random.Range(price.x, price.y);
 
-    protected List<ETargetType> targets = null;
+    protected List<DDCardTargetInfo> targets = null;
 
     // Run-time
     [System.NonSerialized] protected DDCardInHand cardInHand;
     public DDCardInHand CardInHand => cardInHand;
-
+    
+    [System.NonSerialized] protected bool doneInit = false;
+    
     public Dictionary<EPlayerCardFinish, DDPlayerCardFinish> AllCardFinishes { get; private set; }
     [System.NonSerialized] protected Dictionary<EPlayerCardLifeTime, List<DDPlayerCardFinish>> cardExecutionActions;
 
     public DDCardBase Clone(bool withInit)
     {
-        DDCardBase clone = UnityEngine.Object.Instantiate(this);
+        DDCardBase clone = Instantiate(this);
         clone.name = name;
 
-        if (withInit)
+        if (withInit || !doneInit)
         {
             clone.RuntimeInit();
         }
@@ -70,6 +72,8 @@ public abstract class DDCardBase : DDScriptableObject
         {
             AddCardFinishByType(defaultCardFinishes[i]);
         }
+        
+        doneInit = true;
     }
 
     public virtual void SetCardInHand(DDCardInHand inHand)
@@ -204,12 +208,17 @@ public abstract class DDCardBase : DDScriptableObject
         yield return null;
     }
 
-    public virtual bool IsSelectionValid(DDSelection selection, int targetIndex)
+    public virtual bool IsSelectionValid(List<DDSelection> selections, DDSelection selection, int targetIndex)
     {
         return true;
     }
 
-    public virtual List<ETargetType> GetTargets()
+    public virtual bool ShouldExecuteEarly(List<DDSelection> selections)
+    {
+        return false;
+    }
+    
+    public virtual List<DDCardTargetInfo> GetTargets()
     {
         return targets;
     }

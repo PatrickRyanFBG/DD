@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDEnemyBleedGuy
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: ed9fe965cb319684fb974f975796f1b1, type: 3}
-  StartingHealth: 0
+  StartingHealth: 50
   StartingArmor: 0
   entityName: Logger
   immovable: 0

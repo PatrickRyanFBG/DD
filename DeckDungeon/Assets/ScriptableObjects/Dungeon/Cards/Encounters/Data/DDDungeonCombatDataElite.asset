@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: DDDungeonCombatDataElite
   m_EditorClassIdentifier: 
   tiers:
-  - tier: 0
+  - tier: 3
     enemySetups:
-    - enemies:
+    - guid: 55c3b63e-1663-45c7-9603-a6ef658b5443
+      enemies:
       - amount: 1
         enemy: {fileID: 11400000, guid: 053a70c97858d0a41b4c90a3ab6253a5, type: 2}
       - amount: 1
         enemy: {fileID: 11400000, guid: 1497c56dd2efdfc47badb75c61b35de3, type: 2}
-    - enemies:
+    - guid: 2bcc9cda-527d-404d-8c03-a408a9d6b74c
+      enemies:
       - amount: 1
         enemy: {fileID: 11400000, guid: 091990984fe956a44831de16465ee01e, type: 2}
       - amount: 1

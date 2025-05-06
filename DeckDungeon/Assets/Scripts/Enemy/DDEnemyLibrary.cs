@@ -25,6 +25,8 @@ public class SharedActionIcons
     public Texture MoveLeft;
 
     public Texture AttackMelee;
+    public Texture AttackRanged;
+    public Texture AttackPure;
     public Texture AttackExplode;
     public Texture AttackArmorBased;
 

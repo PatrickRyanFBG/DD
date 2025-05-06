@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDEnemyGoblinAirRange
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 26b7274d6e4822749a5183418626842a, type: 3}
-  StartingHealth: 10
+  StartingHealth: 12
   StartingArmor: 5
   entityName: Whirligig
   immovable: 0
@@ -23,5 +23,5 @@ MonoBehaviour:
   xMinMax: {x: 0, y: 0}
   ySpawnPreference: 1
   yMinMax: {x: 1, y: 3}
-  damage: 5
+  damage: 2
   armorBuff: 5

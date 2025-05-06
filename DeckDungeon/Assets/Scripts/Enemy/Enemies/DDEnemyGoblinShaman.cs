@@ -12,8 +12,9 @@ public class DDEnemyGoblinShaman : DDEnemyBase
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
-        List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
-        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        List<DDEnemyOnBoard> allEnemies =
+            new List<DDEnemyOnBoard>(DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies);
+        
         allEnemies.Shuffle();
 
         DDEnemyActionBase healAction = null;
@@ -21,7 +22,7 @@ public class DDEnemyGoblinShaman : DDEnemyBase
         for (int i = 0; i < allEnemies.Count; i++)
         {
             DDEnemyOnBoard eob = allEnemies[i];
-            if (eob != null && eob.IsDamaged())
+            if (eob && eob.IsDamaged())
             {
                 healAction = new DDEnemyActionHealAlly(healAmount, eob.CurrentLocaton.Coord);
             }

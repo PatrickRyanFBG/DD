@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDCardValkMuscleCut
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 6a2afa65d3da3ff48bdc709c6d00980a
-  cardType: 1
+  cardType: 2
   cardRarity: 0
   image: {fileID: 0}
   cardName: Muscle Cut
@@ -37,6 +37,10 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
         affixType: 4
         amount: 5
         shouldSetValue: 0
@@ -46,6 +50,10 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 1
         affixType: 0
         amount: -2
         shouldSetValue: 0

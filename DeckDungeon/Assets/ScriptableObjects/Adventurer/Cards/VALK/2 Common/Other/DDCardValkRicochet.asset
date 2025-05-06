@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: DDCardValkRicochet
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: a9665a8fda1116845b4bb7aa4283a159
-  cardType: 1
+  cardType: 2
   cardRarity: 0
   image: {fileID: 0}
   cardName: Ricochet
-  description: Apply 5 Bleed To Two Enemies
+  description: Apply 4 Bleed To Two Enemies
   rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -35,8 +35,12 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
         affixType: 4
-        amount: 5
+        amount: 4
         shouldSetValue: 0
     - rid: 7815311197493264623
       type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
@@ -44,6 +48,10 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 1
         useLastTarget: 0
+        targetInfo:
+          targetType: 13
+          differentTarget: 1
+          useLastTarget: 0
         affixType: 4
-        amount: 5
+        amount: 4
         shouldSetValue: 0

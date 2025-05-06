@@ -38,9 +38,7 @@ public class DDCardFinishSerrated : DDPlayerCardFinish
 
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
-        List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
-        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref enemies);
-        enemies.Shuffle();
+        List<DDEnemyOnBoard> enemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies.GetRandomElements(numberOfBleeds);
 
         for (int i = 0; i < numberOfBleeds; i++)
         {
@@ -63,7 +61,7 @@ public class DDCardFinishEnergized : DDPlayerCardFinish
 
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
-        DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(1);
+        yield return DDGamePlaySingletonHolder.Instance.Player.AddToMomentum(1);
 
         yield return new WaitForSeconds(0.1f);
     }
@@ -96,12 +94,10 @@ public class DDCardFinishExplosive : DDPlayerCardFinish
     
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
-        List<DDEnemyOnBoard> allEnemies = new();
-        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
-        DDEnemyOnBoard randomEnemy = allEnemies.GetRandomElement();
+        DDEnemyOnBoard randomEnemy = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies.GetRandomElement();
         
         // ANIMATE SHIT HERE
-        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, ERangeType.None, randomEnemy, false);
+        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, ERangeType.Pure, randomEnemy, false);
         
         yield return new WaitForSeconds(0.1f);
     }

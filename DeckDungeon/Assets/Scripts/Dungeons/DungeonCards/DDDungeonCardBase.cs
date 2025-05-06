@@ -68,7 +68,7 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
 
     [SerializeField] private DDDungeonData dungeonAddedUponDefeat;
 
-    public abstract void StartEncounter();
+    public abstract void StartEncounter(ref HashSet<string> usedSetups);
 
     public virtual void SpawnEnemies(DDCombatEnemySetup enemySetup)
     {

@@ -42,9 +42,14 @@ public class DDRow : DDSelection
     }
 #endif
     
-    public void SetIndex(int val)
+    public void SetIndex(int val, Vector2Int meleeRangeBonus)
     {
         index = val;
+
+        for (int i = 0; i < locations.Length; i++)
+        {
+            locations[i].SetMeleeRangeBonus(meleeRangeBonus);
+        }
     }
     
     public override void FillSelectionList(ref List<DDSelection> selections)

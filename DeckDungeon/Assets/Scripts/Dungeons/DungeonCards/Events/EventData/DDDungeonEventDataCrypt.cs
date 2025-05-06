@@ -56,7 +56,7 @@ public class DDDungeonEventDataCrypt : DDDungeonEventData
         DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDungeonDeck(selectedCard);
         DDGamePlaySingletonHolder.Instance.Dungeon.RemoveCardFromDungeonDiscard(selectedCard);
         DDGamePlaySingletonHolder.Instance.ShowDeckArea.DungeonCardSelectedCallback.RemoveListener(DungeonCardSelected);
-        DDGamePlaySingletonHolder.Instance.Dungeon.DisplayDeckClosed();
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CloseArea();
     }
 
     public override bool EventIsValid()

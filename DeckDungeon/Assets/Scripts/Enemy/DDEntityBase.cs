@@ -26,7 +26,7 @@ public abstract class DDEntityBase : DDScriptableObject
     public bool Friendly => friendly;
 
     [SerializeField]
-    private ERangeType rangeType = ERangeType.None;
+    private ERangeType rangeType = ERangeType.Pure;
     public ERangeType RangeType => rangeType;
 
     public abstract List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy);

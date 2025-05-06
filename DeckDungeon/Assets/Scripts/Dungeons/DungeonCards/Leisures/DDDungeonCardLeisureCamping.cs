@@ -6,9 +6,8 @@ using UnityEngine.UI;
 [System.Serializable]
 public class DDDungeonCardLeisureCamping : DDDungeonCardLeisure
 {
-    [Header("Camping")]
-    [SerializeField]
-    private int healAmount = 25;
+    [Header("Camping")] [SerializeField] private int healAmount = 25;
+
     public override void DisplayLeisure(DDLeisureArea area)
     {
         Button buttonOne = area.GenerateButton();
@@ -24,23 +23,37 @@ public class DDDungeonCardLeisureCamping : DDDungeonCardLeisure
         buttonTwo.onClick.AddListener(() =>
         {
             DDGamePlaySingletonHolder.Instance.Dungeon.DisplayPlayerDeck();
-            DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.AddListener(CardSelected);
+            DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.AddListener(PurgeCardSelected);
             buttonTwo.interactable = false;
         });
 
         Button buttonThree = area.GenerateButton();
-        buttonThree.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Other Option ?";
+        buttonThree.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Add Finishes To A Card";
         buttonThree.onClick.AddListener(() =>
         {
+            DDGamePlaySingletonHolder.Instance.Dungeon.DisplayPlayerDeck();
+            DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.AddListener(UpgradeCardSelected);
+            buttonThree.interactable = false;
         });
 
         base.DisplayLeisure(area);
     }
 
-    public void CardSelected(DDCardBase selectedCard)
+    public void PurgeCardSelected(DDCardBase selectedCard)
     {
         DDGamePlaySingletonHolder.Instance.Dungeon.RemoveCardFromDeck(selectedCard);
-        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(CardSelected);
-        DDGamePlaySingletonHolder.Instance.Dungeon.DisplayDeckClosed();
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(PurgeCardSelected);
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CloseArea();
+    }
+
+    public void UpgradeCardSelected(DDCardBase selectedCard)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            selectedCard.AddRandomFinish();
+        }
+
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(UpgradeCardSelected);
+        DDGamePlaySingletonHolder.Instance.ShowDeckArea.CloseArea();
     }
 }

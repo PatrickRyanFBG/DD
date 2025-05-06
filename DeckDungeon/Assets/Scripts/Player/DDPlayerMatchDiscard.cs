@@ -15,9 +15,7 @@ public class DDPlayerMatchDiscard : MonoBehaviour
     {
         DDCardInHand cardInHand =
             DDGlobalManager.Instance.SpawnNewCardInHand(card, false, transform, position ?? cardSpawnLocation.position);
-        //DDCardInHand cardInHand = Instantiate(DDGamePlaySingletonHolder.Instance.Player.CardInHandPrefab, cardSpawnLocation.position, Quaternion.identity, transform);
         cardInHand.transform.DOMove(transform.position, .3f, false);
-        cardInHand.SetUpCard(card, false);
         
         yield return new WaitForSeconds(.3f);
 

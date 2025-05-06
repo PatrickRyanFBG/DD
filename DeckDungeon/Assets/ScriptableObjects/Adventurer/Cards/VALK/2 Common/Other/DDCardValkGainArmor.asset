@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: DDCardValkGainArmor
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 303afd7ebd1a0d243a92beadda630aed
-  cardType: 1
+  cardType: 0
   cardRarity: 0
   image: {fileID: 0}
   cardName: Gain Armor
-  description: Gain 10 Armor
+  description: Gain 9 Armor
   rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -34,6 +34,10 @@ MonoBehaviour:
         targetType: 9
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 9
+          differentTarget: 0
+          useLastTarget: 0
         affixType: 1
-        amount: 10
+        amount: 9
         shouldSetValue: 1

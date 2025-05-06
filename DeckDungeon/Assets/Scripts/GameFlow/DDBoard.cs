@@ -24,10 +24,6 @@ public class DDBoard : MonoBehaviour
     // Gotta put this somewhere else?
     [SerializeField] private int bonkDamage = 5;
 
-    // TODO change this to turn number and not frame
-    private List<DDEnemyOnBoard> currentFrameEnemyList = null;
-    private int lastFrameEnemyListGathered;
-
     private void Awake()
     {
         for (int i = 0; i < columns.Length; i++)
@@ -37,7 +33,7 @@ public class DDBoard : MonoBehaviour
 
         for (int i = 0; i < rows.Length; i++)
         {
-            rows[i].SetIndex(i);
+            rows[i].SetIndex(i, meleeRangedBonus[i]);
         }
         
         columnsCount = columns.Length;
@@ -81,8 +77,8 @@ public class DDBoard : MonoBehaviour
                             () =>
                             {
                                 DDGlobalManager.Instance.ClipLibrary.Bonk.PlayNow();
-                                enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
-                                occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                                enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.Pure, false);
+                                occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.Pure, false);
                             });
                     }
 
@@ -117,8 +113,8 @@ public class DDBoard : MonoBehaviour
                             () =>
                             {
                                 DDGlobalManager.Instance.ClipLibrary.Bonk.PlayNow();
-                                enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
-                                occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.None, false);
+                                enemy.TakeDamage(GetTotalBonkDamage(), ERangeType.Pure, false);
+                                occupiedEnemy.TakeDamage(GetTotalBonkDamage(), ERangeType.Pure, false);
                             });
                     }
 
@@ -161,25 +157,6 @@ public class DDBoard : MonoBehaviour
     public DDEnemyOnBoard GetEnemyAtLocation(int x, int y)
     {
         return columns[x].Locations[y].GetEnemy();
-    }
-
-    public void GetAllEnemies(ref List<DDEnemyOnBoard> enemyList)
-    {
-        // To avoid the need to gather every enemy each time it is need in the same frame (but will be turn number later)
-        if (lastFrameEnemyListGathered == Time.frameCount)
-        {
-            enemyList = currentFrameEnemyList;
-        }
-        else
-        {
-            for (int i = 0; i < columns.Length; i++)
-            {
-                columns[i].FillEnemyList(ref enemyList);
-            }
-
-            currentFrameEnemyList = enemyList;
-            lastFrameEnemyListGathered = Time.frameCount;
-        }
     }
 
     public List<DDLocation> GetSurroundingLocations(Vector2Int location)
@@ -229,7 +206,7 @@ public class DDBoard : MonoBehaviour
 
     public int GetMeleeRangedBonus(ERangeType type, int row)
     {
-        if (type == ERangeType.None)
+        if (type is ERangeType.Pure or ERangeType.None)
         {
             return 0;
         }

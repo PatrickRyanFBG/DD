@@ -13,4 +13,11 @@ public abstract class DDCardWoundBase : DDCardBase
     {
         return false;
     }
+    
+    public override void SetCardInHand(DDCardInHand cardInHand)
+    {
+        base.SetCardInHand(cardInHand);
+
+        cardInHand.MomentumNumber.transform.parent.gameObject.SetActive(false);
+    }
 }

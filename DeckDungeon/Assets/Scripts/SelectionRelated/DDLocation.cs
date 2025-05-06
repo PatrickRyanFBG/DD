@@ -1,33 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DDLocation : DDSelection
 {
-    [SerializeField]
-    private Vector2Int coord;
+    [SerializeField] private Vector2Int coord;
     public Vector2Int Coord => coord;
 
     private DDEnemyOnBoard currentEnemy;
 
-    [SerializeField]
-    private Transform effectsParent;
+    [SerializeField] private Transform effectsParent;
 
-    [SerializeField]
-    private DDLocationEffectVisuals visualsPrefab;
+    [SerializeField] private DDLocationEffectVisuals visualsPrefab;
 
     private List<DDLocationEffectBase> effects = new List<DDLocationEffectBase>();
     private List<DDLocationEffectVisuals> visuals = new List<DDLocationEffectVisuals>();
 
-    [Header("Testing")]
-    [SerializeField]
-    private Renderer hoveredRender;
+    [SerializeField] private TMPro.TextMeshProUGUI info;
 
-    [SerializeField]
-    private Renderer highlightRenderer;
+    private Vector2Int meleeRangeBonus;
+    
+    [Header("Testing")] [SerializeField] private Renderer hoveredRender;
 
-    [SerializeField]
-    private Vector2 minMaxX;
+    [SerializeField] private Renderer highlightRenderer;
+
+    [SerializeField] private Vector2 minMaxX;
 
     [ContextMenu("Fix Coord")]
     private void FixCoord()
@@ -94,10 +92,24 @@ public class DDLocation : DDSelection
         gameObject.name = "Location " + coord.x + " " + coord.y;
     }
 
+    public void SetMeleeRangeBonus(Vector2Int bonus)
+    {
+        meleeRangeBonus = bonus;
+        
+        if (bonus == Vector2Int.zero)
+        {
+            info.text = "";
+        }
+        else
+        {
+            info.text = "Ranged: " + bonus.y + "\r\nMelee: " + bonus.x;
+        }
+    }
+    
     public override void Hovered(bool fromAnotherSelection = false)
     {
         base.Hovered(fromAnotherSelection);
-        
+
         hoveredRender.enabled = true;
     }
 
@@ -120,7 +132,7 @@ public class DDLocation : DDSelection
     {
         return currentEnemy;
     }
-    
+
     public DDEnemyOnBoard GetEnemy()
     {
         return currentEnemy;
@@ -137,7 +149,7 @@ public class DDLocation : DDSelection
 
     public IEnumerator SetEnemy(DDEnemyOnBoard enemy)
     {
-        if(currentEnemy)
+        if (currentEnemy)
         {
             yield return currentEnemy.SetLocation(null);
         }
@@ -162,7 +174,7 @@ public class DDLocation : DDSelection
     {
         for (int i = 0; i < effects.Count; i++)
         {
-            if(effects[i].DoEffect(this))
+            if (effects[i].DoEffect(this))
             {
                 effects.RemoveAt(i);
                 Destroy(visuals[i].gameObject);
@@ -191,7 +203,7 @@ public class DDLocation : DDSelection
 
     public override void FillEnemyList(ref List<DDEnemyOnBoard> enemies)
     {
-        if(currentEnemy)
+        if (currentEnemy)
         {
             enemies.Add(currentEnemy);
         }

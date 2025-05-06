@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDCardValkGainVigor
   m_EditorClassIdentifier: 
   <GUID>k__BackingField: 2cb6a5f745cb75e46a809cf895c3210a
-  cardType: 1
+  cardType: 0
   cardRarity: 0
   image: {fileID: 0}
   cardName: Gain Vigor
@@ -34,6 +34,10 @@ MonoBehaviour:
         targetType: 14
         differentTarget: 0
         useLastTarget: 0
+        targetInfo:
+          targetType: 14
+          differentTarget: 0
+          useLastTarget: 0
         affixType: 2
         amount: 3
         shouldSetValue: 0

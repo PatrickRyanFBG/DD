@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Forward Slash
-  description: 'Deal 5 Damage
+  description: 'Deal 6 Damage
 
     Draw 1 Card'
   rangeType: 0
@@ -37,11 +37,19 @@ MonoBehaviour:
         targetType: 13
         differentTarget: 0
         useLastTarget: 0
-        damage: 5
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
+        damage: 6
     - rid: 7815311197493264624
       type: {class: DDCardEffectDrawCard, ns: , asm: Assembly-CSharp}
       data:
         targetType: 10
         differentTarget: 0
         useLastTarget: 1
+        targetInfo:
+          targetType: 10
+          differentTarget: 0
+          useLastTarget: 1
         amount: 1

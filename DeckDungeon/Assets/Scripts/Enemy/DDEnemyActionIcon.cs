@@ -15,6 +15,8 @@ public class DDEnemyActionIcon : MonoBehaviour
         currentAction = action;
         
         currentAction.DisplayInformation(icon, text);
+
+        gameObject.SetActive(true);
     }
 
     public void Clear()
@@ -24,6 +26,8 @@ public class DDEnemyActionIcon : MonoBehaviour
         text.text = "";
         
         icon.enabled = false;
+        
+        gameObject.SetActive(false);
     }
 
     public void Hovered()

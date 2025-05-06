@@ -146,7 +146,7 @@ public class DDPlayerSelector : MonoBehaviour
     {
         if(hit.collider)
         {
-            GUI.Label(new Rect(Screen.width / 2 - 150, Screen.height - 50, 150, 50), hit.collider.gameObject.ToString());
+            //GUI.Label(new Rect(Screen.width / 2 - 150, Screen.height - 50, 150, 50), hit.collider.gameObject.ToString());
         }
     }
 #endif

@@ -39,9 +39,11 @@ public class DDCardSelection : MonoBehaviour
     public void DisplayPlayerCards(DDDungeonCardEncounter encounterCard)
     {
         // Generate Three Random Cards
-        int amount = 3;
-        List<DDCardBase> cards = DDGlobalManager.Instance.SelectedAdventurer.CardData.GenerateCards(amount);
-        for (int i = 0; i < amount; i++)
+        List<ECardType?> cardTypes = new List<ECardType?>() { ECardType.Action, ECardType.Offensive, null};
+        List<DDCardBase> cards = DDGlobalManager.Instance.SelectedAdventurer.CardData.GenerateCards(ref cardTypes);
+        cards.Shuffle();
+        
+        for (int i = 0; i < cards.Count; i++)
         {
             playerCards[i].SetUpCard(cards[i]);
         }

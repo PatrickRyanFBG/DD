@@ -5753,8 +5753,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ui: {fileID: 874092636}
-  debugArtifacts:
-  - {fileID: 11400000, guid: 1a08cb69e279d8647911937e45cbf8df, type: 2}
+  debugArtifacts: []
   healthText: {fileID: 992226922}
   goldText: {fileID: 637257444}
   dungeonDeckCount: {fileID: 375049874}
@@ -21138,7 +21137,7 @@ MonoBehaviour:
   - {x: -2, y: 2}
   - {x: -4, y: 4}
   dummyPrefab: {fileID: 5859716729871486454, guid: 85ec8d99e7059764299021407eabbca7, type: 3}
-  bonkDamage: 5
+  bonkDamage: 4
 --- !u!1001 &1603544189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22570,6 +22569,8 @@ MonoBehaviour:
     MoveDown: {fileID: 2800000, guid: dab5aa4cef7961e4793b632901b1d7e5, type: 3}
     MoveLeft: {fileID: 2800000, guid: a610b47958b0efd41a62a3e554dae30f, type: 3}
     AttackMelee: {fileID: 2800000, guid: 2718ad04683c39040a5b6922c7cc8c6e, type: 3}
+    AttackRanged: {fileID: 2800000, guid: fd829df17af618841bf9cd5fce239272, type: 3}
+    AttackPure: {fileID: 2800000, guid: 75de1fff9cb7dfe4b85a7746fdcd0e0c, type: 3}
     AttackExplode: {fileID: 2800000, guid: 38c0d0b63e6c6234eb9e5cbf6ed575cf, type: 3}
     AttackArmorBased: {fileID: 2800000, guid: 793f872522048ce4e833989c43cc4749, type: 3}
     ActionHeal: {fileID: 2800000, guid: a74bd99562f9aab4e906110616567f8d, type: 3}

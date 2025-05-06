@@ -12,8 +12,7 @@ public class DDEnemyCreatureMelee : DDEnemyBase
     {
         List<DDEnemyActionBase> actions = new List<DDEnemyActionBase>(number);
 
-        List<DDEnemyOnBoard> allEnemies = new List<DDEnemyOnBoard>();
-        DDGamePlaySingletonHolder.Instance.Board.GetAllEnemies(ref allEnemies);
+        List<DDEnemyOnBoard> allEnemies = allEnemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies;
 
         DDEnemyActionBase buffArmorAction = null;
 
@@ -21,7 +20,7 @@ public class DDEnemyCreatureMelee : DDEnemyBase
         if (allEnemies.Count > 1)
         {
             DDEnemyOnBoard eob = allEnemies[Random.Range(0, allEnemies.Count)];
-            if (eob != null && eob != actingEnemy && eob.GetAffixValue(EAffixType.Armor) < armorBuff)
+            if (eob && eob != actingEnemy && eob.GetAffixValue(EAffixType.Armor) < armorBuff)
             {
                 buffArmorAction =
                     new DDEnemyActionModifyAffix(EAffixType.Armor, armorBuff, true, eob.CurrentLocaton.Coord);
@@ -34,7 +33,8 @@ public class DDEnemyCreatureMelee : DDEnemyBase
         }
         else
         {
-            actingEnemy.GenericMeleeAttackActions(ref actions, new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
+            actingEnemy.GenericMeleeAttackActions(ref actions,
+                new DDEnemyActionAttack(damage, actingEnemy.CurrentEnemy));
         }
 
         return actions;

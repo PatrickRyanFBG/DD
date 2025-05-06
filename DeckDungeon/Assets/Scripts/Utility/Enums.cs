@@ -34,6 +34,7 @@ public enum EEncounterPhase
     PlayersStartTurn,
     PlayersTurn,
     PlayersEndTurn,
+    MonstersStartTurn,
     MonstersAct,
     EncounterEnd,
 }
@@ -73,6 +74,7 @@ public enum ERangeType
 {
     Melee,
     Ranged,
+    Pure,
     None
 }
 
