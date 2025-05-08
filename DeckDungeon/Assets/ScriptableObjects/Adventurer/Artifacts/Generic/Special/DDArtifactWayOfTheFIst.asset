@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DDArtifactWayOfTheFist
   m_EditorClassIdentifier: 
   artifactName: Way Of The Fist
-  description: Gain 5 Vigor at the start of every Encounter.
+  description: Gain 4 Vigor at the start of every Encounter.
   icon: {fileID: 2800000, guid: 6bd045480f0c7164992609027bea564a, type: 3}
   affixType: 2
-  amount: 5
+  amount: 4
   encounterPhase: 0

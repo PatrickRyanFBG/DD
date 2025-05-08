@@ -16,7 +16,7 @@ MonoBehaviour:
   StartingHealth: 24
   StartingArmor: 0
   entityName: Shrapnel Spitter
-  immovable: 1
+  immovable: 0
   friendly: 0
   rangeType: 2
   xSpawnPreference: 0

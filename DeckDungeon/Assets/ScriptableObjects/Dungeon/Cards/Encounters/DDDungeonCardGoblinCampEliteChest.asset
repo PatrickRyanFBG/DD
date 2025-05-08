@@ -20,6 +20,6 @@ MonoBehaviour:
   goldToGive: 50
   cardsToShuffleInAfter: []
   awardsArtifacts: 1
-  eventAfterComplete: {fileID: 11400000, guid: 5cb23e917c00acf4dae012a119486882, type: 2}
+  eventAfterComplete: {fileID: 0}
   dungeonAddedUponDefeat: {fileID: 0}
   data: {fileID: 11400000, guid: 2bb08c4d7b4def142a9444e0f1383a61, type: 2}

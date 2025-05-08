@@ -15,7 +15,9 @@ MonoBehaviour:
   type: 0
   image: {fileID: 2800000, guid: 7f87244ee549c5a4486524f8e68c4498, type: 3}
   name: Goblin Camp Elite
-  description: Its an Elite camp full of goblins!
+  description: 'Its an Elite camp full of goblins!
+
+    (Prompts Rare Card NYI)'
   encounterType: 1
   goldToGive: 50
   cardsToShuffleInAfter: []

@@ -21,6 +21,7 @@ public class DDCardSelection : MonoBehaviour
             {
                 DDGamePlaySingletonHolder.Instance.Dungeon.PromptArtifacts();
             }
+            // Probably should also check this after Artifact is selected so an ecnounter can award an artifact and do an event
             else if (fromEncounter.EventAfterComplete)
             {
                 DDGamePlaySingletonHolder.Instance.Dungeon.StartEvent(fromEncounter.EventAfterComplete);

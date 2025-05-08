@@ -110,6 +110,11 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
         }
     }
 
+    public virtual bool ShouldEndEarly()
+    {
+        return false;
+    }
+
     public virtual IEnumerator EncounterCompleted()
     {
         if (cardsToShuffleInAfter.Count > 0)

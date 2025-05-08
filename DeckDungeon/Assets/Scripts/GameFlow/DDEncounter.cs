@@ -51,6 +51,8 @@ public class DDEncounter : MonoBehaviour
             lastCombatTier = DDGamePlaySingletonHolder.Instance.Dungeon.DungeonStats.CombatTier;
         }
 
+        gameObject.SetActive(true);
+
         if (usedEncounterSetups.TryGetValue(encounter.EncounterType, out var setups))
         {
             currentEncounter.StartEncounter(ref setups);
@@ -61,8 +63,6 @@ public class DDEncounter : MonoBehaviour
             usedEncounterSetups.Add(encounter.EncounterType, usedSetups);
             currentEncounter.StartEncounter(ref usedSetups);
         }
-
-        gameObject.SetActive(true);
 
         player.EncounterStarted();
         player.ShuffleInDeck();
@@ -80,7 +80,8 @@ public class DDEncounter : MonoBehaviour
         {
             destroyedEnemies.Add(enemy);
             
-            if (enemies.Count == 0)
+            // Some combats want to end if a specific character is destroyed or objective met
+            if (enemies.Count == 0 || currentEncounter.ShouldEndEarly())
             {
                 ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
             }
@@ -98,11 +99,6 @@ public class DDEncounter : MonoBehaviour
 
                 if (allFriendly)
                 {
-                    for (int i = enemies.Count - 1; i >= 0; i--)
-                    {
-                        destroyedEnemies.Add(enemy);
-                    }
-
                     ChangeCurrentPhase(EEncounterPhase.EncounterEnd);
                 }
             }
@@ -122,6 +118,19 @@ public class DDEncounter : MonoBehaviour
             Destroy(destroyedEnemies[i].gameObject);
             // Remove enemies.
             destroyedEnemies.RemoveAt(i--);
+        }
+    }
+
+    public void ClearAllEnemies()
+    {
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            // Remove from timeline
+            timeline.RemoveEnemyFromTimeline(enemies[i]);
+            // Destroy object.
+            Destroy(enemies[i].gameObject);
+            // Remove enemies.
+            enemies.RemoveAt(i--);
         }
     }
 
@@ -182,6 +191,10 @@ public class DDEncounter : MonoBehaviour
             {
                 DDEnemyOnBoard enemy = enemies[0];
                 EnemyDefeated(enemy);
+                if (enemies.Count > 0 && CurrentPhase != EEncounterPhase.EncounterEnd)
+                { 
+                    StartCoroutine(CheckDestroyedEnemies());
+                }
             }
         }
     }
@@ -251,7 +264,11 @@ public class DDEncounter : MonoBehaviour
 
     private IEnumerator DoEncounterEnd()
     {
-        yield return CheckDestroyedEnemies();
+        yield return null;
+        
+        // Sometimes there are left over enemies like if we have all friendlies or a combat ended on a specific event
+        // Just clear all enemies instantly with no death effects
+        ClearAllEnemies();
 
         DDGamePlaySingletonHolder.Instance.Board.ClearAllEffects();
         

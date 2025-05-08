@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DDArtifactWayOfTheBlade
   m_EditorClassIdentifier: 
   artifactName: Way Of The Blade
-  description: Gain 5 Expertise at the start of every Encounter.
+  description: Gain 3 Expertise at the start of every Encounter.
   icon: {fileID: 2800000, guid: d4cda88bdfab39f4ab111d9326e3b3dc, type: 3}
   affixType: 0
-  amount: 5
+  amount: 3
   encounterPhase: 0

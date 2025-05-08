@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: DirtyCut
-  description: 'Deal 6 Damage
+  description: 'Deal 4 Damage
 
     Apply 3 Bleed'
   rangeType: 0
@@ -25,29 +25,15 @@ MonoBehaviour:
   price: {x: 100, y: 200}
   effects:
   - rid: 7815311197493264611
-  - rid: 7815311197493264625
+  - rid: 2904589870829404225
   momentumCost: 1
   momentumGain: 0
   references:
     version: 2
     RefIds:
-    - rid: 7815311197493264611
-      type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
-      data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
-        targetInfo:
-          targetType: 13
-          differentTarget: 0
-          useLastTarget: 0
-        damage: 6
-    - rid: 7815311197493264625
+    - rid: 2904589870829404225
       type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 1
         targetInfo:
           targetType: 13
           differentTarget: 0
@@ -55,3 +41,11 @@ MonoBehaviour:
         affixType: 4
         amount: 3
         shouldSetValue: 0
+    - rid: 7815311197493264611
+      type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
+      data:
+        targetInfo:
+          targetType: 13
+          differentTarget: 0
+          useLastTarget: 0
+        damage: 4

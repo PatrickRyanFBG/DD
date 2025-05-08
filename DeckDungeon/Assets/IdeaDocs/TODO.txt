@@ -6,6 +6,11 @@ MeleeRangedBonus on location now but not supported, but could be better utilized
 Fix enemy action forecast to be dynamic and not hard coded 2
 Implement Click and Drag?
 
+5/6
+    x Make sure foreman ends when forman dies
+    x Fix DirtyCut
+    - Fix hover card when drawing bug
+    
 5/4
     x close after Crypt
     x Check if can select same enemy with richoette? 

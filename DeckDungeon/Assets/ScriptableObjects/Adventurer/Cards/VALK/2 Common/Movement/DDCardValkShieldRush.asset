@@ -34,9 +34,6 @@ MonoBehaviour:
     - rid: 7815311197493264616
       type: {class: DDCardEffectMoveEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0
@@ -46,11 +43,8 @@ MonoBehaviour:
     - rid: 7815311197493264621
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 6
-        differentTarget: 0
-        useLastTarget: 1
         targetInfo:
-          targetType: 6
+          targetType: 9
           differentTarget: 0
           useLastTarget: 1
         affixType: 1

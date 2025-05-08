@@ -11,7 +11,8 @@ public class DDDungeonCardLeisureCamping : DDDungeonCardLeisure
     public override void DisplayLeisure(DDLeisureArea area)
     {
         Button buttonOne = area.GenerateButton();
-        buttonOne.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Rest (Heal " + healAmount.ToString() + ")";
+        buttonOne.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Rest and Leave" +
+                                                                         "\r\n (Heal " + healAmount.ToString() + ")";
         buttonOne.onClick.AddListener(() =>
         {
             DDGamePlaySingletonHolder.Instance.Dungeon.HealDamage(healAmount);

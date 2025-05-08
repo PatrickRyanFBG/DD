@@ -34,9 +34,6 @@ MonoBehaviour:
     - rid: 7815311197493264611
       type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0
@@ -45,11 +42,8 @@ MonoBehaviour:
     - rid: 7815311197493264624
       type: {class: DDCardEffectDrawCard, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 10
-        differentTarget: 0
-        useLastTarget: 1
         targetInfo:
-          targetType: 10
+          targetType: 14
           differentTarget: 0
           useLastTarget: 1
         amount: 1

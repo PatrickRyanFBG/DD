@@ -17,9 +17,9 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Shield Bash
-  description: 'Deal 5 Damage
+  description: 'Deal 4 Damage
 
-    Apply 5 Armor'
+    Apply 4 Armor'
   rangeType: 0
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -34,24 +34,18 @@ MonoBehaviour:
     - rid: 7815311197493264611
       type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0
           useLastTarget: 0
-        damage: 5
+        damage: 4
     - rid: 7815311197493264626
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 9
-        differentTarget: 0
-        useLastTarget: 1
         targetInfo:
           targetType: 9
           differentTarget: 0
           useLastTarget: 1
         affixType: 1
-        amount: 5
+        amount: 4
         shouldSetValue: 1

@@ -5,15 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class DDCardEffectBase
 {
-    [SerializeField] protected ETargetType targetType;
-    public ETargetType TargetType => targetType;
-
-    [SerializeField] protected bool differentTarget;
-    public bool DifferentTarget => differentTarget;
-
-    [SerializeField] protected bool useLastTarget;
-    public bool UseLastTarget => useLastTarget;
-
     [SerializeField] private DDCardTargetInfo targetInfo;
     public DDCardTargetInfo TargetInfo => targetInfo;
     
@@ -24,16 +15,16 @@ public class DDCardEffectBase
 
     protected void GetEnemies(DDSelection selection, ref List<DDEnemyOnBoard> allEnemies)
     {
-        if (useLastTarget)
+        if (targetInfo.UseLastTarget)
         {
             DDEnemyOnBoard eob = selection as DDEnemyOnBoard;
 
             if (eob)
             {
-                switch (targetType)
+                switch (targetInfo.TargetType)
                 {
-                    // Need to figure this out. This is like "target the enemy and drop some shit at the ground"
                     case ETargetType.Location:
+                        // Need to figure this out. This is like "target the enemy and drop some shit at the ground"
                         break;
                     case ETargetType.Row:
                         DDRow row = DDGamePlaySingletonHolder.Instance.Board.GetRow(eob.CurrentLocaton.Coord.y);
@@ -43,6 +34,13 @@ public class DDCardEffectBase
                         DDColumn column =
                             DDGamePlaySingletonHolder.Instance.Board.GetColumn(eob.CurrentLocaton.Coord.x);
                         column.FillEnemyList(ref allEnemies);
+                        break;
+                    case ETargetType.Entire:
+                        // This is like deal 5 damage to one target and 1 damage to the rest
+                        allEnemies = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies;
+                        break;
+                    case ETargetType.Enemy:
+                        allEnemies.Add(eob);
                         break;
                 }
             }

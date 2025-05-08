@@ -12,6 +12,8 @@ public class DDDungeonEventDataPlagueDoctor : DDDungeonEventData
 
     [SerializeField, Multiline] private string afterHealDescription;
 
+    [SerializeField] private DDCardBase wound;
+    
     public override void DisplayEvent(DDEventArea area)
     {
         base.DisplayEvent(area);
@@ -26,11 +28,15 @@ public class DDDungeonEventDataPlagueDoctor : DDDungeonEventData
             }
             
             float healPercent = healValues[i];
+            bool addWound = i == 0;
             button.Button.onClick.AddListener(() =>
             {
-                // Maybe something here add a wound card to deck?
                 DDGamePlaySingletonHolder.Instance.Dungeon.HealDamage(
                     (int)(DDGamePlaySingletonHolder.Instance.Dungeon.MaxHealth * healPercent));
+                if (addWound)
+                {
+                    DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(wound, DDGamePlaySingletonHolder.Instance.Dungeon.DungeonCardStartPosition);
+                }
                 AfterSelection(area);
             });
         }

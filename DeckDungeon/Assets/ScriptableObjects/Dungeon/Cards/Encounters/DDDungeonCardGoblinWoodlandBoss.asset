@@ -23,10 +23,12 @@ MonoBehaviour:
   cardsToShuffleInAfter: []
   awardsArtifacts: 1
   eventAfterComplete: {fileID: 0}
-  dungeonAddedUponDefeat: {fileID: 0}
+  dungeonAddedUponDefeat: {fileID: 11400000, guid: b1444b61c011f694184d43d079d143e7, type: 2}
   enemySetup:
+    guid: 
     enemies:
     - amount: 1
       enemy: {fileID: 11400000, guid: 46613e2cce3916b4e9ebf60cf9ece0d8, type: 2}
     - amount: 35
       enemy: {fileID: 11400000, guid: a39c829ce890b8940b123c9fb7f8fb63, type: 2}
+  combatEndsWhenThisDies: {fileID: 11400000, guid: 46613e2cce3916b4e9ebf60cf9ece0d8, type: 2}

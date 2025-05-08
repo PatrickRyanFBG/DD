@@ -15,7 +15,7 @@ public class DDCardGeneric : DDCardBase
         {
             DDCardEffectBase effect = effects[effectIndex];
 
-            if (effect.DifferentTarget || (effect.TargetType != selections[selectionIndex].TargetType && !effect.UseLastTarget))
+            if (effect.TargetInfo.DifferentTarget || (effect.TargetInfo.TargetType != selections[selectionIndex].TargetType && !effect.TargetInfo.UseLastTarget))
             {
                 selectionIndex++;
             }
@@ -44,7 +44,7 @@ public class DDCardGeneric : DDCardBase
         for (int i = 0; i < effects.Length; i++)
         {
             DDCardEffectBase effect = effects[i];
-            if (i == 0 || effect.DifferentTarget || (effect.TargetInfo.TargetType != targets[i - 1].TargetType && !effect.UseLastTarget))
+            if (i == 0 || effect.TargetInfo.DifferentTarget || (effect.TargetInfo.TargetType != targets[i - 1].TargetType && !effect.TargetInfo.UseLastTarget))
             {
                 targets.Add(effect.TargetInfo);
             }
