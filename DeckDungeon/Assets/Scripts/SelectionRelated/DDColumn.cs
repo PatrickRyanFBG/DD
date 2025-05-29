@@ -71,7 +71,7 @@ public class DDColumn : DDSelection
         }
     }
 
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
         for (int i = 0; i < locations.Length; i++)
         {

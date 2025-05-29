@@ -28,9 +28,12 @@ public abstract class DDEnemyActionBase
 
     public abstract string GetDescription();
 
-    public virtual bool HasLocationBasedEffects(ref Vector2Int target)
+    public virtual void ShowLocationBasedEffects()
     {
-        return false;
+    }
+    
+    public virtual void HideLocationBasedEffects()
+    {
     }
 }
 
@@ -384,10 +387,18 @@ public class DDEnemyActionSpawnEnemy : DDEnemyActionBase
         return icon;
     }
 
-    public override bool HasLocationBasedEffects(ref Vector2Int target)
+    public override void ShowLocationBasedEffects()
     {
-        target = atLocation;
-        return true;
+        DDLocation loc = DDGamePlaySingletonHolder.Instance.Board.GetLocation(atLocation);
+        loc.Highlight();
+        loc.ShowSpawnedEntity(enemyToSpawn.Image);
+    }
+
+    public override void HideLocationBasedEffects()
+    {
+        DDLocation loc = DDGamePlaySingletonHolder.Instance.Board.GetLocation(atLocation);
+        loc.Unhighlight();
+        loc.HideSpawnedEntity();
     }
 
     public override string GetDescription()
@@ -437,16 +448,20 @@ public class DDEnemyActionHealAlly : DDEnemyActionBase
         return DDGamePlaySingletonHolder.Instance.EnemyLibrary.SharedActionIconDictionary.ActionHeal;
     }
 
-    public override bool HasLocationBasedEffects(ref Vector2Int target)
+    
+    public override void ShowLocationBasedEffects()
     {
-        if (targetLocation == null)
+        if (targetLocation != null)
         {
-            return false;
+            DDGamePlaySingletonHolder.Instance.Board.GetLocation(targetLocation.Value).Highlight();
         }
-        else
+    }
+
+    public override void HideLocationBasedEffects()
+    {
+        if (targetLocation != null)
         {
-            target = targetLocation.Value;
-            return true;
+            DDGamePlaySingletonHolder.Instance.Board.GetLocation(targetLocation.Value).Unhighlight();
         }
     }
 
@@ -518,17 +533,22 @@ public class DDEnemyActionModifyAffix : DDEnemyActionBase
         return DDGlobalManager.Instance.AffixLibrary.GetAffixByType(affix).Image;
     }
 
-    public override bool HasLocationBasedEffects(ref Vector2Int target)
+    public override void ShowLocationBasedEffects()
     {
-        if (targetLocation == null)
+        if (targetLocation != null)
         {
-            return false;
+            DDGamePlaySingletonHolder.Instance.Board.GetLocation(targetLocation.Value).Highlight();
         }
-
-        target = targetLocation.Value;
-        return true;
     }
 
+    public override void HideLocationBasedEffects()
+    {
+        if (targetLocation != null)
+        {
+            DDGamePlaySingletonHolder.Instance.Board.GetLocation(targetLocation.Value).Unhighlight();
+        }
+    }
+    
     public override string GetDescription()
     {
         if (targetLocation == null)
@@ -570,16 +590,7 @@ public class DDEnemyActionAddCardTo : DDEnemyActionBase
 
         for (int i = 0; i < cardAmount; i++)
         {
-            switch (location)
-            {
-                case ECardLocation.Deck:
-                    break;
-                case ECardLocation.Hard:
-                    break;
-                case ECardLocation.Discard:
-                    yield return DDGamePlaySingletonHolder.Instance.Player.AddCardToDiscard(cardToAdd, position);
-                    break;
-            }
+            yield return DDGamePlaySingletonHolder.Instance.Player.AddCardTo(cardToAdd, position, location, false);
 
             yield return new WaitForSeconds(0.05f);
         }

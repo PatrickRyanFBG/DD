@@ -18,7 +18,7 @@ public class DDArtifactWeightLifting : DDArtifactBase
 
     private void CardLifeTimeChanged(DDCardInHand card, EPlayerCardLifeTime lifeTime)
     {
-        if (lifeTime == EPlayerCardLifeTime.Played)
+        if (lifeTime == EPlayerCardLifeTime.PostPlayed)
         {
             if (card.CurrentCard.CardType == ECardType.Offensive)
             {

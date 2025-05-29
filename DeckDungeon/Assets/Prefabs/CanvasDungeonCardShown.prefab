@@ -1345,7 +1345,7 @@ MonoBehaviour:
         - m_Target: {fileID: 7592135518872182011}
           m_TargetAssemblyTypeName: DDDungeonCardShown, Assembly-CSharp
           m_MethodName: Unhovered
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

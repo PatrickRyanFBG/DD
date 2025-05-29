@@ -70,7 +70,7 @@ public abstract class DDCardBase : DDScriptableObject
 
         for (int i = 0; i < defaultCardFinishes.Length; i++)
         {
-            AddCardFinishByType(defaultCardFinishes[i]);
+            AddCardFinish(defaultCardFinishes[i]);
         }
         
         doneInit = true;
@@ -81,7 +81,7 @@ public abstract class DDCardBase : DDScriptableObject
         cardInHand = inHand;
 
         cardInHand.Image.texture = image;
-        cardInHand.NameText.text = CardName;
+        cardInHand.NameText.text = cardName;
         cardInHand.DescText.text = description;
         cardInHand.TypesText.text = cardType.ToString();
         if (rangeType != ERangeType.None)
@@ -90,56 +90,85 @@ public abstract class DDCardBase : DDScriptableObject
         }
     }
 
-    public virtual void AddRandomFinish()
+    public virtual void RemoveCardFinish(EPlayerCardFinish eFinish)
     {
-        for (int i = 1; i < (int)EPlayerCardFinish.END_OF_POSITIVE; i++)
+        if (AllCardFinishes.TryGetValue(eFinish, out var finish))
         {
-            if (AddCardFinishByType((EPlayerCardFinish)Random.Range(1, (int)EPlayerCardFinish.END_OF_POSITIVE)))
+            foreach (EPlayerCardLifeTime lifeTime in finish.PlayerCardLifeTimes)
+            {
+                if (cardExecutionActions.TryGetValue(lifeTime, out List<DDPlayerCardFinish> finishes))
+                {
+                    finishes.Remove(finish);
+                }
+            }
+            
+            AllCardFinishes.Remove(eFinish);
+        }
+    }
+    
+    public virtual void AddRandomFinishByImpact(EPlayerCardFinishImpact finishImpact)
+    {
+        // Attempt finite number of times. Right now finishes can't stack.
+        for (int i = 1; i < 5; i++)
+        {
+            DDPlayerCardFinish finish = DDGlobalManager.Instance.CardFinishLibrary.GetRandomFinishByImpact(finishImpact);
+            if (AddCardFinish(finish))
             {
                 return;
             }
         }
     }
 
-    public virtual bool AddCardFinishByType(EPlayerCardFinish finishType)
+    // Some cards might not be able to have certain finishes
+    public virtual bool AddCardFinish(EPlayerCardFinish finishType)
+    {
+        DDPlayerCardFinish finish =
+            DDGlobalManager.Instance.CardFinishLibrary.GetFinishByType(finishType);
+
+        return AddCardFinish(finish);
+    }
+
+    public virtual bool AddCardFinish(DDPlayerCardFinish finish)
     {
         // Cards can only have 1 type of finish
-        if (AllCardFinishes.ContainsKey(finishType))
+        if (AllCardFinishes.ContainsKey(finish.PlayerCardFinish))
         {
             return false;
         }
+        
+        AllCardFinishes.Add(finish.PlayerCardFinish, finish);
 
-        DDPlayerCardFinish finish =
-            DDGlobalManager.Instance.CardFinishLibrary.GetFinishByType(finishType);
-        AllCardFinishes.Add(finishType, finish);
 
-        if (cardExecutionActions.TryGetValue(finish.PlayerCardLifeTime, out List<DDPlayerCardFinish> finishes))
+        foreach (EPlayerCardLifeTime lifeTime in finish.PlayerCardLifeTimes)
         {
-            bool added = false;
-            for (int i = 0; i < finishes.Count; i++)
+            if (cardExecutionActions.TryGetValue(lifeTime, out List<DDPlayerCardFinish> finishes))
             {
-                if (finish.PlayerCardFinishPriority < finishes[i].PlayerCardFinishPriority)
+                bool added = false;
+                for (int i = 0; i < finishes.Count; i++)
                 {
-                    finishes.Insert(i, finish);
-                    added = true;
-                    break;
+                    if (finish.PlayerCardFinishPriority < finishes[i].PlayerCardFinishPriority)
+                    {
+                        finishes.Insert(i, finish);
+                        added = true;
+                        break;
+                    }
+                }
+
+                if (!added)
+                {
+                    finishes.Add(finish);
                 }
             }
-
-            if (!added)
+            else
             {
-                finishes.Add(finish);
+                cardExecutionActions.Add(lifeTime, new() { finish });
             }
-        }
-        else
-        {
-            cardExecutionActions.Add(finish.PlayerCardLifeTime, new() { finish });
         }
 
         return true;
     }
 
-    private IEnumerator ExecuteFinishes(EPlayerCardLifeTime lifeTime)
+    public IEnumerator ExecuteFinishes(EPlayerCardLifeTime lifeTime)
     {
         if (cardExecutionActions.TryGetValue(lifeTime, out List<DDPlayerCardFinish> finishes))
         {
@@ -169,10 +198,8 @@ public abstract class DDCardBase : DDScriptableObject
     public IEnumerator ExecuteCard(List<DDSelection> selections)
     {
         yield return PreExecute(selections);
-
+        
         yield return Execute(selections);
-
-        yield return ExecuteFinishes(EPlayerCardLifeTime.Played);
 
         yield return PostExecute(selections);
     }

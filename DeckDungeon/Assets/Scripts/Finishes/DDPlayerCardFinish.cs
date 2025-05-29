@@ -7,9 +7,15 @@ using UnityEngine.Serialization;
 public abstract class DDPlayerCardFinish
 {
     public abstract EPlayerCardFinish PlayerCardFinish { get; }
-    public abstract EPlayerCardLifeTime PlayerCardLifeTime { get; }
+    public virtual EPlayerCardLifeTime[] PlayerCardLifeTimes => new EPlayerCardLifeTime[]{};
     public virtual EPlayerCardFinishPriority PlayerCardFinishPriority => EPlayerCardFinishPriority.None;
 
+    [FormerlySerializedAs("playerCardFinishType")] [SerializeField] private EPlayerCardFinishImpact playerCardFinishImpact;
+    public EPlayerCardFinishImpact PlayerCardFinishImpact => playerCardFinishImpact;
+    
+    [SerializeField] private float weight;
+    public float Weight => weight;
+    
     [SerializeField, Multiline] private string description;
     
     // This needs to go from icon to shader/material for actual finish
@@ -31,7 +37,7 @@ public abstract class DDPlayerCardFinish
 public class DDCardFinishSerrated : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Serrated;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Drawn;
+    public override EPlayerCardLifeTime[] PlayerCardLifeTimes => new[]{ EPlayerCardLifeTime.Drawn };
 
     [SerializeField] private int numberOfBleeds = 2;
     [SerializeField] private int bleedAmount = 2;
@@ -57,7 +63,7 @@ public class DDCardFinishSerrated : DDPlayerCardFinish
 public class DDCardFinishEnergized : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Energized;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Drawn;
+    public override EPlayerCardLifeTime[] PlayerCardLifeTimes => new[]{ EPlayerCardLifeTime.Drawn };
 
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
@@ -70,25 +76,17 @@ public class DDCardFinishEnergized : DDPlayerCardFinish
 public class DDCardFinishSharp : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Sharp;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 public class DDCardFinishWeighty : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Weighty;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
-}
-
-public class DDCardFinishSticky : DDPlayerCardFinish
-{
-    public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Sticky;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 public class DDCardFinishExplosive : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Explosive;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Discarded;
+    public override EPlayerCardLifeTime[] PlayerCardLifeTimes => new[]{ EPlayerCardLifeTime.Discarded };
 
     [SerializeField] private int damage;
     
@@ -103,16 +101,40 @@ public class DDCardFinishExplosive : DDPlayerCardFinish
     }
 }
 
+public class DDCardFinishReplicating : DDPlayerCardFinish
+{
+    public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Replicating;
+    public override EPlayerCardLifeTime[] PlayerCardLifeTimes => new[]{ EPlayerCardLifeTime.PostPlayed };
+
+    public override IEnumerator ExecuteFinish(DDCardBase card)
+    {
+        DDCardBase duplicated = card.Clone(false);
+        duplicated.RemoveCardFinish(EPlayerCardFinish.Replicating);
+        duplicated.AddCardFinish(EPlayerCardFinish.Fleeting);
+        
+        // ANIMATE SHIT HERE
+        // Maybe add card in the same index as this was?
+        yield return DDGamePlaySingletonHolder.Instance.Player.AddCardTo(duplicated, null, ECardLocation.Hand, true);
+        
+        yield return new WaitForSeconds(0.1f);
+    }
+}
+
 // Neutral
+public class DDCardFinishSticky : DDPlayerCardFinish
+{
+    public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Sticky;
+}
+
 public class DDCardFinishFleeting : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Fleeting;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.Discarded;
+    public override EPlayerCardLifeTime[] PlayerCardLifeTimes => new[]{ EPlayerCardLifeTime.Discarded , EPlayerCardLifeTime.PostPlayed };
     public override EPlayerCardFinishPriority PlayerCardFinishPriority => EPlayerCardFinishPriority.Last;
 
     public override IEnumerator ExecuteFinish(DDCardBase card)
     {
-        // Animate discard shit
+        // Animate fading out shit
         GameObject.Destroy(card.CardInHand.gameObject);
         
         yield return new WaitForSeconds(0.1f);
@@ -123,11 +145,9 @@ public class DDCardFinishFleeting : DDPlayerCardFinish
 public class DDCardFinishFragile : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Fragile;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }
 
 public class DDCardFinishSiphon : DDPlayerCardFinish
 {
     public override EPlayerCardFinish PlayerCardFinish => EPlayerCardFinish.Siphon;
-    public override EPlayerCardLifeTime PlayerCardLifeTime => EPlayerCardLifeTime.None;
 }

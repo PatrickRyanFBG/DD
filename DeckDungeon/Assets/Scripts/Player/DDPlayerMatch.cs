@@ -14,13 +14,19 @@ public class DDPlayerMatch : MonoBehaviour
     [SerializeField] private int defaultHandSize = 5;
     private int currentHandSize;
 
+    [SerializeField] private Transform cardSpawnLocation;
+
     [SerializeField] private DDPlayerMatchDeck deck;
     public DDPlayerMatchDeck Deck => deck;
-    
+
     public List<DDCardInHand> CurrentDeck => deck.Cards;
 
     [SerializeField] private DDPlayerMatchHand hand;
     [SerializeField] private DDPlayerMatchDiscard discard;
+
+    private List<DDCardBase> cardsExecutedThisTurn = new List<DDCardBase>();
+    public List<DDCardBase> CardsExecutedThisTurn => cardsExecutedThisTurn;
+    private List<DDCardBase> cardsExecutedThisEncounter = new List<DDCardBase>();
 
     public List<DDCardInHand> CurrentDiscard => discard.Cards;
 
@@ -36,7 +42,7 @@ public class DDPlayerMatch : MonoBehaviour
     [SerializeField] private Arrow.ArrowRenderer arrow;
 
     [SerializeField] private Transform arrowStart;
-    
+
     // This is resource, possible Player_Match will have child classes for different characters?
     private int momentumCounter;
 
@@ -48,42 +54,58 @@ public class DDPlayerMatch : MonoBehaviour
     [SerializeField] private DDAffixVisualsManager[] lanesAffixVisualsManager;
 
     [SerializeField] private DDAffixVisualsManager playersAffixVisualsManager;
-    
+
     private DDAffixManager affixManager;
 
     public UnityEngine.Events.UnityEvent<DDCardInHand, EPlayerCardLifeTime> CardLifeTimeChanged;
 
     [Header("Health")] [SerializeField] private TMPro.TextMeshProUGUI healthText;
-    
+
     [SerializeField] private Image healthBar;
-    
+
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI momentum;
 
     private void OnEnable()
     {
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.AddListener(SomethingSelected);
         DDGamePlaySingletonHolder.Instance.Dungeon.OnHealthChange.AddListener(HealthChanged);
-        HealthChanged(DDGamePlaySingletonHolder.Instance.Dungeon.CurrentHealth, DDGamePlaySingletonHolder.Instance.Dungeon.MaxHealth);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
+
+        HealthChanged(DDGamePlaySingletonHolder.Instance.Dungeon.CurrentHealth,
+            DDGamePlaySingletonHolder.Instance.Dungeon.MaxHealth);
     }
 
     private void OnDisable()
     {
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SomethingSelected.RemoveListener(SomethingSelected);
         DDGamePlaySingletonHolder.Instance.Dungeon.OnHealthChange.RemoveListener(HealthChanged);
+        DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
+
         cardResolving = null;
     }
 
     public void HealthChanged(int current, int max)
     {
         healthText.text = $"{current} / {max}";
-        healthBar.fillAmount = (float)current/max;
+        healthBar.fillAmount = (float)current / max;
+    }
+
+    private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
+    {
+        DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
+        if (phaseArgs.Phase == EEncounterPhase.PlayersStartTurn)
+        {
+            cardsExecutedThisTurn.Clear();
+        }
+
+        yield return null;
     }
 
     public void EncounterStarted()
     {
         playersAffixVisualsManager.ClearVisuals();
         affixManager = new DDAffixManager(playersAffixVisualsManager, EAffixOwner.Player);
-        
+
         laneAffixes = new DDAffixManager[lanesAffixVisualsManager.Length];
 
         for (int i = 0; i < lanesAffixVisualsManager.Length; i++)
@@ -97,6 +119,9 @@ public class DDPlayerMatch : MonoBehaviour
         discard.DestroyCards();
 
         affixManager.AffixAdjusted.AddListener(AffixAdjusted);
+
+        cardsExecutedThisTurn.Clear();
+        cardsExecutedThisEncounter.Clear();
     }
 
     private void AffixAdjusted(EAffixType changedAffix)
@@ -124,9 +149,22 @@ public class DDPlayerMatch : MonoBehaviour
         deck.ShuffleInCards(DDGamePlaySingletonHolder.Instance.Dungeon.PlayerDeck);
     }
 
-    public IEnumerator AddCardToDiscard(DDCardBase card, Vector3? spawnPosition)
+    public IEnumerator AddCardTo(DDCardBase card, Vector3? spawnPosition, ECardLocation location, bool cloned)
     {
-        return discard.AddCardOverTime(card, spawnPosition);
+        switch (location)
+        {
+            case ECardLocation.Deck:
+                break;
+            case ECardLocation.Hand:
+                DDCardInHand cardInHand =
+                    DDGlobalManager.Instance.SpawnNewCardInHand(card, false, transform,
+                        spawnPosition ?? cardSpawnLocation.position, cloned);
+                yield return hand.AddCard(cardInHand, false);
+                break;
+            case ECardLocation.Discard:
+                yield return discard.AddCardOverTime(card, spawnPosition ?? cardSpawnLocation.position, cloned);
+                break;
+        }
     }
 
     public void SetHandSizeToDefault()
@@ -194,7 +232,7 @@ public class DDPlayerMatch : MonoBehaviour
         {
             return;
         }
-        
+
         int leftOverDamage = (laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, -damage, false) ?? -damage);
         laneAffixes[lane].ModifyValueOfAffix(EAffixType.Armor, Mathf.Max(leftOverDamage, 0), true);
 
@@ -216,7 +254,7 @@ public class DDPlayerMatch : MonoBehaviour
             else
             {
                 deck.ShuffleInCards(discard.GetAndClearDiscard());
-                
+
                 // Do some shuffle animation
                 yield return new WaitForSeconds(.25f);
             }
@@ -224,7 +262,7 @@ public class DDPlayerMatch : MonoBehaviour
 
         if (cardAvail)
         {
-            yield return hand.AddCard(deck.GetTopCard());
+            yield return hand.AddCard(deck.GetTopCard(), true);
         }
     }
 
@@ -232,7 +270,7 @@ public class DDPlayerMatch : MonoBehaviour
     {
         yield return hand.EndOfTurn();
     }
-    
+
     public IEnumerator DiscardHand()
     {
         yield return hand.DiscardHand(discard);
@@ -263,7 +301,8 @@ public class DDPlayerMatch : MonoBehaviour
                         cardTargets = selectedCard.GetCardTarget();
                         cardSelections = new List<DDSelection>(cardTargets.Count);
                         currentTargetIndex = 0;
-                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].TargetType.GetLayer());
+                        DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(
+                            cardTargets[currentTargetIndex].TargetType.GetLayer());
                     }
                 }
             }
@@ -271,10 +310,11 @@ public class DDPlayerMatch : MonoBehaviour
         else if (selectedCard)
         {
             // Safety check here for targettype because cards/player are now UI based and can be selected
-            if (selection.TargetType == cardTargets[currentTargetIndex].TargetType && selectedCard.IsSelectionValid(cardSelections, selection, currentTargetIndex))
+            if (selection.TargetType == cardTargets[currentTargetIndex].TargetType &&
+                selectedCard.IsSelectionValid(cardSelections, selection, currentTargetIndex))
             {
                 DDGlobalManager.Instance.ClipLibrary.SelectTarget.PlayNow();
-                
+
                 cardSelections.Add(selection);
                 if (++currentTargetIndex >= cardTargets.Count)
                 {
@@ -292,7 +332,8 @@ public class DDPlayerMatch : MonoBehaviour
                 }
                 else
                 {
-                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex].TargetType.GetLayer());
+                    DDGamePlaySingletonHolder.Instance.PlayerSelector.SetSelectionLayer(cardTargets[currentTargetIndex]
+                        .TargetType.GetLayer());
                 }
             }
         }
@@ -313,14 +354,14 @@ public class DDPlayerMatch : MonoBehaviour
         momentumCounter += value;
 
         yield return null;
-        
+
         for (int i = 0; i < value; i++)
         {
             yield return GainedMomentum.Occured(this);
         }
 
         yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
-        
+
         momentum.text = momentumCounter.ToString();
     }
 
@@ -332,27 +373,42 @@ public class DDPlayerMatch : MonoBehaviour
 
     private IEnumerator WaitingForCardExecution()
     {
-        yield return new WaitForSeconds(.1f);
-        
-        hand.CardRemoved(selectedCard);
-        // Check if this works with fleeting cards?
-        discard.CardDiscarded(selectedCard);
-        
+        yield return hand.CardRemoved(selectedCard);
+
         DDGamePlaySingletonHolder.Instance.PlayerSelector.SetToPlayerCard();
-        
+
+        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(selectedCard,
+            EPlayerCardLifeTime.PrePlayed);
+
+        yield return selectedCard.ExecuteFinishes(EPlayerCardLifeTime.PrePlayed);
+
         yield return selectedCard.ExecuteCard(cardSelections);
-        
+
+        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(selectedCard,
+            EPlayerCardLifeTime.PostPlayed);
+
+        cardsExecutedThisTurn.Add(selectedCard.CurrentCard);
+        cardsExecutedThisEncounter.Add(selectedCard.CurrentCard);
+
+        yield return selectedCard.ExecuteFinishes(EPlayerCardLifeTime.PostPlayed);
+
+        if (selectedCard)
+        {
+            // Check if this works with fleeting cards?
+            yield return discard.CardDiscarded(selectedCard);
+        }
+
         selectedCard = null;
 
         yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
-        
+
         cardResolving = null;
     }
 
     public void DealDamageToEnemy(int damage, ERangeType rangeType, DDEnemyOnBoard enemyOnBoard, bool useExpertise)
     {
         int totalDamage = damage;
-        
+
         if (useExpertise)
         {
             int? dex = affixManager.TryGetAffixValue(EAffixType.Expertise);

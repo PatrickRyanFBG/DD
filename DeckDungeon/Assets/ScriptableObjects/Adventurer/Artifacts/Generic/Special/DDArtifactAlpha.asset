@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DDArtifactAlpha
   m_EditorClassIdentifier: 
   artifactName: Alpha
-  description: The first card drawn each round gets a temporary finish.
+  description: The first card drawn each round gets a temporary modification.
   icon: {fileID: 2800000, guid: 32a3ef31d78168c4ca7260391202a1fb, type: 3}

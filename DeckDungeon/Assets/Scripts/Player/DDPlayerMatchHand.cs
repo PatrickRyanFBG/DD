@@ -1,36 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class DDPlayerMatchHand : MonoBehaviour
 {
     [SerializeField] private float cardSpreadDistance = 160;
-    
+
     private List<DDCardInHand> cards = new List<DDCardInHand>();
 
-    public IEnumerator AddCard(DDCardInHand card)
+    public IEnumerator AddCard(DDCardInHand card, bool drawn)
     {
         DDGlobalManager.Instance.ClipLibrary.DrawCard.PlayNow();
-        
+
         cards.Add(card);
         card.SetCanHover(false);
         card.UpdateDisplayInformation();
         card.gameObject.SetActive(true);
         card.transform.SetParent(transform);
 
-        yield return card.DrawCard();
-        UpdateCardsPosition();
-        
-        yield return new WaitForSeconds(.1f);
-        
+        if (drawn)
+        {
+            yield return card.DrawCard();
+        }
+
+        yield return UpdateCardsPosition();
+
         card.SetCanHover(true);
     }
 
-    public void CardRemoved(DDCardInHand card)
+    public IEnumerator CardRemoved(DDCardInHand card)
     {
-        if(cards.Remove(card))
+        if (cards.Remove(card))
         {
-            UpdateCardsPosition();
+            yield return UpdateCardsPosition();
         }
     }
 
@@ -41,10 +44,10 @@ public class DDPlayerMatchHand : MonoBehaviour
             yield return cards[i].EndOfTurn();
         }
     }
-    
+
     public IEnumerator DiscardHand(DDPlayerMatchDiscard discard)
     {
-        for (int i = cards.Count - 1; i >= 0; i--)
+        for (int i = 0; i < cards.Count; i++)
         {
             if (cards[i].CurrentCard.AllCardFinishes.ContainsKey(EPlayerCardFinish.Sticky))
             {
@@ -53,44 +56,57 @@ public class DDPlayerMatchHand : MonoBehaviour
                 continue;
             }
 
-            yield return DiscardCard(cards[i], discard);
-            
-            yield return new WaitForSeconds(.1f);
+            DDCardInHand card = cards[i];
+            cards.RemoveAt(i--);
+
+            yield return MoveCardToDiscard(card, discard);
         }
+
+        yield return UpdateCardsPosition();
     }
 
     public IEnumerator DiscardCard(DDCardInHand card, DDPlayerMatchDiscard discard)
     {
         if (cards.Remove(card))
         {
-            DDGlobalManager.Instance.ClipLibrary.DiscardCard.PlayNow();
-            
-            yield return card.DiscardCard(false);
-            if (card)
-            {
-                discard.CardDiscarded(card);
-            }
+            yield return MoveCardToDiscard(card, discard);
         }
     }
 
-    private void UpdateCardsPosition()
+    private IEnumerator MoveCardToDiscard(DDCardInHand card, DDPlayerMatchDiscard discard)
     {
-        if(cards.Count == 1)
+        DDGlobalManager.Instance.ClipLibrary.DiscardCard.PlayNow();
+
+        yield return card.DiscardCard(false);
+        if (card)
+        {
+            yield return discard.CardDiscarded(card);
+        }
+    }
+
+    private IEnumerator UpdateCardsPosition()
+    {
+        if (cards.Count == 1)
         {
             cards[0].transform.position = transform.position;
         }
         else
         {
             float minMax = (cards.Count - 1f) * .5f * cardSpreadDistance;
-            
+
             for (float i = 0; i < cards.Count; i++)
             {
                 float percent = i / (cards.Count - 1);
-                
-                Vector3 pos = Vector3.zero;
-                pos.x = Mathf.Lerp(-minMax, minMax, percent);
-                cards[(int)i].transform.localPosition = pos; 
+                cards[(int)i].SetCanHover(false);
+                cards[(int)i].transform.DOLocalMoveX(Mathf.Lerp(minMax, -minMax, percent), .1f);
             }
+        }
+
+        yield return new WaitForSeconds(.1125f);
+
+        foreach (var card in cards)
+        {
+            card.SetCanHover(true);
         }
     }
 
@@ -115,7 +131,7 @@ public class DDPlayerMatchHand : MonoBehaviour
                 ++count;
             }
         }
-        
+
         return count;
     }
 }

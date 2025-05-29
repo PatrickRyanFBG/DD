@@ -81,26 +81,34 @@ public enum ERangeType
 public enum ECardLocation
 { 
     Deck,
-    Hard,
+    Hand,
     Discard
 }
 
 public enum EPlayerCardFinish
 {
-    None,
+    // Space here in case we want some special finishes?
     // Positive
-    Energized,
+    Energized = 100,
     Serrated,
     Sharp,
     Weighty,
     Explosive,
-    Sticky,
-    END_OF_POSITIVE,
+    Replicating,
     // Neutral
-    Fleeting = 100, 
+    Fleeting = 1100, 
+    Sticky,
     // Negative
-    Fragile = 200,
+    Fragile = 2100,
     Siphon,
+}
+
+public enum EPlayerCardFinishImpact
+{
+    None,
+    Positive,
+    Neutral,
+    Negative,
 }
 
 public enum EPlayerCardFinishPriority
@@ -147,7 +155,8 @@ public enum EPlayerCardLifeTime
 {
     None,
     Drawn,
-    Played,
+    PrePlayed,
+    PostPlayed,
     EndOfRound,
     Discarded,
 }

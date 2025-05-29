@@ -25,7 +25,7 @@ public class DDSelection : MonoBehaviour
         }
     }
 
-    public virtual void Unhovered()
+    public virtual void Unhovered(bool fromAnotherSelection = false)
     {
     }
 }

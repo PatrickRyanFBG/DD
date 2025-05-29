@@ -20,13 +20,15 @@ public class DDLocation : DDSelection
     [SerializeField] private TMPro.TextMeshProUGUI info;
 
     private Vector2Int meleeRangeBonus;
-    
+
     [Header("Testing")] [SerializeField] private Renderer hoveredRender;
 
     [SerializeField] private Renderer highlightRenderer;
 
     [SerializeField] private Vector2 minMaxX;
 
+    [SerializeField] private RawImage spawnedImage;
+    
     [ContextMenu("Fix Coord")]
     private void FixCoord()
     {
@@ -95,17 +97,17 @@ public class DDLocation : DDSelection
     public void SetMeleeRangeBonus(Vector2Int bonus)
     {
         meleeRangeBonus = bonus;
-        
+
         if (bonus == Vector2Int.zero)
         {
             info.text = "";
         }
         else
         {
-            info.text = "Ranged: " + bonus.y + "\r\nMelee: " + bonus.x;
+            info.text = "Ranged: " + (bonus.y > 0 ? "+" : "") + bonus.y + "\r\nMelee: " + (bonus.x > 0 ? "+" : "") + bonus.x;
         }
     }
-    
+
     public override void Hovered(bool fromAnotherSelection = false)
     {
         base.Hovered(fromAnotherSelection);
@@ -113,7 +115,7 @@ public class DDLocation : DDSelection
         hoveredRender.enabled = true;
     }
 
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
         hoveredRender.enabled = false;
     }
@@ -207,6 +209,17 @@ public class DDLocation : DDSelection
         {
             enemies.Add(currentEnemy);
         }
+    }
+
+    public void ShowSpawnedEntity(Texture entity)
+    {
+        spawnedImage.texture = entity;
+        spawnedImage.enabled = true;
+    }
+
+    public void HideSpawnedEntity()
+    {
+        spawnedImage.enabled = false;
     }
 }
 

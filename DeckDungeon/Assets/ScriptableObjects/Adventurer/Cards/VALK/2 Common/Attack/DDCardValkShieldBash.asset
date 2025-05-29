@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Shield Bash
-  description: 'Deal 4 Damage
+  description: 'Deal 5 Damage
 
     Apply 4 Armor'
   rangeType: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
           targetType: 13
           differentTarget: 0
           useLastTarget: 0
-        damage: 4
+        damage: 5
     - rid: 7815311197493264626
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
       data:

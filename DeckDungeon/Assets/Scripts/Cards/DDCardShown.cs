@@ -28,7 +28,7 @@ public class DDCardShown : DDCardInHand
         DDGlobalManager.Instance.ClipLibrary.HoverCard.PlayNow();
     }
 
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
     }
 

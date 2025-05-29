@@ -5,32 +5,28 @@ using UnityEngine;
 
 public class DDPlayerMatchDiscard : MonoBehaviour
 {
-    [SerializeField]
-    private Transform cardSpawnLocation;
-
     private List<DDCardInHand> cards = new List<DDCardInHand>();
     public List<DDCardInHand> Cards => cards;
 
-    public IEnumerator AddCardOverTime(DDCardBase card, Vector3? position)
+    public IEnumerator AddCardOverTime(DDCardBase card, Vector3 position, bool cloned)
     {
         DDCardInHand cardInHand =
-            DDGlobalManager.Instance.SpawnNewCardInHand(card, false, transform, position ?? cardSpawnLocation.position);
-        cardInHand.transform.DOMove(transform.position, .3f, false);
+            DDGlobalManager.Instance.SpawnNewCardInHand(card, false, transform, position, cloned);
         
-        yield return new WaitForSeconds(.3f);
-
+        yield return CardDiscarded(cardInHand);
+        
         cardInHand.SetCanHover(true);
-        
-        CardDiscarded(cardInHand);
     }
 
-    public void CardDiscarded(DDCardInHand card)
+    public IEnumerator CardDiscarded(DDCardInHand card)
     {
         cards.Add(card);
 
         // DO ANIMATION OF CARD MOVING TO DISCARD
         card.transform.SetParent(transform);
-        card.transform.localPosition = Vector3.zero;
+        card.SetCanHover(false);
+        yield return card.transform.DOLocalMove(Vector3.zero, .1f).WaitForCompletion();
+        card.SetCanHover(true);
         card.gameObject.SetActive(false);
     }
 

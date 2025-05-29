@@ -79,7 +79,7 @@ public class DDAdventurerCardData
 
         foreach (KeyValuePair<string, DDCardBase> card in cards)
         {
-            card.Value.AddRandomFinish();
+            card.Value.AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
         }
 
         return new List<DDCardBase>(cards.Values);
@@ -126,7 +126,7 @@ public class DDAdventurerCardData
 
         foreach (KeyValuePair<string, DDCardBase> card in cards)
         {
-            card.Value.AddRandomFinish();
+            card.Value.AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
         }
 
         return new List<DDCardBase>(cards.Values);

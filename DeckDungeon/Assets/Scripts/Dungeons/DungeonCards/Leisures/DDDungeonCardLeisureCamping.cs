@@ -51,7 +51,7 @@ public class DDDungeonCardLeisureCamping : DDDungeonCardLeisure
     {
         for (int i = 0; i < 2; i++)
         {
-            selectedCard.AddRandomFinish();
+            selectedCard.AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
         }
 
         DDGamePlaySingletonHolder.Instance.ShowDeckArea.CardSelectedCallback.RemoveListener(UpgradeCardSelected);

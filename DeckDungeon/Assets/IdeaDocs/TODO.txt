@@ -5,6 +5,16 @@ Expand on EnemyActionBase "is hidden" at some point
 MeleeRangedBonus on location now but not supported, but could be better utilized?
 Fix enemy action forecast to be dynamic and not hard coded 2
 Implement Click and Drag?
+x Add Weight to Card Finishes
+
+5/24
+    - Feedback from Ang
+        x Spawned enemies visuals
+        x Do Encountered Cleared screen
+        x timeline highlight and name
+        - Test Foreman for not completed bug
+        x Solidify Finishes and Modifications
+    x Test Omega Artifact
 
 5/6
     x Make sure foreman ends when forman dies

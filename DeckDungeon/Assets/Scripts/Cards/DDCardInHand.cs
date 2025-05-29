@@ -32,6 +32,9 @@ public class DDCardInHand : DDSelection
     [SerializeField] protected Transform finishParent;
     [SerializeField] protected DDCardFinishIcon iconPrefab;
 
+    protected Dictionary<EPlayerCardFinish, DDCardFinishIcon> finishIcons =
+        new Dictionary<EPlayerCardFinish, DDCardFinishIcon>();
+
     protected DDCardBase currentCard;
     public DDCardBase CurrentCard => currentCard;
 
@@ -60,6 +63,14 @@ public class DDCardInHand : DDSelection
     public void SetCanHover(bool hover)
     {
         canHover = hover;
+
+        if (!canHover && moveUpCoroutine != null)
+        {
+            StopCoroutine(moveUpCoroutine);
+            Vector3 localPos = transform.localPosition;
+            localPos.y = 0;
+            transform.localPosition = localPos;
+        }
     }
 
     public void UpdateDisplayInformation()
@@ -67,20 +78,27 @@ public class DDCardInHand : DDSelection
         currentCard.SetCardInHand(this);
         foreach (var finish in currentCard.AllCardFinishes)
         {
-            DDCardFinishIcon icon = Instantiate(iconPrefab, finishParent);
-            icon.SetUp(finish.Value);
-            icon.gameObject.SetActive(true);
+            if (!finishIcons.ContainsKey(finish.Key))
+            {
+                DDCardFinishIcon icon = Instantiate(iconPrefab, finishParent);
+                icon.SetUp(finish.Value);
+                icon.gameObject.SetActive(true);
+                finishIcons[finish.Key] = icon;
+            }
         }
     }
 
+    /*
     private void OnDisable()
     {
-        // pool these
-        for (int i = 1; i < finishParent.childCount; i++)
+        foreach (var finish in finishIcons)
         {
-            Destroy(finishParent.GetChild(i).gameObject);
+            Destroy(finish.Value.gameObject);
         }
+        
+        finishIcons.Clear();
     }
+    */
 
     public List<DDCardTargetInfo> GetCardTarget()
     {
@@ -131,7 +149,7 @@ public class DDCardInHand : DDSelection
     }
 
     // Called from UI
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
         if (selected || !canHover)
         {
@@ -149,7 +167,7 @@ public class DDCardInHand : DDSelection
 
     public IEnumerator DrawCard()
     {
-        yield return CurrentCard.DrawCard();
+        yield return currentCard.DrawCard();
 
         DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(this, EPlayerCardLifeTime.Drawn);
     }
@@ -158,17 +176,21 @@ public class DDCardInHand : DDSelection
     {
         selected = false;
         yield return currentCard.ExecuteCard(selections);
-        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(this, EPlayerCardLifeTime.Played);
+    }
+
+    public IEnumerator ExecuteFinishes(EPlayerCardLifeTime lifeTime)
+    {
+        yield return currentCard.ExecuteFinishes(lifeTime);
     }
 
     public IEnumerator EndOfTurn ()
     {
-        yield return CurrentCard.EndOfTurn();
+        yield return currentCard.EndOfTurn();
     }
 
     public IEnumerator DiscardCard(bool endOfTurn)
     {
-        yield return CurrentCard.DiscardCard(endOfTurn);
+        yield return currentCard.DiscardCard(endOfTurn);
         
         DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged?.Invoke(this, EPlayerCardLifeTime.Discarded);
     }

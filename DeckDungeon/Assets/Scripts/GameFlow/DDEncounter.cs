@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class DDEncounter : MonoBehaviour
@@ -28,6 +29,8 @@ public class DDEncounter : MonoBehaviour
     
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI phaseDebug;
 
+    [SerializeField] private RectTransform completedBanner;
+    
     private DDDungeonCardEncounter currentEncounter;
 
     private bool playersTurnEnding;
@@ -264,7 +267,8 @@ public class DDEncounter : MonoBehaviour
 
     private IEnumerator DoEncounterEnd()
     {
-        yield return null;
+        // Clear all dead enemies
+        yield return CheckDestroyedEnemies();
         
         // Sometimes there are left over enemies like if we have all friendlies or a combat ended on a specific event
         // Just clear all enemies instantly with no death effects
@@ -273,6 +277,21 @@ public class DDEncounter : MonoBehaviour
         DDGamePlaySingletonHolder.Instance.Board.ClearAllEffects();
         
         StopCoroutine(changingPhaseCoroutine);
+
+        Vector3 startPos = -(Vector3.right * Screen.width / 2);
+        startPos.x -= 300;
+        completedBanner.localPosition = startPos;
+        completedBanner.gameObject.SetActive(true);
+
+        Vector3 endPos = startPos * -1;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(completedBanner.DOLocalMove(Vector3.zero, .75f).SetEase(Ease.OutSine));
+        seq.AppendInterval(.25f);
+        seq.Append(completedBanner.DOLocalMove(endPos, .75f).SetEase(Ease.InSine));
+        seq.Play();
+
+        yield return new WaitForSeconds(2f);
         
         gameObject.SetActive(false);
         

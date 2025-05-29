@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Slash
-  description: Deal 5 Melee Damage
+  description: Deal 6 Melee Damage
   rangeType: 0
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -31,11 +31,8 @@ MonoBehaviour:
     - rid: 7815311197493264611
       type: {class: DDCardEffectDamageEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0
           useLastTarget: 0
-        damage: 5
+        damage: 6

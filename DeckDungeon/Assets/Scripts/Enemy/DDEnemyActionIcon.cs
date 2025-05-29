@@ -33,10 +33,12 @@ public class DDEnemyActionIcon : MonoBehaviour
     public void Hovered()
     {
         DDGlobalManager.Instance.ToolTip.SetText(currentAction.GetDescription());
+        currentAction.ShowLocationBasedEffects();
     }
 
     public void Unhovered()
     {
         DDGlobalManager.Instance.ToolTip.SetText("");
+        currentAction.HideLocationBasedEffects();
     }
 }

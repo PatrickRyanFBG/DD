@@ -26,7 +26,7 @@ public class DDPlayerMatchDeck : MonoBehaviour
         for (int i = 0; i < otherCards.Count; i++)
         {
             DDCardInHand cardInHand =
-                DDGlobalManager.Instance.SpawnNewCardInHand(otherCards[i], true, transform, transform.position);
+                DDGlobalManager.Instance.SpawnNewCardInHand(otherCards[i], true, transform, transform.position, false);
             ShuffleInCard(cardInHand, true);
         }
 

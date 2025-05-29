@@ -31,9 +31,6 @@ MonoBehaviour:
     - rid: 7815311197493264610
       type: {class: DDCardEffectMoveEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0

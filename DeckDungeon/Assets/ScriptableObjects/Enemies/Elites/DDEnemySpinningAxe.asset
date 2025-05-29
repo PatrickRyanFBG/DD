@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: DDEnemySpinningAxe
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: ba58a85cb331301478e84b39ff94a569, type: 3}
-  StartingHealth: 12
+  StartingHealth: 8
   StartingArmor: 0
   entityName: Spinning Axe
+  entityDescription: 
   immovable: 0
   friendly: 0
   rangeType: 2

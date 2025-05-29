@@ -33,7 +33,7 @@ public class DDEntireOrEmpty : DDSelection
         }
     }
 
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
         for (int i = 0; i < rows.Length; i++)
         {

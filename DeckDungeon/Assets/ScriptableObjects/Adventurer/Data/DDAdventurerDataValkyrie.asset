@@ -23,11 +23,10 @@ MonoBehaviour:
   startingGold: 200
   artifacts:
   - {fileID: 11400000, guid: f69e792b27fd22f46bbc10184985e4e4, type: 2}
-  - {fileID: 11400000, guid: ab6cf7ddad925fa44854eedf010659ca, type: 2}
   - {fileID: 11400000, guid: 50f996a5d4db03747b7b7983fc29150a, type: 2}
-  - {fileID: 11400000, guid: 862ae6a6a17807548b75274dba30d13a, type: 2}
   - {fileID: 11400000, guid: f57ef33c38462f548b5e0253920d121b, type: 2}
   - {fileID: 11400000, guid: 40d4d026227940b4d857a2f56640002a, type: 2}
+  - {fileID: 11400000, guid: 862ae6a6a17807548b75274dba30d13a, type: 2}
   - {fileID: 11400000, guid: bc01fa2e7e3d1ed4da48fc1e52f4d5ee, type: 2}
   cardData:
     starterCards:
@@ -37,6 +36,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6e61018f252792c47bb45fb7ec9fbd0a, type: 2}
     - {fileID: 11400000, guid: 163dbac06ad21f84785428cb7be015d6, type: 2}
     - {fileID: 11400000, guid: af5840839b4d7fe4487f0c710631fce5, type: 2}
+    - {fileID: 11400000, guid: 303afd7ebd1a0d243a92beadda630aed, type: 2}
     commonCards:
     - {fileID: 11400000, guid: ab71f52b3ea3c7842b7570c8ad85f652, type: 2}
     - {fileID: 11400000, guid: dd309a46f7707d24790aefd533ba4094, type: 2}
@@ -52,7 +52,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 58ecc581b72771a48bf6c010b3d51578, type: 2}
     - {fileID: 11400000, guid: 81b88c85767ebcb4b9ab71a853ce6a82, type: 2}
     - {fileID: 11400000, guid: 9d9439c7dfc16db42bddf97f06e8987b, type: 2}
-    - {fileID: 11400000, guid: 303afd7ebd1a0d243a92beadda630aed, type: 2}
     - {fileID: 11400000, guid: c2ab2792e38c711478131e76050640aa, type: 2}
     - {fileID: 11400000, guid: 6a2afa65d3da3ff48bdc709c6d00980a, type: 2}
     - {fileID: 11400000, guid: 2f973688ea262eb46b2989c2fd6c44f8, type: 2}

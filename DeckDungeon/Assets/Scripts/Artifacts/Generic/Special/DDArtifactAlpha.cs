@@ -19,7 +19,7 @@ public class DDArtifactAlpha : DDArtifactBase
         DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
         if (phaseArgs.Phase == EEncounterPhase.PlayersStartTurn)
         {
-            DDGamePlaySingletonHolder.Instance.Player.Deck.PeakTopCard().CurrentCard.AddRandomFinish();
+            DDGamePlaySingletonHolder.Instance.Player.Deck.PeakTopCard().CurrentCard.AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
         }
 
         yield return null;

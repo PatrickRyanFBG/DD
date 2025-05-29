@@ -198,9 +198,9 @@ MonoBehaviour:
   hoverTime: 0.3
   selectedTime: 0.2
   image: {fileID: 6304360014523601156}
-  cardTypeText: {fileID: 4397850531003950469}
   nameText: {fileID: 1845508217314037740}
   descText: {fileID: 8971802030016065465}
+  typesText: {fileID: 0}
   momentumNumber: {fileID: 5717054111185264135}
   finishParent: {fileID: 1704000135425515196}
   iconPrefab: {fileID: 4455704009313339955}
@@ -1477,9 +1477,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8958752079381682357}
-          m_TargetAssemblyTypeName: DDCardInHand, Assembly-CSharp
+          m_TargetAssemblyTypeName: DDCardShown, Assembly-CSharp
           m_MethodName: Hovered
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1493,9 +1493,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8958752079381682357}
-          m_TargetAssemblyTypeName: DDCardInHand, Assembly-CSharp
+          m_TargetAssemblyTypeName: DDCardShown, Assembly-CSharp
           m_MethodName: Unhovered
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

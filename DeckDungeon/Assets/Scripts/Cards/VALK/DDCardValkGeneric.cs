@@ -9,6 +9,11 @@ public class DDCardValkGeneric : DDCardGeneric
     
     [SerializeField] private int momentumGain;
     public int MomentumGain => momentumGain;
+
+    public virtual void MomentumCostOverride(int value)
+    {
+        momentumCost = value;
+    }
     
     public override bool SelectCard()
     {
@@ -20,9 +25,9 @@ public class DDCardValkGeneric : DDCardGeneric
         return DDGamePlaySingletonHolder.Instance.Player.MomentumCounter >= momentumCost;
     }
 
-    public override void SetCardInHand(DDCardInHand cardInHand)
+    public override void SetCardInHand(DDCardInHand inHand)
     {
-        base.SetCardInHand(cardInHand);
+        base.SetCardInHand(inHand);
 
         cardInHand.MomentumNumber.text = momentumCost.ToString();
     }

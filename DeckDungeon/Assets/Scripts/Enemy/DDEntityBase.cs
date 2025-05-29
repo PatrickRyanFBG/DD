@@ -5,28 +5,26 @@ using UnityEngine.Serialization;
 
 public abstract class DDEntityBase : DDScriptableObject
 {
-    [SerializeField]
-    private Texture image;
+    [SerializeField] private Texture image;
     public Texture Image => image;
 
     public int StartingHealth;
 
     public int StartingArmor;
 
-    [FormerlySerializedAs("enemyName")] [SerializeField]
-    private string entityName;
+    [SerializeField] private string entityName;
     public string EntityName => entityName;
 
-    [SerializeField]
-    private bool immovable = false;
+    [SerializeField] private string entityDescription;
+    public string EntityDescription => entityDescription;
+    
+    [SerializeField] private bool immovable = false;
     public bool Immovable => immovable;
 
-    [SerializeField]
-    private bool friendly;
+    [SerializeField] private bool friendly;
     public bool Friendly => friendly;
 
-    [SerializeField]
-    private ERangeType rangeType = ERangeType.Pure;
+    [SerializeField] private ERangeType rangeType = ERangeType.Pure;
     public ERangeType RangeType => rangeType;
 
     public abstract List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy);

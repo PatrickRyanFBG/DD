@@ -30,7 +30,7 @@ public class DDDungeonEventDataAddFinishes : DDDungeonEventData
 
             for (int i = 0; i < indexes.Count; i++)
             {
-                DDGamePlaySingletonHolder.Instance.Dungeon.PlayerDeck[i].AddRandomFinish();
+                DDGamePlaySingletonHolder.Instance.Dungeon.PlayerDeck[i].AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
             }
             
             area.Description.text = afterFinishesDescription;

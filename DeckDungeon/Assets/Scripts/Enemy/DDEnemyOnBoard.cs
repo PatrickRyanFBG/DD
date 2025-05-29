@@ -43,6 +43,8 @@ public class DDEnemyOnBoard : DDSelection
     [SerializeField] private GameObject attackPrefab;
     public GameObject AttackPrefab => attackPrefab;
 
+    [HideInInspector] public DDEncounterEnemyIcon MatchingIcon; 
+    
     public void SetUpEnemy(DDEnemyBase enemyBase)
     {
         currentEnemy = enemyBase;
@@ -230,11 +232,7 @@ public class DDEnemyOnBoard : DDSelection
     {
         for (int i = 0; i < nextActions.Count; i++)
         {
-            Vector2Int loc = Vector2Int.zero;
-            if (nextActions[i].HasLocationBasedEffects(ref loc))
-            {
-                DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
-            }
+            nextActions[i].HideLocationBasedEffects();
 
             yield return nextActions[i].ExecuteAction(this);
         }
@@ -246,7 +244,7 @@ public class DDEnemyOnBoard : DDSelection
         hoveredImage.enabled = true;
     }
 
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
         hoveredImage.enabled = false;
     }
@@ -260,11 +258,12 @@ public class DDEnemyOnBoard : DDSelection
     {
         for (int i = 0; i < nextActions.Count; i++)
         {
-            Vector2Int loc = Vector2Int.zero;
-            if (nextActions[i].HasLocationBasedEffects(ref loc))
-            {
-                DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Highlight();
-            }
+            nextActions[i].ShowLocationBasedEffects();
+        }
+
+        if (MatchingIcon)
+        {
+            MatchingIcon.PersonalHover();
         }
     }
 
@@ -272,11 +271,12 @@ public class DDEnemyOnBoard : DDSelection
     {
         for (int i = 0; i < nextActions.Count; i++)
         {
-            Vector2Int loc = Vector2Int.zero;
-            if (nextActions[i].HasLocationBasedEffects(ref loc))
-            {
-                DDGamePlaySingletonHolder.Instance.Board.GetLocation(loc).Unhighlight();
-            }
+            nextActions[i].HideLocationBasedEffects();
+        }
+
+        if (MatchingIcon)
+        {
+            MatchingIcon.PersonalUnhover();
         }
 
 #if UNITY_EDITOR

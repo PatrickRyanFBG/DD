@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DDArtifactOmega
   m_EditorClassIdentifier: 
   artifactName: Omega
-  description: The last played card in each round gains a temporary finish.
+  description: The last played card in each round gains a temporary modification.
   icon: {fileID: 2800000, guid: dcbcff86e42b92446b4ace958f8ffe82, type: 3}

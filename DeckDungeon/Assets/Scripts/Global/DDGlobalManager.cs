@@ -137,10 +137,10 @@ public class DDGlobalManager : MonoBehaviour
         }
     }
     
-    public DDCardInHand SpawnNewCardInHand(DDCardBase card, bool hoverable, Transform parent, Vector3 startingLocation)
+    public DDCardInHand SpawnNewCardInHand(DDCardBase card, bool hoverable, Transform parent, Vector3 startingLocation, bool cloned)
     {
         DDCardInHand cardInHand = Instantiate(cardInHandPrefab, startingLocation, Quaternion.identity, parent);
-        cardInHand.SetUpCard(card.Clone(false), hoverable);        
+        cardInHand.SetUpCard(cloned ? card : card.Clone(false), hoverable);        
         return cardInHand;
     }
 }

@@ -4,27 +4,14 @@ using UnityEngine;
 
 public class DDArtifactOmega : DDArtifactBase
 {
-    private DDCardInHand lastCardPlayed;
-    
     public override void Equipped()
     {
         DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged += EncounterPhaseChanged;
-
-        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged.AddListener(CardLifeTimeChanged);
     }
     
     public override void Unequipped()
     {
         DDGamePlaySingletonHolder.Instance.Encounter.PhaseChanged -= EncounterPhaseChanged;
-        DDGamePlaySingletonHolder.Instance.Player.CardLifeTimeChanged.RemoveListener(CardLifeTimeChanged);
-    }
-
-    private void CardLifeTimeChanged(DDCardInHand card, EPlayerCardLifeTime lifeTime)
-    {
-        if(lifeTime == EPlayerCardLifeTime.Played)
-        {
-            lastCardPlayed = card;
-        }
     }
 
     private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)
@@ -32,11 +19,10 @@ public class DDArtifactOmega : DDArtifactBase
         DDEncounter.DDPhaseChangeEventArgs phaseArgs = args as DDEncounter.DDPhaseChangeEventArgs;
         if (phaseArgs.Phase == EEncounterPhase.PlayersEndTurn)
         {
-            if (lastCardPlayed)
+            if (DDGamePlaySingletonHolder.Instance.Player.CardsExecutedThisTurn.Count > 0)
             {
-                lastCardPlayed.CurrentCard.AddRandomFinish();
+                DDGamePlaySingletonHolder.Instance.Player.CardsExecutedThisTurn[^1].AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
             }
-            lastCardPlayed = null;
         }
         
         yield return null;

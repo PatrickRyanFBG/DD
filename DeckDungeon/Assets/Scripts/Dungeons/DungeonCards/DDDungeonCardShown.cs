@@ -61,7 +61,7 @@ public class DDDungeonCardShown : DDSelection
         descParent.SetActive(true);
     }
 
-    public override void Unhovered()
+    public override void Unhovered(bool fromAnotherSelection = false)
     {
         descParent.SetActive(false);
     }

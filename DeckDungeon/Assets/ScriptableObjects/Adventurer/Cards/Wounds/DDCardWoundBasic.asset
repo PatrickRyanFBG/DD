@@ -21,8 +21,8 @@ MonoBehaviour:
 
     Fleeting
 
-    Deals 4 Damage At End of Round'
+    Take 4 Damage At End of Round'
   rangeType: 2
-  defaultCardFinishes: 64000000
+  defaultCardFinishes: 4c040000
   price: {x: 100, y: 200}
   damage: 4
