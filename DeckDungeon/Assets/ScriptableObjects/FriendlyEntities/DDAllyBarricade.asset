@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ad79f55b4e5ce74eb3b065eb5099418, type: 3}
-  m_Name: DDDungeonCardEventChest
+  m_Script: {fileID: 11500000, guid: a9ad463010871ad4f96c275ce51eaa2d, type: 3}
+  m_Name: DDAllyBarricade
   m_EditorClassIdentifier: 
-  type: 1
-  image: {fileID: 2800000, guid: 78ee3297a5e1fb1478eb1c139bee1f59, type: 3}
-  name: Chest
-  description: This encounter will give an artifact!
+  image: {fileID: 2800000, guid: e2d85e98da7cb2543a31f3036346c552, type: 3}
+  StartingHealth: 1
+  enemyName: 
+  immovable: 1
+  friendly: 1

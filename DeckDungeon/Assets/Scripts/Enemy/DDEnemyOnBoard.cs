@@ -43,7 +43,9 @@ public class DDEnemyOnBoard : DDSelection
     [SerializeField] private GameObject attackPrefab;
     public GameObject AttackPrefab => attackPrefab;
 
-    [HideInInspector] public DDEncounterEnemyIcon MatchingIcon; 
+    [HideInInspector] public DDEncounterEnemyIcon MatchingIcon;
+
+    private bool canNonActionableHover = true;
     
     public void SetUpEnemy(DDEnemyBase enemyBase)
     {
@@ -166,6 +168,7 @@ public class DDEnemyOnBoard : DDSelection
                 {
                     // Take Damage Feedback.
                     image.color = Color.white;
+                    image.DOComplete();
                     image.DOColor(Color.red, .2f).SetLoops(4, LoopType.Yoyo);
                 }
 
@@ -230,12 +233,16 @@ public class DDEnemyOnBoard : DDSelection
 
     public IEnumerator DoActions()
     {
+        canNonActionableHover = false;
+        
         for (int i = 0; i < nextActions.Count; i++)
         {
             nextActions[i].HideLocationBasedEffects();
 
             yield return nextActions[i].ExecuteAction(this);
         }
+        
+        canNonActionableHover = true;
     }
 
     public override void Hovered(bool fromAnotherSelection = false)
@@ -256,6 +263,11 @@ public class DDEnemyOnBoard : DDSelection
 
     public void NonActionableHover()
     {
+        if (!canNonActionableHover)
+        {
+            return;
+        }
+        
         for (int i = 0; i < nextActions.Count; i++)
         {
             nextActions[i].ShowLocationBasedEffects();

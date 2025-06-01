@@ -1,11 +1,19 @@
 ~HELLA FUTURE~
 GOTTA DO SOMETHING ABOUT LOC STRINGS BEFORE THIS PROJECT GETS TOO SLOPPY!!!!!!!!!!
     Gotta get a way to put in dynamic numbers into texts
-Expand on EnemyActionBase "is hidden" at some point
-MeleeRangedBonus on location now but not supported, but could be better utilized?
-Fix enemy action forecast to be dynamic and not hard coded 2
-Implement Click and Drag?
+- Expand on EnemyActionBase "is hidden" at some point
+- MeleeRangedBonus on location now but not supported, but could be better utilized?
+- Fix enemy action forecast to be dynamic and not hard coded 2
+- Implement Click and Drag?
 x Add Weight to Card Finishes
+- Implement Debug Features
+- Fix enemy list going backwards for DoActions
+- Buying Shop Card Lerp to Deck
+- How AdventureData works needs to be changed
+
+5/31
+    x Hovering a character when they do ability
+    - Hyperactive damage stays red with bonk damage
 
 5/24
     - Feedback from Ang

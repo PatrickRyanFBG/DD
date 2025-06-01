@@ -29,8 +29,9 @@ public class DDCardShownShop : DDCardShown
         GoldAmountChanged(DDGamePlaySingletonHolder.Instance.Dungeon.GoldAmount);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         DDGamePlaySingletonHolder.Instance.Dungeon.GoldAmountChanged.RemoveListener(GoldAmountChanged);
     }
 

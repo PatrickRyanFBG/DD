@@ -17,7 +17,7 @@ public class DDCardFinishIcon : MonoBehaviour
 
     public void Hovered()
     {
-        DDGlobalManager.Instance.ToolTip.SetText(cardFinish.GetDescription());
+        DDGlobalManager.Instance.ToolTip.SetText(cardFinish.PlayerCardFinish + "\r\n" + cardFinish.GetDescription());
     }
 
     public void Unhovered()

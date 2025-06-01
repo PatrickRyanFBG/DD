@@ -185,7 +185,7 @@ public class DDPlayerMatch : MonoBehaviour
             {
                 arrow.gameObject.SetActive(true);
             }
-
+            
             arrow.SetPositions(arrowStart.position,
                 DDGamePlaySingletonHolder.Instance.PlayerSelector.GetMousePos());
 
@@ -295,7 +295,7 @@ public class DDPlayerMatch : MonoBehaviour
                 DDCardInHand card = selection as DDCardInHand;
                 if (card)
                 {
-                    if (card.CardSelected(selectedCardLocation.localPosition))
+                    if (card.CardSelected(selectedCardLocation.position))
                     {
                         selectedCard = card;
                         cardTargets = selectedCard.GetCardTarget();

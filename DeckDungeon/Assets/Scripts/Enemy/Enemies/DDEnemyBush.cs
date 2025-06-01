@@ -25,7 +25,7 @@ public class DDEnemyBush : DDEnemyBase
         }
         
         // If all locations are filled, or 50% chance, we gain 1 retaliate
-        if (RandomHelpers.GetRandomBool(25))
+        if (RandomHelpers.GetRandomBool(12.5f))
         {
             actions.Add(new DDEnemyActionModifyAffix(EAffixType.Retaliate, retaliateGain, false));
         }

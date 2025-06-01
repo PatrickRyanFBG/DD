@@ -15,7 +15,7 @@ MonoBehaviour:
   <GUID>k__BackingField: 868a6908abaf18d408beb632516b0bb5
   cardType: 2
   cardRarity: 0
-  image: {fileID: 2800000, guid: 9ee3ace4a697b1349b3877cb321ac401, type: 3}
+  image: {fileID: 0}
   cardName: Improvise Weapon
   description: 'Discard A Card
 

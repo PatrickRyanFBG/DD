@@ -88,17 +88,7 @@ public class DDCardInHand : DDSelection
         }
     }
 
-    /*
-    private void OnDisable()
-    {
-        foreach (var finish in finishIcons)
-        {
-            Destroy(finish.Value.gameObject);
-        }
-        
-        finishIcons.Clear();
-    }
-    */
+    protected virtual void OnDisable() { }
 
     public List<DDCardTargetInfo> GetCardTarget()
     {
@@ -271,14 +261,14 @@ public class DDCardInHand : DDSelection
     {
         canHover = false;
 
-        Vector3 pos = transform.localPosition;
+        Vector3 pos = transform.position;
         float time = 0;
 
         while (time < selectedTime)
         {
             time += Time.deltaTime;
 
-            transform.localPosition = Vector3.Lerp(pos, location, time / selectedTime);
+            transform.position = Vector3.Lerp(pos, location, time / selectedTime);
 
             yield return null;
         }

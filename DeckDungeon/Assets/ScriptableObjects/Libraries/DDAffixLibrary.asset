@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allAffixes:
   - affixType: 0
-    affixDescription: Increased Attack Cards
+    affixDescription: Increased Attack Damage
     image: {fileID: 2800000, guid: 478e996e902284b4d82e47661f69eb58, type: 3}
     existsAtZero: 0
     existsNegative: 1

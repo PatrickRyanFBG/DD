@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 2
   cardRarity: 0
   image: {fileID: 0}
-  cardName: DirtyCut
+  cardName: Dirty Cut
   description: 'Deal 4 Damage
 
     Apply 3 Bleed'

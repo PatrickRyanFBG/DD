@@ -24,7 +24,10 @@ public class DDArtifactHyperactive : DDArtifactBase
 
         for (int i = 0; i < allEnemies.Count; i++)
         {
-            allEnemies[i].TakeDamage(damagePerMomentum, ERangeType.Pure, false);
+            if (!allEnemies[i].CurrentEnemy.Friendly)
+            {
+                allEnemies[i].TakeDamage(damagePerMomentum, ERangeType.Pure, false);
+            }
             
             yield return null;
         }

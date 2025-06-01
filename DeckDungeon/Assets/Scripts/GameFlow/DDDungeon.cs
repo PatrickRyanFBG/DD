@@ -475,6 +475,9 @@ public class DDDungeon : MonoBehaviour
             case EDungeonPhase.PlayerCardSelection:
                 playerCardSelection.gameObject.SetActive(true);
                 break;
+            case EDungeonPhase.ArtifactSelection:
+                artifactSelection.gameObject.SetActive(true);
+                break;
             default:
                 break;
         }

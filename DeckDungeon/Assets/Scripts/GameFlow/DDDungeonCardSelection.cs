@@ -103,7 +103,7 @@ public class DDDungeonCardSelection : MonoBehaviour
         
         for (int i = 0; i < dungeonCards.Length; i++)
         {
-            if (i > indexes.Count)
+            if (i >= indexes.Count)
             {
                 dungeonCards[i].gameObject.SetActive(false);
             }

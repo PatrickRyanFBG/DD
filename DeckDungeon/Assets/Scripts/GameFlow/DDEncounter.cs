@@ -132,8 +132,8 @@ public class DDEncounter : MonoBehaviour
             timeline.RemoveEnemyFromTimeline(enemies[i]);
             // Destroy object.
             Destroy(enemies[i].gameObject);
-            // Remove enemies.
-            enemies.RemoveAt(i--);
+            // Remove from enemies.
+            enemies.RemoveAt(i);
         }
     }
 
@@ -232,9 +232,12 @@ public class DDEncounter : MonoBehaviour
         // So we are going backwards for now for safety
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
-            yield return enemies[i].DoActions();
+            // If an enemy dies to retaliate it'll be removed from this list as part of it's action
+            DDEnemyOnBoard enemy = enemies[i];
             
-            timeline.RemoveEnemyFromTimeline(enemies[i]);
+            yield return enemy.DoActions();
+
+            timeline.RemoveEnemyFromTimeline(enemy);
             
             // Sometimes enemies destroy themselves.
             yield return CheckDestroyedEnemies();
@@ -289,10 +292,11 @@ public class DDEncounter : MonoBehaviour
         seq.Append(completedBanner.DOLocalMove(Vector3.zero, .75f).SetEase(Ease.OutSine));
         seq.AppendInterval(.25f);
         seq.Append(completedBanner.DOLocalMove(endPos, .75f).SetEase(Ease.InSine));
-        seq.Play();
-
+        seq.Play().WaitForCompletion();
+        
         yield return new WaitForSeconds(2f);
         
+        completedBanner.gameObject.SetActive(false);
         gameObject.SetActive(false);
         
         DDGamePlaySingletonHolder.Instance.Dungeon.EncounterCompleted(currentEncounter);

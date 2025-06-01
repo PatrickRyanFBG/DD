@@ -18,6 +18,7 @@ public class DDPlayerMatchHand : MonoBehaviour
         card.UpdateDisplayInformation();
         card.gameObject.SetActive(true);
         card.transform.SetParent(transform);
+        card.transform.SetAsFirstSibling();
 
         if (drawn)
         {
@@ -25,7 +26,7 @@ public class DDPlayerMatchHand : MonoBehaviour
         }
 
         yield return UpdateCardsPosition();
-
+        
         card.SetCanHover(true);
     }
 
@@ -97,8 +98,10 @@ public class DDPlayerMatchHand : MonoBehaviour
             for (float i = 0; i < cards.Count; i++)
             {
                 float percent = i / (cards.Count - 1);
+                Vector3 pos = Vector3.zero;
+                pos.x = Mathf.Lerp(minMax, -minMax, percent);
                 cards[(int)i].SetCanHover(false);
-                cards[(int)i].transform.DOLocalMoveX(Mathf.Lerp(minMax, -minMax, percent), .1f);
+                cards[(int)i].transform.DOLocalMove(pos, .1f);
             }
         }
 

@@ -36,4 +36,16 @@ public class DDCardShown : DDCardInHand
     {
         OnCardSelected.Invoke(this);
     }
+    
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        foreach (var finish in finishIcons)
+        {
+            Destroy(finish.Value.gameObject);
+        }
+        
+        finishIcons.Clear();
+    }
 }

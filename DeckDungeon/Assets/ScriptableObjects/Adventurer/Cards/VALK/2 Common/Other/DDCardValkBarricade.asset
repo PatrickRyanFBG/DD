@@ -15,7 +15,7 @@ MonoBehaviour:
   <GUID>k__BackingField: 81b88c85767ebcb4b9ab71a853ce6a82
   cardType: 0
   cardRarity: 0
-  image: {fileID: 2800000, guid: e2d85e98da7cb2543a31f3036346c552, type: 3}
+  image: {fileID: 0}
   cardName: Barricade
   description: Spawns a barricade at target location.
   rangeType: 2

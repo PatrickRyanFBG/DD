@@ -9,7 +9,7 @@ public class DDArtifactSelection : MonoBehaviour
 
     private List<DDArtifactBase> grabbedArtifacts;
     
-    // Also make a funciton to take specific artifacts maybe from bosses?
+    // Also make a function to take specific artifacts maybe from bosses?
     public void DisplayArtifacts()
     {
         grabbedArtifacts = DDGlobalManager.Instance.SelectedAdventurer.GrabArtifacts(3);

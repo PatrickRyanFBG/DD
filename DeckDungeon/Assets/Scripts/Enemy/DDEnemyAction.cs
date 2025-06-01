@@ -734,6 +734,6 @@ public class DDEnemyActionModifyPlayerAffix : DDEnemyActionBase
 
     public override string GetDescription()
     {
-        return "Applies " + amount + affixType.ToString() + " to you.";
+        return "Applies " + amount + " " + affixType + " to you.";
     }
 }

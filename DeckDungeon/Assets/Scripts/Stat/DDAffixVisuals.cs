@@ -43,7 +43,7 @@ public class DDAffixVisuals : MonoBehaviour
 
     public void Hovered()
     {
-        DDGlobalManager.Instance.ToolTip.SetText(affix.AffixDescription);
+        DDGlobalManager.Instance.ToolTip.SetText(affix.AffixType + "\r\n" + affix.AffixDescription);
     }
 
     public void Unhovered()

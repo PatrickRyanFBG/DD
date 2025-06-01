@@ -122,6 +122,11 @@ public abstract class DDDungeonCardEncounter : DDDungeonCardBase
             yield return DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDungeonDeckOvertime(cardsToShuffleInAfter);
         }
 
+        if (dungeonAddedUponDefeat)
+        {
+            yield return DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDungeonDeckOvertime(dungeonAddedUponDefeat.Cards);
+        }
+        
         DDGamePlaySingletonHolder.Instance.Dungeon.AddOrRemoveGold(goldToGive);
     }
 }
