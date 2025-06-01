@@ -253,10 +253,7 @@ public class DDPlayerMatch : MonoBehaviour
             }
             else
             {
-                deck.ShuffleInCards(discard.GetAndClearDiscard());
-
-                // Do some shuffle animation
-                yield return new WaitForSeconds(.25f);
+                yield return deck.ShuffleInCardsOverTime(discard.GetAndClearDiscard());
             }
         }
 

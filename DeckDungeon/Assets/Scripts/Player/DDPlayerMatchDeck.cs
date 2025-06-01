@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class DDPlayerMatchDeck : MonoBehaviour
@@ -9,12 +10,36 @@ public class DDPlayerMatchDeck : MonoBehaviour
 
     public void ShuffleInCard(DDCardInHand card, bool waitToShuffle = false)
     {
-        cards.Add(card);
         // DO ANIMATION HERE
         card.transform.SetParent(transform);
-        card.transform.position = transform.position;
+        card.transform.localPosition = Vector3.zero;
+        card.gameObject.SetActive(false);        
+        
+        cards.Add(card);
+        
+        if(!waitToShuffle)
+        {
+            ShuffleDeck();
+        }
+    }
+    
+    public IEnumerator ShuffleInCardOverTime(DDCardInHand card, bool waitToShuffle = false)
+    {
+        DDGlobalManager.Instance.ClipLibrary.HoverCard.PlayNow();
+        
+        // DO ANIMATION HERE
+        card.transform.SetParent(transform);
+        
+        card.gameObject.SetActive(true);
+        card.SetCanHover(false);
+        
+        yield return card.transform.DOLocalMove(Vector3.zero, 0.1f).WaitForCompletion();
+        
         card.gameObject.SetActive(false);
-
+        card.SetCanHover(true);
+        
+        cards.Add(card);
+        
         if(!waitToShuffle)
         {
             ShuffleDeck();
@@ -33,13 +58,17 @@ public class DDPlayerMatchDeck : MonoBehaviour
         ShuffleDeck();
     }
 
-    public void ShuffleInCards(List<DDCardInHand> otherCards)
+    public IEnumerator ShuffleInCardsOverTime(List<DDCardInHand> otherCards)
     {
         for (int i = 0; i < otherCards.Count; i++)
         {
-            ShuffleInCard(otherCards[i], true);
+            StartCoroutine(ShuffleInCardOverTime(otherCards[i], true));
+
+            yield return new WaitForSeconds(Random.Range(0.04f, 0.06f));
         }
 
+        yield return new WaitForSeconds(0.1f);
+        
         ShuffleDeck();
     }
 
