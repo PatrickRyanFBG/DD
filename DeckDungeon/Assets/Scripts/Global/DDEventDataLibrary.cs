@@ -7,7 +7,7 @@ public class DDEventDataLibrary : MonoBehaviour
 {
     [SerializeField] private List<DDDungeonEventData> genericEventDatas = new List<DDDungeonEventData>();
 
-    private HashSet<DDDungeonEventData> usedEvents;
+    [System.NonSerialized] private HashSet<DDDungeonEventData> usedEvents;
 
     [Header("Debug")] [SerializeField] private int specificEventIndex = -1;
     
@@ -21,6 +21,12 @@ public class DDEventDataLibrary : MonoBehaviour
         if (specificEventIndex >= 0)
         {
             return genericEventDatas[specificEventIndex];    
+        }
+
+        // Safety for now
+        if (usedEvents.Count == genericEventDatas.Count)
+        {
+            usedEvents.Clear();
         }
         
         DDDungeonEventData data = null;

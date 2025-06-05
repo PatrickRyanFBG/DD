@@ -49,7 +49,7 @@ public class DDCardFinishSerrated : DDPlayerCardFinish
         for (int i = 0; i < numberOfBleeds; i++)
         {
             if (i >= enemies.Count)
-            {
+            { 
                 break;
             }
             
@@ -95,9 +95,15 @@ public class DDCardFinishExplosive : DDPlayerCardFinish
         DDEnemyOnBoard randomEnemy = DDGamePlaySingletonHolder.Instance.Encounter.AllEnemies.GetRandomElement();
         
         // ANIMATE SHIT HERE
-        DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, ERangeType.Pure, randomEnemy, false);
-        
-        yield return new WaitForSeconds(0.1f);
+        if (randomEnemy)
+        {
+            DDGamePlaySingletonHolder.Instance.Player.DealDamageToEnemy(damage, ERangeType.Pure, randomEnemy, false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        else
+        {
+            yield return null;
+        }
     }
 }
 

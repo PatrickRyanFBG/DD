@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Gain Retaliate
-  description: Gain 2 Retaliate
+  description: Gain 2 Retaliate in Lane
   rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -31,9 +31,6 @@ MonoBehaviour:
     - rid: 7815311197493264613
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 9
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 9
           differentTarget: 0

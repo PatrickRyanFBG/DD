@@ -16,8 +16,8 @@ MonoBehaviour:
   cardType: 0
   cardRarity: 0
   image: {fileID: 0}
-  cardName: Gain Armor
-  description: Gain 9 Armor
+  cardName: Set Armor
+  description: Set Lane's Armor to 9
   rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -31,9 +31,6 @@ MonoBehaviour:
     - rid: 7815311280090120255
       type: {class: DDCardEffectApplyAffixToColumn, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 9
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 9
           differentTarget: 0

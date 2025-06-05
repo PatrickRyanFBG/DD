@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
@@ -8,7 +9,6 @@ using UnityEngine.Serialization;
 public class DDPlayerMatch : MonoBehaviour
 {
     [SerializeField] private DDCardInHand cardInHandPrefab;
-
     public DDCardInHand CardInHandPrefab => cardInHandPrefab;
 
     [SerializeField] private int defaultHandSize = 5;
@@ -53,6 +53,8 @@ public class DDPlayerMatch : MonoBehaviour
     private DDAffixManager[] laneAffixes;
     [SerializeField] private DDAffixVisualsManager[] lanesAffixVisualsManager;
 
+    [SerializeField] private RawImage playerHeroShot;
+    
     [SerializeField] private DDAffixVisualsManager playersAffixVisualsManager;
 
     private DDAffixManager affixManager;
@@ -87,7 +89,15 @@ public class DDPlayerMatch : MonoBehaviour
     public void HealthChanged(int current, int max)
     {
         healthText.text = $"{current} / {max}";
-        healthBar.fillAmount = (float)current / max;
+        float nextPercent = (float)current / max;
+        if (nextPercent < healthBar.fillAmount)
+        {
+            playerHeroShot.color = Color.white;
+            playerHeroShot.DOComplete();
+            playerHeroShot.DOColor(Color.red, .2f).SetLoops(4, LoopType.Yoyo);
+        }
+        healthBar.fillAmount = nextPercent;
+        
     }
 
     private IEnumerator EncounterPhaseChanged(MonoBehaviour sender, System.EventArgs args)

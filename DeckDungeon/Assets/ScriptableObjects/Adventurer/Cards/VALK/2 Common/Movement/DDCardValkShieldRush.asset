@@ -19,7 +19,7 @@ MonoBehaviour:
   cardName: Shield Rush
   description: 'Move One Backwards
 
-    Gain 5 Armor'
+    Set Armor to 5'
   rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}

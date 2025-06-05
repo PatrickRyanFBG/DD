@@ -147,7 +147,7 @@ public class DDEnemyActionAbsorbArmor : DDEnemyActionBase
 
         if (armorAmount > 0)
         {
-            DDGamePlaySingletonHolder.Instance.Player.ModifyAffix(EAffixType.Armor, 0, true);
+            DDGamePlaySingletonHolder.Instance.Player.ModifyLaneAffix(EAffixType.Armor, 0, enemy.CurrentLocaton.Coord.x, true);
         }
         
         yield return null;

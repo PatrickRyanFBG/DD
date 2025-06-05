@@ -26,6 +26,11 @@ public static class IListExtensions
 
     public static T GetRandomElement<T>(this IList<T> list)
     {
+        if (list.Count == 0)
+        {
+            return default;
+        }
+
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
@@ -35,7 +40,7 @@ public static class IListExtensions
         {
             return new(list);
         }
-        
+
         var result = new List<T>(count);
         for (int i = 0; i < count; i++)
         {
@@ -43,19 +48,17 @@ public static class IListExtensions
             do
             {
                 element = list.GetRandomElement();
-                
             } while (result.Contains(element));
-            
+
             result.Add(element);
         }
-        
+
         return result;
     }
 }
 
 public static class DDCardBaseExtensions
 {
-
 }
 
 public static class DDEnemyBasextensions

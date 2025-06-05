@@ -27618,6 +27618,7 @@ MonoBehaviour:
   - {fileID: 1578051099}
   - {fileID: 1938518465}
   - {fileID: 287519815}
+  playerHeroShot: {fileID: 635402562}
   playersAffixVisualsManager: {fileID: 1077356779}
   CardLifeTimeChanged:
     m_PersistentCalls:

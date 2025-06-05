@@ -109,7 +109,7 @@ public abstract class DDCardBase : DDScriptableObject
     public virtual void AddRandomFinishByImpact(EPlayerCardFinishImpact finishImpact)
     {
         // Attempt finite number of times. Right now finishes can't stack.
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 10; i++)
         {
             DDPlayerCardFinish finish = DDGlobalManager.Instance.CardFinishLibrary.GetRandomFinishByImpact(finishImpact);
             if (AddCardFinish(finish))
@@ -131,13 +131,10 @@ public abstract class DDCardBase : DDScriptableObject
     public virtual bool AddCardFinish(DDPlayerCardFinish finish)
     {
         // Cards can only have 1 type of finish
-        if (AllCardFinishes.ContainsKey(finish.PlayerCardFinish))
+        if (!AllCardFinishes.TryAdd(finish.PlayerCardFinish, finish))
         {
             return false;
         }
-        
-        AllCardFinishes.Add(finish.PlayerCardFinish, finish);
-
 
         foreach (EPlayerCardLifeTime lifeTime in finish.PlayerCardLifeTimes)
         {

@@ -17,7 +17,7 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Muscle Cut
-  description: 'Apply 5 Bleed
+  description: 'Apply 4 Bleed
 
     Reduce Enemy Expertise 2'
   rangeType: 2
@@ -34,22 +34,16 @@ MonoBehaviour:
     - rid: 7815311197493264622
       type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0
           useLastTarget: 0
         affixType: 4
-        amount: 5
+        amount: 4
         shouldSetValue: 0
     - rid: 7815311197493264623
       type: {class: DDCardEffectApplyAffixToEnemy, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 13
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 13
           differentTarget: 0

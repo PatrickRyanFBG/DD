@@ -21,6 +21,9 @@ public class DDDungeonEventDataJunkHeap : DDDungeonEventData
         {
             // Generate Random Card
             List<DDCardBase> card = DDGlobalManager.Instance.SelectedAdventurer.CardData.GenerateCards(1);
+            card[0].AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
+            card[0].AddRandomFinishByImpact(EPlayerCardFinishImpact.Positive);
+            
             DDGamePlaySingletonHolder.Instance.Dungeon.AddCardToDeck(card[0], DDGamePlaySingletonHolder.Instance.Dungeon.DungeonCardStartPosition);
             
             area.Description.text = afterRummageDescription;

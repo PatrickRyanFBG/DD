@@ -17,7 +17,9 @@ MonoBehaviour:
   cardRarity: 0
   image: {fileID: 0}
   cardName: Gain Vigor
-  description: Gain 3 Vigor
+  description: 'Gain 3 Vigor
+
+    (targets self)'
   rangeType: 2
   defaultCardFinishes: 
   price: {x: 100, y: 200}
@@ -31,9 +33,6 @@ MonoBehaviour:
     - rid: 7815311197493264619
       type: {class: DDCardEffectApplyAffixToPlayer, ns: , asm: Assembly-CSharp}
       data:
-        targetType: 14
-        differentTarget: 0
-        useLastTarget: 0
         targetInfo:
           targetType: 14
           differentTarget: 0

@@ -11,9 +11,16 @@ x Add Weight to Card Finishes
 - Buying Shop Card Lerp to Deck
 - How AdventureData works needs to be changed
 
+6/3
+    - finishes didnt show up after boss selection?
+
+6/2
+    x Flash player for health lost
+    - do hover on player
+    
 5/31
     x Hovering a character when they do ability
-    - Hyperactive damage stays red with bonk damage
+    x Hyperactive damage stays red with bonk damage
 
 5/24
     - Feedback from Ang

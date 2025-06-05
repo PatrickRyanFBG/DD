@@ -589,7 +589,7 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 4751ffeb527a4684194728ae2e621ef2, type: 3}
     mixerGroup: {fileID: -6972416624695726298, guid: 35512f013dea76b4ba53bd9a6e55c338, type: 2}
-    volume: 0.1
+    volume: 0.05
     looping: 1
 --- !u!1 &6906305238190658046
 GameObject:
