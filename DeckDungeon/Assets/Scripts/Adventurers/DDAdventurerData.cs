@@ -82,7 +82,7 @@ public class DDAdventurerData : DDScriptableObject
         for (int i = 0; i < guids.Length; i++)
         {
             // Now deep cloned to allow for in-game modifications
-            startingDeck.Add(cardData.GetCardByGUID(guids[i]).Clone(false));
+            startingDeck.Add(cardData.GetCardByGuid(guids[i]).Clone(false));
         }
     }
 

@@ -531,6 +531,7 @@ MonoBehaviour:
   eventDataLibrary: {fileID: 7833182322689536693}
   affixLibrary: {fileID: 11400000, guid: d6f3270c91ac0ca489619edec5f699ed, type: 2}
   cardFinishLibrary: {fileID: 11400000, guid: 1526b924f8631b1408d571df75ce08d6, type: 2}
+  particleLibrary: {fileID: 11400000, guid: 7dbd116ac87e56877be310f17be0545c, type: 2}
   toolTip: {fileID: 3331113012827380809}
   audioManager: {fileID: 4729707475187732268}
   clipLibrary: {fileID: 11400000, guid: dcd4f971583f5f6469ad3f18b8e5567f, type: 2}

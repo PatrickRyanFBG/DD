@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.Events;
 
 public class DDDungeonStats
@@ -59,7 +60,7 @@ public class DDDungeon : MonoBehaviour
     [Header("Gold")] private int goldAmount;
     public int GoldAmount => goldAmount;
 
-    public UnityEngine.Events.UnityEvent<int> GoldAmountChanged;
+    public UnityEvent<int> GoldAmountChanged;
 
     [Header("UI")] [SerializeField] private RectTransform ui;
     
@@ -171,7 +172,7 @@ public class DDDungeon : MonoBehaviour
         DDDungeonCardShown shown = GameObject.Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position,
             Quaternion.identity);
         shown.SetUpDungeonCard(card, 0, false);
-        shown.transform.DOMove(dungeonCardAddedEnd.position, .6f, false);
+        LMotion.Create(shown.transform.position, dungeonCardAddedEnd.position, .6f).BindToPosition(shown.transform);
         Destroy(shown.gameObject, .61f);
 
         dungeonDeckCount.text = dungeonDeck.Count.ToString();
@@ -191,7 +192,7 @@ public class DDDungeon : MonoBehaviour
             DDDungeonCardShown shown = Instantiate(dungeonCardPrefabForAdded, dungeonCardAddedStart.position,
                 Quaternion.identity, ui);
             shown.SetUpDungeonCard(card, 0, false);
-            shown.transform.DOMove(dungeonCardAddedEnd.position, .3f, false);
+            LMotion.Create(shown.transform.position, dungeonCardAddedEnd.position, .3f).BindToPosition(shown.transform);
             Destroy(shown.gameObject, .35f);
             dungeonDeck.Add(card);
             dungeonDeckCount.text = dungeonDeck.Count.ToString();
@@ -316,7 +317,7 @@ public class DDDungeon : MonoBehaviour
     {
         DDCardShown shown = Instantiate(cardPrefabForAdded, startPos, Quaternion.identity, ui);
         shown.SetUpCard(card);
-        shown.transform.DOMove(cardAddedEnd.position, .3f, false);
+        LMotion.Create(shown.transform.position, cardAddedEnd.position, .3f).BindToPosition(shown.transform);
         Destroy(shown.gameObject, .35f);
         playerDeck.Add(card);
         playerDeckCount.text = playerDeck.Count.ToString();

@@ -30,6 +30,7 @@ public enum EDungeonCardExtra
 public enum EEncounterPhase
 {
     EncounterStart,
+    MonsterSpawn,
     MonsterForecast,
     PlayersStartTurn,
     PlayersTurn,
@@ -176,4 +177,13 @@ public enum ECombatTier
     One,
     Two,
     Three,
+}
+
+public enum EEnemyState
+{
+    PreSpawn,
+    Spawning,
+    Alive,
+    Dead,
+    Dying
 }

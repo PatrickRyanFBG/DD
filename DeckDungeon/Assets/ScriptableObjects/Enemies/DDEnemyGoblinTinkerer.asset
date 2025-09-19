@@ -15,7 +15,8 @@ MonoBehaviour:
   image: {fileID: 2800000, guid: 255e7e1363095714f848b129be066cb3, type: 3}
   StartingHealth: 20
   StartingArmor: 0
-  entityName: Gizmoblin
+  entityName: Gizoblin
+  entityDescription: 
   immovable: 0
   friendly: 0
   rangeType: 1

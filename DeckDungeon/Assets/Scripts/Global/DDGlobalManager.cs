@@ -88,6 +88,9 @@ public class DDGlobalManager : MonoBehaviour
     [SerializeField] private DDCardFinishLibrary cardFinishLibrary;
     public DDCardFinishLibrary CardFinishLibrary => cardFinishLibrary;
 
+    [SerializeField] private DDParticleLibrary particleLibrary;
+    public DDParticleLibrary ParticleLibrary => particleLibrary;
+    
     [SerializeField] private DDHoverToolTip toolTip;
     public DDHoverToolTip ToolTip => toolTip;
 

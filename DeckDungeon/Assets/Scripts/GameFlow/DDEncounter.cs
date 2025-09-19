@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 
 public class DDEncounter : MonoBehaviour
@@ -14,8 +15,6 @@ public class DDEncounter : MonoBehaviour
     
     private List<DDEnemyOnBoard> enemies = new List<DDEnemyOnBoard>();
     public List<DDEnemyOnBoard> AllEnemies => enemies;
-
-    private List<DDEnemyOnBoard> destroyedEnemies = new();
 
     [SerializeField] private DDPlayerMatch player;
 
@@ -39,9 +38,13 @@ public class DDEncounter : MonoBehaviour
 
     private ECombatTier lastCombatTier = ECombatTier.Intro;
     private Dictionary<EEncounterType, HashSet<string>> usedEncounterSetups = new();
+
+    [SerializeField] private DDEncounterDebugUI encounterDebugUI;
     
     public void SetUpEncounter(DDDungeonCardEncounter encounter)
     {
+        encounterDebugUI.ClearAndOff();
+        
         changingPhase = false;
         queuedChangingPhase = null;
         playersTurnEnding = false;
@@ -81,8 +84,6 @@ public class DDEncounter : MonoBehaviour
     {
         if (enemies.Remove(enemy))
         {
-            destroyedEnemies.Add(enemy);
-            
             // Some combats want to end if a specific character is destroyed or objective met
             if (enemies.Count == 0 || currentEncounter.ShouldEndEarly())
             {
@@ -110,17 +111,21 @@ public class DDEncounter : MonoBehaviour
 
     public IEnumerator CheckDestroyedEnemies()
     {
-        for (int i = 0; i < destroyedEnemies.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            // Death animations happen here.
-            // On death effects happen.
-            yield return destroyedEnemies[i].DoDeath();
-            // Remove from timeline
-            timeline.RemoveEnemyFromTimeline(destroyedEnemies[i]);
-            // Destroy object.
-            Destroy(destroyedEnemies[i].gameObject);
-            // Remove enemies.
-            destroyedEnemies.RemoveAt(i--);
+            if (enemies[i].CurrentEnemyState == EEnemyState.Dead)
+            {
+                // Death animations happen here.
+                // On death effects happen.
+                yield return enemies[i].DoDeath();
+                // Remove from timeline
+                timeline.RemoveEnemyFromTimeline(enemies[i]);
+                // Destroy object.
+                Destroy(enemies[i].gameObject);
+                
+                // Go through full enemy defeated
+                EnemyDefeated(enemies[i--]);
+            }
         }
     }
 
@@ -164,13 +169,33 @@ public class DDEncounter : MonoBehaviour
         }
 
         phaseDebug.text = currentEncounterPhase.ToString();
+
+        if (Input.GetKeyDown(KeyCode.Backslash))
+        {
+            encounterDebugUI.ToggleWindow();
+        }
     }
 
     private void DoEncounterStart()
     {
         // Do checks
         // Wait for things to come online
-        ChangeCurrentPhase(EEncounterPhase.MonsterForecast);
+        ChangeCurrentPhase(EEncounterPhase.MonsterSpawn);
+    }
+
+    private IEnumerator DoMonsterSpawn()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            DDEnemyOnBoard enemy = enemies[i];
+            
+            yield return enemy.DoSpawn();
+        }
+
+        if (currentEncounterPhase != EEncounterPhase.EncounterEnd)
+        {
+            ChangeCurrentPhase(EEncounterPhase.MonsterForecast);
+        }
     }
 
     private void DoMonsterForecast()
@@ -193,7 +218,7 @@ public class DDEncounter : MonoBehaviour
             if (enemies.Count > 0)
             {
                 DDEnemyOnBoard enemy = enemies[0];
-                EnemyDefeated(enemy);
+                enemy.TakeDamage(9999, ERangeType.Pure, true, false);
                 if (enemies.Count > 0 && CurrentPhase != EEncounterPhase.EncounterEnd)
                 { 
                     StartCoroutine(CheckDestroyedEnemies());
@@ -288,13 +313,13 @@ public class DDEncounter : MonoBehaviour
 
         Vector3 endPos = startPos * -1;
 
-        Sequence seq = DOTween.Sequence();
-        seq.Append(completedBanner.DOLocalMove(Vector3.zero, .75f).SetEase(Ease.OutSine));
+        var seq = LSequence.Create();
+        seq.Append(LMotion.Create(startPos, Vector3.zero, .75f).WithEase(Ease.OutSine).BindToLocalPosition(completedBanner));
         seq.AppendInterval(.25f);
-        seq.Append(completedBanner.DOLocalMove(endPos, .75f).SetEase(Ease.InSine));
-        seq.Play().WaitForCompletion();
-        
-        yield return new WaitForSeconds(2f);
+        seq.Append(LMotion.Create(Vector3.zero, endPos, .75f).WithEase(Ease.OutSine).BindToLocalPosition(completedBanner));
+        seq.AppendInterval(.25f);
+        var handle = seq.Run();
+        yield return handle.ToYieldInstruction();
         
         completedBanner.gameObject.SetActive(false);
         gameObject.SetActive(false);
@@ -335,14 +360,14 @@ public class DDEncounter : MonoBehaviour
         else
         {
             Debug.Log("Changing phase: " + toPhase);
-            changingPhaseCoroutine = StartCoroutine(ChangeCurrentPhaseOverTIme(toPhase));
+            changingPhaseCoroutine = StartCoroutine(ChangeCurrentPhaseOverTime(toPhase));
         }
     }
 
     // This being an enum is awkward becuase phases change phases during their change 
     // Think we have to queue up changes so that way the first one finishes and then if one is queued up to start that after the first coroutine is done
     
-    private IEnumerator ChangeCurrentPhaseOverTIme(EEncounterPhase toPhase)
+    private IEnumerator ChangeCurrentPhaseOverTime(EEncounterPhase toPhase)
     {
         changingPhase = true;
         
@@ -353,6 +378,9 @@ public class DDEncounter : MonoBehaviour
         {
             case EEncounterPhase.EncounterStart:
                 player.SetHandSizeToDefault();
+                break;
+            case EEncounterPhase.MonsterSpawn:
+                yield return DoMonsterSpawn();
                 break;
             case EEncounterPhase.MonsterForecast:
                 break;

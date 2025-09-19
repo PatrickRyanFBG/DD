@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
@@ -52,7 +53,7 @@ public class DDPlayerMatch : MonoBehaviour
 
     private DDAffixManager[] laneAffixes;
     [SerializeField] private DDAffixVisualsManager[] lanesAffixVisualsManager;
-
+    
     [SerializeField] private RawImage playerHeroShot;
     
     [SerializeField] private DDAffixVisualsManager playersAffixVisualsManager;
@@ -66,6 +67,7 @@ public class DDPlayerMatch : MonoBehaviour
     [SerializeField] private Image healthBar;
 
     [Header("Testing")] [SerializeField] private TMPro.TextMeshProUGUI momentum;
+    private MotionHandle colorFlashHandle;
 
     private void OnEnable()
     {
@@ -93,8 +95,8 @@ public class DDPlayerMatch : MonoBehaviour
         if (nextPercent < healthBar.fillAmount)
         {
             playerHeroShot.color = Color.white;
-            playerHeroShot.DOComplete();
-            playerHeroShot.DOColor(Color.red, .2f).SetLoops(4, LoopType.Yoyo);
+            colorFlashHandle.TryComplete();
+            colorFlashHandle = LMotion.Create(Color.white, Color.red, .2f).WithLoops(4, LoopType.Yoyo).BindToColor(playerHeroShot);
         }
         healthBar.fillAmount = nextPercent;
         
@@ -233,6 +235,11 @@ public class DDPlayerMatch : MonoBehaviour
     public int? GetLaneAffix(EAffixType affixType, int lane)
     {
         return laneAffixes[lane].TryGetAffixValue(affixType);
+    }
+
+    public Vector3 GetLaneAffixVisualPosition(int lane)
+    {
+        return lanesAffixVisualsManager[lane].transform.position;
     }
 
     public void DealDamageInLane(int damage, int lane)

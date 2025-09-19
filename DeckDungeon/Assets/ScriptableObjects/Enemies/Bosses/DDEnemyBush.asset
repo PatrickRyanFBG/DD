@@ -20,6 +20,7 @@ MonoBehaviour:
   immovable: 0
   friendly: 0
   rangeType: 2
+  startSpawned: 1
   xSpawnPreference: 0
   xMinMax: {x: 0, y: 0}
   ySpawnPreference: 0

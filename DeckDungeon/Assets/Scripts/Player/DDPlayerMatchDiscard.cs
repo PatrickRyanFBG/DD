@@ -1,6 +1,7 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 
 public class DDPlayerMatchDiscard : MonoBehaviour
@@ -25,7 +26,8 @@ public class DDPlayerMatchDiscard : MonoBehaviour
         // DO ANIMATION OF CARD MOVING TO DISCARD
         card.transform.SetParent(transform);
         card.SetCanHover(false);
-        yield return card.transform.DOLocalMove(Vector3.zero, .1f).WaitForCompletion();
+        var handle = LMotion.Create(card.transform.localPosition, Vector3.zero, 0.1f).BindToLocalPosition(card.transform);
+        yield return handle.ToYieldInstruction();
         card.SetCanHover(true);
         card.gameObject.SetActive(false);
     }

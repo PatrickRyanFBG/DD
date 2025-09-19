@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DDEnemyOnBoard : DDSelection
 {
+    private EEnemyState currentEnemyState = EEnemyState.PreSpawn;
+    public EEnemyState CurrentEnemyState => currentEnemyState;
+    
     private int maxHealth;
     private int currentHealth;
     public int CurrentHealth => currentHealth;
@@ -46,6 +50,10 @@ public class DDEnemyOnBoard : DDSelection
     [HideInInspector] public DDEncounterEnemyIcon MatchingIcon;
 
     private bool canNonActionableHover = true;
+
+    private MotionHandle colorFlashHandle;
+
+    private bool hasSpawned;
     
     public void SetUpEnemy(DDEnemyBase enemyBase)
     {
@@ -57,8 +65,33 @@ public class DDEnemyOnBoard : DDSelection
         affixManager = new DDAffixManager(affixVisualsManager, EAffixOwner.Enemy);
         affixManager.AffixAdjusted.AddListener(AffixAdjusted);
         affixManager.ModifyValueOfAffix(EAffixType.Armor, enemyBase.StartingArmor, true);
+
+        if (currentEnemy.StartSpawned)
+        {
+            hasSpawned = true;
+        }
+        else
+        {
+            transform.localScale = Vector3.zero;
+        }
     }
 
+    public IEnumerator DoSpawn()
+    {
+        currentEnemyState = EEnemyState.Spawning;
+        
+        if (!hasSpawned)
+        {
+            //spawn anims here later
+            var handle = LMotion.Create(Vector3.zero, Vector3.one, .75f).WithEase(Ease.OutBack).BindToLocalScale(transform);
+            yield return handle.ToYieldInstruction();
+        }
+        
+        // spawn effects here
+
+        currentEnemyState = EEnemyState.Alive;
+    }
+    
     private void AffixAdjusted(EAffixType changedAffix)
     {
         switch (changedAffix)
@@ -103,42 +136,28 @@ public class DDEnemyOnBoard : DDSelection
 
         //targetPos.y = startPos.y;
 
-        float time = 0;
-
-        while (time < 1f)
-        {
-            time += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPos, targetPos, time);
-            yield return null;
-        }
+        var handle = LMotion.Create(startPos, targetPos, 1f).WithEase(Ease.InOutSine).BindToPosition(transform);
+        yield return handle.ToYieldInstruction();
     }
 
-    public IEnumerator MoveToLocationAndBack(Vector3 pos, Action midWayAction = null)
+    public IEnumerator MoveToLocationAndBack(Vector3 pos, float midWayPause, Action midWayAction = null)
     {
         Vector3 startPos = transform.position;
         Vector3 targetPos = Vector3.Lerp(startPos, pos, .75f);
-
-        float time = 0;
-        while (time < .5f)
-        {
-            time += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPos, targetPos, time / .5f);
-            yield return null;
-        }
+        
+        var handle = LMotion.Create(startPos, targetPos, .5f).WithEase(Ease.InSine).BindToPosition(transform);
+        yield return handle.ToYieldInstruction();
         
         midWayAction?.Invoke();
+
+        yield return new WaitForSeconds(midWayPause);
         
-        time = 0;
-        while (time < .5f)
-        {
-            time += Time.deltaTime;
-            transform.position = Vector3.Lerp(targetPos, startPos, time / .5f);
-            yield return null;
-        }
+        handle = LMotion.Create(targetPos, startPos, .5f).WithEase(Ease.InOutSine).BindToPosition(transform);
+        yield return handle.ToYieldInstruction();
     }
 
-    // Probably make this enumerator?
-    public void TakeDamage(int amount, ERangeType rangeType, bool bypassArmor)
+    // Probably make this enumerator? +1 for this?
+    public void TakeDamage(int amount, ERangeType rangeType, bool bypassArmor, bool fromPlayer = true)
     {
         int rowBonus = DDGamePlaySingletonHolder.Instance.Board.GetMeleeRangedBonus(rangeType, currentLocation.Coord.y);
         int totalDamage = amount + rowBonus;
@@ -162,25 +181,35 @@ public class DDEnemyOnBoard : DDSelection
                 if (currentHealth <= 0)
                 {
                     currentHealth = 0;
-                    DDGamePlaySingletonHolder.Instance.Encounter.EnemyDefeated(this);
+                    currentEnemyState = EEnemyState.Dead;                    
                 }
                 else
                 {
-                    // Take Damage Feedback.
-                    image.color = Color.white;
-                    image.DOComplete();
-                    image.DOColor(Color.red, .2f).SetLoops(4, LoopType.Yoyo);
+                    TakeDamageFeedback();
                 }
 
                 UpdateHealthUI();
             }
         }
 
-        int retaliate = GetAffixValue(EAffixType.Retaliate);
-        if (retaliate > 0)
+        if (fromPlayer)
         {
-            DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(retaliate, currentLocation.Coord.y);
+            int retaliate = GetAffixValue(EAffixType.Retaliate);
+            if (retaliate > 0)
+            {
+                DDGamePlaySingletonHolder.Instance.Player.DealDamageInLane(retaliate, currentLocation.Coord.y);
+            }
         }
+    }
+
+    public void TakeDamageFeedback()
+    {
+        // Take Damage Feedback.
+        image.color = Color.white;
+        colorFlashHandle.TryComplete();
+        colorFlashHandle = LMotion.Create(Color.white, Color.red, .2f).WithLoops(4, LoopType.Yoyo).BindToColor(image);
+        
+        LMotion.Punch.Create(Vector3.one, Vector3.one * .25f, .25f).WithFrequency(5).BindToLocalScale(transform);
     }
 
     public void ModifyAffix(EAffixType affixType, int amount, bool shouldSet)
@@ -329,11 +358,20 @@ public class DDEnemyOnBoard : DDSelection
 
     public IEnumerator DoDeath()
     {
+        currentEnemyState = EEnemyState.Dying;
+
         foreach (var action in DeathActions)
         {
             yield return action;
         }
 
+        var handle = LMotion.Create(Vector3.one, Vector3.zero, .5f).WithEase(Ease.InBack).BindToLocalScale(transform);
+        yield return handle.ToYieldInstruction();
+         
+        colorFlashHandle.TryComplete();
+        
+        // Poof effects here
+        
         yield return CurrentEnemy.OnDeath();
     }
 }

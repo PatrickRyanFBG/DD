@@ -1,7 +1,8 @@
 using System;
-using DG.Tweening;
+using LitMotion;
 using System.Collections;
 using System.Collections.Generic;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -298,23 +299,33 @@ public class DDEnemyActionAttack : DDEnemyActionBase
 
     public override IEnumerator ExecuteAction(DDEnemyOnBoard enemy)
     {
-        GameObject attackPrefab = GameObject.Instantiate(enemy.AttackPrefab,
-            enemy.transform.position + enemy.CurrentLocaton.transform.up * .2f, Quaternion.identity);
-        Vector3 goal = attackPrefab.transform.position -
-                       (enemy.CurrentLocaton.transform.forward * (1.5f * (enemy.CurrentLocaton.Coord.y + 1)));
-        attackPrefab.transform.DOMove(goal, 1);
-        GameObject.Destroy(attackPrefab, 1.05f);
+        Vector3 particleStart = enemy.transform.position + enemy.CurrentLocaton.transform.up * .1f;
+        Vector3 particleGoal = DDGamePlaySingletonHolder.Instance.Player.GetLaneAffixVisualPosition(enemy.CurrentLocaton.Coord.x) + enemy.CurrentLocaton.transform.up * .1f;
+        particleStart = Vector3.Lerp(particleStart, particleGoal, .2f);
 
-        if (rangedType == ERangeType.Ranged)
+        if (rangedType == ERangeType.Ranged || rangedType == ERangeType.Pure)
         {
             DDGlobalManager.Instance.ClipLibrary.Ranged.PlayNow();
+            
+            DDEnemyRangeParticle rangePart =
+                DDGlobalManager.Instance.ParticleLibrary.GetParticle<DDEnemyRangeParticle>();
+            
+            rangePart.transform.position = particleStart;
+            rangePart.GoalPosition = particleGoal;
+
+            yield return rangePart.Play();
         }
         else if (rangedType == ERangeType.Melee)
         {
             DDGlobalManager.Instance.ClipLibrary.Melee.PlayNow();
+            
+            DDEnemyMeleeParticle meleePart = DDGlobalManager.Instance.ParticleLibrary.GetParticle<DDEnemyMeleeParticle>();
+            meleePart.transform.position = particleGoal;
+            
+            yield return meleePart.Play();
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.05f);
 
         int totalDamage = damage;
         totalDamage += enemy.GetAffixValue(EAffixType.Expertise);
@@ -333,7 +344,7 @@ public class DDEnemyActionAttack : DDEnemyActionBase
             enemy.TakeDamage(retaliateNumber.Value, ERangeType.Pure, false);
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
     }
 
     public override Texture GetIcon()
@@ -657,7 +668,7 @@ public class DDEnemyActionBleedAttack : DDEnemyActionBase
             enemy.transform.position + enemy.CurrentLocaton.transform.up * .2f, Quaternion.identity);
         Vector3 goal = attackPrefab.transform.position -
                        (enemy.CurrentLocaton.transform.forward * (1.5f * (enemy.CurrentLocaton.Coord.y + 1)));
-        attackPrefab.transform.DOMove(goal, 1);
+        LMotion.Create(attackPrefab.transform.position, goal, 1).BindToPosition(attackPrefab.transform);
 
         yield return new WaitForSeconds(1f);
 

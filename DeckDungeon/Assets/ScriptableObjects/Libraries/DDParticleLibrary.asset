@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 008eacbcc4a33e8a7a6c9fcdd7ebc796, type: 3}
+  m_Name: DDParticleLibrary
+  m_EditorClassIdentifier: 
+  particles:
+  - {fileID: 8247533035663320239, guid: 314ea607eb966bb4d9736ca1da7f5c16, type: 3}
+  - {fileID: -7902340727594238046, guid: fbc57ccc519c0ae4e9defbf8011b4b8c, type: 3}

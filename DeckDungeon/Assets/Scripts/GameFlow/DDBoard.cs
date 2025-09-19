@@ -73,7 +73,7 @@ public class DDBoard : MonoBehaviour
                     // We bonk though?!
                     if (fromPlayer)
                     {
-                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position,
+                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position, .25f,
                             () =>
                             {
                                 DDGlobalManager.Instance.ClipLibrary.Bonk.PlayNow();
@@ -109,7 +109,7 @@ public class DDBoard : MonoBehaviour
                     // We bonk though?!
                     if (fromPlayer)
                     {
-                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position,
+                        yield return enemy.MoveToLocationAndBack(occupiedEnemy.CurrentLocaton.transform.position, .25f,
                             () =>
                             {
                                 DDGlobalManager.Instance.ClipLibrary.Bonk.PlayNow();

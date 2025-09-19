@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,9 @@ public class DDAdventurerCardData
     [SerializeField] private List<DDCardBase> rareCards;
 
     private Dictionary<string, DDCardBase> allCards = new Dictionary<string, DDCardBase>();
+    // Make this read only or immutable?
+    public Dictionary<string, DDCardBase> AllCards => allCards;
+    
     private Dictionary<ECardType, List<DDCardBase>> cardsByType = new Dictionary<ECardType, List<DDCardBase>>();
 
     // Probablyt just a big list where we do a linq "Where" so we can look for specifs like "Action" + "Common"
@@ -48,7 +52,7 @@ public class DDAdventurerCardData
         }
     }
 
-    public DDCardBase GetCardByGUID(string guid)
+    public DDCardBase GetCardByGuid(string guid)
     {
         if (allCards.TryGetValue(guid, out DDCardBase card))
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 
 public class DDPlayerMatchDeck : MonoBehaviour
@@ -32,8 +33,9 @@ public class DDPlayerMatchDeck : MonoBehaviour
         
         card.gameObject.SetActive(true);
         card.SetCanHover(false);
-        
-        yield return card.transform.DOLocalMove(Vector3.zero, 0.1f).WaitForCompletion();
+
+        var handle = LMotion.Create(card.transform.localPosition, Vector3.zero, 0.1f).BindToLocalPosition(card.transform);
+        yield return handle.ToYieldInstruction();
         
         card.gameObject.SetActive(false);
         card.SetCanHover(true);

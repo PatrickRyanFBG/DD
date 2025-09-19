@@ -1,10 +1,12 @@
 {
   "dependencies": {
     "com.alexeytaranov.serializereferencedropdown": "https://github.com/AlexeyTaranov/SerializeReferenceDropdown.git",
-    "com.unity.collab-proxy": "2.2.0",
+    "com.annulusgames.lit-motion": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion",
+    "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.development": "1.0.2",
-    "com.unity.render-pipelines.universal": "16.0.5",
+    "com.unity.render-pipelines.universal": "16.0.6",
     "com.unity.timeline": "1.8.6",
+    "com.unity.toolchain.linux-x86_64": "2.0.10",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.8.0",
     "www.nulltale.socreator": "https://github.com/NullTale/SoCreator.git",

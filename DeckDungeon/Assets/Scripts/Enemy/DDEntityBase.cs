@@ -27,6 +27,9 @@ public abstract class DDEntityBase : DDScriptableObject
     [SerializeField] private ERangeType rangeType = ERangeType.Pure;
     public ERangeType RangeType => rangeType;
 
+    [SerializeField] private bool startSpawned = false;
+    public bool StartSpawned => startSpawned;
+    
     public abstract List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy);
 
     public virtual IEnumerator OnDeath()

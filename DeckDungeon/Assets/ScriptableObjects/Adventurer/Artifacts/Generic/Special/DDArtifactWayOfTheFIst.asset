@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1bb0fa6b40fd844797e16242f2af657, type: 3}
-  m_Name: DDArtifactWayOfTheFist
+  m_Name: DDArtifactWayOfTheFIst
   m_EditorClassIdentifier: 
   artifactName: Way Of The Fist
   description: Gain 4 Vigor at the start of every Encounter.

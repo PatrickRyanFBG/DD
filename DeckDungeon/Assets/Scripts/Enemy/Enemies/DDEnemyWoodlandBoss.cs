@@ -15,7 +15,8 @@ public class DDEnemyWoodlandBoss : DDEnemyBase
     public override List<DDEnemyActionBase> CalculateActions(int number, DDEnemyOnBoard actingEnemy)
     {
         List<DDEnemyActionBase> actions = new();
-
+    
+        // Figure out something more concrete for hidden
         if (actingEnemy.gameObject.activeInHierarchy)
         {
             /*
@@ -147,7 +148,7 @@ public class DDEnemyActionRevealAndSneakAttack : DDEnemyActionAttack
         if (bush && bush != enemy)
         {
             // Bush will reveal us after being destroyed
-            bush.TakeDamage(99, ERangeType.Pure, true);
+            bush.TakeDamage(99, ERangeType.Pure, true, false);
             yield return DDGamePlaySingletonHolder.Instance.Encounter.CheckDestroyedEnemies();
 
             // if we were hidden we do sneak attack damage

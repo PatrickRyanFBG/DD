@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 using UnityEngine;
 
 public class DDPlayerMatchHand : MonoBehaviour
@@ -101,7 +102,7 @@ public class DDPlayerMatchHand : MonoBehaviour
                 Vector3 pos = Vector3.zero;
                 pos.x = Mathf.Lerp(minMax, -minMax, percent);
                 cards[(int)i].SetCanHover(false);
-                cards[(int)i].transform.DOLocalMove(pos, .1f);
+                LMotion.Create(cards[(int)i].transform.localPosition, pos, 0.1f).BindToLocalPosition(cards[(int)i].transform);
             }
         }
 
